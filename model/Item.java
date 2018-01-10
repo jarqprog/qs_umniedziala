@@ -54,4 +54,12 @@ public abstract class Item{
         idCounter = newIdCounter;
     }
 
+    public String toString() {
+        return "name: " + name
+                + ", value: " + value
+                + ", description: " + description
+                + ", status: " + status
+                + ", item id: " + itemId;
+    }
+
 }
