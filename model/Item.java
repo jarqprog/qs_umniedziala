@@ -16,4 +16,8 @@ public abstract class Item{
         return value;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
 }
