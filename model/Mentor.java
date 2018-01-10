@@ -19,4 +19,17 @@ public class Mentor extends User{
     public void setClassId(int classId) {
         this.classId = classId;
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        String userInfo = super.toString();
+
+        int noClassID = 0;
+        sb.append(userInfo);
+        if (classId != noClassID) {
+            sb.append("\nClass ID: " + getClassId());
+        }
+        return sb.toString();
+    }
+}
 }
