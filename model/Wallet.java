@@ -12,7 +12,13 @@ public class Wallet{
         this.balance = 0;
         this.artifacts = new ArrayList<Artifacts>();
     }
-    public Wallet(int balance, int coins, ArrayList <Artifacts> artifacts){}
+    
+    public Wallet(int balance, int coins, ArrayList <Artifacts> artifacts){
+        this.coins = balance;
+        this.balance = balance;
+        this.artifacts = artifacts;
+    }
+
     public setCoins(int coins){}
     public int getCoins(){}
     public setBalance(int balance){}
