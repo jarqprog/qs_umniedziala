@@ -1,8 +1,8 @@
 package model;
 
-public abstract class Item{
+public abstract class Item {
 
-    protected static int idCounter;
+    protected static int idCounter = 0;
 
     protected String name;
     protected int value;
