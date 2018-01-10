@@ -33,4 +33,8 @@ public class Quest extends Item {
         this.itemId = itemId;
     }
 
+    public String getType() {
+        return type;
+    }
+
 }
