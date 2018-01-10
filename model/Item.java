@@ -11,5 +11,9 @@ public abstract class Item{
     public String getName() {
         return name;
     }
-    
+
+    public int getValue() {
+        return value;
+    }
+
 }
