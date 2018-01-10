@@ -26,5 +26,10 @@ public class Artifact extends Item {
         this.status = status;
         this.itemId = itemId;
     }
+
+    @Override
+    public String toString() {
+        return "Artifact: " + super.toString();
+    }
     
 }
