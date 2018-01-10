@@ -7,5 +7,9 @@ public abstract class Item{
     protected String description;
     protected boolean status;
     protected int itemId;
+
+    public String getName() {
+        return name;
+    }
     
 }
