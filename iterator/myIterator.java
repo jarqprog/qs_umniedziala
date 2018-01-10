@@ -7,6 +7,7 @@ public class myIterator <T> implements IIterator{
     private ArrayList<T> collection;
     
     public myIterator(ArrayList<T> collection){
+        this.collection = collection;
     }
     
     public boolean hasNext(){
