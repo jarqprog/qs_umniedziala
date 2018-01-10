@@ -10,12 +10,8 @@ public class Quest extends Item {
                  String status,
                  String type) {
 
-        this.name = name;
-        this.value = value;
-        this.description = description;
-        this.status = status;
+        super(name, value, description, status);
         this.type = type;
-        this.itemId = ++idCounter;
     }
 
     public Quest(String name,
@@ -25,12 +21,8 @@ public class Quest extends Item {
                  String type,
                  int itemId) {
 
-        this.name = name;
-        this.value = value;
-        this.description = description;
-        this.status = status;
+        super(name, value, description, status, itemId);
         this.type = type;
-        this.itemId = itemId;
     }
 
     public String getType() {
