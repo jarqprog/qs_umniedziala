@@ -44,8 +44,13 @@ public abstract class Group{
         return this.students;
     }
 
-    public boolean addMember(Student student){}
-    public boolean removeMember(Student student){}
+    public boolean addMember(Student student){
+        return this.students.add(student);
+    }
+
+    public boolean removeMember(Student student){
+        return this.students.remove(student);
+    }
     public String toString(){}
     
 }
