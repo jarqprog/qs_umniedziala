@@ -12,15 +12,20 @@ public class Wallet{
         this.balance = 0;
         this.artifacts = new ArrayList<Artifacts>();
     }
-    
+
     public Wallet(int balance, int coins, ArrayList <Artifacts> artifacts){
         this.coins = balance;
         this.balance = balance;
         this.artifacts = artifacts;
     }
 
-    public setCoins(int coins){}
-    public int getCoins(){}
+    public setCoins(int coins){
+        this.coins = coins;
+    }
+
+    public int getCoins(){
+        return this.coins;
+    }
     public setBalance(int balance){}
     public int getBalance(){}
     public setArtifacts(ArrayList <Artifacts> artifacts){}
