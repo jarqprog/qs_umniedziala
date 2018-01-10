@@ -44,4 +44,8 @@ public abstract class Item{
         this.status = status;
     }
 
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
 }
