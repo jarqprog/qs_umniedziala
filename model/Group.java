@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import iterator.MyIterator;
 
 public abstract class Group{
     protected String name;
@@ -51,6 +52,15 @@ public abstract class Group{
     public boolean removeMember(Student student){
         return this.students.remove(student);
     }
-    public String toString(){}
     
+    public String toString(){
+        MyIterator <Student> myIterator = new MyIterator<>(this.students);
+        String allStudents = "Students:\n";
+
+        while(myIterator.hasNext()){
+            allStudents += myIterator.next().toString() + "\n";
+        }
+
+        return allStudents;
+    }    
 }
