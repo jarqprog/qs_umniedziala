@@ -10,6 +10,31 @@ public abstract class Item {
     protected String status;
     protected int itemId;
 
+    public Item(String name,
+                int value,
+                String description,
+                String status) {
+
+        this.name = name;
+        this.value = value;
+        this.description = description;
+        this.status = status;
+        this.itemId = ++idCounter;
+    }
+
+    public Item(String name,
+                int value,
+                String description,
+                String status,
+                int itemId) {
+
+        this.name = name;
+        this.value = value;
+        this.description = description;
+        this.status = status;
+        this.itemId = itemId;
+    }
+
     public String getName() {
         return name;
     }
