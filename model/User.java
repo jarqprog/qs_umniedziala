@@ -5,12 +5,13 @@ public abstract class User{
     protected String password;
     protected String email;
     protected int userId;
-    protected static int idCounter;
+    protected static int idCounter = 0;
 
     public User(String name, String password, String email) {
         this.name = name;
         this.password = password;
         this.email = email;
+        this.userId = ++idCounter;
     }
 
     public User(String name, String password, String email, int userId) {
