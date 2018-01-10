@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public interface IDaoQuest extends IDao{
 
-    public ArrayList<Quest> getTeams();
-    public Quest getTeamById();
-    public Quest createTeam();
+    public ArrayList<Quest> getQuest();
+    public Quest getQuestById();
+    public Quest createQuest();
 
 }
