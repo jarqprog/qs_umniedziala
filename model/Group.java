@@ -21,7 +21,7 @@ public abstract class Group{
         this.groupId = groupId;
     }
 
-    public setGroupId(int groupId){
+    public void setGroupId(int groupId){
         this.groupId = groupId;
     }
 
@@ -29,7 +29,7 @@ public abstract class Group{
         return this.groupId;
     }
 
-    public setName(String name){
+    public void setName(String name){
         this.name = name;
     }
 
@@ -37,7 +37,7 @@ public abstract class Group{
         return this.name;
     }
 
-    public setStudents(ArrayLIst<Student> students){
+    public void setStudents(ArrayList<Student> students){
         this.students = students;
     }
 
@@ -52,7 +52,7 @@ public abstract class Group{
     public boolean removeMember(Student student){
         return this.students.remove(student);
     }
-    
+
     public String toString(){
         MyIterator <Student> myIterator = new MyIterator<>(this.students);
         String allStudents = "Students:\n";
