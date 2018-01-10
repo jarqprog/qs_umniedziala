@@ -32,7 +32,6 @@ public abstract class View{
             System.out.println(text);
         }
     }
-    public abstract void menu();
 
     
 }
