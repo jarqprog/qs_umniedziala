@@ -27,9 +27,14 @@ public abstract class Group{
     public int getGroupId(){
         return this.groupId;
     }
-    
-    public setName(String name){}
-    public String getName(){}
+
+    public setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return this.name;
+    }
     public setStudents(ArrayLIst<Student> students){}
     public ArrayList<Student> getStudents(){}
     public boolean addMember(Student student){}
