@@ -20,4 +20,8 @@ public abstract class Item{
         return description;
     }
 
+    public boolean getStatus() {
+        return status;
+    }
+
 }
