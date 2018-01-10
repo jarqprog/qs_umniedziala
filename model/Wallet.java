@@ -26,8 +26,12 @@ public class Wallet{
     public int getCoins(){
         return this.coins;
     }
-    public setBalance(int balance){}
-    public int getBalance(){}
+    public setBalance(int balance){
+        this.balance = balance;
+    }
+    public int getBalance(){
+        return this.balance;
+    }
     public setArtifacts(ArrayList <Artifacts> artifacts){}
     public ArrayList <Artifacts> getArtifacts(){}
     public String toString(){}
