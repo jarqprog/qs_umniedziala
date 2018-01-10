@@ -36,4 +36,8 @@ public abstract class Item{
         this.value = value;
     }
 
+    public void setDescription(String description)  {
+        this.description = description;
+    }
+
 }
