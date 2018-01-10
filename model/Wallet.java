@@ -7,7 +7,11 @@ public class Wallet{
     private int balance;
     private ArrayList <Artifacts> artifacts;
 
-    public Wallet(){}
+    public Wallet(){
+        this.coins = 0;
+        this.balance = 0;
+        this.artifacts = new ArrayList<Artifacts>();
+    }
     public Wallet(int balance, int coins, ArrayList <Artifacts> artifacts){}
     public setCoins(int coins){}
     public int getCoins(){}
