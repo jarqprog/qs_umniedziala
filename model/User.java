@@ -5,7 +5,7 @@ public abstract class User{
     protected String password;
     protected String email;
     protected int userId;
-    protected static int COUNTER;
+    protected static int idCounter;
 
     public User(String name, String password, String email) {
         this.name = name;
@@ -47,7 +47,7 @@ public abstract class User{
     }
 
     public static void setIdCounter(int id) {
-        COUNTER = id;
+        idCounter = id;
     }
 
     public String toString() {
