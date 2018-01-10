@@ -11,6 +11,11 @@ public class myIterator <T> implements IIterator{
     }
     
     public boolean hasNext(){
+        if(index < collection.size()){
+            return true;
+        }
+        return false;
+        
     }
     
     public T next(){
