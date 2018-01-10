@@ -5,7 +5,7 @@ public abstract class Item{
     protected String name;
     protected int value;
     protected String description;
-    protected boolean status;
+    protected String status;
     protected int itemId;
 
     public String getName() {
@@ -20,7 +20,7 @@ public abstract class Item{
         return description;
     }
 
-    public boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -40,7 +40,7 @@ public abstract class Item{
         this.description = description;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
