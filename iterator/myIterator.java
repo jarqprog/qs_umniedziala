@@ -19,5 +19,9 @@ public class myIterator <T> implements IIterator{
     }
     
     public T next(){
+        if(hasNext()){
+            return collection.get(index++);
+        }
+        return null;
     }
 }
