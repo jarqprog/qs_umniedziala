@@ -29,10 +29,17 @@ public class Wallet{
     public setBalance(int balance){
         this.balance = balance;
     }
+
     public int getBalance(){
         return this.balance;
     }
-    public setArtifacts(ArrayList <Artifacts> artifacts){}
-    public ArrayList <Artifacts> getArtifacts(){}
+
+    public setArtifacts(ArrayList <Artifacts> artifacts){
+        this.artifacts = artifacts;
+    }
+
+    public ArrayList <Artifacts> getArtifacts(){
+        return this.artifacts;
+    }
     public String toString(){}
 }
