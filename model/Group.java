@@ -19,8 +19,15 @@ public abstract class Group{
         this.students = students;
         this.groupId = groupId;
     }
-    public setGroupId(int groupId){}
-    public int getGroupId(){}
+
+    public setGroupId(int groupId){
+        this.groupId = groupId;
+    }
+
+    public int getGroupId(){
+        return this.groupId;
+    }
+    
     public setName(String name){}
     public String getName(){}
     public setStudents(ArrayLIst<Student> students){}
