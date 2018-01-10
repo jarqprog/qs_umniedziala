@@ -32,4 +32,8 @@ public abstract class Item{
         this.name = name;
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
 }
