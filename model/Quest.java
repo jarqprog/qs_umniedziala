@@ -37,4 +37,8 @@ public class Quest extends Item {
         return type;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }
