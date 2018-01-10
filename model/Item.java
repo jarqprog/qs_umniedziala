@@ -40,4 +40,8 @@ public abstract class Item{
         this.description = description;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
 }
