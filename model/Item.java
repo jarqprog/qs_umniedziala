@@ -2,6 +2,8 @@ package model;
 
 public abstract class Item{
 
+    protected static int idCounter;
+
     protected String name;
     protected int value;
     protected String description;
@@ -46,6 +48,10 @@ public abstract class Item{
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
+    }
+
+    public static void setIdCounter(int newIdCounter) {
+        idCounter = newIdCounter;
     }
 
 }
