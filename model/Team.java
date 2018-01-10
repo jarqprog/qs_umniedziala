@@ -14,6 +14,10 @@ public class Team extends Group{
         super(name, students, groupId);
         this.coins = coins;
     }
-    public void setCoins(int coins){}
-    public int getCoins(){}
+    public void setCoins(int coins){
+        this.coins = coins;
+    }
+    public int getCoins(){
+        return this.coins;
+    }
 }
