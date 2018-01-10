@@ -38,4 +38,16 @@ public class Student extends User{
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        String userInfo = super.toString();
+        int noTeamID = 0;
+        sb.append(userInfo);
+        sb.append("\nClass ID: " + getClassId());
+        if (teamId != noTeamID) {
+            sb.append("\nTeam ID: " + getClassId());
+        }
+        return sb.toString();
+    }
 }
