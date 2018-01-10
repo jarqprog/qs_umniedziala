@@ -14,7 +14,7 @@ public abstract class User{
     }
 
     public User(String name, String password, String email, int userId) {
-        User(name, password, email);
+        this(name, password, email);
         this.userId = userId;
     }
 
@@ -53,9 +53,9 @@ public abstract class User{
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Name: " + getName());
+        sb.append("ID: " + getUserId());
+        sb.append("\nName: " + getName());
         sb.append("\nEmail: " + getEmail());
-        sb.append("\nID: " + getUserId());
 
         return sb.toString();
 
