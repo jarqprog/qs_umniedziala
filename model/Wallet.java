@@ -2,6 +2,7 @@ package model;
 
 import model.Artifact;
 import java.util.ArrayList;
+import iterator.MyIterator;
 
 public class Wallet{
     private int coins;
@@ -15,7 +16,7 @@ public class Wallet{
     }
 
     public Wallet(int balance, int coins, ArrayList <Artifact> artifacts){
-        this.coins = balance;
+        this.coins = coins;
         this.balance = balance;
         this.artifacts = artifacts;
     }
@@ -43,9 +44,12 @@ public class Wallet{
         return this.artifacts;
     }
     public String toString(){
-        //use iterator to browse threw collection
-        //concatenate toString() of artifacts
-        //trim last comma
-        return"";
+        MyIterator <Artifact> myIterator = new MyIterator<>(this.artifacts);
+        String myWallet = "My wallet: " + this.coins + " coolcoins\n\nMy Artifacts:\n";
+        while(myIterator.hasNext()){
+            myWallet += myIterator.next().toString() + "\n";
+        }
+
+        return myWallet;
     }
 }
