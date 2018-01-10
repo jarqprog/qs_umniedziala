@@ -6,7 +6,7 @@ public class MyIterator <T> implements IIterator{
     private int index = 0;
     private ArrayList<T> collection;
     
-    public myIterator(ArrayList<T> collection){
+    public MyIterator(ArrayList<T> collection){
         this.collection = collection;
     }
     
