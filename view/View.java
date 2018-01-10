@@ -23,6 +23,25 @@ public abstract class View{
         return null;    
     }
 
+    public int getIntInputFromUser(String request){
+
+        int number;
+
+        while (true){
+            try{
+                System.out.println(request);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                String userInput = reader.readLine();
+                number = Integer.parseInt(userInput);
+                return number;
+                }
+            catch (IOException | NumberFormatException e){
+                System.out.println("Wrong input");
+                continue;
+            }
+        }
+    }
+
     public void displayText(String text){
         System.out.println(text);
     }
