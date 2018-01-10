@@ -35,8 +35,15 @@ public abstract class Group{
     public String getName(){
         return this.name;
     }
-    public setStudents(ArrayLIst<Student> students){}
-    public ArrayList<Student> getStudents(){}
+
+    public setStudents(ArrayLIst<Student> students){
+        this.students = students;
+    }
+
+    public ArrayList<Student> getStudents(){
+        return this.students;
+    }
+
     public boolean addMember(Student student){}
     public boolean removeMember(Student student){}
     public String toString(){}
