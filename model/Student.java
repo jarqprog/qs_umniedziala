@@ -14,4 +14,28 @@ public class Student extends User{
         this(name, password, email, classId);
         this.teamId = teamId;
     }
+
+    public int getTeamId() {
+
+    }
+
+    public void setTeamId(int teamId) {
+
+    }
+
+    public int getClassId() {
+
+    }
+
+    public void setClassId(int classId) {
+
+    }
+
+    public Wallet getWallet() {
+
+    }
+
+    public void setWallet(Wallet wallet) {
+        
+    }
 }
