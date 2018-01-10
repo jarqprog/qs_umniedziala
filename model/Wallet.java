@@ -1,32 +1,33 @@
 package model;
 
 import model.Artifact;
+import java.util.ArrayList;
 
 public class Wallet{
     private int coins;
     private int balance;
-    private ArrayList <Artifacts> artifacts;
+    private ArrayList <Artifact> artifacts;
 
     public Wallet(){
         this.coins = 0;
         this.balance = 0;
-        this.artifacts = new ArrayList<Artifacts>();
+        this.artifacts = new ArrayList<Artifact>();
     }
 
-    public Wallet(int balance, int coins, ArrayList <Artifacts> artifacts){
+    public Wallet(int balance, int coins, ArrayList <Artifact> artifacts){
         this.coins = balance;
         this.balance = balance;
         this.artifacts = artifacts;
     }
 
-    public setCoins(int coins){
+    public void setCoins(int coins){
         this.coins = coins;
     }
 
     public int getCoins(){
         return this.coins;
     }
-    public setBalance(int balance){
+    public void setBalance(int balance){
         this.balance = balance;
     }
 
@@ -34,12 +35,17 @@ public class Wallet{
         return this.balance;
     }
 
-    public setArtifacts(ArrayList <Artifacts> artifacts){
+    public void setArtifacts(ArrayList <Artifact> artifacts){
         this.artifacts = artifacts;
     }
 
-    public ArrayList <Artifacts> getArtifacts(){
+    public ArrayList <Artifact> getArtifacts(){
         return this.artifacts;
     }
-    public String toString(){}
+    public String toString(){
+        //use iterator to browse threw collection
+        //concatenate toString() of artifacts
+        //trim last comma
+        return"";
+    }
 }
