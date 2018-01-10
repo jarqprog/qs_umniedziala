@@ -24,4 +24,8 @@ public abstract class Item{
         return status;
     }
 
+    public int getItemId() {
+        return itemId;
+    }
+
 }
