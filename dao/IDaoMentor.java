@@ -7,6 +7,6 @@ public interface IDaoMentor extends IDao{
 
     public ArrayList<Mentor> getMentors();
     public Mentor getMentorById(int id);
-    public void createMentor();
+    public Mentor createMentor();
 
 }
