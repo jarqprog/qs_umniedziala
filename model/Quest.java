@@ -41,4 +41,9 @@ public class Quest extends Item {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return "Quest: " + super.toString() + ", type: " + type;
+    }
+
 }
