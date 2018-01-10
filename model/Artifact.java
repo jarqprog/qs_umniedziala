@@ -7,11 +7,7 @@ public class Artifact extends Item {
                  String description,
                  String status) {
 
-        this.name = name;
-        this.value = value;
-        this.description = description;
-        this.status = status;
-        this.itemId = ++idCounter;
+        super(name, value, description, status);
     }
 
     public Artifact(String name,
@@ -20,11 +16,7 @@ public class Artifact extends Item {
                  String status,
                  int itemId) {
 
-        this.name = name;
-        this.value = value;
-        this.description = description;
-        this.status = status;
-        this.itemId = itemId;
+        super(name, value, description, status, itemId);
     }
 
     @Override
