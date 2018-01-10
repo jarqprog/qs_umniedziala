@@ -5,8 +5,15 @@ import java.util.ArrayList;
 public class Team extends Group{
     private int coins;
 
-    public CodecoolClass(String name){}
-    public CodecoolClass(String name, ArrayList<Student> students, int groupId, int coins){}
+    public Team(String name){
+        super(name);
+        this.coins = 0;
+
+    }
+    public Team(String name, ArrayList<Student> students, int groupId, int coins){
+        super(name, students, groupId);
+        this.coins = coins;
+    }
     public void setCoins(int coins){}
     public int getCoins(){}
 }
