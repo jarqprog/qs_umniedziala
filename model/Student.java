@@ -16,26 +16,26 @@ public class Student extends User{
     }
 
     public int getTeamId() {
-
+        return teamId;
     }
 
     public void setTeamId(int teamId) {
-
+        this.teamId = teamId;
     }
 
     public int getClassId() {
-
+        return classId;
     }
 
     public void setClassId(int classId) {
-
+        this.classId = classId;
     }
 
     public Wallet getWallet() {
-
+        return wallet;
     }
 
     public void setWallet(Wallet wallet) {
-        
+        this.wallet = wallet;
     }
 }
