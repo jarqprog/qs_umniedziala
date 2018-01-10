@@ -20,4 +20,8 @@ public class Team extends Group{
     public int getCoins(){
         return this.coins;
     }
+
+    public String toString(){
+        return super.toString() + "\nTeam coins: " + this.coins;
+    }
 }
