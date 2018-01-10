@@ -55,7 +55,7 @@ public abstract class Group{
 
     public String toString(){
         MyIterator <Student> myIterator = new MyIterator<>(this.students);
-        String allStudents = "Students:\n";
+        String allStudents = "Students in \"" + this.name + "\" group:\n";
 
         while(myIterator.hasNext()){
             allStudents += myIterator.next().toString() + "\n";
