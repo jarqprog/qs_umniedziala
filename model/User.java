@@ -47,7 +47,7 @@ public abstract class User{
     }
 
     public static void setIdCounter(int id) {
-
+        COUNTER = id;
     }
 
     public String toString() {
