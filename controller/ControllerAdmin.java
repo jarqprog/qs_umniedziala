@@ -1,7 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
+import dao.DaoClass;
 import dao.DaoMentor;
 import model.Admin;
+import model.CodecoolClass;
+import model.Mentor;
 import view.ViewAdmin;
 
 public class ControllerAdmin implements IUserController {
@@ -35,7 +39,41 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void editMentor() {
+        DaoMentor daoMentor = new DaoMentor();
+        ArrayList<Mentor> mentorList = daoMentor.importData();
 
+        viewAdmin.displayList(mentorList);
+        int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
+        Mentor mentor = daoMentor.getMentorById(mentorId);
+        while (mentor == null) {
+            viewAdmin.displayText("No mentor with such id found!");
+            mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
+            mentor = daoMentor.getMentorById(mentorId);
+        }
+
+        String choice = viewAdmin.getInputFromUser("\nModify email or class? (e/c) ");
+        while (!(choice.equals("e") || choice.equals("c"))) {
+            viewAdmin.displayText("Wrong input!");
+            choice = viewAdmin.getInputFromUser("\nModify email or class? (e/c) ");
+        }
+
+        if (choice.equals("e")) {
+            String newEmail = viewAdmin.getInputFromUser("\nEnter mentor's new email: ");
+            mentor.setEmail(newEmail);
+        } else if (choice.equals("c")) {
+            DaoClass daoClass = new DaoClass();
+            ArrayList<Class> classList = daoClass.importData();
+            int newClassId = viewAdmin.getIntInputFromUser("\nEnter id of mentor's new class: ");
+            CodecoolClass newClass = daoClass.getClassById(newClassById);
+
+            while (newClass == null) {
+                viewAdmin.displayText("No class with such id found!");
+                newClassId = viewAdmin.getIntInputFromUser("\nEnter id of mentor's new class: ");
+                newClass = daoClass.getClassById(newClassById);
+            }
+            mentor.setClassId(newClass.getGroupId());
+        }
+        daoMentor.exportData(mentorList);
     }
 
     public void seeMentorData() {
