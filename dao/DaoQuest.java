@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class DaoQuest implements IDaoQuest{
 
-    private static ArrayList <Quest> quests;
+    private static ArrayList <Quest> quests = new ArrayList<>();
 
     public void createQuest(String name, int value, String description, String status, String type){
         quests.add(new Quest(name, value, description, status, type));

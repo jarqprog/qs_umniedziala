@@ -5,7 +5,7 @@ import model.*;
 
 public class DaoLevels implements IDaoLevels{
 
-    private static ArrayList <Levels> levels;
+    private static ArrayList <Levels> levels = new ArrayList<>();
 
     public Levels getLevelById(int id) {return levels.get(0);}
     public void createLevels() { }

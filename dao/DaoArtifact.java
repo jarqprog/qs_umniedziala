@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class DaoArtifact implements IDaoArtifact{
 
-    private static ArrayList <Artifact> artifacts;
+    private static ArrayList <Artifact> artifacts = new ArrayList<>();
 
 
     public void createArtifact(String name, int value, String description, String status){

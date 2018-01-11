@@ -28,11 +28,11 @@ public class DaoMentor implements IDaoMentor{
         return null;
     }
 
-    public void exportData(ArrayList <Mentor> updatedMenotrs){
-        mentors = updatedMenotrs;
+    public void exportData(ArrayList <Mentor> updatedMentors){
+        mentors = updatedMentors;
     }
 
-    public ArrayList <Mentor> importData(Mentor mentor){
+    public ArrayList <Mentor> importData(){
         return mentors;
     }
 
