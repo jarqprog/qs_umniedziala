@@ -8,18 +8,15 @@ public class DaoMentor implements IDaoMentor{
 
     private static ArrayList <Mentor> mentors;
 
-    public ArrayList <Mentor> getMentors() { return mentors; }
-
-    public void DaoMentor(){
-        Mentor m1 = new Mentor("Jan", "haslo", "jan@mail.pl");
-        Mentor m2 = new Mentor("Anna", "haslo", "anna@mail.pl");
-        mentors.add(m1);
-        mentors.add(m2);
+    public void implementTestData() {
+        createMentor("Dominik", "haslo", "dominik@mail.pl");
+        createMentor("Anna", "haslo", "anna@mail.pl");
     }
 
-    public Mentor createMentor(String name, String password, String email){
-        Mentor mentor = new Mentor(name, password, email);
-        return mentor;
+
+    public void createMentor(String name, String password, String email){
+        mentors.add(new Mentor(name, password, email));
+        
     }
 
     public Mentor getMentorById(int id){
@@ -31,10 +28,12 @@ public class DaoMentor implements IDaoMentor{
         return null;
     }
 
-    public void exportData(){}
+    public void exportData(ArrayList <Mentor> updatedMenotrs){
+        mentors = updatedMenotrs;
+    }
 
-    public void importData(Mentor mentor){
-        mentors.add(mentor);
+    public ArrayList <Mentor> importData(Mentor mentor){
+        return mentors;
     }
 
 }
