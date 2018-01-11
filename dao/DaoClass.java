@@ -7,13 +7,13 @@ public class DaoClass implements IDaoClass{
 
     private static ArrayList <CodecoolClass> classes = new ArrayList<>();
 
-    public void createClass(){
-        classes.add(new CodecoolClass());
+    public void createClass(String name){
+        classes.add(new CodecoolClass(name));
     }
 
     public CodecoolClass getClassById(int id){
         for(CodecoolClass codecoolClass: classes){
-            if(codecoolClass.getId() == id){
+            if(codecoolClass.getGroupId() == id){
                 return codecoolClass;
             }
         }
