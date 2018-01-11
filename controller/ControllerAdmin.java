@@ -33,7 +33,7 @@ public class ControllerAdmin{
 
     }
 
-    public void createLeve() {
+    public void createLevel() {
 
     }
 
