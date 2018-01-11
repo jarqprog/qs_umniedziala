@@ -33,6 +33,12 @@ public class ControllerStudent{
 
     }
 
+
+    public void seeArtifacts() {
+
+    }
+
+
     public void runMenu() {
 
         String studentOption = "";
