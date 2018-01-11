@@ -34,8 +34,8 @@ public class ControllerStudent{
     }
 
     public void seeQuests() {
-
-
+        viewStudent.displayText("Available quests: ");
+        viewStudent.displayList(new DaoQuest().importData());
     }
 
     public void seeArtifacts() {
