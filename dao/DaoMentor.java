@@ -12,7 +12,11 @@ public class DaoMentor implements IDaoMentor{
         createMentor("Dominik", "haslo", "dominik@mail.pl", 12, 1);
         createMentor("Anna", "haslo", "anna@mail.pl", 13, 2);
     }
-
+    
+    public void createMentor(String name, String password, String email){
+        mentors.add(new Mentor(name, password, email));
+        
+    }
 
     public void createMentor(String name, String password, String email, int userId, int classId){
         mentors.add(new Mentor(name, password, email, userId, classId));
