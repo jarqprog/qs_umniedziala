@@ -8,8 +8,8 @@ public class DaoStudent implements IDaoStudent{
     private static ArrayList <Student> students = new ArrayList<>();
 
     public void implementTestData() {
-        createStudent("Jan", "haslo", "jan@mail.pl", 1);
-        createStudent("Anna", "haslo", "anna@mail.pl", 1);
+        createStudent("Krzysztof", "haslo", "krzysztof@mail.pl", 1);
+        createStudent("Mateusz", "haslo", "mateusz@mail.pl", 1);
         createStudent("Filip", "haslo", "filip@mail.pl", 2);
         createStudent("Joanna", "haslo", "joanna@mail.pl", 2);
     }
