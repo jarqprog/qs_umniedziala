@@ -124,26 +124,42 @@ public class ControllerMentor implements IUserController{
     }
 
     public void updateQuest(){
+        toBeImplemented();
     }
 
     public void updateArtifact() {
-        seeArtifacts();
+        //seeArtifacts();
+        toBeImplemented();
+        
+    }
+
+    public void toBeImplemented(){
+        String text = "Implementation in progress";
+        viewMentor.displayText(text);
+    }
+
+    public void markQuest() {
+        toBeImplemented();
+    }
+
+    public void markArtifact() {
+        toBeImplemented();
     }
 
     public void markStudentAchivedQuest() {
-
+        toBeImplemented();
     }
 
     public void markTeamAchivedQuest() {
-
+        toBeImplemented();
     }
 
     public void markStudentBoughtArtifact() {
-
+        toBeImplemented();
     }
 
     public void markTeamBoughtArtifact() {
-
+        toBeImplemented();
     }
 
     public void seeAllWallets() {
@@ -194,21 +210,12 @@ public class ControllerMentor implements IUserController{
                 break;
         case "6": updateArtifact();
                 break;
-        case "7": markStudentAchivedQuest();
+        case "7": markQuest();
                 break;
-        case "8": markStudentAchivedQuest();
+        case "8": markArtifact();
                 break;
-        case "9": markStudentBoughtArtifact();
+        case "9": seeAllWallets();
                 break;
-        case "10": markTeamBoughtArtifact();
-                break;
-        case "11": seeAllWallets();
-                break;
-        case "12":  seeQuests();
-                break;
-        case "13":  seeArtifacts();
-                break;
-
         case "0": break;
 
         default: viewMentor.displayText("Wrong option. Try again!");
