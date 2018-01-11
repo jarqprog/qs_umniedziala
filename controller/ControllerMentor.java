@@ -41,7 +41,8 @@ public class ControllerMentor{
         String nameRequest = "Enter name of new team: ";
         String teamName = viewMentor.getInputFromUser(nameRequest);
 
-        // jakieś metody w dao do tworzenia nowego teamu i exportowanie go 
+        Team newTeam = daoTeam.createTeam(); //tu musi być przekazany argment teamName
+        daoTeam.export // skończ to!!! metoda do exportu teamu do bazy danych
     }
 
     public void addQuest(){
