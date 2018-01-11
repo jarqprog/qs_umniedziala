@@ -9,13 +9,13 @@ public class DaoMentor implements IDaoMentor{
     private static ArrayList <Mentor> mentors = new ArrayList<>();
 
     public void implementTestData() {
-        createMentor("Dominik", "haslo", "dominik@mail.pl");
-        createMentor("Anna", "haslo", "anna@mail.pl");
+        createMentor("Dominik", "haslo", "dominik@mail.pl", 12, 1);
+        createMentor("Anna", "haslo", "anna@mail.pl", 13, 2);
     }
 
 
-    public void createMentor(String name, String password, String email){
-        mentors.add(new Mentor(name, password, email));
+    public void createMentor(String name, String password, String email, int userId, int classId){
+        mentors.add(new Mentor(name, password, email, userId, classId));
         
     }
 
