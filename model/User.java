@@ -55,8 +55,8 @@ public abstract class User{
         StringBuilder sb = new StringBuilder();
 
         sb.append("ID: " + getUserId());
-        sb.append("\nName: " + getName());
-        sb.append("\nEmail: " + getEmail());
+        sb.append(", Name: " + getName());
+        sb.append(", Email: " + getEmail());
 
         return sb.toString();
 

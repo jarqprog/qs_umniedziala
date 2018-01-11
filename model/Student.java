@@ -3,7 +3,7 @@ package model;
 public class Student extends User{
     private int classId;
     private int teamId;
-    private Wallet wallet;
+    private Wallet wallet = null;
 
     public Student(String name, String password, String email, int classId) {
         super(name, password, email);
@@ -44,9 +44,9 @@ public class Student extends User{
         String userInfo = super.toString();
         int noTeamID = 0;
         sb.append(userInfo);
-        sb.append("\nClass ID: " + getClassId());
+        sb.append(", Class ID: " + getClassId());
         if (teamId != noTeamID) {
-            sb.append("\nTeam ID: " + getClassId());
+            sb.append(", Team ID: " + getClassId());
         }
         return sb.toString();
     }
