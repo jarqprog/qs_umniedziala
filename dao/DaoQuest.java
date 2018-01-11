@@ -7,11 +7,8 @@ public class DaoQuest implements IDaoQuest{
 
     private static ArrayList <Quest> quests;
 
-    public ArrayList <Quest> getQuests() { return quests; }
-
-    public Quest createQuest(String name, int value, String description, String status, String type){
-        Quest quest = new Quest(name, value, description, status, type);
-        return quest;
+    public void createQuest(String name, int value, String description, String status, String type){
+        quests.add(new Quest(name, value, description, status, type));
     }
 
     public Quest getQuestById(int id){
@@ -23,10 +20,12 @@ public class DaoQuest implements IDaoQuest{
         return null;
     }
     
-    public void exportData(){}
+    public void exportData(ArrayList <Quest> updatedQuests){
+        quests = updatedQuests;
+    }
 
-    public void importData(Quest quest){
-        quests.add(quest);
+    public ArrayList <Quest> importData(){
+        return quests;
     }
     
 }
