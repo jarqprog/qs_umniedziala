@@ -14,7 +14,7 @@ public class ControllerStudent{
     }
 
     public void seeWallet() {
-
+        System.out.println(student.getWallet());
     }
 
     public void buyArtifact() {
