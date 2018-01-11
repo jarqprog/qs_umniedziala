@@ -76,7 +76,7 @@ public class ControllerMentor implements IUserController{
     }
 
     private String chooseStatus() {
-        String statusRequest = "Choose status:\n1. Basic\n2. Extra\nOption: ";
+        String statusRequest = "Choose status:\n1. Individual\n2. Team\nOption: ";
         String status = null;
         boolean choosingStatus = true;
         int option = 0;
@@ -84,11 +84,11 @@ public class ControllerMentor implements IUserController{
             option = viewMentor.getIntInputFromUser(statusRequest);
             switch(option) {
                 case 1:
-                    status = "basic";
+                    status = "individual";
                     choosingStatus = false;
                     break;
                 case 2:
-                    status = "extra";
+                    status = "team";
                     choosingStatus = false;
                     break;
                 default:
