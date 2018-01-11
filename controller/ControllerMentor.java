@@ -110,6 +110,48 @@ public class ControllerMentor{
     }
 
     public void runMenu() {
+        String mentorOption = "";
+        while (!mentorOption.equals("0")) {
+
+            viewMentor.displayText("\nWhat would like to do?")
+            viewMentor.displayList(viewMentor.getMentorOptions());
+
+    mentorOption = viewMentor.getInputFromUser("Option: ");
+    switch (mentorOption) {
+        case "1": createStudent();
+                break;
+        case "2": createTeam();
+                break;
+        case "3": addQuest();
+                break;
+        case "4": addArtifact();
+                break;
+        case "5": updateQuests();
+                break;
+        case "6": updateArtifact();
+                break;
+        case "7": markStudentAchivedQuest();
+                break;
+        case "8": markStudentAchivedQuest();
+                break;
+        case "9": markStudentBoughtArtifact();
+                break;
+        case "10": markTeamBoughtArtifact();
+                break;
+        case "11": seeAllWallets();
+                break;
+        case "12":  seeQuests();
+                break;
+        case "13":  seeArtifacts();
+                break;
+
+        case "0": break;
+
+        default: viewMentor.displayText("Wrong option. Try again!");
+                 break;
+    }
+        }
 
     }
+
 }
