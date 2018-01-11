@@ -1,9 +1,10 @@
 package controller;
 
+import dao.DaoMentor;
 import model.Admin;
 import view.ViewAdmin;
 
-public class ControllerAdmin{
+public class ControllerAdmin implements IUserController {
 
     private ViewAdmin viewAdmin;
     private Admin admin;
