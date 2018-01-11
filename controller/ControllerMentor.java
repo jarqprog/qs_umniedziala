@@ -98,7 +98,18 @@ public class ControllerMentor implements IUserController{
     }
 
     public void seeAllWallets() {
-
+        int idOfMentorClass = mentor.getClassId();
+        viewMentor.displayText("Wallets of students of class: ");
+        ArrayList<Student> allStudentsOfClass = new DaoStudent().getStudentsByClassId();
+        ArrayList<Wallet> walletsOfStudents = getWalletsOfStudents(allStudentsOfClass);
+        viewMentor.displayList(walletsOfStudents);
+    }
+    private ArrayList<Wallet> getWalletsOfStudents(ArrayList<Student> students) {
+        ArrayList<Wallet> walletsOfStudents = new ArrayList<>();
+        for (Student student : students) {
+            walletsOfStudents.add(student.getWallet());
+        }
+        return walletsOfStudents;
     }
 
     public void seeQuests() {
