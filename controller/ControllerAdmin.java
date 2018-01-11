@@ -15,6 +15,18 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void createMentor() {
+        DaoMentor daoMentor = new DaoMentor();
+
+        String nameRequest = "Enter name of new mentor: ";
+        String mentorName = viewAdmin.getInputFromUser(nameRequest);
+
+        String passwordRequest = "Enter password of new mentor: ";
+        String mentorPassword = viewAdmin.getInputFromUser(passwordRequest);
+
+        String emailRequest = "Enter email of new mentor: ";
+        String mentorEmail = viewAdmin.getInputFromUser(emailRequest);
+
+        daoMentor.createMentor(mentorName, mentorPassword, mentorEmail);
 
     }
 
