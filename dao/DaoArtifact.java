@@ -22,7 +22,9 @@ public class DaoArtifact implements IDaoArtifact{
         }
         return null;
     }
-    public void exportData(){ }
+
+    public void exportData(){} 
+
     public void importData(Artifact artifact){
         artifacts.add(artifact);
     }

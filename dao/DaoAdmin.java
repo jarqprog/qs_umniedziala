@@ -24,6 +24,7 @@ public class DaoAdmin implements IDaoAdmin{
     }
 
     public void exportData(){ }
+    
     public void importData(Admin admin){
         admins.add(admin);
     }

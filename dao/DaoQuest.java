@@ -22,7 +22,9 @@ public class DaoQuest implements IDaoQuest{
         }
         return null;
     }
-    public void exportData(){ }
+    
+    public void exportData(){}
+
     public void importData(Quest quest){
         quests.add(quest);
     }
