@@ -40,14 +40,14 @@ public class ControllerMentor implements IUserController{
         String nameRequest = "Enter name of new team: ";
         String teamName = viewMentor.getInputFromUser(nameRequest);
 
-        daoTeam.createTeam(); //tu musi być przekazany argment teamName
+        daoTeam.createTeam(teamName);
     }
 
     public void addQuest(){
         DaoQuest daoQuest = new DaoQuest();
 
         String nameRequest = "Enter name of new quest: ";
-        String questName = viewMentor.getIntInputFromUser(nameRequest);
+        String questName = viewMentor.getInputFromUser(nameRequest);
 
         String valueRequest = "Enter value of new quest: ";
         int questValue = viewMentor.getIntInputFromUser(valueRequest);
@@ -65,7 +65,7 @@ public class ControllerMentor implements IUserController{
         DaoArtifact daoArtifact = new DaoArtifact();
 
         String nameRequest = "Enter name of new artifact: ";
-        String artifactName = viewMentor.getIntInputFromUser(nameRequest);
+        String artifactName = viewMentor.getInputFromUser(nameRequest);
 
         String valueRequest = "Enter value of new artifact: ";
         int artifactValue = viewMentor.getIntInputFromUser(valueRequest);
@@ -94,7 +94,7 @@ public class ControllerMentor implements IUserController{
                     choosingStatus = false;
                     break;
                 default:
-                    viewMentor.displayText("Wrong option number!")
+                    viewMentor.displayText("Wrong option number!");
             }
         }
         return status;
@@ -117,14 +117,13 @@ public class ControllerMentor implements IUserController{
                     choosingType = false;
                     break;
                 default:
-                    viewMentor.displayText("Wrong option number!")
+                    viewMentor.displayText("Wrong option number!");
             }
         }
         return type;
     }
 
-    public void updateQuest() {
-
+    public void updateQuest(){
     }
 
     public void updateArtifact() {
@@ -150,7 +149,9 @@ public class ControllerMentor implements IUserController{
     public void seeAllWallets() {
         int idOfMentorClass = mentor.getClassId();
         viewMentor.displayText("Wallets of students of class: ");
-        ArrayList<Student> allStudentsOfClass = new DaoStudent().getStudentsByClassId();
+
+        DaoStudent daoStudent = new DaoStudent();
+        ArrayList<Student> allStudentsOfClass = daoStudent.getStudentsByClassId(idOfMentorClass);
         ArrayList<Wallet> walletsOfStudents = getWalletsOfStudents(allStudentsOfClass);
         viewMentor.displayList(walletsOfStudents);
     }
@@ -189,7 +190,7 @@ public class ControllerMentor implements IUserController{
                 break;
         case "4": addArtifact();
                 break;
-        case "5": updateQuests();
+        case "5": updateQuest();
                 break;
         case "6": updateArtifact();
                 break;
