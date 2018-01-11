@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import controller.ControllerAdmin;
 import controller.ControllerMentor;
 import controller.ControllerStudent;
+import controller.IUserController;
 import dao.DaoAdmin;
 import dao.DaoMentor;
 import dao.DaoStudent;
@@ -38,7 +39,20 @@ public class ControllerLogin{
     
     }
 
-    public void login(){}
+    public void login(){
+        userEmail = viewLogin.getInputFromUser("email: ");
+        userPassword = viewLogin.getInputFromUser("password: ");
+
+        User user = getUser(userEmail, userPassword);
+        if(user != null){
+            IUserController userController = getUserController(user);
+            if(userController != null){
+                userController.runMenu();
+            }
+        }else{
+            viewLogin.displayText("Incorrect data");
+        }  
+    }
 
     private ArrayList<User> getAllUsers(){
         ArrayList <User> users = new ArrayList<>();
