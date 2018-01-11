@@ -13,4 +13,32 @@ public class ControllerAdmin{
         this.admin = admin;
     }
 
+    public void createMentor() {
+
+    }
+
+    public void createClass() {
+
+    }
+
+    public void editMentor() {
+
+    }
+
+    public void seeMentorData() {
+
+    }
+
+    public void assignMentorToClass() {
+
+    }
+
+    public void createLeve() {
+
+    }
+
+    public void runMenu() {
+
+    }
+
 }
