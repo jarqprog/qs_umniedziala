@@ -7,6 +7,7 @@ import controller.ControllerMentor;
 import controller.ControllerStudent;
 import controller.IUserController;
 import dao.DaoAdmin;
+import dao.DaoArtifact;
 import dao.DaoMentor;
 import dao.DaoStudent;
 import iterator.MyIterator;
@@ -26,6 +27,7 @@ public class ControllerLogin{
         this.daoAdmin = new DaoAdmin();
         this.daoMentor = new DaoMentor();
         this.daoStudent = new DaoStudent();
+        this.daoArtifact = new DaoArtifact();
         
     }
 
@@ -107,5 +109,6 @@ public class ControllerLogin{
         this.daoAdmin.implementTestData();
         this.daoMentor.implementTestData();
         this.daoStudent.implementTestData();
+        this.daoArtifact.implementTestData();
     }
 }
