@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.stream.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 import iterator.*;
 
@@ -13,16 +14,19 @@ import iterator.*;
 public abstract class View{
 
     public String getInputFromUser(String request){
-        try {
-            displayText(request);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String userInput = reader.readLine();
-            return userInput;    
-            } 
-        catch (IOException e) {
-            displayText("Wrong input");
-            }  
-        return null;    
+        String userInput ="";
+        do{
+            try {
+                displayText(request);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                userInput = reader.readLine(); 
+                } 
+            catch (IOException e) {
+                displayText("Wrong input");
+                }  
+        }while(userInput.trim().isEmpty());
+
+    return userInput;
     }
 
     public int getIntInputFromUser(String request){
