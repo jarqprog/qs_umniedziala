@@ -30,6 +30,8 @@ public class ControllerLogin{
     }
 
     public void runMenu(){
+        implementAllTestData();
+        
         String userOption = "";
         while (!userOption.equals("0")) {
     
