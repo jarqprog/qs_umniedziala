@@ -70,7 +70,7 @@ public class ControllerMentor implements IUserController{
         String descriptionRequest = "Enter description of new artifact";
         String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
 
-        daoArtifact.creatArtifact();
+        daoArtifact.createArtifact();
     }
 
     public void updateQuest() {
@@ -78,7 +78,7 @@ public class ControllerMentor implements IUserController{
     }
 
     public void updateArtifact() {
-
+        seeArtifacts();
     }
 
     public void markStudentAchivedQuest() {
@@ -102,14 +102,13 @@ public class ControllerMentor implements IUserController{
     }
 
     public void seeQuests() {
-
+        viewMentor.displayText("Available quests: ");
+        viewMentor.displayList(new DaoArtifact().importData());
     }
 
     public void seeArtifacts() {
-        DaoArtifact daoArtifact = new DaoArtifact();
-        ArrayList<Artifact> artifacts = daoArtifact.getArtifacts();
-        viewMentor.displayText("ARTIFACTS:\n");
-        viewMentor.displayList(artifacts);
+        viewMentor.displayText("Available artifacts: ");
+        viewMentor.displayList(new DaoArtifact().importData());
     }
 
     public void runMenu() {
