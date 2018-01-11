@@ -7,7 +7,7 @@ public interface IDaoArtifact{
 
     public ArrayList<Artifact> getArtifacts();
     public Artifact getArtifactById(int id);
-    public Artifact createArtifact(String name, int value, String description, String status);
+    public Artifact createArtifact(String name, int value, String description, String status, String type);
     public void importData(Artifact artifact);
     public void exportData();
 

@@ -9,7 +9,7 @@ public class DaoArtifact implements IDaoArtifact{
 
     public ArrayList <Artifact> getArtifacts() { return artifacts; }
 
-    public Artifact createArtifact(String name, int value, String description, String status){
+    public Artifact createArtifact(String name, int value, String description, String status, String type){
         Artifact artifact = new Artifact(name, value, description, status);
         return artifact;
     }
@@ -26,7 +26,5 @@ public class DaoArtifact implements IDaoArtifact{
     public void importData(Artifact artifact){
         artifacts.add(artifact);
     }
-    
-
-    
+        
 }

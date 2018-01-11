@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public interface IDaoLevels {
 
-    public ArrayList<Levels> getTeams();
+    public ArrayList<Levels> getLevels();
     public Levels getLevelById(int id);
-    public Levels createTeam();
-    public void importData(Team team);
+    public Levels createLevels();
+    public void importData();
     public void exportData();
 
 }
