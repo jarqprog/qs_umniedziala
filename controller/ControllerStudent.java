@@ -7,7 +7,7 @@ import model.Student;
 import model.Wallet;
 import view.ViewStudent;
 
-public class ControllerStudent{
+public class ControllerStudent implements IUserController{
 
     private ViewStudent viewStudent;
     private Student student;
@@ -31,7 +31,7 @@ public class ControllerStudent{
         while (artifact == null) {
             viewStudent.displayText("No artifact with such id found!");
 	        artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact you want to buy: ");
-	        artifact = artifactDao.getArtifactById(artifactId);
+	        artifact = daoArtifact.getArtifactById(artifactId);
         }
 
         Wallet wallet = student.getWallet();

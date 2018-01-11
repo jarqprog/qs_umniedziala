@@ -23,9 +23,9 @@ public class ControllerLogin{
     private DaoStudent daoStudent;
 
     public ControllerLogin(){
-        daoAdmin = new DaoAdmin();
-        daoMentor = new DaoMentor();
-        daoStudent = new DaoStudent();
+        this.daoAdmin = new DaoAdmin();
+        this.daoMentor = new DaoMentor();
+        this.daoStudent = new DaoStudent();
         
     }
 
@@ -52,8 +52,8 @@ public class ControllerLogin{
     }
 
     public void login(){
-        userEmail = viewLogin.getInputFromUser("email: ");
-        userPassword = viewLogin.getInputFromUser("password: ");
+        String userEmail = viewLogin.getInputFromUser("email: ");
+        String userPassword = viewLogin.getInputFromUser("password: ");
 
         User user = getUser(userEmail, userPassword);
         if(user != null){
@@ -93,11 +93,11 @@ public class ControllerLogin{
         IUserController controller = null;
 
         if(user instanceof Admin){
-            controller = new ControllerAdmin(user);
+            controller = new ControllerAdmin((Admin)user);
         }else if(user instanceof Mentor){
-            controller = new ControllerMentor(user);
+            controller = new ControllerMentor((Mentor)user);
         }else if(user instanceof Student){
-            controller = new ControllerStudent(user);
+            controller = new ControllerStudent((Student)user);
         }
 
         return controller;
