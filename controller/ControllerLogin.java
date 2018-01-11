@@ -2,10 +2,16 @@ package controller;
 
 import java.util.ArrayList;
 
+import controller.ControllerAdmin;
+import controller.ControllerMentor;
+import controller.ControllerStudent;
 import dao.DaoAdmin;
 import dao.DaoMentor;
 import dao.DaoStudent;
 import iterator.MyIterator;
+import model.Admin;
+import model.Mentor;
+import model.Student;
 import model.User;
 
 public class ControllerLogin{
@@ -42,6 +48,14 @@ public class ControllerLogin{
     }
 
     private IUserController getUserController(User user){
-        ;
+        if(user instanceof Admin){
+            return ControllerAdmin;
+        }else if(user instanceof Mentor){
+            return ControllerMentor;
+        }else if(user instanceof Student){
+            return ControllerStudent;
+        }else{
+            return null;
+        }
     }
 }
