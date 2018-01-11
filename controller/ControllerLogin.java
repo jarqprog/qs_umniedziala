@@ -31,7 +31,7 @@ public class ControllerLogin{
 
     public void runMenu(){
         implementAllTestData();
-        
+
         String userOption = "";
         while (!userOption.equals("0")) {
     
@@ -68,14 +68,10 @@ public class ControllerLogin{
 
     private ArrayList<User> getAllUsers(){
         ArrayList <User> users = new ArrayList<>();
-        
-        DaoAdmin daoAdmin = new DaoAdmin();
-        DaoMentor daoMentor = new DaoMentor();
-        DaoStudent daoStudent = new DaoStudent();
 
-        users.addAll(importData.getAdmins());
-        users.addAll(importData.getMentors());
-        users.addAll(importData.getStudents());
+        users.addAll(this.daoAdmin.importData());
+        users.addAll(this.daoMentor.importData());
+        users.addAll(this.daoStudent.importData());
         
         return users;
     }
