@@ -23,8 +23,8 @@ public class ControllerLogin{
     private ViewLogin viewLogin = new ViewLogin();
     private DaoAdmin daoAdmin;
     private DaoMentor daoMentor;
-    private DaoStudent daoStudent;
     private DaoArtifact daoArtifact;
+    private DaoStudent daoStudent;
     private DaoQuest daoQuest;
     private DaoClass daoClass;
 
@@ -114,8 +114,8 @@ public class ControllerLogin{
     private void implementAllTestData(){
         this.daoAdmin.implementTestData();
         this.daoMentor.implementTestData();
-        this.daoStudent.implementTestData();
         this.daoArtifact.implementTestData();
+        this.daoStudent.implementTestData();
         this.daoQuest.implementTestData();
         this.daoClass.implementTestData();
     }

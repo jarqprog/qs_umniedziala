@@ -3,7 +3,7 @@ package model;
 public class Student extends User{
     private int classId;
     private int teamId;
-    private Wallet wallet = null;
+    private Wallet wallet;
 
     public Student(String name, String password, String email, int classId) {
         super(name, password, email);
