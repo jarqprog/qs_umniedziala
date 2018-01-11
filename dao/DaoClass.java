@@ -5,7 +5,7 @@ import model.*;
 
 public class DaoClass implements IDaoClass{
 
-    private static ArrayList <CodecoolClass> classes;
+    private static ArrayList <CodecoolClass> classes = new ArrayList<>();
 
     public void createClass(){
         classes.add(new CodecoolClass());

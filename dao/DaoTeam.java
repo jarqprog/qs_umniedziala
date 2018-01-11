@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class DaoTeam implements IDaoTeam{
 
-    public static ArrayList <Team> teams;
+    public static ArrayList <Team> teams = new ArrayList<>();
 
     public Team getTeamById() {return teams.get(0);}
     public void createTeam(String name) {

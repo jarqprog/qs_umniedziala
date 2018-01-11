@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class DaoMentor implements IDaoMentor{
 
-    private static ArrayList <Mentor> mentors;
+    private static ArrayList <Mentor> mentors = new ArrayList<>();
 
     public void implementTestData() {
         createMentor("Dominik", "haslo", "dominik@mail.pl");

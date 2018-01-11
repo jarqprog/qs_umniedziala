@@ -5,7 +5,7 @@ import model.*;
 
 public class DaoStudent implements IDaoStudent{
 
-    private static ArrayList <Student> students;
+    private static ArrayList <Student> students = new ArrayList<>();
 
     public void implementTestData() {
         createStudent("Jan", "haslo", "jan@mail.pl", 1);
@@ -39,7 +39,7 @@ public class DaoStudent implements IDaoStudent{
     public ArrayList <Student> importData(){
         return students;
     }
-    public class DaoWallet{
+    private class DaoWallet{
 
         private Wallet wallet = new Wallet();
 
