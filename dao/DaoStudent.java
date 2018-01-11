@@ -2,6 +2,7 @@ package dao;
 
 import java.util.ArrayList;
 import model.*;
+import java.util.ArrayList;
 
 public class DaoStudent implements IDaoStudent{
 
@@ -18,7 +19,7 @@ public class DaoStudent implements IDaoStudent{
     public void createStudent(String name, String password, String email, int classId){
         Student student = new Student(name, password, email, classId);
         DaoWallet daoWallet = new DaoWallet();
-        Wallet wallet = daoWallet.getWallet();
+        Wallet wallet = daoWallet.implementTestData();
         student.setWallet(wallet);
         students.add(student);
     }
@@ -55,6 +56,16 @@ public class DaoStudent implements IDaoStudent{
 
         public Wallet getWallet(){
             return wallet;
+        }
+
+        public Wallet implementTestData(){
+            ArrayList <Artifact> artifacts = new ArrayList<>();
+            DaoArtifact daoArtifact = new DaoArtifact();
+
+            artifacts.add(daoArtifact.getArtifactById(1));
+            artifacts.add(daoArtifact.getArtifactById(2));
+            
+            return new Wallet(56, 120, artifacts);
         }
         
     }
