@@ -14,6 +14,11 @@ public class DaoAdmin implements IDaoAdmin{
         return admin;
     }
 
+    public void DaoAdmin(){
+        Admin a1 = new Admin("Jan", "haslo", "jan@mail.pl");
+        admins.add(a1);
+    }
+
     public Admin getAdminById(int id){
         for(Admin admin: admins){
             if(admin.getUserId() == id){
@@ -24,7 +29,7 @@ public class DaoAdmin implements IDaoAdmin{
     }
 
     public void exportData(){ }
-    
+
     public void importData(Admin admin){
         admins.add(admin);
     }
