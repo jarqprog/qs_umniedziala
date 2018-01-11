@@ -39,7 +39,8 @@ public class ControllerStudent{
     }
 
     public void seeArtifacts() {
-
+        viewStudent.displayText("Available artifacts: ");
+        viewStudent.displayList(new DaoArtifact().importData());
     }
 
     public void runMenu() {
