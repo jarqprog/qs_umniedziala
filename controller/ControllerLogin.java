@@ -13,12 +13,32 @@ import model.Admin;
 import model.Mentor;
 import model.Student;
 import model.User;
+import view.ViewLogin;
 
 public class ControllerLogin{
+    private ViewLogin viewLogin = new ViewLogin();
 
-    public void login(){
-        ;
+    public void runMenu(){
+        String userOption = "";
+        while (!userOption.equals("0")) {
+    
+            System.out.println("\nWhat would like to do?");
+            viewLogin.displayList(viewLogin.getLoginOptions());
+    
+            userOption = viewLogin.getInputFromUser("Option: ");
+            switch (userOption) {
+                case "1": login();
+                        break;
+                case "0": break;
+    
+                default: System.out.println("Wrong option. Try again!");
+                         break;
+            }
+        }
+    
     }
+
+    public void login(){}
 
     private ArrayList<User> getAllUsers(){
         ArrayList <User> users = new ArrayList<>();
