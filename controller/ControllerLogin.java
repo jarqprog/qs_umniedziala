@@ -27,9 +27,9 @@ public class ControllerLogin{
         DaoMentor daoMentor = new DaoMentor();
         DaoStudent daoStudent = new DaoStudent();
 
-        users.addAll(daoAdmin.getAdmins());
-        users.addAll(daoMentor.getMentors());
-        users.addAll(daoStudent.getStudents());
+        users.addAll(importData.getAdmins());
+        users.addAll(importData.getMentors());
+        users.addAll(importData.getStudents());
         
         return users;
     }
