@@ -27,7 +27,7 @@ public class Mentor extends User{
         int noClassID = 0;
         sb.append(userInfo);
         if (classId != noClassID) {
-            sb.append("\nClass ID: " + getClassId());
+            sb.append(", Class ID: " + getClassId());
         }
         return sb.toString();
     }
