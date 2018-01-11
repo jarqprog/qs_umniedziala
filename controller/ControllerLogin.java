@@ -96,7 +96,6 @@ public class ControllerLogin{
 
         if(user instanceof Admin){
             controller = new ControllerAdmin(user);
-        }
         }else if(user instanceof Mentor){
             controller = new ControllerMentor(user);
         }else if(user instanceof Student){
@@ -104,5 +103,11 @@ public class ControllerLogin{
         }
 
         return controller;
+    }
+
+    private void implementAllTestData(){
+        this.daoAdmin.implementTestData();
+        this.daoMentor.implementTestData();
+        this.daoStudent.implementTestData();
     }
 }
