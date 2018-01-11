@@ -59,7 +59,18 @@ public class ControllerMentor{
     }
 
     public void addArtifact() {
+        DaoArtifact daoArtifact = new DaoArtifact();
 
+        String nameRequest = "Enter name of new artifact: ";
+        String artifactName = viewMentor.getIntInputFromUser(nameRequest);
+
+        String valueRequest = "Enter value of new artifact: ";
+        int artifactValue = viewMentor.getIntInputFromUser(valueRequest);
+
+        String descriptionRequest = "Enter description of new artifact";
+        String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
+
+        daoArtifact.creatArtifact();
     }
 
     public void updateQuest() {
