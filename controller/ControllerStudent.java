@@ -13,4 +13,28 @@ public class ControllerStudent{
         this.student = student;
     }
 
+    public void seeWallet() {
+
+    }
+
+    public void buyArtifact() {
+
+    }
+
+    public void seeExpLevel() {
+
+    }
+
+    public void manageTeam() {
+
+    }
+
+    public void seeQuests() {
+
+    }
+
+    public void runMenu() {
+
+    }
+
 }
