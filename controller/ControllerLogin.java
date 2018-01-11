@@ -51,11 +51,11 @@ public class ControllerLogin{
         IUserController controller = null;
 
         if(user instanceof Admin){
-            controller = new ControllerAdmin();  //user
+            controller = new ControllerAdmin(user);
         }else if(user instanceof Mentor){
-            controller = new ControllerMentor();  //user
+            controller = new ControllerMentor(user);
         }else if(user instanceof Student){
-            controller = new ControllerStudent();  //user
+            controller = new ControllerStudent(user);
         }
 
         return controller;
