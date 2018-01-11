@@ -6,7 +6,7 @@ import model.*;
 
 import java.util.ArrayList;
 
-public class ControllerMentor{
+public class ControllerMentor implements IUserController{
     private ViewMentor viewMentor;
     private Mentor mentor;
 
@@ -106,14 +106,16 @@ public class ControllerMentor{
     }
 
     public void seeArtifacts() {
-
+        DaoArtifact daoArtifact = new DaoArtifact();
+        ArrayList<Artifact> artifacts = daoArtifact.getArtifacts();
+        
     }
 
     public void runMenu() {
         String mentorOption = "";
         while (!mentorOption.equals("0")) {
 
-            viewMentor.displayText("\nWhat would like to do?")
+            viewMentor.displayText("\nWhat would like to do?");
             viewMentor.displayList(viewMentor.getMentorOptions());
 
     mentorOption = viewMentor.getInputFromUser("Option: ");
