@@ -50,7 +50,7 @@ public class Wallet{
 
     public String toString(){
         MyIterator <Artifact> myIterator = new MyIterator<>(this.artifacts);
-        String myWallet = "My wallet: " + this.coins + " coolcoins\n\nMy Artifacts:\n";
+        String myWallet = "Wallet contains " + this.coins + " coolcoins\n\nArtifacts:\n";
         while(myIterator.hasNext()){
             myWallet += myIterator.next().toString() + "\n";
         }

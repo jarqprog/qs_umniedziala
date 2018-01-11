@@ -2,6 +2,7 @@ package controller;
 
 import view.ViewMentor;
 import dao.*;
+import iterator.MyIterator;
 import model.*;
 
 import java.util.ArrayList;
@@ -168,8 +169,11 @@ public class ControllerMentor implements IUserController{
 
         DaoStudent daoStudent = new DaoStudent();
         ArrayList<Student> allStudentsOfClass = daoStudent.getStudentsByClassId(idOfMentorClass);
-        ArrayList<Wallet> walletsOfStudents = getWalletsOfStudents(allStudentsOfClass);
-        viewMentor.displayList(walletsOfStudents);
+        MyIterator <Student> myIterator = new MyIterator<>(allStudentsOfClass);
+        while(myIterator.hasNext()){
+            Student student = myIterator.next();
+            viewMentor.displayText(student.toString() + "/n" + student.getWallet().toString());
+        }
     }
     private ArrayList<Wallet> getWalletsOfStudents(ArrayList<Student> students) {
         ArrayList<Wallet> walletsOfStudents = new ArrayList<>();
