@@ -7,11 +7,9 @@ public class DaoArtifact implements IDaoArtifact{
 
     private static ArrayList <Artifact> artifacts;
 
-    public ArrayList <Artifact> getArtifacts() { return artifacts; }
 
-    public Artifact createArtifact(String name, int value, String description, String status, String type){
-        Artifact artifact = new Artifact(name, value, description, status);
-        return artifact;
+    public void createArtifact(String name, int value, String description, String status){
+        artifacts.add(new Artifact(name, value, description, status));
     }
 
     public Artifact getArtifactById(int id){
@@ -23,10 +21,12 @@ public class DaoArtifact implements IDaoArtifact{
         return null;
     }
 
-    public void exportData(){} 
+    public void exportData(ArrayList <Artifact> updatedArtifacts){
+        artifacts = updatedArtifacts;
+    } 
 
-    public void importData(Artifact artifact){
-        artifacts.add(artifact);
+    public ArrayList <Artifact> importData(){
+        return artifacts;
     }
         
 }
