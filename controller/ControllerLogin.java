@@ -18,8 +18,20 @@ import view.ViewLogin;
 
 public class ControllerLogin{
     private ViewLogin viewLogin = new ViewLogin();
+    private DaoAdmin daoAdmin;
+    private DaoMentor daoMentor;
+    private DaoStudent daoStudent;
+
+    public ControllerLogin(){
+        daoAdmin = new DaoAdmin();
+        daoMentor = new DaoMentor();
+        daoStudent = new DaoStudent();
+        
+    }
 
     public void runMenu(){
+        implementAllTestData();
+
         String userOption = "";
         while (!userOption.equals("0")) {
     
@@ -56,14 +68,10 @@ public class ControllerLogin{
 
     private ArrayList<User> getAllUsers(){
         ArrayList <User> users = new ArrayList<>();
-        
-        DaoAdmin daoAdmin = new DaoAdmin();
-        DaoMentor daoMentor = new DaoMentor();
-        DaoStudent daoStudent = new DaoStudent();
 
-        users.addAll(importData.getAdmins());
-        users.addAll(importData.getMentors());
-        users.addAll(importData.getStudents());
+        users.addAll(this.daoAdmin.importData());
+        users.addAll(this.daoMentor.importData());
+        users.addAll(this.daoStudent.importData());
         
         return users;
     }
@@ -93,5 +101,11 @@ public class ControllerLogin{
         }
 
         return controller;
+    }
+
+    private void implementAllTestData(){
+        this.daoAdmin.implementTestData();
+        this.daoMentor.implementTestData();
+        this.daoStudent.implementTestData();
     }
 }
