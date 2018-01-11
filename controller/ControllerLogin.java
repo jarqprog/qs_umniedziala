@@ -18,6 +18,16 @@ import view.ViewLogin;
 
 public class ControllerLogin{
     private ViewLogin viewLogin = new ViewLogin();
+    private DaoAdmin daoAdmin;
+    private DaoMentor daoMentor;
+    private DaoStudent daoStudent;
+
+    public ControllerLogin(){
+        daoAdmin = new DaoAdmin();
+        daoMentor = new DaoMentor();
+        daoStudent = new DaoStudent();
+        
+    }
 
     public void runMenu(){
         String userOption = "";
@@ -86,6 +96,7 @@ public class ControllerLogin{
 
         if(user instanceof Admin){
             controller = new ControllerAdmin(user);
+        }
         }else if(user instanceof Mentor){
             controller = new ControllerMentor(user);
         }else if(user instanceof Student){
