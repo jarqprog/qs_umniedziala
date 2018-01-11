@@ -55,6 +55,7 @@ public class ControllerMentor implements IUserController{
         String descriptionRequest = "Enter description of quest";
         String questDescription = viewMentor.getInputFromUser(descriptionRequest);
 
+        String questStatus = chooseStatus();
         daoQuest.createQuest(); //tu muszą być przekazane argmenty
     }
 
@@ -70,7 +71,31 @@ public class ControllerMentor implements IUserController{
         String descriptionRequest = "Enter description of new artifact";
         String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
 
+        String artifactStatus = chooseStatus();
         daoArtifact.createArtifact();
+    }
+
+    private String chooseStatus() {
+        String statusRequest = "Choose status:\n1. Basic\n2. Extra\nOption: ";
+        String status = null;
+        boolean choosingStatus = true;
+        int option = 0;
+        while(choosingStatus) {
+            option = viewMentor.getIntInputFromUser(statusRequest);
+            switch(option) {
+                case 1:
+                    status = "basic";
+                    choosingStatus = false;
+                    break;
+                case 2:
+                    status = "extra";
+                    choosingStatus = false;
+                    break;
+                default:
+                    viewMentor.displayText("Wrong option number!")
+            }
+        }
+        return status;
     }
 
     public void updateQuest() {
