@@ -18,7 +18,7 @@ public class ControllerAdmin{
     }
 
     public void createClass() {
-
+        viewAdmin.displayText("Implementation in progress");
     }
 
     public void editMentor() {
@@ -26,15 +26,15 @@ public class ControllerAdmin{
     }
 
     public void seeMentorData() {
-
+        viewAdmin.displayText("Implementation in progress");
     }
 
     public void assignMentorToClass() {
-
+        viewAdmin.displayText("Implementation in progress");
     }
 
     public void createLevel() {
-
+        viewAdmin.displayText("Implementation in progress");
     }
 
     public void runMenu() {
