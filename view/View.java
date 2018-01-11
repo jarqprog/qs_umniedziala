@@ -7,6 +7,8 @@ import java.util.stream.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import iterator.*;
+
 
 public abstract class View{
 
@@ -48,8 +50,10 @@ public abstract class View{
     }
 
     public void displayList(ArrayList <String> list){
-        for(String text: list){
-            System.out.println(text);
+
+        MyIterator <String> iterator = new MyIterator(list);
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
         }
     }
 
