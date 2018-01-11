@@ -1,14 +1,22 @@
 package dao;
 
 import java.util.ArrayList;
+import dao.DaoStudent;
 import model.*;
 
 public class DaoClass implements IDaoClass{
 
     private static ArrayList <CodecoolClass> classes = new ArrayList<>();
 
-    public void createClass(String name){
-        classes.add(new CodecoolClass(name));
+    public void implementTestData() {
+        ArrayList<Student> students1 = new DaoStudent().getStudentsByClassId(1);
+        ArrayList<Student> students2 = new DaoStudent().getStudentsByClassId(2);
+        createClass("1a", students1, 1);
+        createClass("2a", students2, 2);
+    }
+    
+    public void createClass(String name, ArrayList<Student> students, int classId){
+        classes.add(new CodecoolClass(name, students, classId));
     }
 
     public CodecoolClass getClassById(int id){

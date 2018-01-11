@@ -38,6 +38,7 @@ public class ControllerStudent implements IUserController{
         if (wallet.getCoins() < artifact.getValue()) {
             viewStudent.displayText("You do not hav enough money to buy this artifact!");
         } else {
+            wallet.setCoins(wallet.getCoins() - artifact.getValue());
             wallet.addArtifact(artifact);
             viewStudent.displayText("Artifact was added to wallet!");
         }
