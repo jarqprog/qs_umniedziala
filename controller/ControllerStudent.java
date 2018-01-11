@@ -18,7 +18,7 @@ public class ControllerStudent{
     }
 
     public void seeWallet() {
-        viewStudent.displayList(student.getWallet());
+        viewStudent.displayText(student.getWallet().toString());
     }
 
     public void buyArtifact() {
