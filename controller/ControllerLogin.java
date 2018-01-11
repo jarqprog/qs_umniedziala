@@ -8,8 +8,10 @@ import controller.ControllerStudent;
 import controller.IUserController;
 import dao.DaoAdmin;
 import dao.DaoArtifact;
+import dao.DaoClass;
 import dao.DaoMentor;
 import dao.DaoStudent;
+import dao.DaoQuest;
 import iterator.MyIterator;
 import model.Admin;
 import model.Mentor;
@@ -23,13 +25,16 @@ public class ControllerLogin{
     private DaoMentor daoMentor;
     private DaoArtifact daoArtifact;
     private DaoStudent daoStudent;
+    private DaoQuest daoQuest;
+    private DaoClass daoClass;
 
     public ControllerLogin(){
         this.daoAdmin = new DaoAdmin();
         this.daoMentor = new DaoMentor();
         this.daoStudent = new DaoStudent();
         this.daoArtifact = new DaoArtifact();
-        
+        this.daoQuest = new DaoQuest();
+        this.daoClass = new DaoClass();
     }
 
     public void runMenu(){
@@ -111,6 +116,7 @@ public class ControllerLogin{
         this.daoMentor.implementTestData();
         this.daoArtifact.implementTestData();
         this.daoStudent.implementTestData();
-        
+        this.daoQuest.implementTestData();
+        this.daoClass.implementTestData();
     }
 }
