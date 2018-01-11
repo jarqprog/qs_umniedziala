@@ -108,7 +108,8 @@ public class ControllerMentor implements IUserController{
     public void seeArtifacts() {
         DaoArtifact daoArtifact = new DaoArtifact();
         ArrayList<Artifact> artifacts = daoArtifact.getArtifacts();
-        
+        viewMentor.displayText("ARTIFACTS:\n");
+        viewMentor.displayList(artifacts);
     }
 
     public void runMenu() {
