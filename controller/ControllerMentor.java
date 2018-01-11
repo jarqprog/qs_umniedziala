@@ -30,9 +30,8 @@ public class ControllerMentor{
         String classIdRequest = "Enter ID of class which student will attend: ";
         int classId = viewMentor.getIntInputFromUser(classIdRequest);
 
-        Student newStudent = daoStudent.createStudent(studentName, studentPassword, studentEmail, classId);
+        daoStudent.createStudent(studentName, studentPassword, studentEmail, classId);
 
-        daoStudent.export; // skończ to !!!!!!!!!!!!!!!!!!!!
     }
 
     public void createTeam() {
@@ -41,12 +40,22 @@ public class ControllerMentor{
         String nameRequest = "Enter name of new team: ";
         String teamName = viewMentor.getInputFromUser(nameRequest);
 
-        Team newTeam = daoTeam.createTeam(); //tu musi być przekazany argment teamName
-        daoTeam.export // skończ to!!! metoda do exportu teamu do bazy danych
+        daoTeam.createTeam(); //tu musi być przekazany argment teamName
     }
 
     public void addQuest(){
+        DaoQuest daoQuest = new DaoQuest();
 
+        String nameRequest = "Enter name of new quest: ";
+        String questName = viewMentor.getIntInputFromUser(nameRequest);
+
+        String valueRequest = "Enter value of new quest: ";
+        int questValue = viewMentor.getIntInputFromUser(valueRequest);
+
+        String descriptionRequest = "Enter description of quest";
+        String questDescription = viewMentor.getInputFromUser(descriptionRequest);
+
+        daoQuest.createQuest(); //tu muszą być przekazane argmenty
     }
 
     public void addArtifact() {
