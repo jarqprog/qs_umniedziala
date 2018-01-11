@@ -40,6 +40,7 @@ public abstract class View{
                 }
             catch (IOException | NumberFormatException e){
                 displayText("Wrong input");
+                continue;
             }
         }
         return number;
