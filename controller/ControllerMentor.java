@@ -58,7 +58,7 @@ public class ControllerMentor implements IUserController{
         String questStatus = chooseStatus();
         String questType = chooseType();
 
-        daoQuest.createQuest(); //tu muszą być przekazane argmenty
+        daoQuest.createQuest(questName, questValue, questDescription, questStatus, questType); 
     }
 
     public void addArtifact() {
@@ -74,7 +74,7 @@ public class ControllerMentor implements IUserController{
         String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
 
         String artifactStatus = chooseStatus();
-        daoArtifact.createArtifact();
+        daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
     }
 
     private String chooseStatus() {
