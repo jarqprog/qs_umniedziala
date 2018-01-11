@@ -44,11 +44,11 @@ public class ControllerStudent{
     }
 
     public void seeExpLevel() {
-
+        viewStudent.displayText("Implementation in progress");
     }
 
     public void manageTeam() {
-
+        viewStudent.displayText("Implementation in progress");
     }
 
     public void seeQuests() {
