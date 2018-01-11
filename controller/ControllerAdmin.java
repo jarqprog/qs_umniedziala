@@ -42,6 +42,7 @@ public class ControllerAdmin implements IUserController {
         DaoMentor daoMentor = new DaoMentor();
         ArrayList<Mentor> mentorList = daoMentor.importData();
 
+        viewAdmin.displayText("Mentor's list:");
         viewAdmin.displayList(mentorList);
         int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
         Mentor mentor = daoMentor.getMentorById(mentorId);
@@ -63,6 +64,8 @@ public class ControllerAdmin implements IUserController {
         } else if (choice.equals("c")) {
             DaoClass daoClass = new DaoClass();
             ArrayList<CodecoolClass> classList = daoClass.importData();
+            viewAdmin.displayText("\nClass list:");
+            viewAdmin.displayList(classList);
             int newClassId = viewAdmin.getIntInputFromUser("\nEnter id of mentor's new class: ");
             CodecoolClass newClass = daoClass.getClassById(newClassId);
 
