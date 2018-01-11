@@ -22,6 +22,7 @@ public class ControllerLogin{
     private DaoAdmin daoAdmin;
     private DaoMentor daoMentor;
     private DaoStudent daoStudent;
+    private DaoArtifact daoArtifact;
 
     public ControllerLogin(){
         this.daoAdmin = new DaoAdmin();
