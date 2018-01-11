@@ -5,9 +5,7 @@ import java.util.Arrays;
 
 public class ViewAdmin extends View{
 
-    private static ArrayList <String> adminOptions = new ArrayList <String>(Arrays.asList("1.Create mentor",
-    "Create class", "Edit mentor", "See mentor's profile", "Create levels of experience"));
-
-    public void menu(){}
+    private static List <String> adminOptions = new ArrayList <String>(Arrays.asList("1.Create mentor",
+    "2.Create class", "3.Edit mentor", "4.See mentor's profile", "5. Create levels of experience"));
 
 }

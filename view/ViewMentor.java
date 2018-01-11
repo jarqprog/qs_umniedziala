@@ -6,10 +6,10 @@ import java.util.Arrays;
 
 public class ViewMentor extends View{
     
-    private static ArrayList <String> mentorOptions = new ArrayList <String>(Arrays.asList("1.Create student",
-        "Create quest", "Edit mentor", "Split quests to categories", "Add artifact to store",
-        "Edit quest", "Edit artifact", "Split artifacts to categories", "Mark quest", "Mark artifact",
-        "See student's wallet"));
+    private static ArrayList <String> mentorOptions = new ArrayList <String>(Arrays.asList("1. Create student",
+        "2. Create quest", "3. Edit mentor", "4. Split quests to categories", "5. Add artifact to store",
+        "6. Edit quest", "7. Edit artifact", "8. Split artifacts to categories", "9. Mark quest", "10. Mark artifact",
+        "11. See student's wallet"));
 
 
 }
