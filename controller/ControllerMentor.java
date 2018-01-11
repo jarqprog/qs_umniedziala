@@ -74,7 +74,7 @@ public class ControllerMentor implements IUserController{
         String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
 
         String artifactStatus = chooseStatus();
-        daoArtifact.createArtifact();
+        daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
     }
 
     private String chooseStatus() {
