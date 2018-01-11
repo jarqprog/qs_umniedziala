@@ -28,8 +28,8 @@ public class ControllerLogin{
         DaoStudent daoStudent = new DaoStudent();
 
         users.addAll(daoAdmin.getAdmins());
-        users.addAll(daoMentor.getAdmins());
-        users.addAll(daoStudent.getAdmins());
+        users.addAll(daoMentor.getMentors());
+        users.addAll(daoStudent.getStudents());
         
         return users;
     }
@@ -48,14 +48,16 @@ public class ControllerLogin{
     }
 
     private IUserController getUserController(User user){
+        IUserController controller = null;
+
         if(user instanceof Admin){
-            return ControllerAdmin;
+            controller = new ControllerAdmin();  //user
         }else if(user instanceof Mentor){
-            return ControllerMentor;
+            controller = new ControllerMentor();  //user
         }else if(user instanceof Student){
-            return ControllerStudent;
-        }else{
-            return null;
+            controller = new ControllerStudent();  //user
         }
+
+        return controller;
     }
 }
