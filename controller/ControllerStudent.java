@@ -1,6 +1,10 @@
 package controller;
 
+import dao.DaoArtifact;
+import dao.DaoQuest;
+import model.Artifact;
 import model.Student;
+import model.Wallet;
 import view.ViewStudent;
 
 public class ControllerStudent{
@@ -14,7 +18,7 @@ public class ControllerStudent{
     }
 
     public void seeWallet() {
-        System.out.println(student.getWallet());
+        viewStudent.displayList(student.getWallet());
     }
 
     public void buyArtifact() {
@@ -31,20 +35,19 @@ public class ControllerStudent{
 
     public void seeQuests() {
 
-    }
 
+    }
 
     public void seeArtifacts() {
 
     }
-
 
     public void runMenu() {
 
         String studentOption = "";
         while (!studentOption.equals("0")) {
 
-            System.out.println("\nWhat would like to do?");
+            viewStudent.displayText("\nWhat would like to do?");
             viewStudent.displayList(viewStudent.getStudentOptions());
 
             studentOption = viewStudent.getInputFromUser("Option: ");
@@ -63,7 +66,7 @@ public class ControllerStudent{
                         break;
                 case "0": break;
 
-                default: System.out.println("Wrong option. Try again!");
+                default: viewStudent.displayText("Wrong option. Try again!");
                          break;
             }
         }
