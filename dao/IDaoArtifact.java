@@ -5,10 +5,9 @@ import java.util.ArrayList;
 
 public interface IDaoArtifact{
 
-    public ArrayList<Artifact> getArtifacts();
-    public Artifact getArtifactById(int Id);
-    public Artifact createArtifact();
-    public void importData(Atrifact artifact);
-    public void exportData();
+    public Artifact getArtifactById(int id);
+    public void createArtifact(String name, int value, String description, String status);
+    public ArrayList <Artifact> importData();
+    public void exportData(ArrayList <Artifact> list);
 
 }

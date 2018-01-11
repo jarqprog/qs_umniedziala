@@ -5,13 +5,14 @@ import java.util.ArrayList;
 
 public class DaoAdmin implements IDaoAdmin{
 
-    private static ArrayList <Admin> admins;
+    private static ArrayList <Admin> admins = new ArrayList<>();
 
-    public ArrayList <Admin> getAdmins() { return admins; }
+    public void implementTestData() {
+        createAdmin("Jan", "haslo", "jan@mail.pl");
+    }
 
-    public Admin createAdmin(String name, String password, String email){
-        Admin admin = new Admin(name, password, email);
-        return admin;
+    public void createAdmin(String name, String password, String email){
+        admins.add(new Admin(name, password, email));
     }
 
     public Admin getAdminById(int id){
@@ -23,10 +24,12 @@ public class DaoAdmin implements IDaoAdmin{
         return null;
     }
 
-    public void exportData(){ }
-    public void importData(Admin admin){
-        admins.add(admin);
+    public void exportData(ArrayList <Admin> updatedAdmins){
+        admins = updatedAdmins;
+    }
+
+    public ArrayList <Admin> importData(){
+        return admins;
     }
     
-
 }

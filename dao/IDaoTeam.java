@@ -5,10 +5,9 @@ import java.util.ArrayList;
 
 public interface IDaoTeam {
 
-    public ArrayList<Team> getTeams();
     public Team getTeamById();
-    public Team createTeam();
-    public void importData(Team team);
-    public void exportData();
+    public void createTeam(String name);
+    public ArrayList <Team> importData();
+    public void exportData(ArrayList <Team> updatedTeams);
 
 }

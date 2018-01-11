@@ -5,10 +5,8 @@ import java.util.ArrayList;
 
 public interface IDaoAdmin{
 
-    public ArrayList<Admin> getAdmins();
     public Admin getAdminById(int id);
-    public Admin createAdmin(String name, String password, String email);
-    public void importData(Admin admin);
-    public void exportData();
-
+    public void createAdmin(String name, String password, String email);
+    public ArrayList <Admin> importData();
+    public void exportData(ArrayList <Admin> updatedAdmins);
 }
