@@ -22,7 +22,25 @@ public class ControllerStudent{
     }
 
     public void buyArtifact() {
+        seeArtifacts();
 
+        DaoArtifact daoArtifact = new DaoArtifact();
+	    int artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact you want to buy: ");
+        Artifact artifact = daoArtifact.getArtifactById(artifactId);
+
+        while (artifact == null) {
+            viewStudent.displayText("No artifact with such id found!");
+	        artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact you want to buy: ");
+	        artifact = artifactDao.getArtifactById(artifactId);
+        }
+
+        Wallet wallet = student.getWallet();
+        if (wallet.getCoins() < artifact.getValue()) {
+            viewStudent.displayText("You do not hav enough money to buy this artifact!");
+        } else {
+            wallet.addArtifact(artifact);
+            viewStudent.displayText("Artifact was added to wallet!");
+        }
     }
 
     public void seeExpLevel() {
