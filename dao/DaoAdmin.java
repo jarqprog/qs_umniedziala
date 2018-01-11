@@ -9,14 +9,14 @@ public class DaoAdmin implements IDaoAdmin{
 
     public ArrayList <Admin> getAdmins() { return admins; }
 
-    public Admin createAdmin(String name, String password, String email){
-        Admin admin = new Admin(name, password, email);
-        return admin;
-    }
-
     public void DaoAdmin(){
         Admin a1 = new Admin("Jan", "haslo", "jan@mail.pl");
         admins.add(a1);
+    }
+
+    public Admin createAdmin(String name, String password, String email){
+        Admin admin = new Admin(name, password, email);
+        return admin;
     }
 
     public Admin getAdminById(int id){
