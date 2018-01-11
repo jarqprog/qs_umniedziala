@@ -11,10 +11,8 @@ public class DaoAdmin implements IDaoAdmin{
         createAdmin("Jan", "haslo", "jan@mail.pl");
     }
 
-    public Admin createAdmin(String name, String password, String email){
-        Admin admin = new Admin(name, password, email);
-        admins.add(admin);
-        return admin;
+    public void createAdmin(String name, String password, String email){
+        admins.add(new Admin(name, password, email));
     }
 
     public Admin getAdminById(int id){
