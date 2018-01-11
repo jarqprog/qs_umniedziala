@@ -7,15 +7,25 @@ public class DaoTeam implements IDaoTeam{
 
     public static ArrayList <Team> teams = new ArrayList<>();
 
-    public Team getTeamById() {return teams.get(0);}
-    public void createTeam(String name) {
+    public void createTeam(String name){
         teams.add(new Team(name));
     }
-    public ArrayList <Team> importData() {
-        return teams;
+
+    public Team getTeamById(int id){
+        for(Team team: teams){
+            if(team.getGroupId() == id){
+                return team;
+            }
+        }
+        return null;
     }
-    public void exportData(ArrayList <Team> updatedTeams) {
+
+    public void exportData(ArrayList <Team> updatedTeams){
         teams = updatedTeams;
+    }
+
+    public ArrayList <Team> importData(){
+        return teams;
     }
     
 }
