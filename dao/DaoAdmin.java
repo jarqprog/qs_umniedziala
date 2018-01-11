@@ -28,5 +28,4 @@ public class DaoAdmin implements IDaoAdmin{
         admins.add(admin);
     }
     
-
 }
