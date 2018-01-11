@@ -14,48 +14,47 @@ public abstract class View{
 
     public String getInputFromUser(String request){
         try {
-            System.out.println(request);
+            displayText(request);
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             String userInput = reader.readLine();
-            return userInput;
-            
+            return userInput;    
             } 
         catch (IOException e) {
-            System.out.println("Wrong input");
+            displayText("Wrong input");
             }  
         return null;    
     }
 
     public int getIntInputFromUser(String request){
 
-        int number;
+        int number = 0;
+        boolean correctInput = true;
 
-        while (true){
+        while (correctInput){
             try{
-                System.out.println(request);
+                displayText(request);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 String userInput = reader.readLine();
                 number = Integer.parseInt(userInput);
-                return number;
+                correctInput = false;
                 }
             catch (IOException | NumberFormatException e){
-                System.out.println("Wrong input");
-                continue;
+                displayText("Wrong input");
             }
         }
+        return number;
     }
 
     public void displayText(String text){
         System.out.println(text);
     }
 
-    public void displayList(ArrayList <String> list){
+    public <T> void displayList(ArrayList <T> list){
 
-        MyIterator <String> iterator = new MyIterator(list);
+        MyIterator <T> iterator = new MyIterator <T>(list);
         while(iterator.hasNext()){
             System.out.println(iterator.next());
         }
     }
 
-    
 }
