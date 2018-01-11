@@ -56,6 +56,8 @@ public class ControllerMentor implements IUserController{
         String questDescription = viewMentor.getInputFromUser(descriptionRequest);
 
         String questStatus = chooseStatus();
+        String questType = chooseType();
+
         daoQuest.createQuest(); //tu muszą być przekazane argmenty
     }
 
@@ -96,6 +98,29 @@ public class ControllerMentor implements IUserController{
             }
         }
         return status;
+    }
+
+    private String chooseType() {
+        String typeRequest = "Choose type:\n1. Basic\n2. Extra\nOption: ";
+        String type = null;
+        boolean choosingType = true;
+        int option = 0;
+        while(choosingType) {
+            option = viewMentor.getIntInputFromUser(typeRequest);
+            switch(option) {
+                case 1:
+                    type = "basic";
+                    choosingType = false;
+                    break;
+                case 2:
+                    type = "extra";
+                    choosingType = false;
+                    break;
+                default:
+                    viewMentor.displayText("Wrong option number!")
+            }
+        }
+        return type;
     }
 
     public void updateQuest() {
