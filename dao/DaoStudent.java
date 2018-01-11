@@ -16,7 +16,11 @@ public class DaoStudent implements IDaoStudent{
 
 
     public void createStudent(String name, String password, String email, int classId){
-        students.add(new Student(name, password, email, classId));
+        Student student = new Student(name, password, email, classId);
+        DaoWallet daoWallet = new DaoWallet();
+        Wallet wallet = daoWallet.getWallet();
+        student.setWallet(wallet);
+        students.add(student);
     }
 
     public Student getStudentById(int id){
@@ -36,6 +40,12 @@ public class DaoStudent implements IDaoStudent{
         return students;
     }
     public class DaoWallet{
+
+        private Wallet wallet = new Wallet();
+
+        public Wallet getWallet(){
+            return wallet;
+        }
         
     }
 
