@@ -62,14 +62,14 @@ public class ControllerAdmin implements IUserController {
             mentor.setEmail(newEmail);
         } else if (choice.equals("c")) {
             DaoClass daoClass = new DaoClass();
-            ArrayList<Class> classList = daoClass.importData();
+            ArrayList<CodecoolClass> classList = daoClass.importData();
             int newClassId = viewAdmin.getIntInputFromUser("\nEnter id of mentor's new class: ");
-            CodecoolClass newClass = daoClass.getClassById(newClassById);
+            CodecoolClass newClass = daoClass.getClassById(newClassId);
 
             while (newClass == null) {
                 viewAdmin.displayText("No class with such id found!");
                 newClassId = viewAdmin.getIntInputFromUser("\nEnter id of mentor's new class: ");
-                newClass = daoClass.getClassById(newClassById);
+                newClass = daoClass.getClassById(newClassId);
             }
             mentor.setClassId(newClass.getGroupId());
         }
