@@ -11,10 +11,20 @@ public class DaoLevels implements IDaoLevels{
         levels.add(new Levels(name, coins));
     }
 
-    public Levels getLevelById(int id) {return levels.get(0);}
+    public Levels getLevelById(int id) {
+        for(Levels level: levels){
+            if(level.getId() == id){
+                return level;
+            }
+        }
+        return null;
+    }
     
     public ArrayList <Levels> importData() {return levels;}
-    public void exportData(ArrayList <Levels> list) {}
+    
+    public void exportData(ArrayList <Levels> list) {
+        levels = list;
+    }
 
 
 }

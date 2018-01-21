@@ -7,7 +7,7 @@ public class Levels{
     private int id;
     private static int idCounter;
 
-    public void Levels(String name, int coins){
+    public Levels(String name, int coins){
         
         this.name = name;
         this.coins = coins;
@@ -31,7 +31,7 @@ public class Levels{
 
         sb.append("ID: " + getId());
         sb.append(", Name: " + getName());
-        sb.append(", Email: " + getCoins());
+        sb.append(", Coins: " + getCoins());
 
         return sb.toString();
     }
