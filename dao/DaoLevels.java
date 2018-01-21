@@ -19,9 +19,20 @@ public class DaoLevels implements IDaoLevels{
         }
         return null;
     }
+
+    public Levels checkLevel(int coins){
+        Levels teamLevel = null;
+        for(Levels level : levels){
+            if(level.getCoins() <= coins){
+                teamLevel = level;
+            }
+        }
+        return teamLevel;
+
+    }
     
     public ArrayList <Levels> importData() {return levels;}
-    
+
     public void exportData(ArrayList <Levels> list) {
         levels = list;
     }
