@@ -21,9 +21,9 @@ public class DaoLevels implements IDaoLevels{
     }
 
     public Levels checkLevel(int coins){
-        Levels teamLevel = null;
+        Levels teamLevel = new Levels("No levels", 0);
         for(Levels level : levels){
-            if(level.getCoins() <= coins){
+            if(level.getCoins() <= coins & teamLevel.getCoins() < coins){
                 teamLevel = level;
             }
         }

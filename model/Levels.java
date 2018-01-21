@@ -28,8 +28,7 @@ public class Levels{
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
-
-        sb.append("ID: " + getId());
+        
         sb.append(", Name: " + getName());
         sb.append(", Coins: " + getCoins());
 
