@@ -3,9 +3,11 @@ package controller;
 import java.util.ArrayList;
 import dao.DaoClass;
 import dao.DaoMentor;
+import dao.DaoLevels;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
+import model.Levels;
 import view.ViewAdmin;
 
 public class ControllerAdmin implements IUserController {
@@ -88,7 +90,16 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void createLevel() {
-        viewAdmin.displayText("Implementation in progress");
+        DaoLevels daoLevels = new DaoLevels();
+
+        String nameRequest = "Enter name of new level: ";
+        String levelName = viewAdmin.getInputFromUser(nameRequest);
+
+        String numberRequest = "Enter the number of coins required for level: ";
+        int levelNumber = viewAdmin.getIntInputFromUser(numberRequest);
+        
+        daoLevels.createLevels(levelName, levelNumber);
+
     }
 
     public void runMenu() {

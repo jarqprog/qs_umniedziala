@@ -1,10 +1,12 @@
 package controller;
 
 import dao.DaoArtifact;
+import dao.DaoLevels;
 import dao.DaoQuest;
 import model.Artifact;
 import model.Student;
 import model.Wallet;
+import model.Levels;
 import view.ViewStudent;
 
 public class ControllerStudent implements IUserController{
@@ -45,7 +47,9 @@ public class ControllerStudent implements IUserController{
     }
 
     public void seeExpLevel() {
-        viewStudent.displayText("Implementation in progress");
+        DaoLevels daoLevels = new DaoLevels();
+        Levels level = daoLevels.checkLevel(this.student.getWallet().getCoins());
+        System.out.println(level);
     }
 
     public void manageTeam() {
