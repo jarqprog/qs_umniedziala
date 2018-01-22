@@ -21,13 +21,13 @@ public class DaoLevels implements IDaoLevels{
     }
 
     public Levels checkLevel(int coins){
-        Levels teamLevel = new Levels("No levels", 0);
+        Levels studentLevel = new Levels("No levels", 0);
         for(Levels level : levels){
-            if(level.getCoins() <= coins & teamLevel.getCoins() < coins){
-                teamLevel = level;
+            if(level.getCoins() <= coins & studentLevel.getCoins() < coins){
+                studentLevel = level;
             }
         }
-        return teamLevel;
+        return studentLevel;
 
     }
     
