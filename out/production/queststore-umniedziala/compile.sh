@@ -1,0 +1,1 @@
+javac -d qsbin -sourcepath queststore-umniedziala/  queststore-umniedziala/**/*.java
