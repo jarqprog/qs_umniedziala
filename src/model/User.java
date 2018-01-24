@@ -5,16 +5,14 @@ public abstract class User{
     protected String password;
     protected String email;
     protected int userId;
-    protected static int idCounter = 0;
 
     public User(String name, String password, String email) {
         this.name = name;
         this.password = password;
         this.email = email;
-        this.userId = ++idCounter;
     }
 
-    public User(String name, String password, String email, int userId) {
+    public User(int userId, String name, String password, String email) {
         this(name, password, email);
         this.userId = userId;
     }
@@ -45,10 +43,6 @@ public abstract class User{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public static void setIdCounter(int id) {
-        idCounter = id;
     }
 
     public String toString() {
