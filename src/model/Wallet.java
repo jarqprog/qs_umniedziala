@@ -1,56 +1,43 @@
 package model;
 
-import model.Artifact;
-import java.util.ArrayList;
 import iterator.MyIterator;
 
+import java.util.ArrayList;
+
 public class Wallet{
-    private int coins;
-    private int balance;
-    private ArrayList <Artifact> artifacts;
+    private int allCoins;
+    private int availableCoins;
+    private ArrayList<Artifact> artifacts;
 
     public Wallet(){
-        this.coins = 0;
-        this.balance = 0;
-        this.artifacts = new ArrayList<Artifact>();
+        this.allCoins = 0;
+        this.availableCoins = 0;
+        artifacts = new ArrayList<>();
     }
 
-    public Wallet(int balance, int coins, ArrayList <Artifact> artifacts){
-        this.coins = coins;
-        this.balance = balance;
+    public Wallet(int allCoins, int availableCoins, ArrayList<Artifact> artifacts){
+        this.allCoins = allCoins;
+        this.availableCoins = availableCoins;
         this.artifacts = artifacts;
     }
 
-    public void setCoins(int coins){
-        this.coins = coins;
+    public void setAllCoins(int allCoins){
+        this.allCoins = allCoins;
     }
 
-    public int getCoins(){
-        return this.coins;
-    }
-    public void setBalance(int balance){
-        this.balance = balance;
+    public int getAllCoins(){
+        return this.allCoins;
     }
 
-    public int getBalance(){
-        return this.balance;
+    public void setAvailableCoins(int availableCoins){
+        this.availableCoins = availableCoins;
     }
 
-    public void setArtifacts(ArrayList <Artifact> artifacts){
-        this.artifacts = artifacts;
-    }
-
-    public ArrayList <Artifact> getArtifacts(){
-        return this.artifacts;
-    }
-
-    public void addArtifact(Artifact artifact) {
-        artifacts.add(artifact);
-    }
+    public int getAvailableCoins() { return this.availableCoins; }
 
     public String toString(){
         MyIterator <Artifact> myIterator = new MyIterator<>(this.artifacts);
-        String myWallet = "Wallet contains " + this.coins + " coolcoins\n\nArtifacts:\n";
+        String myWallet = "Wallet contains " + this.availableCoins + " coolcoins\n\nArtifacts:\n";
         while(myIterator.hasNext()){
             myWallet += myIterator.next().toString() + "\n";
         }
