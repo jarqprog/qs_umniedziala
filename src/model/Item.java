@@ -2,38 +2,36 @@ package model;
 
 public abstract class Item {
 
-    protected static int idCounter = 0;
-
+    protected int itemId;
     protected String name;
     protected int value;
     protected String description;
-    protected String status;
-    protected int itemId;
+    protected String type;
 
     public Item(String name,
                 int value,
                 String description,
-                String status) {
+                String type) {
 
         this.name = name;
         this.value = value;
         this.description = description;
-        this.status = status;
-        this.itemId = ++idCounter;
+        this.type = type;
     }
 
-    public Item(String name,
+    public Item(int itemId,
+                String name,
                 int value,
                 String description,
-                String status,
-                int itemId) {
+                String type) {
 
         this.name = name;
         this.value = value;
         this.description = description;
-        this.status = status;
+        this.type = type;
         this.itemId = itemId;
     }
+    public int getItemId() { return itemId; }
 
     public String getName() {
         return name;
@@ -47,13 +45,10 @@ public abstract class Item {
         return description;
     }
 
-    public String getStatus() {
+    public String getType() {
         return status;
     }
 
-    public int getItemId() {
-        return itemId;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -67,18 +62,14 @@ public abstract class Item {
         this.description = description;
     }
 
-    public void setStatus(String status) {
+    public void setType(String status) {
         this.status = status;
     }
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
     }
-
-    public static void setIdCounter(int newIdCounter) {
-        idCounter = newIdCounter;
-    }
-
+    
     public String toString() {
         return "name: " + name
                 + ", value: " + value
