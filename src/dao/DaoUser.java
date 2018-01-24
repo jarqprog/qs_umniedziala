@@ -30,17 +30,18 @@ public class DaoUser {
         }
     }
 
-    public User executeQuery(String query){
+    public User selectUser(String query){
         User user = null;
         Statement statement = null;
         try{
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
+
             int id = resultSet.getInt("id_user");
             String name = resultSet.getString("name");
             String password = resultSet.getString("password");
             String email = resultSet.getString("email");
-            System.out.println("n:" + name + "|email:" + email);
+            int id_role = resultSet.getInt("id_role");
 
             user = new Student(id, name, password, email);
 
@@ -51,5 +52,21 @@ public class DaoUser {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return user;
+    }
+
+    public String getRole(int id_role){
+        String role = null;
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("Select name from roles where id_role=" + id_role + ";");
+            role = resultSet.getString("name");
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+
+        return role;
     }
 }
