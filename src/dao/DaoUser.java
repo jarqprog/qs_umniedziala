@@ -72,20 +72,21 @@ public class DaoUser {
     public User createUser(ResultSet resultSet, String role){
         User user = null;
 
-        int id = resultSet.getInt("id_user");
+        int userId = resultSet.getInt("id_user");
         String name = resultSet.getString("name");
         String password = resultSet.getString("password");
         String email = resultSet.getString("email");
 
-        switch(role.toUpperCase()){
+        switch(role.toUpperCase()){  //tu podpiąć odpowiednie DAO
             case "ADMIN":
-                user = Admin(id, name, password, email);
+                user = Admin(userId, name, password, email);
                 break;
             case "MENTOR":
-                user = Mentor(id, name, password, email);
+                user = Mentor(userId, name, password, email);
                 break;
             case "STUDENT":
-                Wallet wallet = getWallet();
+                Wallet wallet = getWallet(userId);
+                user = Student(userId, name, password, email, wallet);
                 break;
         }
 
@@ -116,5 +117,29 @@ public class DaoUser {
     }
 
     private ArrayList<Artifact> getUserArtifacts(int userID) {
+        ArrayList<Artifact> artifacts = null;
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery();
+            //inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
+
+            while(resultSet.next()){
+                int idArtifact = resultSet.getInt("id_artifact");
+                String name = resultSet.getString("name");
+                int value = resultSet.getInt("value");
+                String description = resultSet.getString("description");
+                String type = resultSet.getString("status");
+
+                artifacts.add(Artifact(idArtifact, name, value, description, type));
+
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+
+        return artifacts;
     }
 }
