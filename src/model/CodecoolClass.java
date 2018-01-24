@@ -8,7 +8,7 @@ public class CodecoolClass extends Group{
         super(name);
     }
     
-    public CodecoolClass(String name, ArrayList<Student> students, int groupId){
-        super(name, students, groupId);
+    public CodecoolClass(int groupId, String name, ArrayList<Student> students){
+        super(groupId, name, students);
     }
 }
