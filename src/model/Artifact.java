@@ -5,18 +5,18 @@ public class Artifact extends Item {
     public Artifact(String name,
                  int value,
                  String description,
-                 String status) {
+                 String type) {
 
-        super(name, value, description, status);
+        super(name, value, description, type);
     }
 
-    public Artifact(String name,
+    public Artifact(int itemId,
+                String name,
                  int value,
                  String description,
-                 String status,
-                 int itemId) {
+                 String type) {
 
-        super(name, value, description, status, itemId);
+        super(itemId, name, value, description, type);
     }
 
     @Override
