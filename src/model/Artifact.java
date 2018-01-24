@@ -18,10 +18,5 @@ public class Artifact extends Item {
 
         super(itemId, name, value, description, type);
     }
-
-    @Override
-    public String toString() {
-        return "Artifact: " + super.toString();
-    }
     
 }
