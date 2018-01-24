@@ -46,7 +46,7 @@ public abstract class Item {
     }
 
     public String getType() {
-        return status;
+        return type;
     }
 
 
@@ -63,18 +63,18 @@ public abstract class Item {
     }
 
     public void setType(String status) {
-        this.status = status;
+        this.type = status;
     }
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
     }
-    
+
     public String toString() {
         return "name: " + name
                 + ", value: " + value
                 + ", description: " + description
-                + ", status: " + status
+                + ", status: " + type
                 + ", item id: " + itemId;
     }
 
