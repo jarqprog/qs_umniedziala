@@ -3,25 +3,25 @@ package model;
 import java.util.ArrayList;
 
 public class Team extends Group{
-    private int coins;
+    private int availableCoins;
 
     public Team(String name){
         super(name);
-        this.coins = 0;
+        this.availableCoins = 0;
 
     }
-    public Team(String name, ArrayList<Student> students, int groupId, int coins){
-        super(name, students, groupId);
-        this.coins = coins;
+    public Team(int groupId, String name, ArrayList<Student> students, int availableCoins){
+        super(groupId, name, students);
+        this.availableCoins = availableCoins;
     }
-    public void setCoins(int coins){
-        this.coins = coins;
+    public void setAvailableCoins(int availableCoins){
+        this.availableCoins = availableCoins;
     }
-    public int getCoins(){
-        return this.coins;
+    public int getAvailableCoins(){
+        return this.availableCoins;
     }
 
     public String toString(){
-        return super.toString() + "\nTeam coins: " + this.coins;
+        return super.toString() + "\nTeam coins: " + this.availableCoins;
     }
 }
