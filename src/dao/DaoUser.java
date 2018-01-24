@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class DaoUser {
     private Connection connection = null;
-//    private ViewDao view = new ViewDao();
 
     public boolean setConnection(String databaseName) {
         try{
@@ -30,9 +29,10 @@ public class DaoUser {
         }
     }
 
-    public User selectUser(String query){
+    public User getUser(String email, String password){
         User user = null;
         Statement statement = null;
+        String query = "SELECT * from users where email='" + email + "' AND password='" + password + "';";
         try{
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -69,13 +69,26 @@ public class DaoUser {
         return role;
     }
 
-    public User createUser(ResultSet resultSet, String role){
+    private User createUser(ResultSet resultSet, String role){
+        /*Kiedy dao userów będą gotowe, stworzyć w nich metode
+        createstudent/mentor/admin(ResultSet):User
+        do wywołania w switch - case
+        */
         User user = null;
 
-        int userId = resultSet.getInt("id_user");
-        String name = resultSet.getString("name");
-        String password = resultSet.getString("password");
-        String email = resultSet.getString("email");
+        int userId = 0;
+        String name = null;
+        String password = null;
+        String email = null;
+
+        try {
+            userId = resultSet.getInt("id_user");
+            name = resultSet.getString("name");
+            password = resultSet.getString("password");
+            email = resultSet.getString("email");
+        } catch (SQLException e) {
+            return user;
+        }
 
         switch(role.toUpperCase()){  //tu podpiąć odpowiednie DAO
             case "ADMIN":
@@ -93,6 +106,7 @@ public class DaoUser {
         return user;
     }
 
+    //Dao Wallet
     private Wallet getWallet(int userID) {
         Wallet wallet = null;
         Statement statement = null;
@@ -116,13 +130,15 @@ public class DaoUser {
         return wallet;
     }
 
+    //Dao artifact lub Wallet
     private ArrayList<Artifact> getUserArtifacts(int userID) {
         ArrayList<Artifact> artifacts = null;
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery();
-            //inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
+            ResultSet resultSet = statement.executeQuery(); /*Dopisać i przekazać zapytanie
+            inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
+            */
 
             while(resultSet.next()){
                 int idArtifact = resultSet.getInt("id_artifact");
