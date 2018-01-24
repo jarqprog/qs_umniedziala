@@ -18,6 +18,7 @@ import model.Mentor;
 import model.Student;
 import model.User;
 import view.ViewLogin;
+import dao.DaoUser;  //testL
 
 public class ControllerLogin{
     private ViewLogin viewLogin = new ViewLogin();
@@ -27,6 +28,7 @@ public class ControllerLogin{
     private DaoStudent daoStudent;
     private DaoQuest daoQuest;
     private DaoClass daoClass;
+    private DaoUser daoUser;
 
     public ControllerLogin(){
         this.daoAdmin = new DaoAdmin();
@@ -35,9 +37,11 @@ public class ControllerLogin{
         this.daoArtifact = new DaoArtifact();
         this.daoQuest = new DaoQuest();
         this.daoClass = new DaoClass();
+        this.daoUser = new DaoUser();
     }
 
     public void runMenu(){
+
         implementAllTestData();
 
         String userOption = "";
@@ -63,7 +67,13 @@ public class ControllerLogin{
         String userEmail = viewLogin.getInputFromUser("email: ");
         String userPassword = viewLogin.getInputFromUser("password: ");
 
-        User user = getUser(userEmail, userPassword);
+        User user = null;
+        if(daoUser.setConnection("resources/dbStruct.db")){
+//            System.out.println("Connected!");
+            user = getUser(userEmail, userPassword);
+            daoUser.closeConnection();
+        }
+//        User user = getUser(userEmail, userPassword);
         if(user != null){
             IUserController userController = getUserController(user);
             if(userController != null){
@@ -85,16 +95,18 @@ public class ControllerLogin{
     }
 
     private User getUser(String email, String password){
-        ArrayList <User> users = getAllUsers();
-        MyIterator <User> myIterator = new MyIterator<>(users);
-
-        while(myIterator.hasNext()){
-            User user = myIterator.next();
-            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
-                return user;
-            }
-        }
-        return null;
+        String query = "select * from 'users' where email='" + email + "' AND password='" + password + "';";
+        User user = daoUser.executeQuery(query);
+//        ArrayList <User> users = getAllUsers();
+//        MyIterator <User> myIterator = new MyIterator<>(users);
+//
+//        while(myIterator.hasNext()){
+//            User user = myIterator.next();
+//            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
+//                return user;
+//            }
+//        }
+        return user;
     }
 
     private IUserController getUserController(User user){

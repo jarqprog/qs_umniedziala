@@ -4,6 +4,13 @@ public class Student extends User{
     private int classId;
     private int teamId;
     private Wallet wallet;
+    private int id;
+
+    public Student(int id, String name, String password, String email) {
+        super(name, password, email);
+        this.classId = classId;
+        this.id = id;
+    }
 
     public Student(String name, String password, String email, int classId) {
         super(name, password, email);
