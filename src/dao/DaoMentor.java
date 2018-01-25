@@ -86,5 +86,4 @@ public class DaoMentor extends Dao {
             System.out.println("Mentor update failed");
         }
     }
-
 }
