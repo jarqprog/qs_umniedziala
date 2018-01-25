@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.*;
 
-public class DaoStudent implements IDaoStudent{
+public class DaoStudent extends Dao {
 
     public Student createStudent(String name, String password, String email){
         return new Student(name, password, email);
@@ -17,7 +17,7 @@ public class DaoStudent implements IDaoStudent{
     }
 
 
-    public Student importStudent(int studentId) {
+    public Student importInstance(int studentId) {
         Student student = null;
         PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM users WHERE id_user = ?;";
@@ -42,7 +42,7 @@ public class DaoStudent implements IDaoStudent{
         return student;
     }
 
-    public void exportStudent(Student student) {
+    public void exportInstance(Student student) {
 
         String name = student.getName();
         String password = student.getPassword();
