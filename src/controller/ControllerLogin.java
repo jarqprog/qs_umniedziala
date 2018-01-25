@@ -69,11 +69,10 @@ public class ControllerLogin{
 
         User user = null;
         if(daoUser.setConnection("resources/dbStruct.db")){
-//            System.out.println("Connected!");
-            user = getUser(userEmail, userPassword);
+            user = daoUser.getUser(userEmail, userPassword);
             daoUser.closeConnection();
         }
-//        User user = getUser(userEmail, userPassword);
+
         if(user != null){
             IUserController userController = getUserController(user);
             if(userController != null){
