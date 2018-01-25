@@ -13,21 +13,5 @@ public class DaoMentor extends Dao {
         return new Mentor(userId, name, password, email);
     }
 
-    public Mentor getMentorById(int id) {
-        for(Mentor mentor: mentors){
-            if(mentor.getUserId() == id) {
-                return mentor;
-            }
-        }
-        return null;
-    }
-
-    public void exportData(ArrayList <Mentor> updatedMentors) {
-        mentors = updatedMentors;
-    }
-
-    public ArrayList <Mentor> importData() {
-        return mentors;
-    }
 
 }
