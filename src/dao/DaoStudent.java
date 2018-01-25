@@ -65,14 +65,5 @@ public class DaoStudent extends Dao {
         }
     }
 
-    private class DaoWallet{
-
-        private Wallet wallet = new Wallet();
-
-        public Wallet getWallet(){
-            return wallet;
-        }
-        
-    }
 
 }
