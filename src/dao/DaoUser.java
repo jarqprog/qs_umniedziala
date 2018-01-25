@@ -8,18 +8,10 @@ import java.util.ArrayList;
 
 
 public class DaoUser {
-    private Connection connection = null;
+    private DbConnection connection = null;
 
     public boolean setConnection(String databaseName) {
-        try{
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
-            return true;
-
-        } catch (SQLException | ClassNotFoundException e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return false;
-        }
+        connection = DbConnection.getInstance(databaseName);
     }
     public void closeConnection(){
         try{
@@ -146,9 +138,9 @@ public class DaoUser {
 
         ArrayList<Artifact> artifacts = null;
         String query = "select * from users";
-        Statement statement = null;
+        PreparedStatement preparedStatement = null;
         try {
-            statement = connection.createStatement();
+            preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery(query); /*Dopisać i przekazać zapytanie
             inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
             */
