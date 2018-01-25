@@ -105,8 +105,10 @@ public class DaoUser {
                 user = new Mentor(userId, name, password, email);
                 break;
             case "STUDENT":
+                Student student = new Student(userId, name, password, email);
                 Wallet wallet = getWallet(userId);
-                user = new Student(userId, name, password, email, wallet);
+                student.setWallet(wallet);
+                user = student;
                 break;
         }
 
