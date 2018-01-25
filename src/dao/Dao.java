@@ -6,7 +6,7 @@ import model.*;
 import java.sql.*;
 
 public class Dao {
-    private Connection connection;
+    protected Connection connection;
 
     public boolean setConnection() {
         boolean isConnected;
