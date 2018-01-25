@@ -13,7 +13,7 @@ public static class DbConnection {
             return DriverManager.getConnection("jdbc:sqlite:resources/dbStruct.db");
     }
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws ClassNotFoundException, SQLException {
         return firstInstance;
     }
 }
