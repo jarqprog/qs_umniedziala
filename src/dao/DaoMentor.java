@@ -5,11 +5,6 @@ import java.util.ArrayList;
 
 
 public class DaoMentor implements IDaoMentor{
-
-    public void implementTestData() {
-        createMentor("Dominik", "haslo", "dominik@mail.pl", 12, 1);
-        createMentor("Anna", "haslo", "anna@mail.pl", 13, 2);
-    }
     
     public void createMentor(String name, String password, String email){
         mentors.add(new Mentor(name, password, email));
