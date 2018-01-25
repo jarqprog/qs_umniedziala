@@ -23,7 +23,7 @@ public class DaoStudent extends Dao {
         String query = "SELECT * FROM users WHERE id_user = ?;";
 
         try {
-            preparedStatement = DbConnection.getInstance().prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, studentId);
             ResultSet resultSet = preparedStatement.executeQuery(query);
             int userId = resultSet.getInt("id_user");
@@ -56,7 +56,7 @@ public class DaoStudent extends Dao {
                        "values (?, ?, ?);";
 
         try{
-            preparedStatement = DbConnection.getInstance().prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
@@ -79,8 +79,8 @@ public class DaoStudent extends Dao {
         String email = student.getEmail();
         int studentId = student.getUserId();
         PreparedStatement preparedStatement = null;
-
         try{
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
