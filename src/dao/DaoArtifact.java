@@ -3,7 +3,7 @@ package dao;
 import model.*;
 import java.util.ArrayList;
 
-public class DaoArtifact {
+public class DaoArtifact extends Dao{
 
         
 }

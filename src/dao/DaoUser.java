@@ -7,26 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
-public class DaoUser {
-    private Connection connection;
-  
-    public boolean setConnection() {
-        try {
-            connection = DbConnection.getConnection();
-            return  true;
-        } catch (ClassNotFoundException | SQLException e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-        }
-        return false;
-    }
-    public void closeConnection(){
-        try{
-            connection.close();
-
-        }catch(SQLException e){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-        }
-    }
+public class DaoUser extends Dao{
 
     public User getUser(String email, String password){
         User user = null;

@@ -4,5 +4,5 @@ import model.*;
 import java.util.ArrayList;
 
 
-public class DaoMentor{ 
+public class DaoMentor extends Dao{
 }

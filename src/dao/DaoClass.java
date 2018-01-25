@@ -4,6 +4,6 @@ import java.util.ArrayList;
 import dao.DaoStudent;
 import model.*;
 
-public class DaoClass{
+public class DaoClass extends Dao{
 
 }
