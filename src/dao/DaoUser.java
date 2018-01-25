@@ -142,13 +142,18 @@ public class DaoUser {
     private ArrayList<Artifact> getUserArtifacts(int userID) {
 
         ArrayList<Artifact> artifacts = null;
-        String query = "select * from users";
         PreparedStatement preparedStatement = null;
+        String query = "Select name, value, description, type from artifacts inner join artifacts_in_wallets on artifacts.id_artifact = artifacts_in_wallets.id_artifact where artifacts_in_wallets.id_student = ?;"
+
         try {
             preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery(query); /*Dopisać i przekazać zapytanie
+            preparedStatement.setInt(1, userID);
+            
+            ResultSet resultSet = preparedStatement.executeQuery(query);
+            /*Dopisać i przekazać zapytanie
             inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
             */
+
 
             while(resultSet.next()){
                 int idArtifact = resultSet.getInt("id_artifact");
