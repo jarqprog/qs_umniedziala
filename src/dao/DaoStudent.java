@@ -79,8 +79,8 @@ public class DaoStudent extends Dao {
         String email = student.getEmail();
         int studentId = student.getUserId();
         PreparedStatement preparedStatement = null;
-
         try{
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
