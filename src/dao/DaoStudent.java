@@ -3,7 +3,6 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import model.*;
 
 public class DaoStudent extends Dao {
@@ -34,9 +33,8 @@ public class DaoStudent extends Dao {
             preparedStatement.close();
 
             student = createStudent(userId, name, password, email);
-            //DaoWallet daoWallet = new DaoWallet();
-            //Wallet wallet = daoWallet.importInstance(studentId); //metoda do napisania
-            //student.setWallet(wallet);
+            Wallet wallet = new DaoWallet().importInstance(studentId);
+            student.setWallet(wallet);
 
         } catch (SQLException e) {
             return student;
@@ -70,7 +68,7 @@ public class DaoStudent extends Dao {
 
     public void updateInstance(Student student) {
 
-        String query = "update mentors" +
+        String query = "update users" +
                 "set name = ?, password = ?, email = ?" +
                 "where id_user= ?;";
 
@@ -84,6 +82,7 @@ public class DaoStudent extends Dao {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
+            preparedStatement.setInt(3, studentId);
             preparedStatement.executeQuery();
             preparedStatement.close();
         } catch (SQLException e) {
