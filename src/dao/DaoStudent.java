@@ -34,6 +34,9 @@ public class DaoStudent extends Dao {
             preparedStatement.close();
 
             student = createStudent(userId, name, password, email);
+            DaoWallet daoWallet = new DaoWallet();
+            Wallet wallet = daoWallet.importInstance(studentId); //metoda do napisania
+            student.setWallet(wallet);
 
         } catch (SQLException e) {
             return student;
@@ -50,7 +53,7 @@ public class DaoStudent extends Dao {
 
         PreparedStatement preparedStatement = null;
         String query = "INSERT into users (name, password, email)" +
-                "value (?, ?, ?);";
+                       "values (?, ?, ?);";
 
         try{
             preparedStatement = DbConnection.getInstance().prepareStatement(query);
@@ -65,24 +68,28 @@ public class DaoStudent extends Dao {
         }
     }
 
-    private class DaoWallet{
+    public void updateInstance(Student student){
 
-        private Wallet wallet = new Wallet();
+        String query = "update mentors" +
+            "set name = ?, password = ?, email = ?"+
+            "where id_user= ?;";
 
-        public Wallet getWallet(){
-            return wallet;
+        String name = student.getName();
+        String password = student.getPassword();
+        String email = student.getEmail();
+        int studentId = student.getUserId();
+        PreparedStatement preparedStatement = null;
+
+        try{
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, email);
+            preparedStatement.executeQuery();
+            preparedStatement.close();
+        } catch (SQLException e){
+            System.out.println("Student update failed");
         }
-
-        public Wallet implementTestData(){
-            ArrayList <Artifact> artifacts = new ArrayList<>();
-            DaoArtifact daoArtifact = new DaoArtifact();
-
-            artifacts.add(daoArtifact.getArtifactById(1));
-            artifacts.add(daoArtifact.getArtifactById(2));
-            
-            return new Wallet(56, 120, artifacts);
-        }
-        
     }
+
 
 }

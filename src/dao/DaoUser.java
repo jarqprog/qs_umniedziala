@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class DaoUser {
     private Connection connection;
-
+  
     public boolean setConnection() {
         try {
             connection = DbConnection.getConnection();
@@ -161,7 +161,7 @@ public class DaoUser {
 
             }
             resultSet.close();
-            statement.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
