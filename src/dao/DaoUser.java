@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 
 public class DaoUser {
-    private DbConnection connection = null;
+    private Connection connection;
 
-    public boolean setConnection(String databaseName) {
-        connection = DbConnection.getInstance(databaseName);
+    public boolean setConnection() {
+        connection = DbConnection.getConnection();
     }
     public void closeConnection(){
         try{
