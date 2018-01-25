@@ -104,9 +104,9 @@ INSERT INTO levels VALUES (?, 'Soldier', 500);
 INSERT INTO levels VALUES (?, 'Wizard', 2000);
 INSERT INTO levels VALUES (?, 'Master', 1000000);
 
-INSERT INTO wallets VALUES (1, 1000, 100);
-INSERT INTO wallets VALUES (2, 2000, 200);
-INSERT INTO wallets VALUES (3, 3000, 300);
+INSERT INTO wallets VALUES (5, 1000, 100);
+INSERT INTO wallets VALUES (6, 2000, 200);
+INSERT INTO wallets VALUES (7, 3000, 300);
 
 INSERT INTO artifacts VALUES (?, 'Combat training', 50, 'Private mentoring', 'individual');
 INSERT INTO artifacts VALUES (?, 'Sanctuary', 300, 'You can spend a day in home office', 'individual');
@@ -122,23 +122,26 @@ INSERT INTO codecool_classes VALUES (?, '2017-1-b');
 INSERT INTO codecool_classes VALUES (?, '2017-2-a');
 INSERT INTO codecool_classes VALUES (?, '2017-2-b');
 
-INSERT INTO students_in_teams VALUES (?, 1, 1);
-INSERT INTO students_in_teams VALUES (?, 1, 2);
-INSERT INTO students_in_teams VALUES (?, 2, 3);
+INSERT INTO students_in_teams VALUES (?, 1, 5);
+INSERT INTO students_in_teams VALUES (?, 1, 6);
+INSERT INTO students_in_teams VALUES (?, 2, 7);
 
-INSERT INTO mentors_in_classes VALUES (?, 1, 1);
 INSERT INTO mentors_in_classes VALUES (?, 1, 2);
-INSERT INTO mentors_in_classes VALUES (?, 2, 3);
+INSERT INTO mentors_in_classes VALUES (?, 1, 3);
+INSERT INTO mentors_in_classes VALUES (?, 2, 4);
 
-INSERT INTO students_in_classes VALUES (?, 1, 1);
-INSERT INTO students_in_classes VALUES (?, 1, 2);
-INSERT INTO students_in_classes VALUES (?, 2, 3);
+INSERT INTO students_in_classes VALUES (?, 1, 5);
+INSERT INTO students_in_classes VALUES (?, 1, 6);
+INSERT INTO students_in_classes VALUES (?, 2, 7);
 
-INSERT INTO quests_of_students VALUES (?, 1, 1);
-INSERT INTO quests_of_students VALUES (?, 2, 2);
-INSERT INTO quests_of_students VALUES (?, 3, 3);
+INSERT INTO quests_of_students VALUES (?, 1, 5);
+INSERT INTO quests_of_students VALUES (?, 2, 6);
+INSERT INTO quests_of_students VALUES (?, 3, 7);
 
-INSERT INTO artifacts_in_wallets VALUES (?, 1, 1);
-INSERT INTO artifacts_in_wallets VALUES (?, 2, 2);
-INSERT INTO artifacts_in_wallets VALUES (?, 2, 3);
+INSERT INTO artifacts_in_wallets VALUES (?, 1, 5);
+INSERT INTO artifacts_in_wallets VALUES (?, 2, 5);
+INSERT INTO artifacts_in_wallets VALUES (?, 3, 6);
+INSERT INTO artifacts_in_wallets VALUES (?, 1, 6);
+INSERT INTO artifacts_in_wallets VALUES (?, 2, 7);
+INSERT INTO artifacts_in_wallets VALUES (?, 3, 7);
 
