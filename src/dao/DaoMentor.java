@@ -40,4 +40,27 @@ public class DaoMentor extends Dao {
         return mentor;
     }
 
+    public void exportInstance(Mentor mentor) {
+
+        String name = mentor.getName();
+        String password = mentor.getPassword();
+        String email = mentor.getEmail();
+
+        PreparedStatement preparedStatement = null;
+        String query = "INSERT into users (name, password, email)" +
+                       "values (?, ?, ?);";
+
+        try{
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, email);
+            preparedStatement.executeQuery();
+            preparedStatement.close();
+
+        }catch (SQLException e){
+            System.out.println("Mentor insertion failed");
+        }
+    }
+
 }
