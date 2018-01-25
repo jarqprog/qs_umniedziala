@@ -32,11 +32,13 @@ public class DaoUser {
 
     public User getUser(String email, String password){
         User user = null;
-        Statement statement = null;
-        String query = "SELECT * from users where email='" + email + "' AND password='" + password + "';";
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT * from users where email= ? AND password= ?;";
         try{
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery(query);
 
             int id_role = resultSet.getInt("id_role");
             String role = getRole(id_role);
@@ -44,7 +46,7 @@ public class DaoUser {
             user = createUser(resultSet, role);
 
             resultSet.close();
-            statement.close();
+            preparedStatement.close();
 
         }catch(SQLException e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -53,16 +55,20 @@ public class DaoUser {
     }
 
     public String getRole(int id_role){
+
         String role = null;
-        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        String query = "Select name from roles where id_role= ?;";
         try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("Select name from roles where id_role=" + id_role + ";");
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id_role);
+            ResultSet resultSet = preparedStatement.executeQuery(query);
+
 
             role = resultSet.getString("name");
 
             resultSet.close();
-            statement.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
@@ -110,11 +116,13 @@ public class DaoUser {
     //Dao Wallet
     private Wallet getWallet(int userID) {
         Wallet wallet = null;
-        Statement statement = null;
+        PreparedStatement preparedStatement = null;
         ArrayList<Artifact> artifacts = null;
+        String query = "Select * from wallets where id_student= ?";
         try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("Select * from wallets where id_student=" + userID + ";");
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userID);
+            ResultSet resultSet = preparedStatement.executeQuery(query);
 
             int allCoins = resultSet.getInt("all_coins");
             int availableCoins = resultSet.getInt("available_coins");
@@ -123,7 +131,7 @@ public class DaoUser {
             wallet = new Wallet(allCoins, availableCoins, artifacts);
 
             resultSet.close();
-            statement.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
@@ -133,11 +141,13 @@ public class DaoUser {
 
     //Dao artifact lub Wallet
     private ArrayList<Artifact> getUserArtifacts(int userID) {
+
         ArrayList<Artifact> artifacts = null;
+        String query = "select * from users";
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from users"); /*Dopisać i przekazać zapytanie
+            ResultSet resultSet = statement.executeQuery(query); /*Dopisać i przekazać zapytanie
             inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
             */
 
