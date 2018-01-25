@@ -3,33 +3,30 @@ package dao;
 import model.*;
 import java.util.ArrayList;
 
+public class DaoMentor extends Dao {
 
-public class DaoMentor implements IDaoMentor{
-    
-    public void createMentor(String name, String password, String email){
-        mentors.add(new Mentor(name, password, email));
-        
+    public Mentor createMentor(String name, String password, String email) {
+        return new Mentor(name, password, email);
     }
 
-    public void createMentor(String name, String password, String email, int userId, int classId){
-        mentors.add(new Mentor(name, password, email, userId, classId));
-        
+    public Mentor createMentor(int userId, String name, String password, String email) {
+        return new Mentor(userId, name, password, email);
     }
 
-    public Mentor getMentorById(int id){
+    public Mentor getMentorById(int id) {
         for(Mentor mentor: mentors){
-            if(mentor.getUserId() == id){
+            if(mentor.getUserId() == id) {
                 return mentor;
             }
         }
         return null;
     }
 
-    public void exportData(ArrayList <Mentor> updatedMentors){
+    public void exportData(ArrayList <Mentor> updatedMentors) {
         mentors = updatedMentors;
     }
 
-    public ArrayList <Mentor> importData(){
+    public ArrayList <Mentor> importData() {
         return mentors;
     }
 
