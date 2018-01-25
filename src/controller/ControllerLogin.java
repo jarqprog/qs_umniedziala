@@ -2,16 +2,16 @@ package controller;
 
 import java.util.ArrayList;
 
-import controller.ControllerAdmin;
-import controller.ControllerMentor;
-import controller.ControllerStudent;
-import controller.IUserController;
-import dao.DaoAdmin;
-import dao.DaoArtifact;
-import dao.DaoClass;
-import dao.DaoMentor;
+//import controller.ControllerAdmin;
+//import controller.ControllerMentor;
+//import controller.ControllerStudent;
+//import controller.IUserController;
+//import dao.DaoAdmin;
+//import dao.DaoArtifact;
+//import dao.DaoClass;
+//import dao.DaoMentor;
 import dao.DaoStudent;
-import dao.DaoQuest;
+//import dao.DaoQuest;
 import iterator.MyIterator;
 import model.Admin;
 import model.Mentor;
@@ -22,27 +22,27 @@ import dao.DaoUser;  //testL
 
 public class ControllerLogin{
     private ViewLogin viewLogin = new ViewLogin();
-    private DaoAdmin daoAdmin;
-    private DaoMentor daoMentor;
-    private DaoArtifact daoArtifact;
+//    private DaoAdmin daoAdmin;
+//    private DaoMentor daoMentor;
+//    private DaoArtifact daoArtifact;
     private DaoStudent daoStudent;
-    private DaoQuest daoQuest;
-    private DaoClass daoClass;
+//    private DaoQuest daoQuest;
+//    private DaoClass daoClass;
     private DaoUser daoUser;
 
     public ControllerLogin(){
-        this.daoAdmin = new DaoAdmin();
-        this.daoMentor = new DaoMentor();
+//        this.daoAdmin = new DaoAdmin();
+//        this.daoMentor = new DaoMentor();
         this.daoStudent = new DaoStudent();
-        this.daoArtifact = new DaoArtifact();
-        this.daoQuest = new DaoQuest();
-        this.daoClass = new DaoClass();
+//        this.daoArtifact = new DaoArtifact();
+//        this.daoQuest = new DaoQuest();
+//        this.daoClass = new DaoClass();
         this.daoUser = new DaoUser();
     }
 
     public void runMenu(){
 
-        implementAllTestData();
+//        implementAllTestData();
 
         String userOption = "";
         while (!userOption.equals("0")) {
@@ -68,12 +68,11 @@ public class ControllerLogin{
         String userPassword = viewLogin.getInputFromUser("password: ");
 
         User user = null;
-        if(daoUser.setConnection("resources/dbStruct.db")){
-//            System.out.println("Connected!");
-            user = getUser(userEmail, userPassword);
-            daoUser.closeConnection();
+        if(daoUser.setConnection()){
+            user = daoUser.getUser(userEmail, userPassword);
+//            daoUser.closeConnection();
         }
-//        User user = getUser(userEmail, userPassword);
+
         if(user != null){
             IUserController userController = getUserController(user);
             if(userController != null){
@@ -84,19 +83,19 @@ public class ControllerLogin{
         }  
     }
 
-    private ArrayList<User> getAllUsers(){
-        ArrayList <User> users = new ArrayList<>();
+//    private ArrayList<User> getAllUsers(){
+//        ArrayList <User> users = new ArrayList<>();
+//
+//        users.addAll(this.daoAdmin.importData());
+//        users.addAll(this.daoMentor.importData());
+//        users.addAll(this.daoStudent.importData());
+//
+//        return users;
+//    }
 
-        users.addAll(this.daoAdmin.importData());
-        users.addAll(this.daoMentor.importData());
-        users.addAll(this.daoStudent.importData());
-        
-        return users;
-    }
-
-    private User getUser(String email, String password){
-        String query = "select * from 'users' where email='" + email + "' AND password='" + password + "';";
-        User user = daoUser.executeQuery(query);
+//    private User getUser(String email, String password){
+//        String query = "select * from 'users' where email='" + email + "' AND password='" + password + "';";
+//        User user = daoUser.executeQuery(query);
 //        ArrayList <User> users = getAllUsers();
 //        MyIterator <User> myIterator = new MyIterator<>(users);
 //
@@ -106,9 +105,9 @@ public class ControllerLogin{
 //                return user;
 //            }
 //        }
-        return user;
-    }
-
+//        return user;
+//    }
+//
     private IUserController getUserController(User user){
         IUserController controller = null;
 
@@ -123,12 +122,12 @@ public class ControllerLogin{
         return controller;
     }
 
-    private void implementAllTestData(){
-        this.daoAdmin.implementTestData();
-        this.daoMentor.implementTestData();
-        this.daoArtifact.implementTestData();
-        this.daoStudent.implementTestData();
-        this.daoQuest.implementTestData();
-        this.daoClass.implementTestData();
-    }
+//    private void implementAllTestData(){
+//        this.daoAdmin.implementTestData();
+//        this.daoMentor.implementTestData();
+//        this.daoArtifact.implementTestData();
+//        this.daoStudent.implementTestData();
+//        this.daoQuest.implementTestData();
+//        this.daoClass.implementTestData();
+//    }
 }
