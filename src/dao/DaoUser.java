@@ -11,7 +11,12 @@ public class DaoUser {
     private Connection connection;
 
     public boolean setConnection() {
-        connection = DbConnection.getConnection();
+        try {
+            connection = DbConnection.getConnection();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return false;
+        }
     }
     public void closeConnection(){
         try{
