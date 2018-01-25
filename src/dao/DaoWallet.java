@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class DaoWallet extends Dao {
 
-    private Wallet importInstance(int userID) {
+    public Wallet importInstance(int userID) {
         Wallet wallet = null;
         PreparedStatement preparedStatement = null;
         ArrayList<Artifact> artifacts = null;
@@ -19,18 +19,18 @@ public class DaoWallet extends Dao {
             preparedStatement.setInt(1, userID);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            int allCoins = resultSet.getInt("all_coins");
-            int availableCoins = resultSet.getInt("available_coins");
-            artifacts = getUserArtifacts(userID);
-
-            wallet = new Wallet(allCoins, availableCoins, artifacts);
-
+            if (resultSet.next()) {
+                int allCoins = resultSet.getInt("all_coins");
+                int availableCoins = resultSet.getInt("available_coins");
+                artifacts = getUserArtifacts(userID);
+                wallet = new Wallet(allCoins, availableCoins, artifacts);
+            }
             resultSet.close();
             preparedStatement.close();
+
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
-
         return wallet;
     }
 
