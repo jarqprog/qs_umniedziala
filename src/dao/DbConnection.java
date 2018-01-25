@@ -5,54 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 
-public class DbConnection {
-    private static DbConnection firstInstance = null;
-    private Connection dbConnection;
+public static class DbConnection {
+    private static Connection firstInstance = setConnection();
 
-    private DbConnection(String databaseName) {
-        try {
+    private Connection setConnection() throws ClassNotFoundException, SQLException{
             Class.forName("org.sqlite.JDBC");
-            dbConnection = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
-            dbConnection.setAutoCommit(false);
-        }
-        catch (ClassNotFoundException | SQLException ex) {
-            System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
-            return false;
-        }
+            return DriverManager.getConnection("jdbc:sqlite:resources/dbStruct.db");
     }
 
-    public static DbConnection getInstance(String databaseName) {
-            if (firstInstance == null) {
-                firstInstance = new DbConnection(databaseName);
-            }
+    public static Connection getConnection() {
         return firstInstance;
-    }
-    public PreparedStatement prepareStatement(String query) {
-        PreparedStatement stmt = null;
-        try {
-            stmt = dbConnection.createStatement();
-        } catch (SQLException ex) {
-            System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
-            System.exit(0);
-        }
-        return stmt;
-    }
-
-    public void commit() {
-        try {
-            dbConnection.commit();
-        } catch (SQLException ex) {
-            System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
-            System.exit(0);
-        }
-    }
-
-    public void close() {
-        try {
-            dbConnection.close();
-        } catch (SQLException ex) {
-            System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
-            System.exit(0);
-        }
     }
 }
