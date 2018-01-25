@@ -8,9 +8,14 @@ import model.*;
 
 public class DaoStudent implements IDaoStudent{
 
+    public Student createStudent(String name, String password, String email){
+        return new Student(name, password, email);
+    }
+
     public Student createStudent(int userId, String name, String password, String email){
         return new Student(userId, name, password, email);
     }
+
 
     public Student importStudent(int studentId) {
         Student student = null;
@@ -36,7 +41,6 @@ public class DaoStudent implements IDaoStudent{
 
         return student;
     }
-
 
     private class DaoWallet{
 
