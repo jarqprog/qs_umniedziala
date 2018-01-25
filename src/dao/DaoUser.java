@@ -1,5 +1,6 @@
 package dao;
 
+
 import model.*;
 
 import java.sql.*;
@@ -92,14 +93,14 @@ public class DaoUser {
 
         switch(role.toUpperCase()){  //tu podpiąć odpowiednie DAO
             case "ADMIN":
-                user = Admin(userId, name, password, email);
+                user = new Admin(userId, name, password, email);
                 break;
             case "MENTOR":
-                user = Mentor(userId, name, password, email);
+                user = new Mentor(userId, name, password, email);
                 break;
             case "STUDENT":
                 Wallet wallet = getWallet(userId);
-                user = Student(userId, name, password, email, wallet);
+                user = new Student(userId, name, password, email, wallet);
                 break;
         }
 
@@ -136,7 +137,7 @@ public class DaoUser {
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(); /*Dopisać i przekazać zapytanie
+            ResultSet resultSet = statement.executeQuery("select * from users"); /*Dopisać i przekazać zapytanie
             inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
             */
 
@@ -147,7 +148,7 @@ public class DaoUser {
                 String description = resultSet.getString("description");
                 String type = resultSet.getString("status");
 
-                artifacts.add(Artifact(idArtifact, name, value, description, type));
+                artifacts.add(new Artifact(idArtifact, name, value, description, type));
 
             }
             resultSet.close();
