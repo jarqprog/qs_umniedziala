@@ -1,5 +1,8 @@
 package dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import model.*;
 
@@ -7,6 +10,31 @@ public class DaoStudent implements IDaoStudent{
 
     public Student createStudent(int userId, String name, String password, String email){
         return new Student(userId, name, password, email);
+    }
+
+    public Student importStudent(int studentId) {
+        Student student = null;
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT * FROM users WHERE id_user = ?;";
+
+        try {
+            preparedStatement = DbConnection.getInstance().prepareStatement(query);
+            preparedStatement.setInt(1, studentId);
+            ResultSet resultSet = preparedStatement.executeQuery(query);
+            int userId = resultSet.getInt("id_user");
+            String name = resultSet.getString("name");
+            String password = resultSet.getString("password");
+            String email = resultSet.getString("email");
+            resultSet.close();
+            preparedStatement.close();
+
+            student = createStudent(userId, name, password, email);
+
+        } catch (SQLException e) {
+            return student;
+        }
+
+        return student;
     }
 
 
