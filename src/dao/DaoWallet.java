@@ -9,6 +9,14 @@ import java.util.ArrayList;
 
 public class DaoWallet extends Dao {
 
+    public Wallet createWallet(){
+        return new Wallet();
+    }
+
+    public Wallet createWallet(int allCoins, int availableCoins, ArrayList<Artifact> artifacts){
+        return new Wallet(allCoins, availableCoins, artifacts);
+    }
+
     public Wallet importInstance(int userID) {
         Wallet wallet = null;
         PreparedStatement preparedStatement = null;
