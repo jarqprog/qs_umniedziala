@@ -3,11 +3,11 @@ package controller;
 import java.util.ArrayList;
 import dao.DaoClass;
 import dao.DaoMentor;
-import dao.DaoLevels;
+import dao.DaoLevel;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
-import model.Levels;
+import model.Level;
 import view.ViewAdmin;
 
 public class ControllerAdmin implements IUserController {
@@ -90,7 +90,7 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void createLevel() {
-        DaoLevels daoLevels = new DaoLevels();
+        DaoLevel daoLevel = new DaoLevel();
 
         String nameRequest = "Enter name of new level: ";
         String levelName = viewAdmin.getInputFromUser(nameRequest);
@@ -98,7 +98,7 @@ public class ControllerAdmin implements IUserController {
         String numberRequest = "Enter the number of coins required for level: ";
         int levelNumber = viewAdmin.getIntInputFromUser(numberRequest);
         
-        daoLevels.createLevels(levelName, levelNumber);
+        daoLevel.createLevels(levelName, levelNumber);
 
     }
 
