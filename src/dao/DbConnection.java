@@ -9,10 +9,10 @@ public class DbConnection {
     private static DbConnection firstInstance = null;
     private Connection dbConnection;
 
-    private DbConnection() {
+    private DbConnection(String databaseName) {
         try {
             Class.forName("org.sqlite.JDBC");
-            dbConnection = DriverManager.getConnection("jdbc:sqlite:dbStruct.db");
+            dbConnection = DriverManager.getConnection("jdbc:sqlite:" + databaseName0);
             dbConnection.setAutoCommit(false);
         }
         catch (ClassNotFoundException | SQLException ex) {
@@ -21,9 +21,9 @@ public class DbConnection {
         }
     }
 
-    public static DbConnection getInstance() {
+    public static DbConnection getInstance(String databaseName) {
             if (firstInstance == null) {
-                firstInstance = new DbConnection();
+                firstInstance = new DbConnection(databaseName);
             }
         return firstInstance;
     }
