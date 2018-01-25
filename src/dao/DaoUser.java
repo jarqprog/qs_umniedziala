@@ -19,6 +19,10 @@ public class DaoUser extends Dao{
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            if(resultSet.isClosed()){
+                return null;
+            }
+
             int id_role = resultSet.getInt("id_role");
             String role = getRole(id_role);
 
