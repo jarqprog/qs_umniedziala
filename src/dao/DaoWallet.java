@@ -1,4 +1,4 @@
 package dao;
 
-public class DaoWallet {
+public class DaoWallet extends Dao {
 }

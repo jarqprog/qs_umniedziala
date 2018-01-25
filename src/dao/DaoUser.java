@@ -7,26 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
-public class DaoUser {
-    private Connection connection;
-  
-    public boolean setConnection() {
-        try {
-            connection = DbConnection.getConnection();
-            return  true;
-        } catch (ClassNotFoundException | SQLException e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-        }
-        return false;
-    }
-    public void closeConnection(){
-        try{
-            connection.close();
-
-        }catch(SQLException e){
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-        }
-    }
+public class DaoUser extends Dao{
 
     public User getUser(String email, String password){
         User user = null;
@@ -36,7 +17,7 @@ public class DaoUser {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             int id_role = resultSet.getInt("id_role");
             String role = getRole(id_role);
@@ -60,7 +41,7 @@ public class DaoUser {
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id_role);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
 
             role = resultSet.getString("name");
@@ -122,7 +103,7 @@ public class DaoUser {
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, userID);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             int allCoins = resultSet.getInt("all_coins");
             int availableCoins = resultSet.getInt("available_coins");
@@ -150,7 +131,7 @@ public class DaoUser {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, userID);
             
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
             /*Dopisać i przekazać zapytanie
             inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
             */

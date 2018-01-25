@@ -10,9 +10,9 @@ import java.util.ArrayList;
 //import dao.DaoArtifact;
 //import dao.DaoClass;
 //import dao.DaoMentor;
-//import dao.DaoStudent;
+import dao.DaoStudent;
 //import dao.DaoQuest;
-//import iterator.MyIterator;
+import iterator.MyIterator;
 import model.Admin;
 import model.Mentor;
 import model.Student;
@@ -25,7 +25,7 @@ public class ControllerLogin{
 //    private DaoAdmin daoAdmin;
 //    private DaoMentor daoMentor;
 //    private DaoArtifact daoArtifact;
-//    private DaoStudent daoStudent;
+    private DaoStudent daoStudent;
 //    private DaoQuest daoQuest;
 //    private DaoClass daoClass;
     private DaoUser daoUser;
@@ -33,7 +33,7 @@ public class ControllerLogin{
     public ControllerLogin(){
 //        this.daoAdmin = new DaoAdmin();
 //        this.daoMentor = new DaoMentor();
-//        this.daoStudent = new DaoStudent();
+        this.daoStudent = new DaoStudent();
 //        this.daoArtifact = new DaoArtifact();
 //        this.daoQuest = new DaoQuest();
 //        this.daoClass = new DaoClass();
@@ -70,7 +70,7 @@ public class ControllerLogin{
         User user = null;
         if(daoUser.setConnection()){
             user = daoUser.getUser(userEmail, userPassword);
-            daoUser.closeConnection();
+//            daoUser.closeConnection();
         }
 
         if(user != null){
@@ -107,7 +107,7 @@ public class ControllerLogin{
 //        }
 //        return user;
 //    }
-
+//
     private IUserController getUserController(User user){
         IUserController controller = null;
 
