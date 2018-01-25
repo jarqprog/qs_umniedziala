@@ -83,7 +83,7 @@ public class DaoMentor extends Dao {
             preparedStatement.executeQuery();
             preparedStatement.close();
         } catch (SQLException e){
-            System.out.println("Student update failed");
+            System.out.println("Mentor update failed");
         }
     }
 
