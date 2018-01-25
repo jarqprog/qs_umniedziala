@@ -17,7 +17,7 @@ public class DbConnection {
         }
         catch (ClassNotFoundException | SQLException ex) {
             System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
-            System.exit(0);
+            return false;
         }
     }
 
@@ -27,8 +27,8 @@ public class DbConnection {
             }
         return firstInstance;
     }
-    public Statement createStatement() {
-        Statement stmt = null;
+    public PreparedStatement prepareStatement(Tring query) {
+        PreparedStatement stmt = null;
         try {
             stmt = dbConnection.createStatement();
         } catch (SQLException ex) {
