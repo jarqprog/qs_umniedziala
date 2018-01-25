@@ -146,7 +146,7 @@ public class DaoUser {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery(query); /*Dopisać i przekazać zapytanie
+            ResultSet resultSet = preparedStatement.executeQuery(query); /*Dopisać i przekazać zapytanie
             inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
             */
 
