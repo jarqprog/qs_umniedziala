@@ -27,7 +27,7 @@ public class DbConnection {
             }
         return firstInstance;
     }
-    public PreparedStatement prepareStatement(Tring query) {
+    public PreparedStatement prepareStatement(String query) {
         PreparedStatement stmt = null;
         try {
             stmt = dbConnection.createStatement();
