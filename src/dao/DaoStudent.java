@@ -50,7 +50,7 @@ public class DaoStudent extends Dao {
 
         PreparedStatement preparedStatement = null;
         String query = "INSERT into users (name, password, email)" +
-                "value (?, ?, ?);";
+                       "values (?, ?, ?);";
 
         try{
             preparedStatement = DbConnection.getInstance().prepareStatement(query);
