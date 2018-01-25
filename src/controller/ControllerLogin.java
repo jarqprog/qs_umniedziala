@@ -68,7 +68,7 @@ public class ControllerLogin{
         String userPassword = viewLogin.getInputFromUser("password: ");
 
         User user = null;
-        if(daoUser.setConnection("resources/dbStruct.db")){
+        if(daoUser.setConnection()){
             user = daoUser.getUser(userEmail, userPassword);
             daoUser.closeConnection();
         }
