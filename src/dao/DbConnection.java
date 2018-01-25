@@ -12,7 +12,7 @@ public class DbConnection {
     private DbConnection(String databaseName) {
         try {
             Class.forName("org.sqlite.JDBC");
-            dbConnection = DriverManager.getConnection("jdbc:sqlite:" + databaseName0);
+            dbConnection = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
             dbConnection.setAutoCommit(false);
         }
         catch (ClassNotFoundException | SQLException ex) {
