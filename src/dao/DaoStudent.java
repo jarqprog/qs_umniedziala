@@ -65,5 +65,28 @@ public class DaoStudent extends Dao {
         }
     }
 
+    public void updateInstance(Student student){
+
+        String query = "update mentors" +
+            "set name = ?, password = ?, email = ?"+
+            "where id_user= ?;";
+
+        String name = student.getName();
+        String password = student.getPassword();
+        String email = student.getEmail();
+        int studentId = student.getUserId();
+        PreparedStatement preparedStatement = null;
+
+        try{
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, email);
+            preparedStatement.executeQuery();
+            preparedStatement.close();
+        } catch (SQLException e){
+            System.out.println("Student update failed");
+        }
+    }
+
 
 }
