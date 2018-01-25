@@ -5,14 +5,6 @@ import model.*;
 
 public class DaoStudent implements IDaoStudent{
 
-    public void implementTestData() {
-        createStudent("Krzysztof", "haslo", "krzysztof@mail.pl", 1);
-        createStudent("Mateusz", "haslo", "mateusz@mail.pl", 1);
-        createStudent("Filip", "haslo", "filip@mail.pl", 2);
-        createStudent("Joanna", "haslo", "joanna@mail.pl", 2);
-    }
-
-
     public void createStudent(String name, String password, String email, int classId){
         Student student = new Student(name, password, email, classId);
         DaoWallet daoWallet = new DaoWallet();
