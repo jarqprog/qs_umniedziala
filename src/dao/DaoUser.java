@@ -13,10 +13,11 @@ public class DaoUser {
     public boolean setConnection() {
         try {
             connection = DbConnection.getConnection();
+            return  true;
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return false;
         }
+        return false;
     }
     public void closeConnection(){
         try{
@@ -143,7 +144,7 @@ public class DaoUser {
 
         ArrayList<Artifact> artifacts = null;
         PreparedStatement preparedStatement = null;
-        String query = "Select name, value, description, type from artifacts inner join artifacts_in_wallets on artifacts.id_artifact = artifacts_in_wallets.id_artifact where artifacts_in_wallets.id_student = ?;"
+        String query = "Select name, value, description, type from artifacts inner join artifacts_in_wallets on artifacts.id_artifact = artifacts_in_wallets.id_artifact where artifacts_in_wallets.id_student = ?;";
 
         try {
             preparedStatement = connection.prepareStatement(query);
