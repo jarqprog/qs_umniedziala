@@ -46,30 +46,23 @@ public class DaoWallet extends Dao {
 
         ArrayList<Artifact> artifacts = null;
         PreparedStatement preparedStatement = null;
-        String query = "Select name, value, description, type from artifacts inner join artifacts_in_wallets on artifacts.id_artifact = artifacts_in_wallets.id_artifact where artifacts_in_wallets.id_student = ?;";
+        String query = "Select artifacts.id_artifact from artifacts inner join artifacts_in_wallets "
+                       + "on artifacts.id_artifact = artifacts_in_wallets.id_artifact "
+                       + "where artifacts_in_wallets.id_student = ?;";
 
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, userID);
-
             ResultSet resultSet = preparedStatement.executeQuery();
-            /*Dopisać i przekazać zapytanie
-            inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
-            */
 
-
-            while(resultSet.next()){
+            while (resultSet.next()){
                 int idArtifact = resultSet.getInt("id_artifact");
-                String name = resultSet.getString("name");
-                int value = resultSet.getInt("value");
-                String description = resultSet.getString("description");
-                String type = resultSet.getString("status");
-
-                artifacts.add(new Artifact(idArtifact, name, value, description, type));
-
+                Artifact artifact = new DaoArtifact().importInstance(idArtifact);
+                artifacts.add(artifact);
             }
             resultSet.close();
             preparedStatement.close();
+
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
