@@ -16,7 +16,7 @@ public class DaoArtifact extends Dao{
         return new Artifact(itemId, name, value, description, type);
     }
 
-    private Artifact importInstance(int itemId) {
+    public Artifact importInstance(int itemId) {
         Artifact artifact = null;
         PreparedStatement preparedStatement = null;
         String query = "Select * from artifacts where id_artifact = ?";
