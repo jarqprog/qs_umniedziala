@@ -33,9 +33,8 @@ public class DaoStudent extends Dao {
             preparedStatement.close();
 
             student = createStudent(userId, name, password, email);
-            //DaoWallet daoWallet = new DaoWallet();
-            //Wallet wallet = daoWallet.importInstance(studentId); //metoda do napisania
-            //student.setWallet(wallet);
+            Wallet wallet = new DaoWallet().importInstance(studentId);
+            student.setWallet(wallet);
 
         } catch (SQLException e) {
             return student;
