@@ -2,11 +2,8 @@ package dao;
 
 import java.util.ArrayList;
 import model.*;
-import java.util.ArrayList;
 
 public class DaoStudent implements IDaoStudent{
-
-    private static ArrayList <Student> students = new ArrayList<>();
 
     public void implementTestData() {
         createStudent("Krzysztof", "haslo", "krzysztof@mail.pl", 1);
