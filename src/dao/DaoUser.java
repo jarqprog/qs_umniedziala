@@ -56,10 +56,6 @@ public class DaoUser extends Dao{
     }
 
     private User createUser(ResultSet resultSet, String role){
-        /*Kiedy dao userów będą gotowe, stworzyć w nich metode
-        createstudent/mentor/admin(ResultSet):User
-        do wywołania w switch - case
-        */
         User user = null;
 
         int userId = 0;
@@ -76,19 +72,15 @@ public class DaoUser extends Dao{
             return user;
         }
 
-        switch(role.toUpperCase()){  //tu podpiąć odpowiednie DAO
+        switch (role.toUpperCase()) {
             case "ADMIN":
                 user = new Admin(userId, name, password, email);
                 break;
             case "MENTOR":
-                user = new Mentor(userId, name, password, email);
+                user = new DaoMentor().createMentor(userId, name, password, email);
                 break;
             case "STUDENT":
-                Student student = new Student(userId, name, password, email);
-                Wallet wallet = getWallet(userId);
-                student.setWallet(wallet);
-                user = student;
-                break;
+                user = new DaoStudent().createStudent(userId, name, password, email);
         }
 
         return user;
