@@ -1,7 +1,7 @@
 package controller;
 
 import view.ViewMentor;
-//import dao.*;
+import dao.*;
 import iterator.MyIterator;
 import model.*;
 
@@ -17,65 +17,65 @@ public class ControllerMentor implements IUserController{
     }
 
     public void createStudent() {
-//        DaoStudent daoStudent = new DaoStudent();
-//
-//        String nameRequest = "Enter name of new student: ";
-//        String studentName = viewMentor.getInputFromUser(nameRequest);
-//
-//        String passwordRequest = "Enter password of new student: ";
-//        String studentPassword = viewMentor.getInputFromUser(passwordRequest);
-//
-//        String emailRequest = "Enter email of new student: ";
-//        String studentEmail = viewMentor.getInputFromUser(emailRequest);
-//
-//        String classIdRequest = "Enter ID of class which student will attend: ";
-//        int classId = viewMentor.getIntInputFromUser(classIdRequest);
-//
-//        daoStudent.createStudent(studentName, studentPassword, studentEmail, classId);
+        DaoStudent daoStudent = new DaoStudent();
+
+        String nameRequest = "Enter name of new student: ";
+        String studentName = viewMentor.getInputFromUser(nameRequest);
+
+        String passwordRequest = "Enter password of new student: ";
+        String studentPassword = viewMentor.getInputFromUser(passwordRequest);
+
+        String emailRequest = "Enter email of new student: ";
+        String studentEmail = viewMentor.getInputFromUser(emailRequest);
+
+        String classIdRequest = "Enter ID of class which student will attend: ";
+        int classId = viewMentor.getIntInputFromUser(classIdRequest);
+
+        daoStudent.createStudent(studentName, studentPassword, studentEmail, classId);
 
     }
 
     public void createTeam() {
-//        DaoTeam daoTeam = new DaoTeam();
-//
-//        String nameRequest = "Enter name of new team: ";
-//        String teamName = viewMentor.getInputFromUser(nameRequest);
-//
-//        daoTeam.createTeam(teamName);
+        DaoTeam daoTeam = new DaoTeam();
+
+        String nameRequest = "Enter name of new team: ";
+        String teamName = viewMentor.getInputFromUser(nameRequest);
+
+        daoTeam.createTeam(teamName);
     }
 
     public void addQuest(){
-//        DaoQuest daoQuest = new DaoQuest();
-//
-//        String nameRequest = "Enter name of new quest: ";
-//        String questName = viewMentor.getInputFromUser(nameRequest);
-//
-//        String valueRequest = "Enter value of new quest: ";
-//        int questValue = viewMentor.getIntInputFromUser(valueRequest);
-//
-//        String descriptionRequest = "Enter description of quest";
-//        String questDescription = viewMentor.getInputFromUser(descriptionRequest);
-//
-//        String questStatus = chooseStatus();
-//        String questType = chooseType();
-//
-//        daoQuest.createQuest(questName, questValue, questDescription, questStatus, questType);
+        DaoQuest daoQuest = new DaoQuest();
+
+        String nameRequest = "Enter name of new quest: ";
+        String questName = viewMentor.getInputFromUser(nameRequest);
+
+        String valueRequest = "Enter value of new quest: ";
+        int questValue = viewMentor.getIntInputFromUser(valueRequest);
+
+        String descriptionRequest = "Enter description of quest";
+        String questDescription = viewMentor.getInputFromUser(descriptionRequest);
+
+        String questStatus = chooseStatus();
+        String questType = chooseType();
+
+        daoQuest.createQuest(questName, questValue, questDescription, questStatus, questType); 
     }
 
     public void addArtifact() {
-//        DaoArtifact daoArtifact = new DaoArtifact();
-//
-//        String nameRequest = "Enter name of new artifact: ";
-//        String artifactName = viewMentor.getInputFromUser(nameRequest);
-//
-//        String valueRequest = "Enter value of new artifact: ";
-//        int artifactValue = viewMentor.getIntInputFromUser(valueRequest);
-//
-//        String descriptionRequest = "Enter description of new artifact";
-//        String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
-//
-//        String artifactStatus = chooseStatus();
-//        daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
+        DaoArtifact daoArtifact = new DaoArtifact();
+
+        String nameRequest = "Enter name of new artifact: ";
+        String artifactName = viewMentor.getInputFromUser(nameRequest);
+
+        String valueRequest = "Enter value of new artifact: ";
+        int artifactValue = viewMentor.getIntInputFromUser(valueRequest);
+
+        String descriptionRequest = "Enter description of new artifact";
+        String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
+
+        String artifactStatus = chooseStatus();
+        daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
     }
 
     private String chooseStatus() {
@@ -164,16 +164,16 @@ public class ControllerMentor implements IUserController{
     }
 
     public void seeAllWallets() {
-//        int idOfMentorClass = mentor.getClassId();
-//        viewMentor.displayText("Wallets of students of class: ");
-//
-//        DaoStudent daoStudent = new DaoStudent();
-//        ArrayList<Student> allStudentsOfClass = daoStudent.getStudentsByClassId(idOfMentorClass);
-//        MyIterator <Student> myIterator = new MyIterator<>(allStudentsOfClass);
-//        while(myIterator.hasNext()){
-//            Student student = myIterator.next();
-//            viewMentor.displayText(student.toString() + "/n" + student.getWallet().toString());
-//        }
+        int idOfMentorClass = mentor.getClassId();
+        viewMentor.displayText("Wallets of students of class: ");
+
+        DaoStudent daoStudent = new DaoStudent();
+        ArrayList<Student> allStudentsOfClass = daoStudent.getStudentsByClassId(idOfMentorClass);
+        MyIterator <Student> myIterator = new MyIterator<>(allStudentsOfClass);
+        while(myIterator.hasNext()){
+            Student student = myIterator.next();
+            viewMentor.displayText(student.toString() + "/n" + student.getWallet().toString());
+        }
     }
     private ArrayList<Wallet> getWalletsOfStudents(ArrayList<Student> students) {
         ArrayList<Wallet> walletsOfStudents = new ArrayList<>();
@@ -184,13 +184,13 @@ public class ControllerMentor implements IUserController{
     }
 
     public void seeQuests() {
-//        viewMentor.displayText("Available quests: ");
-//        viewMentor.displayList(new DaoArtifact().importData());
+        viewMentor.displayText("Available quests: ");
+        viewMentor.displayList(new DaoArtifact().importData());
     }
 
     public void seeArtifacts() {
-//        viewMentor.displayText("Available artifacts: ");
-//        viewMentor.displayList(new DaoArtifact().importData());
+        viewMentor.displayText("Available artifacts: ");
+        viewMentor.displayList(new DaoArtifact().importData());
     }
 
     public void runMenu() {
