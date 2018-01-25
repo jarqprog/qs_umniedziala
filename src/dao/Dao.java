@@ -5,7 +5,7 @@ import model.*;
 
 import java.sql.*;
 
-public class Dao {
+public abstract class Dao {
     protected Connection connection;
 
     public boolean setConnection() {
@@ -26,4 +26,5 @@ public class Dao {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
     }
+
 }
