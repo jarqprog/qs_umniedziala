@@ -1,73 +1,95 @@
 package dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import model.*;
-import java.util.ArrayList;
 
-public class DaoStudent implements IDaoStudent{
+public class DaoStudent extends Dao {
 
-    private static ArrayList <Student> students = new ArrayList<>();
+    public Student createStudent(String name, String password, String email){
+        return new Student(name, password, email);
+    }
 
-    public void implementTestData() {
-        createStudent("Krzysztof", "haslo", "krzysztof@mail.pl", 1);
-        createStudent("Mateusz", "haslo", "mateusz@mail.pl", 1);
-        createStudent("Filip", "haslo", "filip@mail.pl", 2);
-        createStudent("Joanna", "haslo", "joanna@mail.pl", 2);
+    public Student createStudent(int userId, String name, String password, String email){
+        return new Student(userId, name, password, email);
     }
 
 
-    public void createStudent(String name, String password, String email, int classId){
-        Student student = new Student(name, password, email, classId);
-        DaoWallet daoWallet = new DaoWallet();
-        Wallet wallet = daoWallet.implementTestData();
-        student.setWallet(wallet);
-        students.add(student);
-    }
+    public Student importInstance(int studentId) {
+        Student student = null;
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT * FROM users WHERE id_user = ?;";
 
-    public Student getStudentById(int id){
-        for(Student student: students){
-            if(student.getUserId() == id){
-                return student;
-            }
-        }
-        return null;
-    }
+        try {
+            preparedStatement = DbConnection.getInstance().prepareStatement(query);
+            preparedStatement.setInt(1, studentId);
+            ResultSet resultSet = preparedStatement.executeQuery(query);
+            int userId = resultSet.getInt("id_user");
+            String name = resultSet.getString("name");
+            String password = resultSet.getString("password");
+            String email = resultSet.getString("email");
+            resultSet.close();
+            preparedStatement.close();
 
-    public ArrayList <Student> getStudentsByClassId(int id){
-        ArrayList <Student> studentsInClass = new ArrayList<Student>();
-        for(Student student: students){
-            if(student.getClassId() == id){
-                studentsInClass.add(student);
-            }
-        }
-        return studentsInClass;
-    }
+            student = createStudent(userId, name, password, email);
+            DaoWallet daoWallet = new DaoWallet();
+            Wallet wallet = daoWallet.importInstance(studentId); //metoda do napisania
+            student.setWallet(wallet);
 
-    public void exportData(ArrayList <Student> updatedStudents){
-        students = updatedStudents;
-    }
-
-    public ArrayList <Student> importData(){
-        return students;
-    }
-    private class DaoWallet{
-
-        private Wallet wallet = new Wallet();
-
-        public Wallet getWallet(){
-            return wallet;
+        } catch (SQLException e) {
+            return student;
         }
 
-        public Wallet implementTestData(){
-            ArrayList <Artifact> artifacts = new ArrayList<>();
-            DaoArtifact daoArtifact = new DaoArtifact();
-
-            artifacts.add(daoArtifact.getArtifactById(1));
-            artifacts.add(daoArtifact.getArtifactById(2));
-            
-            return new Wallet(56, 120, artifacts);
-        }
-        
+        return student;
     }
+
+    public void exportInstance(Student student) {
+
+        String name = student.getName();
+        String password = student.getPassword();
+        String email = student.getEmail();
+
+        PreparedStatement preparedStatement = null;
+        String query = "INSERT into users (name, password, email)" +
+                       "values (?, ?, ?);";
+
+        try{
+            preparedStatement = DbConnection.getInstance().prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, email);
+            preparedStatement.executeQuery();
+            preparedStatement.close();
+
+        }catch (SQLException e){
+            System.out.println("Student insertion failed");
+        }
+    }
+
+    public void updateInstance(Student student){
+
+        String query = "update mentors" +
+            "set name = ?, password = ?, email = ?"+
+            "where id_user= ?;";
+
+        String name = student.getName();
+        String password = student.getPassword();
+        String email = student.getEmail();
+        int studentId = student.getUserId();
+        PreparedStatement preparedStatement = null;
+
+        try{
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, email);
+            preparedStatement.executeQuery();
+            preparedStatement.close();
+        } catch (SQLException e){
+            System.out.println("Student update failed");
+        }
+    }
+
 
 }
