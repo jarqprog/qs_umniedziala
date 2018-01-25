@@ -17,7 +17,7 @@ public class DaoUser extends Dao{
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             int id_role = resultSet.getInt("id_role");
             String role = getRole(id_role);
@@ -41,7 +41,7 @@ public class DaoUser extends Dao{
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id_role);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
 
             role = resultSet.getString("name");
@@ -103,7 +103,7 @@ public class DaoUser extends Dao{
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, userID);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             int allCoins = resultSet.getInt("all_coins");
             int availableCoins = resultSet.getInt("available_coins");
@@ -131,7 +131,7 @@ public class DaoUser extends Dao{
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, userID);
             
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
             /*Dopisać i przekazać zapytanie
             inner join artifacts_in_wallets and artifacts on id_artifact where id_user=userID???
             */
