@@ -42,6 +42,29 @@ public class DaoStudent implements IDaoStudent{
         return student;
     }
 
+    public void exportStudent(Student student) {
+
+        String name = student.getName();
+        String password = student.getPassword();
+        String email = student.getEmail();
+
+        PreparedStatement preparedStatement = null;
+        String query = "INSERT into users (name, password, email)" +
+                "value (?, ?, ?);";
+
+        try{
+            preparedStatement = DbConnection.getInstance().prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, email);
+            preparedStatement.executeQuery();
+            preparedStatement.close();
+
+        }catch (SQLException e){
+            System.out.println("Student insertion failed");
+        }
+    }
+
     private class DaoWallet{
 
         private Wallet wallet = new Wallet();
