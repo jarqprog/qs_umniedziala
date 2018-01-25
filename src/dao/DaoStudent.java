@@ -8,11 +8,11 @@ import model.*;
 
 public class DaoStudent extends Dao {
 
-    public Student createStudent(String name, String password, String email){
+    public Student createStudent(String name, String password, String email) {
         return new Student(name, password, email);
     }
 
-    public Student createStudent(int userId, String name, String password, String email){
+    public Student createStudent(int userId, String name, String password, String email) {
         return new Student(userId, name, password, email);
     }
 
@@ -53,9 +53,9 @@ public class DaoStudent extends Dao {
 
         PreparedStatement preparedStatement = null;
         String query = "INSERT into users (name, password, email)" +
-                       "values (?, ?, ?);";
+                "values (?, ?, ?);";
 
-        try{
+        try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -63,31 +63,33 @@ public class DaoStudent extends Dao {
             preparedStatement.executeQuery();
             preparedStatement.close();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Student insertion failed");
         }
     }
 
-    public void updateInstance(Student student){
+    public void updateInstance(Student student) {
 
         String query = "update mentors" +
-            "set name = ?, password = ?, email = ?"+
-            "where id_user= ?;";
+                "set name = ?, password = ?, email = ?" +
+                "where id_user= ?;";
 
         String name = student.getName();
         String password = student.getPassword();
         String email = student.getEmail();
         int studentId = student.getUserId();
         PreparedStatement preparedStatement = null;
-        try{
+        try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.executeQuery();
             preparedStatement.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Student update failed");
         }
     }
+
+}
 
