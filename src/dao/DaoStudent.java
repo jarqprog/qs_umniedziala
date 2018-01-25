@@ -72,16 +72,6 @@ public class DaoStudent extends Dao {
         public Wallet getWallet(){
             return wallet;
         }
-
-        public Wallet implementTestData(){
-            ArrayList <Artifact> artifacts = new ArrayList<>();
-            DaoArtifact daoArtifact = new DaoArtifact();
-
-            artifacts.add(daoArtifact.getArtifactById(1));
-            artifacts.add(daoArtifact.getArtifactById(2));
-            
-            return new Wallet(56, 120, artifacts);
-        }
         
     }
 
