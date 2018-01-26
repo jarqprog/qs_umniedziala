@@ -14,10 +14,14 @@ public class DaoUser extends Dao{
         PreparedStatement preparedStatement = null;
         String query = "SELECT * from users where email= ? AND password= ?;";
         try{
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.isClosed()){
+                return null;
+            }
 
             int id_role = resultSet.getInt("id_role");
             String role = getRole(id_role);
@@ -27,7 +31,7 @@ public class DaoUser extends Dao{
             resultSet.close();
             preparedStatement.close();
 
-        }catch(SQLException e){
+        }catch(SQLException | ClassNotFoundException e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return user;
@@ -80,7 +84,8 @@ public class DaoUser extends Dao{
                 user = new DaoMentor().createMentor(userId, name, password, email);
                 break;
             case "STUDENT":
-                user = new DaoStudent().createStudent(userId, name, password, email);
+                user = new DaoStudent().importInstance(userId);
+                break;
         }
 
         return user;
