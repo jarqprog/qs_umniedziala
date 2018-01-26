@@ -23,7 +23,7 @@ public class DaoWallet extends Dao {
         ArrayList<Artifact> artifacts = null;
         String query = "Select * from wallets where id_student= ?";
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, userID);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -36,7 +36,7 @@ public class DaoWallet extends Dao {
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return wallet;
@@ -44,14 +44,14 @@ public class DaoWallet extends Dao {
 
     private ArrayList<Artifact> getUserArtifacts(int userID) {
 
-        ArrayList<Artifact> artifacts = null;
+        ArrayList<Artifact> artifacts = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         String query = "Select artifacts.id_artifact from artifacts inner join artifacts_in_wallets "
                        + "on artifacts.id_artifact = artifacts_in_wallets.id_artifact "
                        + "where artifacts_in_wallets.id_student = ?;";
 
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, userID);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -63,7 +63,7 @@ public class DaoWallet extends Dao {
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
