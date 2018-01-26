@@ -21,7 +21,7 @@ public class DaoArtifact extends Dao{
         PreparedStatement preparedStatement = null;
         String query = "Select * from artifacts where id_artifact = ?";
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, itemId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -36,7 +36,7 @@ public class DaoArtifact extends Dao{
 
             resultSet.close();
             preparedStatement.close();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
