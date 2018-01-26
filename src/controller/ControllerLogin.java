@@ -1,32 +1,18 @@
 package controller;
 
-import java.util.ArrayList;
 
-//import controller.ControllerAdmin;
-//import controller.ControllerMentor;
-//import controller.ControllerStudent;
-//import controller.IUserController;
-//import dao.DaoAdmin;
-//import dao.DaoArtifact;
-//import dao.DaoClass;
-//import dao.DaoMentor;
-import dao.DaoStudent;
-//import dao.DaoQuest;
-import iterator.MyIterator;
 import model.Admin;
 import model.Mentor;
 import model.Student;
 import model.User;
 import view.ViewLogin;
-import dao.DaoUser;  //testL
+import dao.DaoUser;
 
 public class ControllerLogin{
     private ViewLogin viewLogin = new ViewLogin();
-    private DaoStudent daoStudent;
     private DaoUser daoUser;
 
     public ControllerLogin(){
-        this.daoStudent = new DaoStudent();
         this.daoUser = new DaoUser();
     }
 
