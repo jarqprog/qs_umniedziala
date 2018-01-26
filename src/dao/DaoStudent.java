@@ -2,7 +2,10 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Calendar;
+
 import model.*;
 
 public class DaoStudent extends Dao {
@@ -22,21 +25,25 @@ public class DaoStudent extends Dao {
         String query = "SELECT * FROM users WHERE id_user = ?;";
 
         try {
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, studentId);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, String.valueOf(studentId));
+            ResultSet resultSet = preparedStatement.executeQuery();
+
             int userId = resultSet.getInt("id_user");
+
             String name = resultSet.getString("name");
             String password = resultSet.getString("password");
             String email = resultSet.getString("email");
-            resultSet.close();
-            preparedStatement.close();
 
             student = createStudent(userId, name, password, email);
             Wallet wallet = new DaoWallet().importInstance(studentId);
             student.setWallet(wallet);
 
-        } catch (SQLException e) {
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
             return student;
         }
 
@@ -68,9 +75,7 @@ public class DaoStudent extends Dao {
 
     public void updateInstance(Student student) {
 
-        String query = "update users" +
-                "set name = ?, password = ?, email = ?" +
-                "where id_user= ?;";
+        String query = "update users set name = ?, password = ?, email = ? where id_user= ?;";
 
         String name = student.getName();
         String password = student.getPassword();
