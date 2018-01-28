@@ -29,17 +29,20 @@ public class DaoStudent extends Dao {
             preparedStatement.setString(1, String.valueOf(studentId));
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            int userId = resultSet.getInt("id_user");
+            if(!resultSet.isClosed()){
 
-            String name = resultSet.getString("name");
-            String password = resultSet.getString("password");
-            String email = resultSet.getString("email");
+                int userId = resultSet.getInt("id_user");
 
-            student = createStudent(userId, name, password, email);
-            Wallet wallet = new DaoWallet().importInstance(studentId);
-            student.setWallet(wallet);
+                String name = resultSet.getString("name");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
 
-            resultSet.close();
+                student = createStudent(userId, name, password, email);
+                Wallet wallet = new DaoWallet().importInstance(studentId);
+                student.setWallet(wallet);
+
+                resultSet.close();
+            }
             preparedStatement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -74,22 +77,25 @@ public class DaoStudent extends Dao {
     }
 
     public void updateInstance(Student student) {
-
-        String query = "update users set name = ?, password = ?, email = ? where id_user= ?;";
-
         String name = student.getName();
         String password = student.getPassword();
         String email = student.getEmail();
         int studentId = student.getUserId();
+
         PreparedStatement preparedStatement = null;
+        String query = "update users set name = ?, password = ?, email = ? where id_user= ?;";
+
         try {
             preparedStatement = connection.prepareStatement(query);
+
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(3, studentId);
+
             preparedStatement.executeQuery();
             preparedStatement.close();
+
         } catch (SQLException e) {
             System.out.println("Student update failed");
         }

@@ -27,13 +27,13 @@ public class DaoWallet extends Dao {
             preparedStatement.setInt(1, userID);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
+            if (!resultSet.isClosed()) {
                 int allCoins = resultSet.getInt("all_coins");
                 int availableCoins = resultSet.getInt("available_coins");
                 artifacts = getUserArtifacts(userID);
                 wallet = new Wallet(allCoins, availableCoins, artifacts);
+                resultSet.close();
             }
-            resultSet.close();
             preparedStatement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -60,6 +60,7 @@ public class DaoWallet extends Dao {
                 Artifact artifact = new DaoArtifact().importInstance(idArtifact);
                 artifacts.add(artifact);
             }
+            
             resultSet.close();
             preparedStatement.close();
 

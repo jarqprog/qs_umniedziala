@@ -25,16 +25,16 @@ public class DaoArtifact extends Dao{
             preparedStatement.setInt(1, itemId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
+            if (resultSet.isClosed()) {
                 String name = resultSet.getString("name");
                 int value = resultSet.getInt("value");
                 String description = resultSet.getString("description");
                 String type = resultSet.getString("type");
 
                 artifact = new Artifact(itemId, name, value, description, type);
+                resultSet.close();
             }
 
-            resultSet.close();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
