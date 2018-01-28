@@ -40,7 +40,7 @@ public class DaoUser extends Dao{
         PreparedStatement preparedStatement = null;
         String query = "Select name from roles where id_role= ?;";
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, id_role);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -50,7 +50,7 @@ public class DaoUser extends Dao{
             }
 
             preparedStatement.close();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 

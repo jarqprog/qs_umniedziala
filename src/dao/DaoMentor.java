@@ -55,7 +55,7 @@ public class DaoMentor extends Dao {
                        "values (?, ?, ?);";
 
         try{
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
@@ -63,7 +63,7 @@ public class DaoMentor extends Dao {
             preparedStatement.executeQuery();
             preparedStatement.close();
 
-        }catch (SQLException e){
+        }catch (SQLException | ClassNotFoundException e){
             System.out.println("Mentor insertion failed");
         }
     }
@@ -79,14 +79,14 @@ public class DaoMentor extends Dao {
                 "where id_user= ?;";
 
         try{
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, mentorId);
             preparedStatement.executeQuery();
             preparedStatement.close();
-        } catch (SQLException e){
+        } catch (SQLException | ClassNotFoundException e){
             System.out.println("Mentor update failed");
         }
     }

@@ -64,14 +64,14 @@ public class DaoStudent extends Dao {
                 "values (?, ?, ?);";
 
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.executeQuery();
             preparedStatement.close();
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Student insertion failed");
         }
     }
@@ -86,7 +86,7 @@ public class DaoStudent extends Dao {
         String query = "update users set name = ?, password = ?, email = ? where id_user= ?;";
 
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -96,7 +96,7 @@ public class DaoStudent extends Dao {
             preparedStatement.executeQuery();
             preparedStatement.close();
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Student update failed");
         }
     }
