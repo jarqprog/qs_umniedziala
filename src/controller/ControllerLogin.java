@@ -6,18 +6,18 @@ import model.Mentor;
 import model.Student;
 import model.User;
 import view.ViewLogin;
-import dao.DaoUser;
+import dao.DaoLogin;
 
 public class ControllerLogin{
     private ViewLogin viewLogin = new ViewLogin();
-    private DaoUser daoUser;
+    private DaoLogin daoLogin;
 
     public ControllerLogin(){
-        this.daoUser = new DaoUser();
+        this.daoLogin = new DaoLogin();
     }
 
     public void runMenu(){
-        if(daoUser.setConnection()){
+        if(daoLogin.setConnection()){
 
             String userOption = "";
             while (!userOption.equals("0")) {
@@ -36,7 +36,7 @@ public class ControllerLogin{
                 }
             }
 
-        daoUser.closeConnection();
+        daoLogin.closeConnection();
         }
     
     }
@@ -45,7 +45,7 @@ public class ControllerLogin{
         String userEmail = viewLogin.getInputFromUser("email: ");
         String userPassword = viewLogin.getInputFromUser("password: ");
 
-        User user = daoUser.getUser(userEmail, userPassword);
+        User user = daoLogin.getUser(userEmail, userPassword);
 
         if(user != null){
             IUserController userController = getUserController(user);
