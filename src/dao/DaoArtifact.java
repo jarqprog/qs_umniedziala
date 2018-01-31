@@ -25,7 +25,7 @@ public class DaoArtifact extends Dao{
             preparedStatement.setInt(1, itemId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.isClosed()) {
+            if (!resultSet.isClosed()) {
                 String name = resultSet.getString("name");
                 int value = resultSet.getInt("value");
                 String description = resultSet.getString("description");
