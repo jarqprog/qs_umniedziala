@@ -2,11 +2,12 @@ package dao;
 
 import model.Admin;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DaoAdmin implements IDaoUser <Admin> {
+public class DaoAdmin implements IDaoUser <Admin>  {
 
     public Admin createInstance (String name, String password, String email){
         return new Admin(name, password, email);
@@ -20,6 +21,7 @@ public class DaoAdmin implements IDaoUser <Admin> {
         Admin admin = null;
         PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM users WHERE id_user = ?;";
+
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -50,8 +52,8 @@ public class DaoAdmin implements IDaoUser <Admin> {
         String email = admin.getEmail();
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into users (name, password, email)" +
-                "values (?, ?, ?);";
+        String query = "INSERT into users (name, password, email, id_role)" +
+                "values (?, ?, ?, 1);";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -59,7 +61,7 @@ public class DaoAdmin implements IDaoUser <Admin> {
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
 
         }catch (SQLException | ClassNotFoundException e){
@@ -77,12 +79,13 @@ public class DaoAdmin implements IDaoUser <Admin> {
                 "where id_user= ?;";
 
         try{
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            Connection connection = DbConnection.getConnection();
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, adminId);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException e){
             System.out.println("Admin update failed");
