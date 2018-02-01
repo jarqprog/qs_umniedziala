@@ -24,15 +24,19 @@ public class DaoMentor extends Dao {
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, mentorId);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
-            int userId = resultSet.getInt("id_user");
-            String name = resultSet.getString("name");
-            String password = resultSet.getString("password");
-            String email = resultSet.getString("email");
-            resultSet.close();
-            preparedStatement.close();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            mentor = createMentor(userId, name, password, email);
+            if(!resultSet.isClosed()) {
+                int userId = resultSet.getInt("id_user");
+                String name = resultSet.getString("name");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+
+                mentor = createMentor(userId, name, password, email);
+
+                resultSet.close();
+            }
+            preparedStatement.close();
 
         } catch (SQLException e) {
             return mentor;
@@ -51,38 +55,38 @@ public class DaoMentor extends Dao {
                        "values (?, ?, ?);";
 
         try{
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
+
             preparedStatement.executeQuery();
             preparedStatement.close();
 
-        }catch (SQLException e){
+        }catch (SQLException | ClassNotFoundException e){
             System.out.println("Mentor insertion failed");
         }
     }
 
     public void updateInstance(Mentor mentor){
-
-        String query = "update users" +
-                "set name = ?, password = ?, email = ?"+
-                "where id_user= ?;";
-
         String name = mentor.getName();
         String password = mentor.getPassword();
         String email = mentor.getEmail();
         int mentorId = mentor.getUserId();
+
         PreparedStatement preparedStatement = null;
+        String query = "update users SET name = ?, password = ?, email = ?"+
+                "where id_user= ?;";
+
         try{
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, mentorId);
             preparedStatement.executeQuery();
             preparedStatement.close();
-        } catch (SQLException e){
+        } catch (SQLException | ClassNotFoundException e){
             System.out.println("Mentor update failed");
         }
     }

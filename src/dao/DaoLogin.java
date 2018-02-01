@@ -1,13 +1,13 @@
 package dao;
 
-
-import model.*;
+import model.User;
+import model.Admin;
+import model.Mentor;
+import model.Student;
 
 import java.sql.*;
-import java.util.ArrayList;
 
-
-public class DaoUser extends Dao{
+public class DaoLogin extends Dao{
 
     public User getUser(String email, String password){
         User user = null;
@@ -19,16 +19,13 @@ public class DaoUser extends Dao{
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.isClosed()){
-                return null;
+            if(!resultSet.isClosed()) {
+                int id_role = resultSet.getInt("id_role");
+                String role = getRole(id_role);
+
+                user = createUser(resultSet, role);
+                resultSet.close();
             }
-
-            int id_role = resultSet.getInt("id_role");
-            String role = getRole(id_role);
-
-            user = createUser(resultSet, role);
-
-            resultSet.close();
             preparedStatement.close();
 
         }catch(SQLException | ClassNotFoundException e){
@@ -43,16 +40,17 @@ public class DaoUser extends Dao{
         PreparedStatement preparedStatement = null;
         String query = "Select name from roles where id_role= ?;";
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, id_role);
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            if(!resultSet.isClosed()) {
+                role = resultSet.getString("name");
+                resultSet.close();
+            }
 
-            role = resultSet.getString("name");
-
-            resultSet.close();
             preparedStatement.close();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
