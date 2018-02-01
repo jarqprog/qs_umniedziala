@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DaoAdmin extends Dao implements IDaoUser{
+public class DaoAdmin implements IDaoUser <Admin> {
 
     public Admin createInstance (String name, String password, String email){
         return new Admin(name, password, email);
@@ -23,7 +23,7 @@ public class DaoAdmin extends Dao implements IDaoUser{
         String query = "SELECT * FROM users WHERE id_user = ?;";
 
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, adminId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -39,7 +39,7 @@ public class DaoAdmin extends Dao implements IDaoUser{
             }
             preparedStatement.close();
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             return admin;
         }
         return admin;
