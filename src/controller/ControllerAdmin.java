@@ -99,16 +99,18 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void createLevel() {
-//        DaoLevel daoLevel = new DaoLevel();
-//
-//        String nameRequest = "Enter name of new level: ";
-//        String levelName = viewAdmin.getInputFromUser(nameRequest);
-//
-//        String numberRequest = "Enter the number of coins required for level: ";
-//        int levelNumber = viewAdmin.getIntInputFromUser(numberRequest);
-//
-//        daoLevel.createLevels(levelName, levelNumber);
-//
+        seeAllLevels();
+
+        String nameRequest = "Enter name of new level: ";
+        String levelName = viewAdmin.getInputFromUser(nameRequest);
+
+        String coinsLimitRequest = "Enter the number of coins required for level: ";
+        int coinsLimit = viewAdmin.getIntInputFromUser(coinsLimitRequest);
+
+        DaoLevel daoLevel = new DaoLevel();
+        Level level = daoLevel.createLevel(levelName, coinsLimit);
+        daoLevel.exportLevel(level);
+
     }
 
     public void runMenu() {
