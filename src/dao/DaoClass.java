@@ -17,7 +17,32 @@ public class DaoClass{
         return new CodecoolClass(groupId, name, students);
     }
 
-    public CodecoolClass importClass(Integer classID){ return null;}
+    public CodecoolClass importClass(Integer classID){
+        CodecoolClass codecoolClass = null;
+        PreparedStatement preparedStatement;
+
+        String query = "SELECT * from codecool_classes where id_codecool_class = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, classID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()) {
+                String name = resultSet.getString("name");
+                ArrayList<Student> students = new DaoStudent().getCodecoolClassStudents(classID);
+
+                codecoolClass = createClass(classID, name, students);
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Class not found");
+        }
+
+        return codecoolClass;
+    }
 
     public void exportClass(CodecoolClass codecoolClass) {
 
