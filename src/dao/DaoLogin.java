@@ -76,10 +76,10 @@ public class DaoLogin extends Dao{
 
         switch (role.toUpperCase()) {
             case "ADMIN":
-                user = new Admin(userId, name, password, email);
+                user = new DaoAdmin().importInstance(userId);
                 break;
             case "MENTOR":
-                user = new DaoMentor().createMentor(userId, name, password, email);
+                user = new DaoMentor().importInstance(userId);
                 break;
             case "STUDENT":
                 user = new DaoStudent().importInstance(userId);
