@@ -53,11 +53,25 @@ public class ControllerAdmin implements IUserController {
     }
 
     private void seeAllMentors() {
+
         DaoMentor daoMentor = new DaoMentor();
         ArrayList<Mentor> mentorList = daoMentor.getAllMentors();
 
         viewAdmin.displayText("Mentor's list:");
         viewAdmin.displayList(mentorList);
+    }
+
+    private Mentor getMentor() {
+
+        int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
+        DaoMentor daoMentor = new DaoMentor();
+        Mentor mentor = daoMentor.importInstance(mentorId);
+        while (mentor == null) {
+            viewAdmin.displayText("No mentor with such id found!");
+            mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
+            mentor = daoMentor.importInstance(mentorId);
+        }
+        return mentor;
     }
 
     private void editMentorClass(Mentor mentor){
