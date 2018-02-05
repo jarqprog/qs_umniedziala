@@ -3,11 +3,11 @@ package controller;
 import java.util.ArrayList;
 //import dao.DaoClass;
 //import dao.DaoMentor;
-//import dao.DaoLevel;
+import dao.DaoLevel;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
-//import model.Level;
+import model.Level;
 import view.ViewAdmin;
 
 public class ControllerAdmin implements IUserController {
@@ -87,6 +87,15 @@ public class ControllerAdmin implements IUserController {
 
     public void assignMentorToClass() {
         viewAdmin.displayText("Implementation in progress");
+    }
+
+    private void seeAllLevels() {
+
+        DaoLevel daoLevel = new DaoLevel();
+        ArrayList<Level> levelList = daoLevel.getAllLevels();
+
+        viewAdmin.displayText("List of existing levels:");
+        viewAdmin.displayList(levelList);
     }
 
     public void createLevel() {
