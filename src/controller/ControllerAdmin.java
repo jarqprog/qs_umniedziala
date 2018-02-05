@@ -6,6 +6,7 @@ import java.util.ArrayList;
 //import dao.DaoLevel;
 
 import dao.DaoClass;
+import dao.DaoMentor;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
@@ -88,11 +89,47 @@ public class ControllerAdmin implements IUserController {
 //        daoMentor.exportData(mentorList);
     }
 
-    public void seeMentorData() {
-        viewAdmin.displayText("Implementation in progress");
+    private void editMentorClass(Mentor mentor){
+
+        Integer userId = mentor.getUserId();
+        Integer mentorId = new DaoMentor().getMentorClassId(mentor);
+        if(mentorId == null){
+            assignMentorToClass(userId);
+        }else{
+            String adminOption = "";
+            while (!adminOption.equals("0")) {
+
+                viewAdmin.displayText("\nWhat would like to do?");
+                viewAdmin.displayList(viewAdmin.getEditMentorOptions());
+
+                adminOption = viewAdmin.getInputFromUser("Option: ");
+                switch (adminOption) {
+                    case "1": unsignMentorFromClass(userId);
+                        break;
+                    case "2": changeMentorClass(userId);
+                        break;
+                    case "0": break;
+
+                    default: viewAdmin.displayText("Wrong option. Try again!");
+                        break;
+                }
+            }
+        }
     }
 
-    public void assignMentorToClass() {
+    private void assignMentorToClass(Integer userId){
+        ;
+    }
+
+    private void unsignMentorFromClass(Integer userId){
+        ;
+    }
+
+    private void changeMentorClass(Integer userId){
+        ;
+    }
+
+    public void seeMentorData() {
         viewAdmin.displayText("Implementation in progress");
     }
 
