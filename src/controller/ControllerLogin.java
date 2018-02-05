@@ -1,12 +1,15 @@
 package controller;
 
 
+import dao.DbConnection;
 import model.Admin;
 import model.Mentor;
 import model.Student;
 import model.User;
 import view.ViewLogin;
 import dao.DaoLogin;
+
+import java.sql.SQLException;
 
 public class ControllerLogin{
     private ViewLogin viewLogin = new ViewLogin();
@@ -17,28 +20,34 @@ public class ControllerLogin{
     }
 
     public void runMenu(){
-        if(daoLogin.setConnection()){
+        try {
+            if(DbConnection.getConnection() != null){
 
-            String userOption = "";
-            while (!userOption.equals("0")) {
+                String userOption = "";
+                while (!userOption.equals("0")) {
 
-                System.out.println("\nWhat would like to do?");
-                viewLogin.displayList(viewLogin.getLoginOptions());
+                    System.out.println("\nWhat would like to do?");
+                    viewLogin.displayList(viewLogin.getLoginOptions());
 
-                userOption = viewLogin.getInputFromUser("Option: ");
-                switch (userOption) {
-                    case "1": login();
-                            break;
-                    case "0": break;
+                    userOption = viewLogin.getInputFromUser("Option: ");
+                    switch (userOption) {
+                        case "1": login();
+                                break;
+                        case "0": break;
 
-                    default: System.out.println("Wrong option. Try again!");
-                             break;
+                        default: System.out.println("Wrong option. Try again!");
+                                 break;
+                    }
                 }
-            }
 
-        daoLogin.closeConnection();
+            DbConnection.getConnection().close();
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    
+
     }
 
     public void login(){
