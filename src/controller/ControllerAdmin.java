@@ -4,7 +4,7 @@ import java.util.ArrayList;
 //import dao.DaoClass;
 //import dao.DaoMentor;
 //import dao.DaoLevel;
-import com.sun.org.apache.bcel.internal.classfile.Code;
+
 import dao.DaoClass;
 import model.Admin;
 import model.CodecoolClass;
@@ -40,10 +40,10 @@ public class ControllerAdmin implements IUserController {
 
     public void createClass() {
 
-        String className = viewAdmin.getInputFromUser("Enter the name of the class");
+        String className = viewAdmin.getInputFromUser("Enter the name of the class:");
         DaoClass daoClass = new DaoClass();
-        //CodecoolClass codecoolClass = daoClass.createClass(className);
-        //daoClass.exportClass(codecoolClass);
+        CodecoolClass codecoolClass = daoClass.createClass(className);
+        daoClass.exportClass(codecoolClass);
 
     }
 
