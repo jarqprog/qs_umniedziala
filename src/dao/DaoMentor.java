@@ -79,7 +79,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
         int mentorId = mentor.getUserId();
 
         PreparedStatement preparedStatement = null;
-        String query = "update users SET name = ?, password = ?, email = ?, "+
+        String query = "update users SET name = ?, password = ?, email = ? "+
                 "where id_user= ?;";
 
         try{
