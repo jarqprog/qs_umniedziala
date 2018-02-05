@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import model.CodecoolClass;
+import model.Student;
 
 public class DaoClass{
 
