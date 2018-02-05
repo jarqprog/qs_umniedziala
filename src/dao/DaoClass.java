@@ -67,4 +67,16 @@ public class DaoClass{
         return allCodecoolClasses;
     }
 
+    public void assignMentorToClass(Integer mentorId, Integer classId){
+        //insert
+    }
+
+    public void updateMentorInClass(Integer mentorId, Integer classId){
+        //update
+    }
+
+    public void unsignMentorFromClass(Integer mentorId){
+        //remove
+    }
+
 }
