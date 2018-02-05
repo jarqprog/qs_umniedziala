@@ -118,4 +118,8 @@ public class DaoMentor implements IDaoUser <Mentor> {
         return roleId;
 
     }
+
+    public Integer getMentorClassId(Mentor mentor){
+        return null;
+    }
 }
