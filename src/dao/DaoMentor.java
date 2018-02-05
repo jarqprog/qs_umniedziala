@@ -52,7 +52,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
         int roleId = getRoleID("mentor");
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into users (name, password, email)" +
+        String query = "INSERT into users (name, password, email, id_role)" +
                        "values (?, ?, ?, ?);";
 
         try{
