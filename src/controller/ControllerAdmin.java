@@ -140,7 +140,8 @@ public class ControllerAdmin implements IUserController {
     }
 
     private void changeMentorClass(Integer userId){
-        ;
+        CodecoolClass codecoolClass = getCodecoolClass();
+        new DaoClass().updateMentorInClass(userId, codecoolClass.getGroupId());
     }
 
     private CodecoolClass getCodecoolClass(){
