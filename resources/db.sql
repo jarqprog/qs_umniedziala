@@ -32,7 +32,8 @@ CREATE TABLE IF NOT EXISTS artifacts (
 
 CREATE TABLE IF NOT EXISTS teams (
     id_team INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL);
+    name TEXT NOT NULL,
+	available_coins INTEGER NOT NULL);
 
 CREATE TABLE IF NOT EXISTS codecool_classes (
     id_codecool_class INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -84,15 +85,15 @@ INSERT INTO roles VALUES (?, 'admin');
 INSERT INTO roles VALUES (?, 'mentor');
 INSERT INTO roles VALUES (?, 'student');
 
-INSERT INTO users VALUES (?, 'Jerzy Jeżyk', 'jerzy', 'jerzy@codecool.com', 1);
+INSERT INTO users VALUES (?, 'Jerzy Jeżyk', 'jerzy', 'jerzy@cc.com', 1);
 
-INSERT INTO users VALUES (?, 'Dominik Starzyk', 'dominik', 'dominik@codecool.com', 2);
-INSERT INTO users VALUES (?, 'Piotr Tomaszewski', 'piotr', 'piotr@codecool.com', 2);
-INSERT INTO users VALUES (?, 'Konrad Gadzina', 'konrad', 'konrad@codecool.com', 2);
+INSERT INTO users VALUES (?, 'Dominik Starzyk', 'dominik', 'dominik@cc.com', 2);
+INSERT INTO users VALUES (?, 'Piotr Tomaszewski', 'piotr', 'piotr@cc.com', 2);
+INSERT INTO users VALUES (?, 'Konrad Gadzina', 'konrad', 'konrad@cc.com', 2);
 
-INSERT INTO users VALUES (?, 'Marta Stąporek', 'marta', 'marta@codecool.com', 3);
-INSERT INTO users VALUES (?, 'Filip Hartman', 'filip', 'filip@codecool.com', 3);
-INSERT INTO users VALUES (?, 'Joanna Baran', 'joanna', 'joanna@codecool.com', 3);
+INSERT INTO users VALUES (?, 'Marta Stąporek', 'marta', 'marta@cc.com', 3);
+INSERT INTO users VALUES (?, 'Filip Hartman', 'filip', 'filip@cc.com', 3);
+INSERT INTO users VALUES (?, 'Joanna Baran', 'joanna', 'joanna@cc.com', 3);
 
 INSERT INTO quests VALUES (?, 'Solving the magic puzzle', 100, 'Finishing an SI assignment', 'individual', 'basic');
 INSERT INTO quests VALUES (?, 'Slaying a dragon', 100, 'Passing a Checkpoint', 'individual', 'basic');
@@ -112,10 +113,10 @@ INSERT INTO artifacts VALUES (?, 'Combat training', 50, 'Private mentoring', 'in
 INSERT INTO artifacts VALUES (?, 'Sanctuary', 300, 'You can spend a day in home office', 'individual');
 INSERT INTO artifacts VALUES (?, 'Time travel', 500, 'Extend SI week assignment deadline by one day', 'individual');
 
-INSERT INTO teams VALUES (?, 'Umniedziala');
-INSERT INTO teams VALUES (?, 'Ziemniaki');
-INSERT INTO teams VALUES (?, 'Cytryny');
-INSERT INTO teams VALUES (?, 'Wiaderka');
+INSERT INTO teams VALUES (?, 'Umniedziala', 20);
+INSERT INTO teams VALUES (?, 'Ziemniaki', 55);
+INSERT INTO teams VALUES (?, 'Cytryny', 0);
+INSERT INTO teams VALUES (?, 'Wiaderka', 80);
 
 INSERT INTO codecool_classes VALUES (?, '2017-1-a');
 INSERT INTO codecool_classes VALUES (?, '2017-1-b');
