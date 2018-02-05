@@ -102,7 +102,19 @@ public class DaoClass{
     }
 
     public void unsignMentorFromClass(Integer mentorId){
-        //remove
+        PreparedStatement preparedStatement = null;
+        String query = "DELETE FROM mentors_in_classes WHERE id_mentor=?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, mentorId);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Unsigning mentor from class failed");
+        }
     }
 
 }
