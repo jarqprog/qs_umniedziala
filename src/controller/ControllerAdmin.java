@@ -4,6 +4,8 @@ import java.util.ArrayList;
 //import dao.DaoClass;
 //import dao.DaoMentor;
 //import dao.DaoLevel;
+
+import dao.DaoClass;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
@@ -37,7 +39,12 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void createClass() {
-        viewAdmin.displayText("Implementation in progress");
+
+        String className = viewAdmin.getInputFromUser("Enter the name of the class:");
+        DaoClass daoClass = new DaoClass();
+        CodecoolClass codecoolClass = daoClass.createClass(className);
+        daoClass.exportClass(codecoolClass);
+
     }
 
     public void editMentor() {
