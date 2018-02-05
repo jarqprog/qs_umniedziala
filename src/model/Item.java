@@ -74,7 +74,7 @@ public abstract class Item {
         return "name: " + name
                 + ", value: " + value
                 + ", description: " + description
-                + ", status: " + type
+                + ", type: " + type
                 + ", item id: " + itemId;
     }
 
