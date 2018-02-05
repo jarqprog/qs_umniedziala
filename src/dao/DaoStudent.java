@@ -61,7 +61,7 @@ public class DaoStudent implements IDaoUser <Student> {
         int roleId = getRoleID("student");
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into users (name, password, email)" +
+        String query = "INSERT into users (name, password, email, id_role)" +
                 "values (?, ?, ?, ?);";
 
         try {
@@ -71,7 +71,7 @@ public class DaoStudent implements IDaoUser <Student> {
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, roleId);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -96,7 +96,7 @@ public class DaoStudent implements IDaoUser <Student> {
             preparedStatement.setString(3, email);
             preparedStatement.setInt(3, studentId);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
