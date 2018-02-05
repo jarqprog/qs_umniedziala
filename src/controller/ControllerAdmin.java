@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import dao.DaoClass;
 import dao.DaoMentor;
+import iterator.MyIterator;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
@@ -134,11 +135,24 @@ public class ControllerAdmin implements IUserController {
     }
 
     private void unsignMentorFromClass(Integer userId){
-        ;
+
+        //samo del relation from tab
     }
 
     private void changeMentorClass(Integer userId){
         ;
+    }
+
+    private CodecoolClass getCodecoolClass(){
+        ArrayList<CodecoolClass> classes = new DaoClass().getAllClasses();
+
+        MyIterator<CodecoolClass> iterator = new MyIterator <CodecoolClass>(classes);
+        while(iterator.hasNext()){
+            viewAdmin.displayText(iterator.next().toString());
+        }
+
+        Integer classId = viewAdmin.getIntInputFromUser("Choose class by id: ");
+        return new DaoClass().importClass(classId);
     }
 
     public void seeMentorData() {
