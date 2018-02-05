@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -33,6 +34,35 @@ public class DaoClass{
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Class insertion failed");
         }
+    }
+
+    public ArrayList<CodecoolClass> getAllClasses(){
+        ArrayList <CodecoolClass> allCodecoolClasses = new ArrayList <CodecoolClass> ();
+
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT * FROM codecool_classes;";
+        CodecoolClass codecoolClass;
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()) {
+                int classId = resultSet.getInt("id_codecool_class");
+                String name = resultSet.getString("name");
+                ArrayList<Student> students = new DaoStudent().getCodecoolClassStudents(classId);
+
+                codecoolClass = createClass(classId, name, students);
+                allCodecoolClasses.add(codecoolClass);
+
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("No Classes");
+        }
+        return allCodecoolClasses;
     }
 
 }
