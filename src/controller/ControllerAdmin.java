@@ -131,12 +131,12 @@ public class ControllerAdmin implements IUserController {
     }
 
     private void assignMentorToClass(Integer userId){
-        ;
+        CodecoolClass codecoolClass = getCodecoolClass();
+        new DaoClass().assignMentorToClass(userId, codecoolClass.getGroupId());
     }
 
     private void unsignMentorFromClass(Integer userId){
-
-        //samo del relation from tab
+        new DaoClass().unsignMentorFromClass(userId);
     }
 
     private void changeMentorClass(Integer userId){
