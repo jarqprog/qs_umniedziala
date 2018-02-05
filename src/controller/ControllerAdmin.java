@@ -176,9 +176,7 @@ public class ControllerAdmin implements IUserController {
                           break;
                 case "4": seeMentorData();
                           break;
-                case "5": assignMentorToClass();
-                          break;
-                case "6": createLevel();
+                case "5": createLevel();
                           break;
                 case "0": break;
 
