@@ -8,13 +8,13 @@ import java.util.Calendar;
 
 import model.*;
 
-public class DaoStudent extends Dao {
+public class DaoStudent implements IDaoUser <Student> {
 
-    public Student createStudent(String name, String password, String email) {
+    public Student createInstance(String name, String password, String email) {
         return new Student(name, password, email);
     }
 
-    public Student createStudent(int userId, String name, String password, String email) {
+    public Student createInstance(int userId, String name, String password, String email) {
         return new Student(userId, name, password, email);
     }
 
@@ -37,7 +37,7 @@ public class DaoStudent extends Dao {
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                student = createStudent(userId, name, password, email);
+                student = createInstance(userId, name, password, email);
                 Wallet wallet = new DaoWallet().importInstance(studentId);
                 student.setWallet(wallet);
 
@@ -58,16 +58,19 @@ public class DaoStudent extends Dao {
         String name = student.getName();
         String password = student.getPassword();
         String email = student.getEmail();
+        int roleId = getRoleID("student");
 
         PreparedStatement preparedStatement = null;
         String query = "INSERT into users (name, password, email)" +
-                "values (?, ?, ?);";
+                "values (?, ?, ?, ?);";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
+            preparedStatement.setInt(4, roleId);
+
             preparedStatement.executeQuery();
             preparedStatement.close();
 
@@ -99,6 +102,32 @@ public class DaoStudent extends Dao {
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Student update failed");
         }
+    }
+
+    public int getRoleID(String roleName){
+
+        int roleId = 0;
+        PreparedStatement preparedStatement = null;
+
+        String query = "SELECT id_role from roles where name = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, roleName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()) {
+                roleId = resultSet.getInt("id_role");
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Role not found");
+        }
+
+        return roleId;
+
     }
 
 }
