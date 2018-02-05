@@ -105,9 +105,9 @@ public class ControllerAdmin implements IUserController {
     private void editMentorClass(Mentor mentor){
 
         Integer userId = mentor.getUserId();
-        Integer mentorId = new DaoMentor().getMentorClassId(mentor);
+        Integer mentorClassId = new DaoMentor().getMentorClassId(mentor);
 
-        if(mentorId == null){
+        if(mentorClassId == null){
             assignMentorToClass(userId);
         }else{
             String adminOption = "";
