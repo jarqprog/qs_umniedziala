@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DaoWallet extends Dao {
+public class DaoWallet{
 
     public Wallet createWallet(){
         return new Wallet();

@@ -6,13 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DaoMentor extends Dao {
+public class DaoMentor implements IDaoUser <Mentor> {
 
-    public Mentor createMentor(String name, String password, String email) {
+    public Mentor createInstance(String name, String password, String email) {
         return new Mentor(name, password, email);
     }
 
-    public Mentor createMentor(int userId, String name, String password, String email) {
+    public Mentor createInstance(int userId, String name, String password, String email) {
         return new Mentor(userId, name, password, email);
     }
 
@@ -22,7 +22,7 @@ public class DaoMentor extends Dao {
         String query = "SELECT * FROM users WHERE id_user = ?;";
 
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, mentorId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -32,13 +32,13 @@ public class DaoMentor extends Dao {
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                mentor = createMentor(userId, name, password, email);
+                mentor = createInstance(userId, name, password, email);
 
                 resultSet.close();
             }
             preparedStatement.close();
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             return mentor;
         }
         return mentor;
@@ -49,18 +49,20 @@ public class DaoMentor extends Dao {
         String name = mentor.getName();
         String password = mentor.getPassword();
         String email = mentor.getEmail();
+        int roleId = getRoleID("mentor");
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into users (name, password, email)" +
-                       "values (?, ?, ?);";
+        String query = "INSERT into users (name, password, email, id_role)" +
+                       "values (?, ?, ?, ?);";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
+            preparedStatement.setInt(4, roleId);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
 
         }catch (SQLException | ClassNotFoundException e){
@@ -75,7 +77,7 @@ public class DaoMentor extends Dao {
         int mentorId = mentor.getUserId();
 
         PreparedStatement preparedStatement = null;
-        String query = "update users SET name = ?, password = ?, email = ?"+
+        String query = "update users SET name = ?, password = ?, email = ?, "+
                 "where id_user= ?;";
 
         try{
@@ -84,10 +86,36 @@ public class DaoMentor extends Dao {
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, mentorId);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException e){
             System.out.println("Mentor update failed");
         }
+    }
+
+    public int getRoleID(String roleName){
+
+        int roleId = 0;
+        PreparedStatement preparedStatement = null;
+
+        String query = "SELECT id_role from roles where name = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, roleName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()) {
+                roleId = resultSet.getInt("id_role");
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Role not found");
+        }
+
+        return roleId;
+
     }
 }
