@@ -122,7 +122,27 @@ public class DaoMentor implements IDaoUser <Mentor> {
     }
 
     public Integer getMentorClassId(Mentor mentor){
-        return null;
+        Integer classId = null;
+        PreparedStatement preparedStatement;
+
+        String query = "SELECT id_codecool_class from mentors_in_classes where id_mentor = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, mentor.getUserId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()) {
+                classId = resultSet.getInt("id_codecool_class");
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Class not found");
+        }
+
+        return classId;
     }
 
     public ArrayList <Mentor> getAllMentors(){
