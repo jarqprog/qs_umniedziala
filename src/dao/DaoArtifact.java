@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DaoArtifact extends Dao{
+public class DaoArtifact{
 
     public Artifact createArtifact(String name, int value, String description, String type) {
         return new Artifact(name, value, description, type);

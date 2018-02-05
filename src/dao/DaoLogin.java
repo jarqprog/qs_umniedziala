@@ -7,7 +7,7 @@ import model.Student;
 
 import java.sql.*;
 
-public class DaoLogin extends Dao{
+public class DaoLogin{
 
     public User getUser(String email, String password){
         User user = null;
