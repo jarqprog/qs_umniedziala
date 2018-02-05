@@ -106,6 +106,7 @@ public class ControllerAdmin implements IUserController {
 
         Integer userId = mentor.getUserId();
         Integer mentorId = new DaoMentor().getMentorClassId(mentor);
+
         if(mentorId == null){
             assignMentorToClass(userId);
         }else{
@@ -118,8 +119,10 @@ public class ControllerAdmin implements IUserController {
                 adminOption = viewAdmin.getInputFromUser("Option: ");
                 switch (adminOption) {
                     case "1": unsignMentorFromClass(userId);
+                        adminOption = "0"; //to leave menu when operation is done
                         break;
                     case "2": changeMentorClass(userId);
+                        adminOption = "0";
                         break;
                     case "0": break;
 
