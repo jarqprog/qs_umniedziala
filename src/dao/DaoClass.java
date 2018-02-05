@@ -68,7 +68,20 @@ public class DaoClass{
     }
 
     public void assignMentorToClass(Integer mentorId, Integer classId){
-        //insert
+        PreparedStatement preparedStatement = null;
+        String query = "INSERT into mentors_in_classes (id_codecool_class, id_mentor) values (?, ?);";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, classId);
+            preparedStatement.setInt(2, mentorId);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Assigning mentor to class failed");
+        }
     }
 
     public void updateMentorInClass(Integer mentorId, Integer classId){
