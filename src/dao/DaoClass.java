@@ -6,4 +6,8 @@ import model.*;
 
 public class DaoClass{
 
+    public CodecoolClass createClass(String name){
+        return new CodecoolClass(name);
+    }
+
 }
