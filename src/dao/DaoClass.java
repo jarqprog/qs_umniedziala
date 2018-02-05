@@ -17,6 +17,8 @@ public class DaoClass{
         return new CodecoolClass(groupId, name, students);
     }
 
+    public CodecoolClass importClass(Integer classID){ return null;}
+
     public void exportClass(CodecoolClass codecoolClass) {
 
         String name = codecoolClass.getName();
