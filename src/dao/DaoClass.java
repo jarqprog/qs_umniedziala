@@ -85,7 +85,20 @@ public class DaoClass{
     }
 
     public void updateMentorInClass(Integer mentorId, Integer classId){
-        //update
+        PreparedStatement preparedStatement = null;
+        String query = "UPDATE mentors_in_classes SET id_codecool_class=? WHERE id_mentor=?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, classId);
+            preparedStatement.setInt(2, mentorId);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("updating mentors class assignment failed");
+        }
     }
 
     public void unsignMentorFromClass(Integer mentorId){
