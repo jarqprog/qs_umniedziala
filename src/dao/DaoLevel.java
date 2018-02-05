@@ -19,4 +19,8 @@ public class DaoLevel{
     public Level importLevel(int levelId) {
         return null;
     }
+
+    public ArrayList<Level> getAllLevels() {
+        return new ArrayList<Level>();
+    }
 }
