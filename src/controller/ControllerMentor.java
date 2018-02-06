@@ -39,21 +39,17 @@ public class ControllerMentor implements IUserController{
     }
 
     public void addQuest(){
-//        DaoQuest daoQuest = new DaoQuest();
-//
-//        String nameRequest = "Enter name of new quest: ";
-//        String questName = viewMentor.getInputFromUser(nameRequest);
-//
-//        String valueRequest = "Enter value of new quest: ";
-//        int questValue = viewMentor.getIntInputFromUser(valueRequest);
-//
-//        String descriptionRequest = "Enter description of quest";
-//        String questDescription = viewMentor.getInputFromUser(descriptionRequest);
-//
-//        String questStatus = chooseStatus();
-//        String questType = chooseType();
-//
-//        daoQuest.createQuest(questName, questValue, questDescription, questStatus, questType);
+
+        DaoQuest daoQuest = new DaoQuest();
+
+        String questName = viewMentor.getInputFromUser("Enter name of new quest: ");
+        int questValue = viewMentor.getIntInputFromUser( "Enter value of new quest: ");
+        String questDescription = viewMentor.getInputFromUser("Enter description of quest");
+        String questStatus = chooseStatus();
+        String questType = chooseType();
+
+        Quest quest = daoQuest.createQuest(questName, questValue, questDescription, questStatus, questType);
+        daoQuest.exportQuest(quest);
     }
 
     public void addArtifact() {
