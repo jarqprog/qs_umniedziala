@@ -133,6 +133,17 @@ public class DaoTeam{
     }
 
     public void assignStudentToTeam(int studentId, int teamId) {
+        String query = "INSERT INTO students_in_teams (id_team, id_student) VALUES (?, ?);";
 
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, teamId);
+            preparedStatement.setInt(2, studentId);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Assignment of student to team failed");
+        }
     }
 }
