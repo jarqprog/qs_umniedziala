@@ -18,7 +18,25 @@ public class DaoLevel{
 
     public void exportLevel(Level level){
 
+        String name = level.getName();
+        int coinsLimit = level.getCoinsLimit();
+
+        PreparedStatement preparedStatement = null;
+        String query = "INSERT into levels (name, coins_limit)" +
+                "values (?, ?);";
+
+        try{
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, coinsLimit);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Level insertion failed");
+        }
     }
+
 
     public Level importLevel(int levelId) {
         Level level = null;
