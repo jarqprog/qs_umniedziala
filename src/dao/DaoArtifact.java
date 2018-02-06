@@ -67,9 +67,6 @@ public class DaoArtifact{
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
-        for (Artifact artifact : artifacts) {
-            System.out.println(artifact);
-        }
         return artifacts;
     }
         
