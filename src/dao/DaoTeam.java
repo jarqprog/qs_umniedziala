@@ -84,7 +84,29 @@ public class DaoTeam{
     }
 
     public ArrayList<Student> getStudentsOfTeam(int teamId) {
-        return new ArrayList<Student>();
+        ArrayList<Student> studentsOfTeam = new ArrayList<Student>();
+        String query = "SELECT id_user FROM users JOIN students_in_teams "
+                     + "ON users.id_user = students_in_teams.id_student "
+                     + "WHERE students_in_teams.id_team = ?;";
+
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, teamId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                int userId = resultSet.getInt("id_user");
+                Student student = new DaoStudent().importInstance(userId);
+                studentsOfTeam.add(student);
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("No students");
+        }
+        return studentsOfTeam;
     }
 
     public ArrayList<Team> getAllTeams() {
