@@ -158,8 +158,10 @@ public class ControllerAdmin implements IUserController {
         CodecoolClass mentorsClass = new DaoClass().getMentorsClass(mentor.getUserId());
 
         viewAdmin.displayText(mentor.toString());
-        viewAdmin.displayText("");
-        viewAdmin.displayText(mentorsClass.toString());
+        if(mentorsClass != null){
+            viewAdmin.displayText("");
+            viewAdmin.displayText(mentorsClass.toString());
+        }
 
     }
 
