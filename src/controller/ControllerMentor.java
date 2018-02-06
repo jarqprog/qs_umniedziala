@@ -53,19 +53,20 @@ public class ControllerMentor implements IUserController{
     }
 
     public void addArtifact() {
-//        DaoArtifact daoArtifact = new DaoArtifact();
-//
-//        String nameRequest = "Enter name of new artifact: ";
-//        String artifactName = viewMentor.getInputFromUser(nameRequest);
-//
-//        String valueRequest = "Enter value of new artifact: ";
-//        int artifactValue = viewMentor.getIntInputFromUser(valueRequest);
-//
-//        String descriptionRequest = "Enter description of new artifact";
-//        String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
-//
-//        String artifactStatus = chooseStatus();
-//        daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
+        DaoArtifact daoArtifact = new DaoArtifact();
+
+        String nameRequest = "Enter name of new artifact: ";
+        String artifactName = viewMentor.getInputFromUser(nameRequest);
+
+        String valueRequest = "Enter value of new artifact: ";
+        int artifactValue = viewMentor.getIntInputFromUser(valueRequest);
+
+        String descriptionRequest = "Enter description of new artifact";
+        String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
+
+        String artifactStatus = chooseType();
+        Artifact artifact = daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
+        daoArtifact.exportArtifact(artifact);
     }
 
     private String chooseType() {
