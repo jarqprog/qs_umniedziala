@@ -1,15 +1,13 @@
 package controller;
 
 import java.util.ArrayList;
-//import dao.DaoClass;
+import dao.DaoLevel;
 import dao.DaoMentor;
-//import dao.DaoLevel;
-
 import dao.DaoClass;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
-//import model.Level;
+import model.Level;
 import view.ViewAdmin;
 
 public class ControllerAdmin implements IUserController {
@@ -90,17 +88,28 @@ public class ControllerAdmin implements IUserController {
         viewAdmin.displayText("Implementation in progress");
     }
 
+    private void seeAllLevels() {
+
+        DaoLevel daoLevel = new DaoLevel();
+        ArrayList<Level> levelList = daoLevel.getAllLevels();
+
+        viewAdmin.displayText("List of existing levels:");
+        viewAdmin.displayList(levelList);
+    }
+
     public void createLevel() {
-//        DaoLevel daoLevel = new DaoLevel();
-//
-//        String nameRequest = "Enter name of new level: ";
-//        String levelName = viewAdmin.getInputFromUser(nameRequest);
-//
-//        String numberRequest = "Enter the number of coins required for level: ";
-//        int levelNumber = viewAdmin.getIntInputFromUser(numberRequest);
-//
-//        daoLevel.createLevels(levelName, levelNumber);
-//
+        seeAllLevels();
+
+        String nameRequest = "Enter name of new level: ";
+        String levelName = viewAdmin.getInputFromUser(nameRequest);
+
+        String coinsLimitRequest = "Enter the number of coins required for level: ";
+        int coinsLimit = viewAdmin.getIntInputFromUser(coinsLimitRequest);
+
+        DaoLevel daoLevel = new DaoLevel();
+        Level level = daoLevel.createLevel(levelName, coinsLimit);
+        daoLevel.exportLevel(level);
+
     }
 
     public void runMenu() {
