@@ -221,7 +221,7 @@ public class ControllerMentor implements IUserController{
             viewMentor.displayList(viewMentor.getAssignStudentToTeamOptions());
             String chosenOption = viewMentor.getInputFromUser("Choose option: ");
             switch(chosenOption){
-                case "1": assignStudentToTeam();
+                case "1": assignStudentToTeam(team);
                     viewMentor.displayText("Student added to " + team.getName() + " team!");
                     break;
                 case "0": toContinue = false;
@@ -232,7 +232,10 @@ public class ControllerMentor implements IUserController{
         }while(toContinue);
     }
 
-    public void assignStudentToTeam(){}
+    public void assignStudentToTeam(Team team){
+        Student student = getStudent();
+        new DaoTeam().assignStudentToTeam(student.getUserId(), team.getGroupId());
+    }
 
     public void runMenu() {
         String mentorOption = "";
