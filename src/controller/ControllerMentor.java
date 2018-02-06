@@ -124,6 +124,15 @@ public class ControllerMentor implements IUserController{
         
     }
 
+    private void seeAllArtifacts() {
+
+        DaoArtifact daoArtifact = new DaoArtifact();
+        ArrayList<Artifact> artifactList = daoArtifact.getAllArtifacts();
+
+        viewMentor.displayText("List of artifacts:");
+        viewMentor.displayList(artifactList);
+    }
+
     public void toBeImplemented(){
         String text = "Implementation in progress";
         viewMentor.displayText(text);
