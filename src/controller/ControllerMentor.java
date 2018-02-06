@@ -69,7 +69,7 @@ public class ControllerMentor implements IUserController{
     }
 
     private String chooseArtifactType() {
-        String statusRequest = "Choose status:\n1. Individual\n2. Team\nOption: ";
+        String statusRequest = "Choose artifact type:\n1. Individual\n2. Team\nOption: ";
         String status = null;
         boolean choosingStatus = true;
         int option = 0;
