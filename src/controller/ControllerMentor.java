@@ -51,7 +51,7 @@ public class ControllerMentor implements IUserController{
         return daoStudent.importInstance(studentId);
     }
 
-    public Student getTeam(){
+    public Team getTeam(){
         DaoTeam daoTeam = new DaoTeam();
 
         ArrayList<Team> teams = daoTeam.getAllTeams();
@@ -63,7 +63,6 @@ public class ControllerMentor implements IUserController{
 
         return daoTeam.importTeam(teamId);
     }
-
 
     public void addQuest(){
 //        DaoQuest daoQuest = new DaoQuest();
@@ -214,9 +213,26 @@ public class ControllerMentor implements IUserController{
 //        viewMentor.displayList(new DaoArtifact().importData());
     }
 
-    public void assignStudentToTeam(){
-        System.out.println("To be implemented");
+    public void assignStudentsToTeam(){
+        Team team = getTeam();
+
+        boolean toContinue = true;
+        do{
+            viewMentor.displayList(viewMentor.getAssignStudentToTeamOptions());
+            String chosenOption = viewMentor.getInputFromUser("Choose option: ");
+            switch(chosenOption){
+                case "1": assignStudentToTeam();
+                    viewMentor.displayText("Student added to " + team.getName() + " team!");
+                    break;
+                case "0": toContinue = false;
+                    break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }while(toContinue);
     }
+
+    public void assignStudentToTeam(){}
 
     public void runMenu() {
         String mentorOption = "";
@@ -245,7 +261,7 @@ public class ControllerMentor implements IUserController{
                 break;
         case "9": seeAllWallets();
                 break;
-        case "10": assignStudentToTeam();
+        case "10": assignStudentsToTeam();
                 break;
         case "0": break;
 
