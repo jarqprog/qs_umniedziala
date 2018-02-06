@@ -34,7 +34,7 @@ public class Level{
 
         StringBuilder sb = new StringBuilder();
         
-        sb.append(", Level: " + getName());
+        sb.append("Level: " + getName());
         sb.append(", Coins limit: " + getCoinsLimit());
 
         return sb.toString();
