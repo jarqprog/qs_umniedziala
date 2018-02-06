@@ -119,10 +119,34 @@ public class ControllerMentor implements IUserController{
     }
 
     public void updateArtifact() {
-        //seeArtifacts();
-        toBeImplemented();
-        
+        Artifact artifact = getArtifact();
+
+        boolean toContinue = true;
+        do{
+            viewMentor.displayList(viewMentor.getUpdateArtifactsOptions());
+            String chosenOption = viewMentor.getInputFromUser("Choose option: ");
+            switch(chosenOption){
+                case "1": updateArtifactName(artifact);
+                    break;
+                case "2": updateArtifactDescription(artifact);
+                    break;
+                case "3": updateArtifactValue(artifact);
+                    break;
+                case "4": updateArtifactType(artifact);
+                    break;
+                case "0": toContinue = false;
+                    break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }while(toContinue);
+
     }
+
+    public void updateArtifactName(Artifact artifact){}
+    public void updateArtifactValue(Artifact artifact){}
+    public void updateArtifactDescription(Artifact artifact){}
+    public void updateArtifactType(Artifact artifact){}
 
     private void seeAllArtifacts() {
 
