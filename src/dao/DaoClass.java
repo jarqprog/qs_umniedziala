@@ -74,7 +74,7 @@ public class DaoClass{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()) {
+            while(resultSet.next()) {
                 int classId = resultSet.getInt("id_codecool_class");
                 String name = resultSet.getString("name");
                 ArrayList<Student> students = getStudentsOfClass(classId);
@@ -82,8 +82,8 @@ public class DaoClass{
                 codecoolClass = createClass(classId, name, students);
                 allCodecoolClasses.add(codecoolClass);
 
-                resultSet.close();
             }
+            resultSet.close();
             preparedStatement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -143,7 +143,29 @@ public class DaoClass{
     }
 
     public ArrayList<Student> getStudentsOfClass(Integer classID){
-        ;
+        ArrayList <Student> studentsInClass = new ArrayList <> ();
+
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT id_user FROM users JOIN students_in_classes WHERE students_in_classes.id_codecool_class=? AND students_in_classes.id_student=users.id_user;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, classID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                int userId = resultSet.getInt("id_user");
+
+                studentsInClass.add(new DaoStudent().importInstance(userId));
+
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("No mentors");
+        }
+        return studentsInClass;
     }
 
 }
