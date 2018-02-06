@@ -43,4 +43,40 @@ public class DaoQuest{
         Quest quest = createQuest(itemId, name, value, description, type, category);
         return quest;
     }
+
+    public void updateQuest(Quest quest) {
+        int itemId = quest.getItemId();
+        String name = quest.getName();
+        int value = quest.getValue();
+        String description = quest.getDescription();
+        String type = quest.getType();
+        String category = quest.getCategory();
+
+        PreparedStatement preparedStatement = null;
+
+        String query = createQueryForUpdateQuest();
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, value);
+            preparedStatement.setString(3, description);
+            preparedStatement.setString(4, type);
+            preparedStatement.setString(5, category);
+            preparedStatement.setInt(6, itemId);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(" Quest update failed");
+        }
+    }
+
+    private String createQueryForUpdateQuest() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE quests SET ");
+        sb.append("name = ?, value = ?, description = ?, type = ?, category =? ");
+        sb.append("WHERE id_quest = ?");
+        return sb.toString();
+    }
 }
