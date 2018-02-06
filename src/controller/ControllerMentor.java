@@ -29,12 +29,13 @@ public class ControllerMentor implements IUserController{
     }
 
     public void createTeam() {
-//        DaoTeam daoTeam = new DaoTeam();
-//
-//        String nameRequest = "Enter name of new team: ";
-//        String teamName = viewMentor.getInputFromUser(nameRequest);
-//
-//        daoTeam.createTeam(teamName);
+        DaoTeam daoTeam = new DaoTeam();
+
+        String nameRequest = "Enter name of new team: ";
+        String teamName = viewMentor.getInputFromUser(nameRequest);
+
+        Team team = daoTeam.createTeam(teamName);
+        daoTeam.exportTeam(team);
     }
 
     public void addQuest(){
