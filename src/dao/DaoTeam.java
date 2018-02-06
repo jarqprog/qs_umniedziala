@@ -19,7 +19,7 @@ public class DaoTeam{
 
     public Team importTeam(int teamId) {
         Team team = null;
-        String query = "SELECT (name, available_coins) FROM teams WHERE id_team = ?;";
+        String query = "SELECT name, available_coins FROM teams WHERE id_team = ?;";
 
         try {
             Connection connection = DbConnection.getConnection();
