@@ -159,7 +159,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
             preparedStatement.setInt(1, roleId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()) {
+            while(resultSet.next()) {
                 int userId = resultSet.getInt("id_user");
                 String name = resultSet.getString("name");
                 String password = resultSet.getString("password");
@@ -168,8 +168,8 @@ public class DaoMentor implements IDaoUser <Mentor> {
                 mentor = createInstance(userId, name, password, email);
                 mentorList.add(mentor);
 
-                resultSet.close();
             }
+            resultSet.close();
             preparedStatement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
