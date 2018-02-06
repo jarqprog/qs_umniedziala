@@ -1,6 +1,9 @@
 package dao;
 
 import model.*;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DaoTeam{
@@ -13,6 +16,21 @@ public class DaoTeam{
     }
 
     public void exportTeam(Team team) {
+        String teamName = team.getName();
+        int teamCoins = team.getAvailableCoins();
 
+        PreparedStatement preparedStatement = null;
+        String query = "INSERT INTO teams (name, available_coins) VALUES (?, ?);";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, teamName);
+            preparedStatement.setInt(2, teamCoins);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Team insertion failed");
+        }
     }
 }
