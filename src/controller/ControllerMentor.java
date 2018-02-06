@@ -68,7 +68,7 @@ public class ControllerMentor implements IUserController{
 //        daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
     }
 
-    private String chooseStatus() {
+    private String chooseArtifactType() {
         String statusRequest = "Choose status:\n1. Individual\n2. Team\nOption: ";
         String status = null;
         boolean choosingStatus = true;
