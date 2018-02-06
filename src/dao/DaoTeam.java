@@ -83,6 +83,10 @@ public class DaoTeam{
         }
     }
 
+    public ArrayList<Student> getStudentsOfTeam(int teamId) {
+        return new ArrayList<Student>();
+    }
+
     public ArrayList<Team> getAllTeams() {
         return new ArrayList<Team>();
     }
