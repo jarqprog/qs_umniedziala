@@ -23,7 +23,7 @@ public class DaoLevel{
     public Level importLevel(int levelId) {
         Level level = null;
         PreparedStatement preparedStatement = null;
-        String query = "SELECT coins_limit FROM levels WHERE id_level = ?;";
+        String query = "SELECT name, coins_limit FROM levels WHERE id_level = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
