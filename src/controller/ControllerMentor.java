@@ -38,6 +38,19 @@ public class ControllerMentor implements IUserController{
         daoTeam.exportTeam(team);
     }
 
+    public Student getStudent(){
+        DaoStudent daoStudent = new DaoStudent();
+
+        ArrayList<Student> students = daoStudent.getAllStudents();
+        for(Student student: students){
+            viewMentor.displayText(student.toString());
+        }
+
+        int studentId = viewMentor.getIntInputFromUser("\nEnter id of student: ");
+
+        return daoStudent.importInstance(studentId);
+    }
+
     public void addQuest(){
 //        DaoQuest daoQuest = new DaoQuest();
 //
