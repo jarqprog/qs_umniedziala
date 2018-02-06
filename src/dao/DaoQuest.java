@@ -68,7 +68,7 @@ public class DaoQuest{
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(" Quest update failed");
+            System.out.println("Quest update failed");
         }
     }
 
