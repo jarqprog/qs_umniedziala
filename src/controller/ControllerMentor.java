@@ -133,6 +133,20 @@ public class ControllerMentor implements IUserController{
         viewMentor.displayList(artifactList);
     }
 
+    private Artifact getArtifact() {
+
+        seeAllArtifacts();
+        int artifactId = viewMentor.getIntInputFromUser("\nEnter id of artifact: ");
+        DaoArtifact daoArtifact = new DaoArtifact();
+        Artifact artifact = daoArtifact.importArtifact(artifactId);
+        while (artifact == null) {
+            viewMentor.displayText("No artifact with such id found!");
+            artifactId = viewMentor.getIntInputFromUser("\nEnter id of artifact: ");
+            artifact = daoArtifact.importArtifact(artifactId);
+        }
+        return artifact;
+    }
+
     public void toBeImplemented(){
         String text = "Implementation in progress";
         viewMentor.displayText(text);
