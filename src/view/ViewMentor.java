@@ -11,8 +11,12 @@ public class ViewMentor extends View{
         "6. Edit artifact", "7. Mark quest", "8. Mark artifact", "9. See student's wallet",
         "10. Assign student to team", "0. Log out"));
 
+    private static ArrayList <String> assignStudentToTeamOptions = new ArrayList <String>(Arrays.asList("1. Assign student to chosen team", "0. Log out"));
+
     public ArrayList<String> getMentorOptions() {
         return mentorOptions;
     }
+
+    public ArrayList<String> getAssignStudentToTeamOptions() { return assignStudentToTeamOptions; }
 
 }
