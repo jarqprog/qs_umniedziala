@@ -16,7 +16,7 @@ public class DaoArtifact{
         return new Artifact(itemId, name, value, description, type);
     }
 
-    public Artifact importInstance(int itemId) {
+    public Artifact importArtifact(int itemId) {
         Artifact artifact = null;
         PreparedStatement preparedStatement = null;
         String query = "Select * from artifacts where id_artifact = ?";
