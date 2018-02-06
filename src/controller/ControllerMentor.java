@@ -45,10 +45,10 @@ public class ControllerMentor implements IUserController{
         String questName = viewMentor.getInputFromUser("Enter name of new quest: ");
         int questValue = viewMentor.getIntInputFromUser( "Enter value of new quest: ");
         String questDescription = viewMentor.getInputFromUser("Enter description of quest");
-        String questStatus = chooseStatus();
         String questType = chooseType();
+        String questCategory = chooseCategory();
 
-        Quest quest = daoQuest.createQuest(questName, questValue, questDescription, questStatus, questType);
+        Quest quest = daoQuest.createQuest(questName, questValue, questDescription, questType, questCategory);
         daoQuest.exportQuest(quest);
     }
 
@@ -68,8 +68,8 @@ public class ControllerMentor implements IUserController{
 //        daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
     }
 
-    private String chooseArtifactType() {
-        String statusRequest = "Choose artifact type:\n1. Individual\n2. Team\nOption: ";
+    private String chooseType() {
+        String statusRequest = "Choose type:\n1. Individual\n2. Team\nOption: ";
         String status = null;
         boolean choosingStatus = true;
         int option = 0;
@@ -91,8 +91,8 @@ public class ControllerMentor implements IUserController{
         return status;
     }
 
-    private String chooseType() {
-        String typeRequest = "Choose type:\n1. Basic\n2. Extra\nOption: ";
+    private String chooseCategory() {
+        String typeRequest = "Choose category:\n1. Basic\n2. Extra\nOption: ";
         String type = null;
         boolean choosingType = true;
         int option = 0;
