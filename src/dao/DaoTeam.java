@@ -19,7 +19,7 @@ public class DaoTeam{
 
     public Team importTeam(int teamId) {
         Team team = null;
-        String query = "SELECT (name, available_coins) from teams where id_team = ?;";
+        String query = "SELECT (name, available_coins) FROM teams WHERE id_team = ?;";
 
         try {
             Connection connection = DbConnection.getConnection();
@@ -110,7 +110,26 @@ public class DaoTeam{
     }
 
     public ArrayList<Team> getAllTeams() {
-        return new ArrayList<Team>();
+        ArrayList<Team> teams = new ArrayList<Team>();
+        String query = "SELECT id_team FROM teams;";
+
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                int teamId = resultSet.getInt("id_team");
+                Team team = importTeam(teamId);
+                teams.add(team);
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+        return teams;
     }
 
     public void assignStudentToTeam(int studentId, int teamId) {
