@@ -163,7 +163,7 @@ public class ControllerMentor implements IUserController{
         String type = null;
         boolean toContinue = true;
         do{
-            viewMentor
+            viewMentor.displayList(viewMentor.getUpdateArtifactTypeOptions());
             String userChoice = viewMentor.getInputFromUser("Choose type: ");
             switch (userChoice){
                 case "1": type = "individual";
