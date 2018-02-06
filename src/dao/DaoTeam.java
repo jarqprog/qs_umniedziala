@@ -15,6 +15,10 @@ public class DaoTeam{
         return new Team(groupId, name, students, availableCoins);
     }
 
+    public Team importTeam(int groupId) {
+        return new Team("name");
+    }
+
     public void exportTeam(Team team) {
         String teamName = team.getName();
         int teamCoins = team.getAvailableCoins();
@@ -53,5 +57,13 @@ public class DaoTeam{
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(" insertion failed");
         }
+    }
+
+    public ArrayList<Team> getAllTeams() {
+        return new ArrayList<Team>();
+    }
+
+    public void assignStudentToTeam(int studentId, int teamId) {
+
     }
 }
