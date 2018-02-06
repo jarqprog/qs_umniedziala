@@ -33,4 +33,25 @@ public class DaoTeam{
             System.out.println("Team insertion failed");
         }
     }
+
+    public void updateTeamData(Team team) {
+        String teamName = team.getName();
+        int teamId = team.getGroupId();
+        int teamCoins = team.getAvailableCoins();
+
+        PreparedStatement preparedStatement = null;
+        String query = "UPDATE teams SET name = ?, available_coins = ? WHERE id_team = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, teamName);
+            preparedStatement.setInt(2, teamCoins);
+            preparedStatement.setInt(3, teamId);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(" insertion failed");
+        }
+    }
 }
