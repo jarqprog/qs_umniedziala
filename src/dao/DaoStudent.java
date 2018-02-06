@@ -130,8 +130,6 @@ public class DaoStudent implements IDaoUser <Student> {
         return roleId;
 
     }
-
-    public ArrayList<Student> getCodecoolClassStudents(Integer classId){ return  null;}
-
+    
 }
 

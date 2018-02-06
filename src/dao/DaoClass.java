@@ -30,7 +30,7 @@ public class DaoClass{
 
             if(!resultSet.isClosed()) {
                 String name = resultSet.getString("name");
-                ArrayList<Student> students = new DaoStudent().getCodecoolClassStudents(classID);
+                ArrayList<Student> students = getStudentsOfClass(classID);
 
                 codecoolClass = createClass(classID, name, students);
                 resultSet.close();
@@ -77,7 +77,7 @@ public class DaoClass{
             if(!resultSet.isClosed()) {
                 int classId = resultSet.getInt("id_codecool_class");
                 String name = resultSet.getString("name");
-                ArrayList<Student> students = new DaoStudent().getCodecoolClassStudents(classId);
+                ArrayList<Student> students = getStudentsOfClass(classId);
 
                 codecoolClass = createClass(classId, name, students);
                 allCodecoolClasses.add(codecoolClass);
@@ -140,6 +140,10 @@ public class DaoClass{
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Unsigning mentor from class failed");
         }
+    }
+
+    public ArrayList<Student> getStudentsOfClass(Integer classID){
+        ;
     }
 
 }
