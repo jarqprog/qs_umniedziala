@@ -187,6 +187,10 @@ public class ControllerMentor implements IUserController{
 //        viewMentor.displayList(new DaoArtifact().importData());
     }
 
+    public void assignStudentToTeam(){
+        System.out.println("To be implemented");
+    }
+
     public void runMenu() {
         String mentorOption = "";
         while (!mentorOption.equals("0")) {
@@ -213,6 +217,8 @@ public class ControllerMentor implements IUserController{
         case "8": markArtifact();
                 break;
         case "9": seeAllWallets();
+                break;
+        case "10": assignStudentToTeam();
                 break;
         case "0": break;
 
