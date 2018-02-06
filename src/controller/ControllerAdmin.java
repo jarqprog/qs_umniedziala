@@ -152,7 +152,7 @@ public class ControllerAdmin implements IUserController {
 
         MyIterator<CodecoolClass> iterator = new MyIterator <CodecoolClass>(classes);
         while(iterator.hasNext()){
-            viewAdmin.displayText(iterator.next().toString());
+            viewAdmin.displayText(iterator.next().getBasicInfo());
         }
 
         Integer classId = viewAdmin.getIntInputFromUser("Choose class by id: ");
