@@ -42,9 +42,8 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void editMentor() {
-        seeAllMentors();
-        Mentor mentor = getMentor();
 
+        Mentor mentor = getMentor();
         String editMentorOption = "";
         while (!editMentorOption.equals("0")) {
 
@@ -76,6 +75,7 @@ public class ControllerAdmin implements IUserController {
 
     private Mentor getMentor() {
 
+        seeAllMentors();
         int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
         DaoMentor daoMentor = new DaoMentor();
         Mentor mentor = daoMentor.importInstance(mentorId);
