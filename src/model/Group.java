@@ -52,5 +52,9 @@ public abstract class Group{
         }
 
         return allStudents;
-    }    
+    }
+
+    public String getBasicInfo(){
+        return "Id: " + this.groupId + ", Name: " + this.name;
+    }
 }
