@@ -1,9 +1,11 @@
 package dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Level;
+import model.Mentor;
 
 public class DaoLevel{
     public Level createLevel(String name, int coinsLimit) {
@@ -37,7 +39,27 @@ public class DaoLevel{
 
 
     public Level importLevel(int levelId) {
-        return null;
+        Level level = null;
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT coins_limit FROM levels WHERE id_level = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, levelId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()) {
+                String name = resultSet.getString("name");
+                int coinsLimit = resultSet.getInt("coins_limit");
+                level = createLevel(levelId, name, coinsLimit);
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            return level;
+        }
+        return level;
     }
 
     public ArrayList<Level> getAllLevels() {
