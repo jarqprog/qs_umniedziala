@@ -2,7 +2,9 @@ package dao;
 
 import model.*;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -15,8 +17,30 @@ public class DaoTeam{
         return new Team(groupId, name, students, availableCoins);
     }
 
-    public Team importTeam(int groupId) {
-        return new Team("name");
+    public Team importTeam(int teamId) {
+        Team team = null;
+        String query = "SELECT (name, available_coins) from teams where id_team = ?;";
+
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, teamId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int availableCoins = resultSet.getInt("available_coins");
+                ArrayList<Student> students = getStudentsOfTeam(teamId);
+
+                team = createTeam(teamId, name, students, availableCoins);
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Team not found");
+        }
+        return team;
     }
 
     public void exportTeam(Team team) {
