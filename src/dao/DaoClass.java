@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import model.CodecoolClass;
+import model.Mentor;
 import model.Student;
 
 public class DaoClass{
@@ -166,6 +167,32 @@ public class DaoClass{
             System.out.println("No mentors");
         }
         return studentsInClass;
+    }
+
+    public CodecoolClass getMentorsClass(Integer mentorId){
+        PreparedStatement preparedStatement;
+        CodecoolClass mentorsClass = null;
+
+        String query = "SELECT id_codecool_class FROM mentors_in_classes WHERE id_mentor=?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, mentorId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()){
+                Integer classId = resultSet.getInt("id_codecool_class");
+
+                mentorsClass = importClass(classId);
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("updating mentors class assignment failed");
+        }
+
+        return mentorsClass;
     }
 
 }

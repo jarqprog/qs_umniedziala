@@ -75,15 +75,17 @@ public class ControllerAdmin implements IUserController {
     }
 
     private Mentor getMentor() {
+        DaoMentor daoMentor = new DaoMentor();
+
+        ArrayList<Mentor> mentors = daoMentor.getAllMentors();
+        for(Mentor mentor: mentors){
+            viewAdmin.displayText(mentor.toString());
+        }
 
         int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
-        DaoMentor daoMentor = new DaoMentor();
+
         Mentor mentor = daoMentor.importInstance(mentorId);
-        while (mentor == null) {
-            viewAdmin.displayText("No mentor with such id found!");
-            mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
-            mentor = daoMentor.importInstance(mentorId);
-        }
+
         return mentor;
     }
 
@@ -152,7 +154,15 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void seeMentorData() {
-        viewAdmin.displayText("Implementation in progress");
+        Mentor mentor = getMentor();
+        CodecoolClass mentorsClass = new DaoClass().getMentorsClass(mentor.getUserId());
+
+        viewAdmin.displayText(mentor.toString());
+        if(mentorsClass != null){
+            viewAdmin.displayText("");
+            viewAdmin.displayText(mentorsClass.toString());
+        }
+
     }
 
     private void seeAllLevels() {
