@@ -1,9 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
-//import dao.DaoClass;
-//import dao.DaoMentor;
 import dao.DaoLevel;
+import dao.DaoMentor;
+import dao.DaoClass;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
@@ -21,23 +21,22 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void createMentor() {
-//        DaoMentor daoMentor = new DaoMentor();
-//
-//        String nameRequest = "Enter name of new mentor: ";
-//        String mentorName = viewAdmin.getInputFromUser(nameRequest);
-//
-//        String passwordRequest = "Enter password of new mentor: ";
-//        String mentorPassword = viewAdmin.getInputFromUser(passwordRequest);
-//
-//        String emailRequest = "Enter email of new mentor: ";
-//        String mentorEmail = viewAdmin.getInputFromUser(emailRequest);
-//
-//        daoMentor.createMentor(mentorName, mentorPassword, mentorEmail);
-//
+        DaoMentor daoMentor = new DaoMentor();
+        String mentorName = viewAdmin.getInputFromUser("Enter name of new mentor: ");
+        String mentorPassword = viewAdmin.getInputFromUser("Enter password of new mentor: ");
+        String mentorEmail = viewAdmin.getInputFromUser("Enter email of new mentor: ");
+
+        Mentor mentor = daoMentor.createInstance(mentorName, mentorPassword, mentorEmail);
+        daoMentor.exportInstance(mentor);
     }
 
     public void createClass() {
-        viewAdmin.displayText("Implementation in progress");
+
+        String className = viewAdmin.getInputFromUser("Enter the name of the class:");
+        DaoClass daoClass = new DaoClass();
+        CodecoolClass codecoolClass = daoClass.createClass(className);
+        daoClass.exportClass(codecoolClass);
+
     }
 
     public void editMentor() {

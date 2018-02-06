@@ -1,7 +1,7 @@
 package controller;
 
 import view.ViewMentor;
-//import dao.*;
+import dao.*;
 import iterator.MyIterator;
 import model.*;
 
@@ -17,21 +17,14 @@ public class ControllerMentor implements IUserController{
     }
 
     public void createStudent() {
-//        DaoStudent daoStudent = new DaoStudent();
-//
-//        String nameRequest = "Enter name of new student: ";
-//        String studentName = viewMentor.getInputFromUser(nameRequest);
-//
-//        String passwordRequest = "Enter password of new student: ";
-//        String studentPassword = viewMentor.getInputFromUser(passwordRequest);
-//
-//        String emailRequest = "Enter email of new student: ";
-//        String studentEmail = viewMentor.getInputFromUser(emailRequest);
-//
-//        String classIdRequest = "Enter ID of class which student will attend: ";
-//        int classId = viewMentor.getIntInputFromUser(classIdRequest);
-//
-//        daoStudent.createStudent(studentName, studentPassword, studentEmail, classId);
+        
+        DaoStudent daoStudent = new DaoStudent();
+        String studentName = viewMentor.getInputFromUser("Enter name of new student: ");
+        String studentPassword = viewMentor.getInputFromUser("Enter password of new student: ");
+        String studentEmail = viewMentor.getInputFromUser( "Enter email of new student: ");
+
+        Student student = daoStudent.createInstance(studentName, studentPassword, studentEmail);
+        daoStudent.exportInstance(student);
 
     }
 
