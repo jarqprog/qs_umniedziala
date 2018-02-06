@@ -143,7 +143,11 @@ public class ControllerMentor implements IUserController{
 
     }
 
-    public void updateArtifactName(Artifact artifact){}
+    public void updateArtifactName(Artifact artifact){
+        String name = viewMentor.getInputFromUser("Choose new name: ");
+        artifact.setName(name);
+        new DaoArtifact().updateArtifact(artifact);
+    }
     public void updateArtifactValue(Artifact artifact){}
     public void updateArtifactDescription(Artifact artifact){}
     public void updateArtifactType(Artifact artifact){}
