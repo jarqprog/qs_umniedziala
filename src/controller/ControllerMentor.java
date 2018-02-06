@@ -159,7 +159,28 @@ public class ControllerMentor implements IUserController{
         artifact.setDescription(description);
         new DaoArtifact().updateArtifact(artifact);
     }
-    public void updateArtifactType(Artifact artifact){}
+    public void updateArtifactType(Artifact artifact){
+        String type = null;
+        boolean toContinue = true;
+        do{
+            viewMentor
+            String userChoice = viewMentor.getInputFromUser("Choose type: ");
+            switch (userChoice){
+                case "1": type = "individual";
+                    break;
+                case "2": type = "team"; //validate type names!!!
+                    break;
+                case "0": toContinue = false;
+                    break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+            }
+        }while (toContinue);
+
+        if(type != null){
+            artifact.setType(type);
+            new DaoArtifact().updateArtifact(artifact);
+        }
+    }
 
     private void seeAllArtifacts() {
 
