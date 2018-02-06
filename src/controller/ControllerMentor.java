@@ -148,11 +148,16 @@ public class ControllerMentor implements IUserController{
         artifact.setName(name);
         new DaoArtifact().updateArtifact(artifact);
     }
-    public void updateArtifactValue(Artifact artifact){}
+    public void updateArtifactValue(Artifact artifact){
+        Integer value = viewMentor.getIntInputFromUser("Choose new value: ");
+        artifact.setValue(value);
+        new DaoArtifact().updateArtifact(artifact);
+    }
+
     public void updateArtifactDescription(Artifact artifact){
         String description = viewMentor.getInputFromUser("Choose new description: ");
         artifact.setDescription(description);
-        new DaoArtifact().updateArtifact(description);
+        new DaoArtifact().updateArtifact(artifact);
     }
     public void updateArtifactType(Artifact artifact){}
 
