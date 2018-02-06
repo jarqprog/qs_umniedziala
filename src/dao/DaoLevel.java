@@ -9,11 +9,11 @@ import model.Mentor;
 
 public class DaoLevel{
     public Level createLevel(String name, int coinsLimit) {
-        return null;
+        return new Level(name, coinsLimit);
     }
 
     public Level createLevel(int levelId, String name, int coinsLimit) {
-        return null;
+        return new Level(levelId, name, coinsLimit);
     }
 
     public void exportLevel(Level level){
