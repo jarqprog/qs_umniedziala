@@ -45,6 +45,27 @@ public class DaoLevel{
     }
 
     public ArrayList<Level> getAllLevels() {
-        return new ArrayList<Level>();
+        ArrayList<Level> levels = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT id_level FROM levels ORDER BY coins_limit;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                int levelId = resultSet.getInt("id_level");
+                Level level = importLevel(levelId);
+                levels.add(level);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+
+        return levels;
     }
 }
