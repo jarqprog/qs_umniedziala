@@ -1,9 +1,6 @@
 package dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -163,6 +160,33 @@ public class DaoStudent implements IDaoUser <Student> {
 
         return roleId;
 
+    }
+
+    public ArrayList<Student> getAllStudents() {
+        ArrayList<Student> students = new ArrayList<>();
+        int roleId = getRoleID("student");
+        String query = "SELECT id_user FROM users WHERE id_role = ?;";
+
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, roleId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                int userId = resultSet.getInt("id_user");
+                Student student = importInstance(userId);
+                students.add(student);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+
+        return students;
     }
     
 }

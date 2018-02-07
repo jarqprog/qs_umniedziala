@@ -42,6 +42,31 @@ public class ControllerMentor implements IUserController{
         daoTeam.exportTeam(team);
     }
 
+    public Student getStudent(){
+        DaoStudent daoStudent = new DaoStudent();
+
+        viewMentor.displayText("Available students:\n");
+        viewMentor.displayList(daoStudent.getAllStudents());
+
+        int studentId = viewMentor.getIntInputFromUser("\nEnter id of student: ");
+
+        return daoStudent.importInstance(studentId);
+    }
+
+    public Team getTeam(){
+        DaoTeam daoTeam = new DaoTeam();
+
+        viewMentor.displayText("Available teams:\n");
+        ArrayList<Team> teams = daoTeam.getAllTeams();
+        for(Team team: teams) {
+            viewMentor.displayText(team.getBasicInfo());
+        }
+
+        int teamId = viewMentor.getIntInputFromUser("\nEnter id of team: ");
+
+        return daoTeam.importTeam(teamId);
+    }
+
     public void addQuest(){
 
         DaoQuest daoQuest = new DaoQuest();
@@ -188,6 +213,29 @@ public class ControllerMentor implements IUserController{
 //        viewMentor.displayList(new DaoArtifact().importData());
     }
 
+    public void assignStudentsToTeam(){
+        Team team = getTeam();
+
+        boolean toContinue = true;
+        do{
+            viewMentor.displayList(viewMentor.getAssignStudentToTeamOptions());
+            String chosenOption = viewMentor.getInputFromUser("Choose option: ");
+            switch(chosenOption){
+                case "1": assignStudentToTeam(team);
+                    break;
+                case "0": toContinue = false;
+                    break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }while(toContinue);
+    }
+
+    public void assignStudentToTeam(Team team){
+        Student student = getStudent();
+        new DaoTeam().assignStudentToTeam(student.getUserId(), team.getGroupId());
+    }
+
     public void runMenu() {
         String mentorOption = "";
         while (!mentorOption.equals("0")) {
@@ -214,6 +262,8 @@ public class ControllerMentor implements IUserController{
         case "8": markArtifact();
                 break;
         case "9": seeAllWallets();
+                break;
+        case "10": assignStudentsToTeam();
                 break;
         case "0": break;
 
