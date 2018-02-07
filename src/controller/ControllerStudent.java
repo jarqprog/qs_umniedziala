@@ -39,7 +39,7 @@ public class ControllerStudent implements IUserController{
 
             DaoWallet daoWallet = new DaoWallet();
             daoWallet.updateWallet(studentId);
-            daoWallet.exportStudentArtifact(studentId, artifactId);
+            daoWallet.exportStudentArtifact(artifactId, studentId);
 
         } else {
             viewStudent.displayText("You do not have enough money to buy this artifact!");
