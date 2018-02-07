@@ -117,6 +117,17 @@ public class ControllerMentor implements IUserController{
         return type;
     }
 
+    public Quest getQuest(){
+        DaoQuest daoQuest = new DaoQuest();
+
+        viewMentor.displayText("Available quests:\n");
+        viewMentor.displayList(daoQuest.getAllQuests());
+
+        int guestId = viewMentor.getIntInputFromUser("\nEnter id of quest: ");
+
+        return daoQuest.importQuest(questId);
+    }
+
     public void updateQuest(){
         toBeImplemented();
     }
