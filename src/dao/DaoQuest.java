@@ -38,25 +38,26 @@ public class DaoQuest{
         }
         return quest;
     }
-    public ArrayList<Quest> importData() {
-        ArrayList<Quest> allQuests = new ArrayList<>();
+    public ArrayList<Quest> getAllQuests() {
+        ArrayList<Quest> quests = new ArrayList<>();
         PreparedStatement preparedStatement = null;
-        String query = "SELECT * FROM quests";
+        String query = "SELECT id_quest FROM quests";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            ResultSet rs = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (rs.next()) {
-                Quest quest = createQuestFromDBData(rs);
-                allQuests.add(quest);
+            while (resultSet.next()) {
+                int questId = resultSet.getInt("id_quest");
+                Quest quest = importQuest(questId);
+                quests.add(quest);
             }
             preparedStatement.close();
-            rs.close();
+            resultSet.close();
         }catch(SQLException | ClassNotFoundException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-        return allQuests;
+        return quests;
     }
 
     private Quest createQuestFromDBData(ResultSet rs) throws SQLException {
