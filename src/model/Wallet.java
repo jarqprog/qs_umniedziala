@@ -44,16 +44,13 @@ public class Wallet{
 
     public void addNewArtifact(Artifact artifact) { this.newArtifacts.add(artifact); }
 
-    public Artifact removeNewArtifact(int artifactId) {
-        Artifact artifactToBeRemoved = null;
+    public void removeNewArtifact(int artifactId) {
         for(Artifact artifact: this.newArtifacts){
             if(artifact.getItemId() == artifactId){
-                artifactToBeRemoved = artifact;
                 this.newArtifacts.remove(artifact);
                 break;
             }
         }
-        return artifactToBeRemoved;
     }
 
     public void addUsedArtifact(Artifact artifact) { this.usedArtifacts.add(artifact); }
