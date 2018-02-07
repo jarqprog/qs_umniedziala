@@ -54,7 +54,7 @@ public class DaoStudent implements IDaoUser <Student> {
         return student;
     }
 
-    public Student getByEmail(String userEmail){
+    public Student importNewStudent(String userEmail){
 
         Student student = null;
         PreparedStatement preparedStatement = null;
@@ -74,8 +74,6 @@ public class DaoStudent implements IDaoUser <Student> {
                 String email = resultSet.getString("email");
 
                 student = createInstance(userId, name, password, email);
-                Wallet wallet = new DaoWallet().importInstance(userId);
-                student.setWallet(wallet);
 
                 resultSet.close();
             }
