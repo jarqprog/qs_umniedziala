@@ -164,7 +164,7 @@ public class DaoClass{
             preparedStatement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("No mentors");
+            System.out.println("No students");
         }
         return studentsInClass;
     }

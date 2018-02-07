@@ -42,6 +42,31 @@ public class DaoWallet{
         return wallet;
     }
 
+    public void exportWallet(Student student){
+
+        int value = student.getUserId();
+        int allCoins = student.getWallet().getAllCoins();
+        int availableCoins = student.getWallet().getAvailableCoins();
+
+        PreparedStatement preparedStatement = null;
+        String query = "INSERT into wallets (id_student, all_coins, available_coins)" +
+                "values (?, ?, ?);";
+
+        try{
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, value);
+            preparedStatement.setInt(2, allCoins);
+            preparedStatement.setInt(3, availableCoins);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Wallet insertion failed");
+        }
+
+    }
+
     private ArrayList<Artifact> getUserArtifacts(int userID) {
 
         ArrayList<Artifact> artifacts = new ArrayList<>();

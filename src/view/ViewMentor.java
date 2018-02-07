@@ -9,7 +9,9 @@ public class ViewMentor extends View{
     private static ArrayList <String> mentorOptions = new ArrayList <String>(Arrays.asList("1. Create student",
         "2. Create team", "3. Create quest", "4. Add artifact to store", "5. Edit quest",
         "6. Edit artifact", "7. Mark quest", "8. Mark artifact", "9. See student's wallet",
-        "0. Log out"));
+        "10. Assign student to team", "0. Go back"));
+
+    private static ArrayList <String> assignStudentToTeamOptions = new ArrayList <String>(Arrays.asList("1. Assign student to chosen team", "0. Go back"));
 
     private static ArrayList <String> artifactEditOptions = new ArrayList<>(Arrays.asList("1. Change name",
             "2. Change value", "3. Change description", "4. Change type", "5. Change category"));
@@ -37,5 +39,5 @@ public class ViewMentor extends View{
         return updateArtifactTypeOptions;
     }
 
-
+    public ArrayList<String> getAssignStudentToTeamOptions() { return assignStudentToTeamOptions; }
 }
