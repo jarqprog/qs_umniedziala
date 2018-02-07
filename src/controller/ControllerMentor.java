@@ -24,7 +24,14 @@ public class ControllerMentor implements IUserController{
         String studentEmail = viewMentor.getInputFromUser( "Enter email of new student: ");
 
         Student student = daoStudent.createInstance(studentName, studentPassword, studentEmail);
+        String email = student.getEmail();
         daoStudent.exportInstance(student);
+        Student studentWithId = daoStudent.getByEmail(email);
+        int idStudentWithId = studentWithId.getUserId();
+        DaoWallet daoWallet = new DaoWallet();
+        Wallet wallet = daoWallet.createWallet();
+        studentWithId.setWallet(wallet);
+        daoWallet.exportWallet(studentWithId);
 
     }
 

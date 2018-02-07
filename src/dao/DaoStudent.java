@@ -54,6 +54,42 @@ public class DaoStudent implements IDaoUser <Student> {
         return student;
     }
 
+    public Student getByEmail(String userEmail){
+
+        Student student = null;
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT * FROM users WHERE email = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, userEmail);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()){
+
+                int userId = resultSet.getInt("id_user");
+
+                String name = resultSet.getString("name");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+
+                student = createInstance(userId, name, password, email);
+                Wallet wallet = new DaoWallet().importInstance(userId);
+                student.setWallet(wallet);
+
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+            return student;
+        }
+
+        return student;
+    }
+
+
     public void exportInstance(Student student) {
 
         String name = student.getName();
