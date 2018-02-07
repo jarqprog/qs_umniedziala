@@ -3,18 +3,23 @@ package controller;
 import view.ViewTeam;
 import model.*;
 
-public class ControllerTeam implements IUserController{
+public class ControllerTeam implements IUserController {
 
     private ViewTeam viewTeam;
     private Team team;
 
-    public ControllerTeam(Team team){
+    public ControllerTeam(Team team) {
         this.viewTeam = new ViewTeam();
         this.team = team;
     }
 
+    public void buyArtifact() {
+    }
 
-    public void runMenu(){
+    public void splitMoney() {
+    }
+
+    public void runMenu() {
 
         String teamOption = "";
         while (!teamOption.equals("0")) {
@@ -24,9 +29,17 @@ public class ControllerTeam implements IUserController{
 
             teamOption = viewTeam.getInputFromUser("Option: ");
             switch (teamOption) {
-                case "1": seeWallet();
+                case "1":
+                    buyArtifact();
                     break;
-                case "2": buyArtifact();
-
+                case "2":
+                    splitMoney();
+                    break;
+                case "0":
+                    break;
+                default: viewTeam.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }
     }
 }
