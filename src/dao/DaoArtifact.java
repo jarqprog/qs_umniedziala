@@ -81,7 +81,7 @@ public class DaoArtifact{
 
         String query = "UPDATE artifacts SET " +
                 "name = ?, value = ?, description = ?, type = ? " +
-                "WHERE id_quest = ?";
+                "WHERE id_artifact = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -94,6 +94,7 @@ public class DaoArtifact{
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.out.println("Artifact update failed");
         }
     }
