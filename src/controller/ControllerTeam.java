@@ -14,6 +14,10 @@ public class ControllerTeam{
 
     }
 
+    public void splitMoneyAlmostEqually() {
+
+    }
+
     public void splitTeamMoney() {
 
     }
