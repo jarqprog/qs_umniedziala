@@ -82,7 +82,7 @@ public class DaoWallet{
 
             while (resultSet.next()){
                 int idArtifact = resultSet.getInt("id_artifact");
-                Artifact artifact = new DaoArtifact().importInstance(idArtifact);
+                Artifact artifact = new DaoArtifact().importArtifact(idArtifact);
                 artifacts.add(artifact);
             }
             
