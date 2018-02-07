@@ -49,11 +49,11 @@ public class ControllerStudent implements IUserController{
 //        }
     }
 
-    public Artifact getArtifact(String status) {
+    public Artifact getArtifact(String type) {
         DaoArtifact daoArtifact = new DaoArtifact();
 
         viewStudent.displayText("Available artifacts:\n");
-        viewStudent.displayList(daoArtifact.getArtifacts(status));
+        viewStudent.displayList(daoArtifact.getArtifacts(type));
 
         int artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact: ");
         Artifact artifact = daoArtifact.importArtifact(artifactId);

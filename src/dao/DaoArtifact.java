@@ -67,7 +67,7 @@ public class DaoArtifact{
 
     }
 
-    public ArrayList<Artifact> getArtifacts(String status) {
+    public ArrayList<Artifact> getArtifacts(String type) {
         return new ArrayList<Artifact>();
     }
         
