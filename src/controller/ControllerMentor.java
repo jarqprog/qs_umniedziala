@@ -167,8 +167,10 @@ public class ControllerMentor implements IUserController{
             String userChoice = viewMentor.getInputFromUser("Choose type: ");
             switch (userChoice){
                 case "1": type = "individual";
+                    toContinue = false;
                     break;
-                case "2": type = "team"; //validate type names!!!
+                case "2": type = "team";
+                    toContinue = false;
                     break;
                 case "0": toContinue = false;
                     break;
