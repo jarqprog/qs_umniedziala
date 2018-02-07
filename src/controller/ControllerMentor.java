@@ -99,6 +99,7 @@ public class ControllerMentor implements IUserController{
     }
 
     private String chooseType() {
+
         String statusRequest = "Choose type:\n1. Individual\n2. Team\nOption: ";
         String status = null;
         boolean choosingStatus = true;
@@ -144,8 +145,71 @@ public class ControllerMentor implements IUserController{
         return type;
     }
 
+    public Quest getQuest(){
+        DaoQuest daoQuest = new DaoQuest();
+
+        viewMentor.displayText("Available quests:\n");
+        viewMentor.displayList(daoQuest.getAllQuests());
+
+        int questId = viewMentor.getIntInputFromUser("\nEnter id of quest: ");
+
+        return daoQuest.importQuest(questId);
+    }
+
     public void updateQuest(){
-        toBeImplemented();
+        Quest quest = getQuest();
+
+        boolean toContinue = true;
+        do{
+            viewMentor.displayList(viewMentor.getEditQuestOptions());
+            String chosenOption = viewMentor.getInputFromUser("Choose option: ");
+            switch(chosenOption){
+                case "1": updateQuestName(quest);
+                    break;
+                case "2": updateQuestDescription(quest);
+                    break;
+                case "3": updateQuestValue(quest);
+                    break;
+                case "4": updateQuestType(quest);
+                    break;
+                case "5": updateQuestCategory(quest);
+                    break;
+                case "0": toContinue = false;
+                    break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }while(toContinue);
+    }
+
+    public void updateQuestName(Quest quest){
+        String name = viewMentor.getInputFromUser("Pass new quest name: ");
+        quest.setName(name);
+        new DaoQuest().updateQuest(quest);
+    }
+
+    public void updateQuestDescription(Quest quest){
+        String description = viewMentor.getInputFromUser("Pass new quest description: ");
+        quest.setDescription(description);
+        new DaoQuest().updateQuest(quest);
+    }
+
+    public void updateQuestValue(Quest quest){
+        Integer value = viewMentor.getIntInputFromUser("Pass new quest value: ");
+        quest.setValue(value);
+        new DaoQuest().updateQuest(quest);
+    }
+
+    public void updateQuestType(Quest quest){
+        String type = chooseType();
+        quest.setType(type);
+        new DaoQuest().updateQuest(quest);
+    }
+
+    public void updateQuestCategory(Quest quest){
+        String category = chooseCategory();
+        quest.setCategory(category);
+        new DaoQuest().updateQuest(quest);
     }
 
     public void updateArtifact() {

@@ -22,13 +22,20 @@ public class ViewMentor extends View{
 
     private static ArrayList <String> updateArtifactTypeOptions = new ArrayList <String>(Arrays.asList("1. Type individual",
             "2. Type team", "0. Go back"));
+    
+  private static ArrayList <String> questEditOptions = new ArrayList<>(Arrays.asList("1. Change name",
+            "2. Change description", "3. Change value", "4. Change type", "5. Change category", "0. Go back"));
 
     public ArrayList<String> getMentorOptions() {
         return mentorOptions;
     }
 
+
     public static ArrayList<String> getArtifactEditOptions() {
         return artifactEditOptions;
+
+    public static ArrayList<String> getEditQuestOptions() {
+        return questEditOptions;
     }
 
     public ArrayList<String> getUpdateArtifactsOptions() {
