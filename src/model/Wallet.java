@@ -33,7 +33,9 @@ public class Wallet{
         this.availableCoins = availableCoins;
     }
 
-    public int getAvailableCoins() { return this.availableCoins; }
+    public int getAvailableCoins() {
+        return this.availableCoins;
+    }
 
     public String toString(){
         MyIterator <Artifact> myIterator = new MyIterator<>(this.artifacts);
