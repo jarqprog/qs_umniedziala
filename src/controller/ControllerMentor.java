@@ -78,11 +78,11 @@ public class ControllerMentor implements IUserController{
         return daoQuest.importQuest(questId);
     }
 
-    public Quest getTeamQuest(){
+    public Quest getIndividualQuest(){
         DaoQuest daoQuest = new DaoQuest();
 
         viewMentor.displayText("Available individual quests:\n");
-        viewMentor.displayList(daoQuest.getTeamQuests());
+        viewMentor.displayList(daoQuest.getIndividualQuests());
 
         Integer questId = viewMentor.getIntInputFromUser("Enter id of chosen quest");
 
