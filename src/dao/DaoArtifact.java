@@ -69,5 +69,33 @@ public class DaoArtifact{
 
         return artifacts;
     }
+
+    public void updateArtifact(Artifact artifact) {
+        int itemId = artifact.getItemId();
+        String name = artifact.getName();
+        int value = artifact.getValue();
+        String description = artifact.getDescription();
+        String type = artifact.getType();
+
+        PreparedStatement preparedStatement = null;
+
+        String query = "UPDATE quests SET " +
+                "name = ?, value = ?, description = ?, type = ? " +
+                "WHERE id_quest = ?";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, value);
+            preparedStatement.setString(3, description);
+            preparedStatement.setString(4, type);
+            preparedStatement.setInt(5, itemId);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Artifact update failed");
+        }
+    }
         
 }
