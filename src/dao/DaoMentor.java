@@ -5,6 +5,8 @@ import model.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DaoMentor implements IDaoUser <Mentor> {
 
@@ -77,7 +79,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
         int mentorId = mentor.getUserId();
 
         PreparedStatement preparedStatement = null;
-        String query = "update users SET name = ?, password = ?, email = ?, "+
+        String query = "update users SET name = ?, password = ?, email = ? "+
                 "where id_user= ?;";
 
         try{
@@ -118,4 +120,62 @@ public class DaoMentor implements IDaoUser <Mentor> {
         return roleId;
 
     }
+
+    public Integer getMentorClassId(Mentor mentor){
+        Integer classId = null;
+        PreparedStatement preparedStatement;
+
+        String query = "SELECT id_codecool_class from mentors_in_classes where id_mentor = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, mentor.getUserId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()) {
+                classId = resultSet.getInt("id_codecool_class");
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Class not found");
+        }
+
+        return classId;
+    }
+
+    public ArrayList <Mentor> getAllMentors(){
+
+        ArrayList <Mentor> mentorList = new ArrayList <Mentor> ();
+        int roleId = getRoleID("mentor");
+
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT * FROM users WHERE id_role = ?;";
+        Mentor mentor;
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, roleId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                int userId = resultSet.getInt("id_user");
+                String name = resultSet.getString("name");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+
+                mentor = createInstance(userId, name, password, email);
+                mentorList.add(mentor);
+
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("No mentors");
+        }
+        return mentorList;
+    }
+
 }

@@ -2,6 +2,7 @@ package dao;
 
 import model.*;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,6 +42,28 @@ public class DaoArtifact{
         }
 
         return artifact;
+    }
+
+    public void exportArtifact(Artifact artifact) {
+
+        String query = "INSERT INTO artifacts VALUES (?, ?, ?, ?, ?);";
+
+        try{
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(2, artifact.getName());
+            preparedStatement.setInt(3, artifact.getValue());
+            preparedStatement.setString(4, artifact.getDescription());
+            preparedStatement.setString(5, artifact.getType());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Artifact insertion failed");
+        }
+
     }
         
 }

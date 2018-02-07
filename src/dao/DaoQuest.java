@@ -75,6 +75,7 @@ public class DaoQuest{
         "WHERE id_quest = ?";
 
         try {
+
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, value);
@@ -90,3 +91,4 @@ public class DaoQuest{
         }
     }
 }
+

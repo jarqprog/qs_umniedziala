@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import dao.DaoLevel;
 import dao.DaoMentor;
 import dao.DaoClass;
+import dao.DaoMentor;
+import iterator.MyIterator;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
@@ -40,52 +42,127 @@ public class ControllerAdmin implements IUserController {
     }
 
     public void editMentor() {
-//        DaoMentor daoMentor = new DaoMentor();
-//        ArrayList<Mentor> mentorList = daoMentor.importData();
-//
-//        viewAdmin.displayText("Mentor's list:");
-//        viewAdmin.displayList(mentorList);
-//        int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
-//        Mentor mentor = daoMentor.getMentorById(mentorId);
-//        while (mentor == null) {
-//            viewAdmin.displayText("No mentor with such id found!");
-//            mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
-//            mentor = daoMentor.getMentorById(mentorId);
-//        }
-//
-//        String choice = viewAdmin.getInputFromUser("\nModify email or class? (e/c) ");
-//        while (!(choice.equals("e") || choice.equals("c"))) {
-//            viewAdmin.displayText("Wrong input!");
-//            choice = viewAdmin.getInputFromUser("\nModify email or class? (e/c) ");
-//        }
-//
-//        if (choice.equals("e")) {
-//            String newEmail = viewAdmin.getInputFromUser("\nEnter mentor's new email: ");
-//            mentor.setEmail(newEmail);
-//        } else if (choice.equals("c")) {
-//            DaoClass daoClass = new DaoClass();
-//            ArrayList<CodecoolClass> classList = daoClass.importData();
-//            viewAdmin.displayText("\nClass list:");
-//            viewAdmin.displayList(classList);
-//            int newClassId = viewAdmin.getIntInputFromUser("\nEnter id of mentor's new class: ");
-//            CodecoolClass newClass = daoClass.getClassById(newClassId);
-//
-//            while (newClass == null) {
-//                viewAdmin.displayText("No class with such id found!");
-//                newClassId = viewAdmin.getIntInputFromUser("\nEnter id of mentor's new class: ");
-//                newClass = daoClass.getClassById(newClassId);
-//            }
-//            mentor.setClassId(newClass.getGroupId());
-//        }
-//        daoMentor.exportData(mentorList);
+        seeAllMentors();
+        Mentor mentor = getMentor();
+
+        String editMentorOption = "";
+        while (!editMentorOption.equals("0")) {
+
+            viewAdmin.displayText("\nWhat would like to do?");
+            viewAdmin.displayList(viewAdmin.getEditMentorOptions1());
+
+            editMentorOption = viewAdmin.getInputFromUser("Option: ");
+            switch (editMentorOption) {
+                case "1": editMentorEmail(mentor);
+                    break;
+                case "2": editMentorClass(mentor);
+                    break;
+                case "0": break;
+
+                default: viewAdmin.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }
+    }
+
+    private void seeAllMentors() {
+
+        DaoMentor daoMentor = new DaoMentor();
+        ArrayList<Mentor> mentorList = daoMentor.getAllMentors();
+
+        viewAdmin.displayText("Mentor's list:");
+        viewAdmin.displayList(mentorList);
+    }
+
+    private Mentor getMentor() {
+        DaoMentor daoMentor = new DaoMentor();
+
+        ArrayList<Mentor> mentors = daoMentor.getAllMentors();
+        for(Mentor mentor: mentors){
+            viewAdmin.displayText(mentor.toString());
+        }
+
+        int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
+
+        Mentor mentor = daoMentor.importInstance(mentorId);
+
+        return mentor;
+    }
+
+    private void editMentorEmail(Mentor mentor) {
+        DaoMentor daoMentor = new DaoMentor();
+        String newEmail = viewAdmin.getInputFromUser("\nEnter mentor's new email: ");
+        mentor.setEmail(newEmail);
+        daoMentor.updateInstance(mentor);
+    }
+
+    private void editMentorClass(Mentor mentor){
+
+        Integer userId = mentor.getUserId();
+        Integer mentorClassId = new DaoMentor().getMentorClassId(mentor);
+
+        if(mentorClassId == null){
+            assignMentorToClass(userId);
+        }else{
+            String adminOption = "";
+            while (!adminOption.equals("0")) {
+
+                viewAdmin.displayText("\nWhat would like to do?");
+                viewAdmin.displayList(viewAdmin.getEditMentorOptions());
+
+                adminOption = viewAdmin.getInputFromUser("Option: ");
+                switch (adminOption) {
+                    case "1": unsignMentorFromClass(userId);
+                        adminOption = "0"; //to leave menu when operation is done
+                        break;
+                    case "2": changeMentorClass(userId);
+                        adminOption = "0";
+                        break;
+                    case "0": break;
+
+                    default: viewAdmin.displayText("Wrong option. Try again!");
+                        break;
+                }
+            }
+        }
+    }
+
+    private void assignMentorToClass(Integer userId){
+        CodecoolClass codecoolClass = getCodecoolClass();
+        new DaoClass().assignMentorToClass(userId, codecoolClass.getGroupId());
+    }
+
+    private void unsignMentorFromClass(Integer userId){
+        new DaoClass().unsignMentorFromClass(userId);
+    }
+
+    private void changeMentorClass(Integer userId){
+        CodecoolClass codecoolClass = getCodecoolClass();
+        new DaoClass().updateMentorInClass(userId, codecoolClass.getGroupId());
+    }
+
+    private CodecoolClass getCodecoolClass(){
+        ArrayList<CodecoolClass> classes = new DaoClass().getAllClasses();
+
+        MyIterator<CodecoolClass> iterator = new MyIterator <CodecoolClass>(classes);
+        while(iterator.hasNext()){
+            viewAdmin.displayText(iterator.next().getBasicInfo());
+        }
+
+        Integer classId = viewAdmin.getIntInputFromUser("Choose class by id: ");
+        return new DaoClass().importClass(classId);
     }
 
     public void seeMentorData() {
-        viewAdmin.displayText("Implementation in progress");
-    }
+        Mentor mentor = getMentor();
+        CodecoolClass mentorsClass = new DaoClass().getMentorsClass(mentor.getUserId());
 
-    public void assignMentorToClass() {
-        viewAdmin.displayText("Implementation in progress");
+        viewAdmin.displayText(mentor.toString());
+        if(mentorsClass != null){
+            viewAdmin.displayText("");
+            viewAdmin.displayText(mentorsClass.toString());
+        }
+
     }
 
     private void seeAllLevels() {
@@ -130,9 +207,7 @@ public class ControllerAdmin implements IUserController {
                           break;
                 case "4": seeMentorData();
                           break;
-                case "5": assignMentorToClass();
-                          break;
-                case "6": createLevel();
+                case "5": createLevel();
                           break;
                 case "0": break;
 
