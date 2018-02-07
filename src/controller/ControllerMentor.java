@@ -41,7 +41,7 @@ public class ControllerMentor implements IUserController{
     public Student getStudent(){
         DaoStudent daoStudent = new DaoStudent();
 
-        viewMentor.displayText("Students list: ");
+        viewMentor.displayText("Available students:\n");
         viewMentor.displayList(daoStudent.getAllStudents());
         ArrayList<Student> students = daoStudent.getAllStudents();
 
@@ -53,8 +53,11 @@ public class ControllerMentor implements IUserController{
     public Team getTeam(){
         DaoTeam daoTeam = new DaoTeam();
 
-        viewMentor.displayText("Students list: ");
-        viewMentor.displayList(daoTeam.getAllTeams());
+        viewMentor.displayText("Available teams:\n");
+        ArrayList<Team> teams = daoTeam.getAllTeams();
+        for(Team team: teams) {
+            viewMentor.displayText(team.getBasicInfo());
+        }
 
         int teamId = viewMentor.getIntInputFromUser("\nEnter id of team: ");
 
@@ -219,7 +222,6 @@ public class ControllerMentor implements IUserController{
             String chosenOption = viewMentor.getInputFromUser("Choose option: ");
             switch(chosenOption){
                 case "1": assignStudentToTeam(team);
-                    viewMentor.displayText("Student added to " + team.getName() + " team!");
                     break;
                 case "0": toContinue = false;
                     break;
