@@ -23,4 +23,8 @@ public class Student extends User{
         this.wallet = wallet;
     }
 
+    public void addCoins(int coins) {
+        wallet.addCoins(coins);
+    }
+
 }
