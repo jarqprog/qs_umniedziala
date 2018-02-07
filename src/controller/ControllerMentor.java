@@ -2,7 +2,6 @@ package controller;
 
 import view.ViewMentor;
 import dao.*;
-import iterator.MyIterator;
 import model.*;
 
 import java.util.ArrayList;
@@ -25,6 +24,11 @@ public class ControllerMentor implements IUserController{
 
         Student student = daoStudent.createInstance(studentName, studentPassword, studentEmail);
         daoStudent.exportInstance(student);
+        Student studentWithId = daoStudent.importNewStudent(studentEmail);
+        DaoWallet daoWallet = new DaoWallet();
+        Wallet wallet = daoWallet.createWallet();
+        studentWithId.setWallet(wallet);
+        daoWallet.exportWallet(studentWithId);
 
     }
 
