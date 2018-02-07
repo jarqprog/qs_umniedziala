@@ -20,6 +20,10 @@ public class ViewMentor extends View{
 
     private static ArrayList <String> updateQuestTypeOptions = new ArrayList <String>(Arrays.asList("1. Type individual",
             "2. Type team", "0. Go back"));
+
+    private static ArrayList <String> updateQuestCategoryOptions = new ArrayList <String>(Arrays.asList("1. Category Basic",
+            "2. Category Extra", "0. Go back"));
+    
     public ArrayList<String> getMentorOptions() {
         return mentorOptions;
     }
