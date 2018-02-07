@@ -99,4 +99,30 @@ public class DaoWallet{
         return artifacts;
     }
 
+    public void updateWallet(Student student){
+
+        int allCoins = student.getWallet().getAllCoins();
+        int availableCoins = student.getWallet().getAvailableCoins();
+        int userId = student.getUserId();
+
+        PreparedStatement preparedStatement = null;
+        String query = "update wallets SET all_coins = ?, available_coins = ?"+
+                "where id_user= ?;";
+
+        try{
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, allCoins);
+            preparedStatement.setInt(2, availableCoins);
+            preparedStatement.setInt(3, userId);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException e){
+            System.out.println("Wallet update failed");
+        }
+    }
+
+    public void exportStudentArtifact(){
+        
+    }
+
 }
