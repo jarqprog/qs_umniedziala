@@ -129,7 +129,29 @@ public class ControllerMentor implements IUserController{
     }
 
     public void updateQuest(){
-        toBeImplemented();
+        Quest quest = getQuest();
+
+        boolean toContinue = true;
+        do{
+//            viewMentor.displayList(viewMentor.getUpdateQuestOptions());  //update when view ready
+            String chosenOption = viewMentor.getInputFromUser("Choose option: ");
+            switch(chosenOption){
+                case "1": updateQuestName(artifact);
+                    break;
+                case "2": updateQuestDescription(artifact);
+                    break;
+                case "3": updateQuestValue(artifact);
+                    break;
+                case "4": updateQuestType(artifact);
+                    break;
+                case "4": updateQuestCategory(artifact);
+                    break;
+                case "0": toContinue = false;
+                    break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }while(toContinue);
     }
 
     public void updateArtifact() {
