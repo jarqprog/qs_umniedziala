@@ -35,6 +35,10 @@ public class Wallet{
 
     public int getAvailableCoins() { return this.availableCoins; }
 
+    public boolean hasEnoughCoins(int value) {
+        return (availableCoins - value) >= 0;
+    }
+
     public void subtractCoins(int coins) {
         availableCoins -= coins;
     }
