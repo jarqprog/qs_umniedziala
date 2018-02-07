@@ -3,11 +3,14 @@ package controller;
 //import dao.DaoArtifact;
 //import dao.DaoLevel;
 //import dao.DaoQuest;
+import dao.DaoArtifact;
 import model.Artifact;
 import model.Student;
 import model.Wallet;
 import model.Level;
 import view.ViewStudent;
+
+import java.sql.SQLException;
 
 public class ControllerStudent implements IUserController{
 
@@ -46,8 +49,16 @@ public class ControllerStudent implements IUserController{
 //        }
     }
 
-    public Artifact getIndividualArtifact() {
-        
+    public Artifact getArtifact(String status) {
+        DaoArtifact daoArtifact = new DaoArtifact();
+
+        viewStudent.displayText("Available artifacts:\n");
+        viewStudent.displayList(daoArtifact.getArtifacts(status));
+
+        int artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact: ");
+        Artifact artifact = daoArtifact.importArtifact(artifactId);
+
+        return artifact;
     }
 
     public void seeExpLevel() {
