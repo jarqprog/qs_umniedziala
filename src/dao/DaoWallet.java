@@ -31,9 +31,9 @@ public class DaoWallet{
             if (!resultSet.isClosed()) {
                 int allCoins = resultSet.getInt("all_coins");
                 int availableCoins = resultSet.getInt("available_coins");
-                ArrayList <Artifact> newArtifacts = getUserNewArtifacts(userID);
-                ArrayList <Artifact> usedArtifacts = getUserUsedArtifacts(userID);
-                wallet = new Wallet(allCoins, availableCoins, artifacts);
+                ArrayList <Artifact> newArtifacts = getUserArtifacts(userID, "new");
+                ArrayList <Artifact> usedArtifacts = getUserArtifacts(userID, "new");
+                wallet = new Wallet(allCoins, availableCoins, artifacts, newArtifacts, usedArtifacts);
                 resultSet.close();
             }
             preparedStatement.close();
@@ -69,17 +69,18 @@ public class DaoWallet{
 
     }
 
-    private ArrayList<Artifact> getUserNewArtifacts(int userID) {
+    private ArrayList<Artifact> getUserArtifacts(int userID, String status) {
 
         ArrayList<Artifact> artifacts = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         String query = "Select artifacts.id_artifact from artifacts inner join artifacts_in_wallets "
                        + "on artifacts.id_artifact = artifacts_in_wallets.id_artifact "
-                       + "where artifacts_in_wallets.id_student = ?;";
+                       + "where artifacts_in_wallets.id_student = ? and artifacts_in_wallets.status = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, userID);
+            preparedStatement.setString(2, status);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
@@ -88,35 +89,6 @@ public class DaoWallet{
                 artifacts.add(artifact);
             }
             
-            resultSet.close();
-            preparedStatement.close();
-
-        } catch (SQLException | ClassNotFoundException e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-        }
-
-        return artifacts;
-    }
-
-    private ArrayList<Artifact> getUserUsedArtifacts(int userID) {
-
-        ArrayList<Artifact> artifacts = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
-        String query = "Select artifacts.id_artifact from artifacts inner join artifacts_in_wallets "
-                + "on artifacts.id_artifact = artifacts_in_wallets.id_artifact "
-                + "where artifacts_in_wallets.id_student = ?;";
-
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, userID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()){
-                int idArtifact = resultSet.getInt("id_artifact");
-                Artifact artifact = new DaoArtifact().importInstance(idArtifact);
-                artifacts.add(artifact);
-            }
-
             resultSet.close();
             preparedStatement.close();
 
