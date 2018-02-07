@@ -15,7 +15,7 @@ public class DaoWallet{
 
     public Wallet createWallet(int allCoins, int availableCoins, ArrayList<Artifact> newArtifacts,
                                ArrayList <ArrayList> usedArtifacts){
-        return new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts );
+        return new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
     }
 
     public Wallet importInstance(int userID) {
@@ -32,7 +32,7 @@ public class DaoWallet{
                 int allCoins = resultSet.getInt("all_coins");
                 int availableCoins = resultSet.getInt("available_coins");
                 ArrayList <Artifact> newArtifacts = getUserArtifacts(userID, "new");
-                ArrayList <Artifact> usedArtifacts = getUserArtifacts(userID, "new");
+                ArrayList <Artifact> usedArtifacts = getUserArtifacts(userID, "used");
                 wallet = new Wallet(allCoins, availableCoins, artifacts, newArtifacts, usedArtifacts);
                 resultSet.close();
             }
@@ -121,8 +121,29 @@ public class DaoWallet{
         }
     }
 
-    public void exportStudentArtifact(){
-        
+    public void exportStudentArtifact(int idArtifact, int idStudent){
+
+        String status = "new";
+
+        PreparedStatement preparedStatement = null;
+        String query = "INSERT into artifacts_in_wallets (id_artifact, id_student, status)" +
+                "values (?, ?, ?);";
+
+        try{
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, idArtifact);
+            preparedStatement.setInt(2, idStudent);
+            preparedStatement.setString(3, status);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Artifact insertion failed");
+        }
+
+
+
     }
 
 }
