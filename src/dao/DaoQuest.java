@@ -12,6 +12,32 @@ public class DaoQuest{
         return new Quest(itemId, name, value, description, type, category);
     }
 
+    public Quest importQuest(int itemId) {
+        Quest quest = null;
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT * FROM quests WHERE id_quest = ?";
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, itemId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()) {
+                String name = resultSet.getString("name");
+                int value = resultSet.getInt("value");
+                String description = resultSet.getString("description");
+                String type = resultSet.getString("type");
+                String category = resultSet.getString("category");
+
+                quest = createQuest(itemId, name, value, description, type, category);
+                resultSet.close();
+            }
+
+            preparedStatement.close();
+        }catch(SQLException | ClassNotFoundException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return quest;
+    }
     public ArrayList<Quest> importData() {
         ArrayList<Quest> allQuests = new ArrayList<>();
         PreparedStatement preparedStatement = null;
