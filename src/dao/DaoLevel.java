@@ -111,9 +111,6 @@ public class DaoLevel{
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 int limitCoins = resultSet.getInt("coins_limit");
-                System.out.println(name);
-                System.out.println(limitCoins);
-
                 level = createLevel(name, limitCoins);
                 levels.add(level);
             }
