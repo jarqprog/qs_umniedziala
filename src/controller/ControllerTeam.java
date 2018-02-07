@@ -10,4 +10,8 @@ public class ControllerTeam{
         return ((double) teamCoins % teamSize) == 0;
     }
 
+    public void splitTeamMoney() {
+        
+    }
+
 }
