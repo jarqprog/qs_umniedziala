@@ -71,7 +71,7 @@ public class ControllerMentor implements IUserController{
 //        daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
     }
 
-    private String chooseStatus() {
+    private String chooseType() {
         String statusRequest = "Choose status:\n1. Individual\n2. Team\nOption: ";
         String status = null;
         boolean choosingStatus = true;
@@ -94,7 +94,7 @@ public class ControllerMentor implements IUserController{
         return status;
     }
 
-    private String chooseType() {
+    private String chooseCategory() {
         String typeRequest = "Choose type:\n1. Basic\n2. Extra\nOption: ";
         String type = null;
         boolean choosingType = true;
@@ -175,6 +175,12 @@ public class ControllerMentor implements IUserController{
     public void updateQuestType(Quest quest){
         String type = chooseType();
         quest.setType(type);
+        new DaoQuest().updateQuest(quest);
+    }
+
+    public void updateQuestCategory(Quest quest){
+        String category = chooseCategory();
+        quest.setCategory(category);
         new DaoQuest().updateQuest(quest);
     }
 
