@@ -12,36 +12,52 @@ public class DaoQuest{
         return new Quest(itemId, name, value, description, type, category);
     }
 
-    public ArrayList<Quest> importData() {
-        ArrayList<Quest> allQuests = new ArrayList<>();
+    public Quest importQuest(int itemId) {
+        Quest quest = null;
         PreparedStatement preparedStatement = null;
-        String query = "SELECT * FROM quests";
-
+        String query = "SELECT * FROM quests WHERE id_quest = ?";
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            ResultSet rs = preparedStatement.executeQuery();
+            preparedStatement.setInt(1, itemId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (rs.next()) {
-                Quest quest = createQuestFromDBData(rs);
-                allQuests.add(quest);
+            if(!resultSet.isClosed()) {
+                String name = resultSet.getString("name");
+                int value = resultSet.getInt("value");
+                String description = resultSet.getString("description");
+                String type = resultSet.getString("type");
+                String category = resultSet.getString("category");
+
+                quest = createQuest(itemId, name, value, description, type, category);
+                resultSet.close();
             }
+
             preparedStatement.close();
-            rs.close();
         }catch(SQLException | ClassNotFoundException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
-        return allQuests;
-    }
-
-    private Quest createQuestFromDBData(ResultSet rs) throws SQLException {
-        int itemId = rs.getInt("id_quest");
-        String name = rs.getString("name");
-        int value = rs.getInt("value");
-        String description = rs.getString("description");
-        String type = rs.getString("type");
-        String category = rs.getString("category");
-        Quest quest = createQuest(itemId, name, value, description, type, category);
         return quest;
+    }
+    public ArrayList<Quest> getAllQuests() {
+        ArrayList<Quest> quests = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT id_quest FROM quests";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int questId = resultSet.getInt("id_quest");
+                Quest quest = importQuest(questId);
+                quests.add(quest);
+            }
+            preparedStatement.close();
+            resultSet.close();
+        }catch(SQLException | ClassNotFoundException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return quests;
     }
 
     public void updateQuest(Quest quest) {
@@ -54,7 +70,9 @@ public class DaoQuest{
 
         PreparedStatement preparedStatement = null;
 
-        String query = createQueryForUpdateQuest();
+        String query = "UPDATE quests SET " +
+        "name = ?, value = ?, description = ?, type = ?, category =? " +
+        "WHERE id_quest = ?";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -68,15 +86,7 @@ public class DaoQuest{
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(" Quest update failed");
+            System.out.println("Quest update failed");
         }
-    }
-
-    private String createQueryForUpdateQuest() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("UPDATE quests SET ");
-        sb.append("name = ?, value = ?, description = ?, type = ?, category =? ");
-        sb.append("WHERE id_quest = ?");
-        return sb.toString();
     }
 }
