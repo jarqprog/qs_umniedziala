@@ -172,6 +172,12 @@ public class ControllerMentor implements IUserController{
         new DaoQuest().updateQuest(quest);
     }
 
+    public void updateQuestType(Quest quest){
+        String type = chooseType();
+        quest.setType(type);
+        new DaoQuest().updateQuest(quest);
+    }
+
     public void updateArtifact() {
         //seeArtifacts();
         toBeImplemented();
