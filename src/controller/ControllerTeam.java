@@ -11,11 +11,19 @@ public class ControllerTeam{
     }
 
     public void splitMoneyEqually() {
-        
+        ArrayList<Student> students = team.getStudents();
+        int teamCoins = team.getAvailableCoins();
+        int teamSize = team.getSize();
+
+        int coinsForOneStudent = teamCoins / teamSize;
+
+        for (Student student: students) {
+            student.addCoins(coinsForOneStudent);
+        }
     }
 
     public void splitMoneyAlmostEqually() {
-
+        
     }
 
     public void splitTeamMoney() {
