@@ -31,7 +31,18 @@ public class ControllerTeam{
     }
 
     private void splitMoneyAlmostEqually() {
+        ArrayList<Student> students = team.getStudents().clone();
+        int teamCoins = team.getAvailableCoins();
+        int teamSize = team.getSize();
 
+        splitMoneyEqually();
+        int remainderCoins = (teamCoins % teamSize);
+
+        while (ramainderCoins > 0) {
+            Student luckyStudent = popRandomStudent(students);
+            luckyStudent.addCoins(1);
+            remainderCoins--;
+        }
     }
 
     public void splitTeamMoney() {
