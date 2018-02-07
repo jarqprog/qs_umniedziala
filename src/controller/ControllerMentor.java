@@ -154,6 +154,12 @@ public class ControllerMentor implements IUserController{
         }while(toContinue);
     }
 
+    public void updateQuestName(Quest quest){
+        String name = viewMentor.getInputFromUser("Pass new quest name");
+        quest.setName(name);
+        new DaoQuest().updateQuest(quest);
+    }
+
     public void updateArtifact() {
         //seeArtifacts();
         toBeImplemented();
