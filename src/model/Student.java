@@ -23,4 +23,8 @@ public class Student extends User{
         this.wallet = wallet;
     }
 
+    public boolean hasEnoughCoins(int value) {
+        return wallet.hasEnoughCoins(value);
+    }
+
 }
