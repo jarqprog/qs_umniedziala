@@ -58,8 +58,6 @@ public class Wallet{
 
     public void addUsedArtifact(Artifact artifact) { this.usedArtifacts.add(artifact); }
 
-    public void removeUsedArtifact(Artifact artifact) { this.usedArtifacts.remove(artifact); }
-
     public String toString(){
         String myWallet = "Wallet contains:\n";
         myWallet += this.availableCoins + " available coolcoins";
