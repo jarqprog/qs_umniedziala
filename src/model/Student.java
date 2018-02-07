@@ -27,4 +27,8 @@ public class Student extends User{
         return wallet.hasEnoughCoins(value);
     }
 
+    public void subtractCoins(int coins) {
+        wallet.subtractCoins(coins);
+    }
+
 }
