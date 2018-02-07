@@ -16,10 +16,10 @@ public class ViewMentor extends View{
 
     private static ArrayList <String> updateArtifactsOptions = new ArrayList <String>(Arrays.asList("1. Update artifacts name",
             "2. Update artifacts description", "3. Update artifacts value", "4. Update artifacts type",
-            "0. Log out"));
+            "0. Go back"));
 
     private static ArrayList <String> updateArtifactTypeOptions = new ArrayList <String>(Arrays.asList("1. Type individual",
-            "2. Type team", "0. Log out"));
+            "2. Type team", "0. Go back"));
 
     public ArrayList<String> getMentorOptions() {
         return mentorOptions;
