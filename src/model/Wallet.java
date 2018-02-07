@@ -43,12 +43,23 @@ public class Wallet{
     public ArrayList<Artifact> getUsedArtifacts() { return usedArtifacts; }
 
     public String toString(){
-        MyIterator <Artifact> myIterator = new MyIterator<>(this.artifacts);
         String myWallet = "Wallet contains " + this.availableCoins + " coolcoins\n\nArtifacts:\n";
-        while(myIterator.hasNext()){
-            myWallet += myIterator.next().toString() + "\n";
-        }
 
         return myWallet;
+    }
+
+    private String getStudentArtifacts(ArrayList<Artifact> artifacts){
+        String allArtifacts = "";
+        if(artifacts.size() == 0){
+            allArtifacts = "No artifacts";
+        }else {
+            MyIterator<Artifact> myIterator = new MyIterator<>(artifacts);
+            while (myIterator.hasNext()) {
+                allArtifacts += myIterator.next().toString() + "\n";
+            }
+        }
+
+        return allArtifacts;
+
     }
 }
