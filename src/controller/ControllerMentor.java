@@ -119,9 +119,90 @@ public class ControllerMentor implements IUserController{
     }
 
     public void updateArtifact() {
-        //seeArtifacts();
-        toBeImplemented();
-        
+        Artifact artifact = getArtifact();
+
+        boolean toContinue = true;
+        do{
+            viewMentor.displayList(viewMentor.getUpdateArtifactsOptions());
+            String chosenOption = viewMentor.getInputFromUser("Choose option: ");
+            switch(chosenOption){
+                case "1": updateArtifactName(artifact);
+                    break;
+                case "2": updateArtifactDescription(artifact);
+                    break;
+                case "3": updateArtifactValue(artifact);
+                    break;
+                case "4": updateArtifactType(artifact);
+                    break;
+                case "0": toContinue = false;
+                    break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }while(toContinue);
+
+    }
+
+    public void updateArtifactName(Artifact artifact){
+        String name = viewMentor.getInputFromUser("Choose new name: ");
+        artifact.setName(name);
+        new DaoArtifact().updateArtifact(artifact);
+    }
+    public void updateArtifactValue(Artifact artifact){
+        Integer value = viewMentor.getIntInputFromUser("Choose new value: ");
+        artifact.setValue(value);
+        new DaoArtifact().updateArtifact(artifact);
+    }
+
+    public void updateArtifactDescription(Artifact artifact){
+        String description = viewMentor.getInputFromUser("Choose new description: ");
+        artifact.setDescription(description);
+        new DaoArtifact().updateArtifact(artifact);
+    }
+    public void updateArtifactType(Artifact artifact){
+        String type = null;
+        boolean toContinue = true;
+        do{
+            viewMentor.displayList(viewMentor.getUpdateArtifactTypeOptions());
+            String userChoice = viewMentor.getInputFromUser("Choose type: ");
+            switch (userChoice){
+                case "1": type = "individual";
+                    break;
+                case "2": type = "team"; //validate type names!!!
+                    break;
+                case "0": toContinue = false;
+                    break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+            }
+        }while (toContinue);
+
+        if(type != null){
+            artifact.setType(type);
+            new DaoArtifact().updateArtifact(artifact);
+        }
+    }
+
+    private void seeAllArtifacts() {
+
+        DaoArtifact daoArtifact = new DaoArtifact();
+        ArrayList<Artifact> artifactList = daoArtifact.getAllArtifacts();
+
+        viewMentor.displayText("List of artifacts:");
+        viewMentor.displayList(artifactList);
+    }
+
+    private Artifact getArtifact() {
+
+        seeAllArtifacts();
+        int artifactId = viewMentor.getIntInputFromUser("\nEnter id of artifact: ");
+        DaoArtifact daoArtifact = new DaoArtifact();
+        Artifact artifact = daoArtifact.importArtifact(artifactId);
+        while (artifact == null) {
+            viewMentor.displayText("No artifact with such id found!");
+            artifactId = viewMentor.getIntInputFromUser("\nEnter id of artifact: ");
+            artifact = daoArtifact.importArtifact(artifactId);
+        }
+        return artifact;
     }
 
     public void toBeImplemented(){
