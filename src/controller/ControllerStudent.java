@@ -3,10 +3,7 @@ package controller;
 //import dao.DaoArtifact;
 //import dao.DaoLevel;
 //import dao.DaoQuest;
-import model.Artifact;
-import model.Student;
-import model.Wallet;
-import model.Level;
+import model.*;
 import view.ViewStudent;
 
 public class ControllerStudent implements IUserController{
@@ -53,7 +50,9 @@ public class ControllerStudent implements IUserController{
     }
 
     public void manageTeam() {
-        viewStudent.displayText("Implementation in progress");
+        Team team = new Team("ziomki");//testowo, do zmiany jak bedzie metoda w DAO
+        ControllerTeam controllerTeam = new ControllerTeam(team);
+        controllerTeam.runMenu();
     }
 
     public void seeQuests() {
@@ -65,6 +64,7 @@ public class ControllerStudent implements IUserController{
 //        viewStudent.displayText("Available artifacts: ");
 //        viewStudent.displayList(new DaoArtifact().importData());
     }
+
 
     public void runMenu() {
 
@@ -87,6 +87,8 @@ public class ControllerStudent implements IUserController{
                 case "5": seeQuests();
                         break;
                 case "6": seeArtifacts();
+                        break;
+                case "7": manageTeam();
                         break;
                 case "0": break;
 
