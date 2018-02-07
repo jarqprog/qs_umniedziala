@@ -107,7 +107,7 @@ public class DaoWallet{
 
         PreparedStatement preparedStatement = null;
         String query = "update wallets SET all_coins = ?, available_coins = ?"+
-                "where id_user= ?;";
+                "where id_student= ?;";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -147,22 +147,21 @@ public class DaoWallet{
 
         String statusArtifact = "used";
 
-            PreparedStatement preparedStatement = null;
-            String query = "update artifacts_in_wallets SET status = ?, available_coins = ?"+
+        PreparedStatement preparedStatement = null;
+        String query = "update artifacts_in_wallets SET status = ?"+
                     "where id_artifact= ? and id_student = ?;";
 
-            try{
-                preparedStatement = DbConnection.getConnection().prepareStatement(query);
-                preparedStatement.setString(1, statusArtifact);
-                preparedStatement.setInt(2, idArtifact);
-                preparedStatement.setInt(3, idStudent);
+        try{
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, statusArtifact);
+            preparedStatement.setInt(2, idArtifact);
+            preparedStatement.setInt(3, idStudent);
 
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
 
-            }catch (SQLException | ClassNotFoundException e){
-                System.out.println("Artifact update failed");
-            }
-
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Artifact update failed");
         }
+    }
 }
