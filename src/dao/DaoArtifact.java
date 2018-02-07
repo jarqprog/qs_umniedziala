@@ -79,7 +79,7 @@ public class DaoArtifact{
 
         PreparedStatement preparedStatement = null;
 
-        String query = "UPDATE quests SET " +
+        String query = "UPDATE artifacts SET " +
                 "name = ?, value = ?, description = ?, type = ? " +
                 "WHERE id_quest = ?";
 
