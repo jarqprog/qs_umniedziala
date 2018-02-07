@@ -37,6 +37,11 @@ public class Wallet{
         return this.availableCoins;
     }
 
+    public void addCoins(int coins) {
+        availableCoins += coins;
+        allCoins += coins;
+    }
+
     public String toString(){
         MyIterator <Artifact> myIterator = new MyIterator<>(this.artifacts);
         String myWallet = "Wallet contains " + this.availableCoins + " coolcoins\n\nArtifacts:\n";
