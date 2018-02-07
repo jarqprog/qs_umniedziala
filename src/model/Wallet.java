@@ -43,7 +43,9 @@ public class Wallet{
     public ArrayList<Artifact> getUsedArtifacts() { return usedArtifacts; }
 
     public String toString(){
-        String myWallet = "Wallet contains " + this.availableCoins + " coolcoins\n\nArtifacts:\n";
+        String myWallet = "Wallet contains " + this.availableCoins + " coolcoins";
+        myWallet += "\n\nNew Artifacts:\n" + getStudentArtifacts(newArtifacts);
+        myWallet += "\n\nUsed Artifacts:\n" + getStudentArtifacts(usedArtifacts);
 
         return myWallet;
     }
