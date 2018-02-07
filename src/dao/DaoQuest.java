@@ -60,17 +60,6 @@ public class DaoQuest{
         return quests;
     }
 
-    private Quest createQuestFromDBData(ResultSet rs) throws SQLException {
-        int itemId = rs.getInt("id_quest");
-        String name = rs.getString("name");
-        int value = rs.getInt("value");
-        String description = rs.getString("description");
-        String type = rs.getString("type");
-        String category = rs.getString("category");
-        Quest quest = createQuest(itemId, name, value, description, type, category);
-        return quest;
-    }
-
     public void updateQuest(Quest quest) {
         int itemId = quest.getItemId();
         String name = quest.getName();
