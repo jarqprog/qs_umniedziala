@@ -42,6 +42,12 @@ public class Wallet{
 
     public ArrayList<Artifact> getUsedArtifacts() { return usedArtifacts; }
 
+    public void addNewArtifact(Artifact artifact) { this.newArtifacts.add(artifact); }
+
+    public void removeNewArtifact(Artifact artifact) { this.newArtifacts.remove(artifact); }
+
+    public void setUsedArtifacts(ArrayList<Artifact> usedArtifacts) { this.usedArtifacts = usedArtifacts; }
+
     public String toString(){
         String myWallet = "Wallet contains:\n";
         myWallet += this.availableCoins + " available coolcoins";
