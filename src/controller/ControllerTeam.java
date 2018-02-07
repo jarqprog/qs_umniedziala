@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class ControllerTeam{
 
     private boolean checkTeamCoinsDivisibleByTeamSize(int teamCoins, int teamSize) {
-        return ((double) teamCoins % teamSize) == 0;
+        return (teamCoins % teamSize) == 0;
     }
 
     private void splitMoneyEqually() {
