@@ -7,18 +7,21 @@ import java.util.ArrayList;
 public class Wallet{
     private int allCoins;
     private int availableCoins;
-    private ArrayList<Artifact> artifacts;
+    private ArrayList<Artifact> newArtifacts;
+    private ArrayList<Artifact> usedArtifacts;
 
     public Wallet(){
         this.allCoins = 0;
         this.availableCoins = 0;
-        artifacts = new ArrayList<>();
+        newArtifacts = new ArrayList<>();
+        usedArtifacts = new ArrayList<>();
     }
 
-    public Wallet(int allCoins, int availableCoins, ArrayList<Artifact> artifacts){
+    public Wallet(int allCoins, int availableCoins, ArrayList<Artifact> newArtifacts,  ArrayList<Artifact> usedArtifacts){
         this.allCoins = allCoins;
         this.availableCoins = availableCoins;
-        this.artifacts = artifacts;
+        this.newArtifacts = newArtifacts;
+        this.usedArtifacts = usedArtifacts;
     }
 
     public void setAllCoins(int allCoins){
