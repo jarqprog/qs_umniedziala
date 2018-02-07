@@ -53,10 +53,8 @@ public class ControllerMentor implements IUserController{
     public Team getTeam(){
         DaoTeam daoTeam = new DaoTeam();
 
-        ArrayList<Team> teams = daoTeam.getAllTeams();
-        for(Team team: teams){
-            viewMentor.displayText(team.getBasicInfo());
-        }
+        viewMentor.displayText("Students list: ");
+        viewMentor.displayList(daoTeam.getAllTeams());
 
         int teamId = viewMentor.getIntInputFromUser("\nEnter id of team: ");
 
