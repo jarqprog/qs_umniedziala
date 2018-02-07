@@ -11,7 +11,7 @@ public class ControllerTeam{
     }
 
     public void splitMoneyEqually() {
-
+        
     }
 
     public void splitMoneyAlmostEqually() {
@@ -19,7 +19,19 @@ public class ControllerTeam{
     }
 
     public void splitTeamMoney() {
+        int teamCoins = team.getAvailableCoins();
+        int teamSize = team.getSize();
 
+        if (teamCoins == 0) {
+            teamView.displayText("Team has no coins to split");
+            return;
+        }
+
+        if (checkTeamCoinsDivisibleByTeamSize(teamCoins, teamSize)) {
+            splitMoneyEqually();
+        } else {
+            splitMoneyAlmostEqually();
+        }
     }
 
 }
