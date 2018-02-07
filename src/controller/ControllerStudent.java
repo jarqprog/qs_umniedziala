@@ -46,6 +46,10 @@ public class ControllerStudent implements IUserController{
 //        }
     }
 
+    public Artifact getIndividualArtifact() {
+        
+    }
+
     public void seeExpLevel() {
 //        DaoLevel daoLevels = new DaoLevel();
 //        Level level = daoLevels.checkLevel(this.student.getWallet().getCoins());
