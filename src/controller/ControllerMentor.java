@@ -123,7 +123,7 @@ public class ControllerMentor implements IUserController{
         viewMentor.displayText("Available quests:\n");
         viewMentor.displayList(daoQuest.getAllQuests());
 
-        int guestId = viewMentor.getIntInputFromUser("\nEnter id of quest: ");
+        int questId = viewMentor.getIntInputFromUser("\nEnter id of quest: ");
 
         return daoQuest.importQuest(questId);
     }
@@ -133,18 +133,18 @@ public class ControllerMentor implements IUserController{
 
         boolean toContinue = true;
         do{
-//            viewMentor.displayList(viewMentor.getUpdateQuestOptions());  //update when view ready
+            viewMentor.displayList(viewMentor.getEditQuestOptions());
             String chosenOption = viewMentor.getInputFromUser("Choose option: ");
             switch(chosenOption){
-                case "1": updateQuestName(artifact);
+                case "1": updateQuestName(quest);
                     break;
-                case "2": updateQuestDescription(artifact);
+                case "2": updateQuestDescription(quest);
                     break;
-                case "3": updateQuestValue(artifact);
+                case "3": updateQuestValue(quest);
                     break;
-                case "4": updateQuestType(artifact);
+                case "4": updateQuestType(quest);
                     break;
-                case "4": updateQuestCategory(artifact);
+                case "5": updateQuestCategory(quest);
                     break;
                 case "0": toContinue = false;
                     break;
