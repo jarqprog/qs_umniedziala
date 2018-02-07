@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class ControllerTeam{
 
-    public boolean checkTeamCoinsDivisibleByTeamSize(int teamCoins, int teamSize) {
+    private boolean checkTeamCoinsDivisibleByTeamSize(int teamCoins, int teamSize) {
         return ((double) teamCoins % teamSize) == 0;
     }
 
-    public void splitMoneyEqually() {
+    private void splitMoneyEqually() {
         ArrayList<Student> students = team.getStudents();
         int teamCoins = team.getAvailableCoins();
         int teamSize = team.getSize();
@@ -22,8 +22,8 @@ public class ControllerTeam{
         }
     }
 
-    public void splitMoneyAlmostEqually() {
-        
+    private void splitMoneyAlmostEqually() {
+
     }
 
     public void splitTeamMoney() {
