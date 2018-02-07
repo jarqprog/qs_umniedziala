@@ -28,7 +28,7 @@ public class ViewMentor extends View{
         return mentorOptions;
     }
 
-    public static ArrayList<String> getQuestEditOptions() {
+    public static ArrayList<String> getEditQuestOptions() {
         return questEditOptions;
     }
 
