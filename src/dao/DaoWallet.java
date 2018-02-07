@@ -121,15 +121,15 @@ public class DaoWallet{
         }
     }
 
-    public void exportStudentArtifact(int idArtifact, int idStudent){
+    public void exportStudentArtifact(int idArtifact, int idStudent) {
 
         String status = "new";
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into artifacts_in_wallets (id_artifact, id_student, status)" +
-                "values (?, ?, ?);";
+        String query = "INSERT INTO artifacts_in_wallets (id_artifact, id_student, status)" +
+                "VALUES (?, ?, ?);";
 
-        try{
+        try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, idArtifact);
             preparedStatement.setInt(2, idStudent);
@@ -138,12 +138,31 @@ public class DaoWallet{
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Artifact insertion failed");
         }
-
-
-
     }
 
+    public void updateStudentsArtifact(int idArtifact, int idStudent){
+
+        String statusArtifact = "used";
+
+            PreparedStatement preparedStatement = null;
+            String query = "update artifacts_in_wallets SET status = ?, available_coins = ?"+
+                    "where id_artifact= ? and id_student = ?;";
+
+            try{
+                preparedStatement = DbConnection.getConnection().prepareStatement(query);
+                preparedStatement.setString(1, statusArtifact);
+                preparedStatement.setInt(2, idArtifact);
+                preparedStatement.setInt(3, idStudent);
+
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+
+            }catch (SQLException | ClassNotFoundException e){
+                System.out.println("Artifact update failed");
+            }
+
+        }
 }
