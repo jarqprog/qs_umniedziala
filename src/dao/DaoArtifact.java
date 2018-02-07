@@ -97,6 +97,7 @@ public class DaoArtifact{
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Artifact update failed");
         }
+    }
 
     public void exportArtifact(Artifact artifact) {
 
