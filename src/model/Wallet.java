@@ -43,6 +43,10 @@ public class Wallet{
         availableCoins -= coins;
     }
 
+    public void addArtifact(Artifact artifact) {
+        artifacts.add(artifact);
+    }
+
     public String toString(){
         MyIterator <Artifact> myIterator = new MyIterator<>(this.artifacts);
         String myWallet = "Wallet contains " + this.availableCoins + " coolcoins\n\nArtifacts:\n";
