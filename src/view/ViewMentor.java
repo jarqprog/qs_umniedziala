@@ -23,9 +23,24 @@ public class ViewMentor extends View{
 
     private static ArrayList <String> updateQuestCategoryOptions = new ArrayList <String>(Arrays.asList("1. Category Basic",
             "2. Category Extra", "0. Go back"));
-    
+
     public ArrayList<String> getMentorOptions() {
         return mentorOptions;
     }
 
+    public static ArrayList<String> getQuestEditOptions() {
+        return questEditOptions;
+    }
+
+    public static ArrayList<String> getUpdateQuestOptions() {
+        return updateQuestOptions;
+    }
+
+    public static ArrayList<String> getUpdateQuestTypeOptions() {
+        return updateQuestTypeOptions;
+    }
+
+    public static ArrayList<String> getUpdateQuestCategoryOptions() {
+        return updateQuestCategoryOptions;
+    }
 }
