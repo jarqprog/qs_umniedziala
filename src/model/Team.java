@@ -21,6 +21,10 @@ public class Team extends Group{
         return this.availableCoins;
     }
 
+    public int getSize() {
+        return students.size();
+    }
+
     public String toString(){
         return super.toString() + "\nTeam coins: " + this.availableCoins;
     }
