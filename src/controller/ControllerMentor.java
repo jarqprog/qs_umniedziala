@@ -142,6 +142,18 @@ public class ControllerMentor implements IUserController{
         toBeImplemented();
     }
 
+    public void markBoughtArtifact(){
+        Student student = getStudent();
+
+        viewMentor.displayText("Student artifacts:\n");
+        viewMentor.displayList(student.getAllNewArtifacts());
+        Integer artifactId = viewMentor.getIntInputFromUser("Choose id artifact to be marked as bougth: ");
+
+        Artifact artifactToBeBougth = getArtifact(artifactId);
+        student.markArtifactAsBougth(artifactToBeBougth);
+
+    }
+
     public void markStudentAchivedQuest() {
         toBeImplemented();
     }
