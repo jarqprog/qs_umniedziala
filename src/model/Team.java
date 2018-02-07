@@ -21,6 +21,10 @@ public class Team extends Group{
         return this.availableCoins;
     }
 
+    public void addCoins(int coins) {
+        availableCoins += coins;
+    }
+
     public String toString(){
         return super.toString() + "\nTeam coins: " + this.availableCoins;
     }
