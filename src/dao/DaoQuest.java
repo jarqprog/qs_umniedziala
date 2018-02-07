@@ -70,7 +70,9 @@ public class DaoQuest{
 
         PreparedStatement preparedStatement = null;
 
-        String query = createQueryForUpdateQuest();
+        String query = "UPDATE quests SET " +
+        "name = ?, value = ?, description = ?, type = ?, category =? " +
+        "WHERE id_quest = ?";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -86,13 +88,5 @@ public class DaoQuest{
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Quest update failed");
         }
-    }
-
-    private String createQueryForUpdateQuest() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("UPDATE quests SET ");
-        sb.append("name = ?, value = ?, description = ?, type = ?, category =? ");
-        sb.append("WHERE id_quest = ?");
-        return sb.toString();
     }
 }
