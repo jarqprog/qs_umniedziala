@@ -12,7 +12,7 @@ public class ViewMentor extends View{
         "0. Log out"));
 
     private static ArrayList <String> questEditOptions = new ArrayList<>(Arrays.asList("1. Change name",
-            "2. Change value", "3. Change description", "4. Change type", "5. Change category"));
+            "2. Change value", "3. Change description", "4. Change type", "5. Change category", "0. Go back"));
 
     private static ArrayList <String> updateQuestOptions = new ArrayList <String>(Arrays.asList("1. Update quest's name",
             "2. Update quest's description", "3. Update quest's value", "4. Update quest's type", "5. Update quest's category",
