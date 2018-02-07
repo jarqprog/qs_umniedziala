@@ -14,7 +14,7 @@ public class DaoWallet{
     }
 
     public Wallet createWallet(int allCoins, int availableCoins, ArrayList<Artifact> newArtifacts,
-                               ArrayList <ArrayList> usedArtifacts){
+                               ArrayList <Artifact> usedArtifacts){
         return new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
     }
 
@@ -33,7 +33,7 @@ public class DaoWallet{
                 int availableCoins = resultSet.getInt("available_coins");
                 ArrayList <Artifact> newArtifacts = getUserArtifacts(userID, "new");
                 ArrayList <Artifact> usedArtifacts = getUserArtifacts(userID, "used");
-                wallet = new Wallet(allCoins, availableCoins, artifacts, newArtifacts, usedArtifacts);
+                wallet = new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
                 resultSet.close();
             }
             preparedStatement.close();
