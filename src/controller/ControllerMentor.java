@@ -41,10 +41,9 @@ public class ControllerMentor implements IUserController{
     public Student getStudent(){
         DaoStudent daoStudent = new DaoStudent();
 
+        viewMentor.displayText("Students list: ");
+        viewMentor.displayList(daoStudent.getAllStudents());
         ArrayList<Student> students = daoStudent.getAllStudents();
-        for(Student student: students){
-            viewMentor.displayText(student.toString());
-        }
 
         int studentId = viewMentor.getIntInputFromUser("\nEnter id of student: ");
 
