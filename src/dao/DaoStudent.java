@@ -20,11 +20,14 @@ public class DaoStudent implements IDaoUser <Student>{
     public Student importInstance(int studentId) {
         Student student = null;
         PreparedStatement preparedStatement = null;
-        String query = "SELECT * FROM users WHERE id_user = ?;";
+        int roleId = getRoleID("mentor");
+
+        String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, String.valueOf(studentId));
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.setInt(2, roleId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(!resultSet.isClosed()){
@@ -55,11 +58,14 @@ public class DaoStudent implements IDaoUser <Student>{
 
         Student student = null;
         PreparedStatement preparedStatement = null;
-        String query = "SELECT * FROM users WHERE email = ?;";
+        int roleId = getRoleID("mentor");
+
+        String query = "SELECT * FROM users WHERE email = ? AND id_role = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, userEmail);
+            preparedStatement.setInt(2, roleId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(!resultSet.isClosed()){
@@ -117,9 +123,11 @@ public class DaoStudent implements IDaoUser <Student>{
         String password = student.getPassword();
         String email = student.getEmail();
         int studentId = student.getUserId();
+        int roleId = getRoleID("mentor");
+
 
         PreparedStatement preparedStatement = null;
-        String query = "update users set name = ?, password = ?, email = ? where id_user= ?;";
+        String query = "update users set name = ?, password = ?, email = ? where id_user= ? AND id_role = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -127,7 +135,8 @@ public class DaoStudent implements IDaoUser <Student>{
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
-            preparedStatement.setInt(3, studentId);
+            preparedStatement.setInt(4, studentId);
+            preparedStatement.setInt(5, roleId);
 
             preparedStatement.executeUpdate();
             preparedStatement.close();

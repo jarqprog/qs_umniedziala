@@ -20,12 +20,14 @@ public class DaoAdmin implements IDaoUser <Admin>  {
     public Admin importInstance(int adminId){
         Admin admin = null;
         PreparedStatement preparedStatement = null;
-        String query = "SELECT * FROM users WHERE id_user = ?;";
+        String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
+        int roleId = getRoleID("admin");
 
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, adminId);
+            preparedStatement.setInt(2, roleId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(!resultSet.isClosed()) {
@@ -75,10 +77,11 @@ public class DaoAdmin implements IDaoUser <Admin>  {
         String password = admin.getPassword();
         String email = admin.getEmail();
         int adminId = admin.getUserId();
+        int roleId = getRoleID("admin");
 
         PreparedStatement preparedStatement = null;
         String query = "update users SET name = ?, password = ?, email = ?"+
-                "where id_user= ?;";
+                "where id_user= ? AND id_role = ?;";
 
         try{
 
@@ -87,6 +90,7 @@ public class DaoAdmin implements IDaoUser <Admin>  {
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, adminId);
+            preparedStatement.setInt(5, roleId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException e){
