@@ -39,4 +39,6 @@ public class Team extends Group {
     public void addCoins(int coins) {
         availableCoins += coins;
     }
+
+    public void subtractCoins(Integer coins){ availableCoins -= coins; }
 }
