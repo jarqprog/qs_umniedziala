@@ -319,7 +319,7 @@ public class ControllerMentor implements IUserController{
 
         viewMentor.displayText("Student artifacts:\n");
         viewMentor.displayList(student.getAllNewArtifacts());
-        Integer artifactId = viewMentor.getIntInputFromUser("Choose id artifact to be marked as bougth: ");
+        Integer artifactId = viewMentor.getIntInputFromUser("Choose id artifact to be marked as used: ");
 
         Artifact artifactToBeBougth = new DaoArtifact().importArtifact(artifactId);
         student.markArtifactAsBougth(artifactToBeBougth);
