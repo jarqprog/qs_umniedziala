@@ -19,11 +19,11 @@ public abstract class View{
             try {
                 System.out.print(request);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                userInput = reader.readLine(); 
-                } 
+                userInput = reader.readLine();
+                }
             catch (IOException e) {
                 displayText("Wrong input");
-                }  
+                }
         }while(userInput.trim().isEmpty());
 
     return userInput;
@@ -36,11 +36,12 @@ public abstract class View{
 
         while (correctInput){
             try{
-                displayText(request);
+                System.out.print(request);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                int userInput = reader.read();
+                String userInput = reader.readLine();
+                number = Integer.parseInt(userInput);
                 correctInput = false;
-                }
+            }
             catch (IOException | NumberFormatException e){
                 displayText("Wrong input");
                 continue;
