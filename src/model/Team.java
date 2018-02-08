@@ -32,4 +32,7 @@ public class Team extends Group {
         return super.getBasicInfo() + "\nTeam coins: " + this.availableCoins;
     }
 
+    public void addCoins(int coins) {
+        availableCoins += coins;
+    }
 }

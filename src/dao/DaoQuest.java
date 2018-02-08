@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class DaoQuest{
@@ -118,5 +119,52 @@ public class DaoQuest{
             System.out.println("Quest insertion failed");
         }
     }
+
+    public ArrayList<Quest> getTeamQuests() {
+        ArrayList<Quest> quests = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT id_quest FROM quests WHERE type = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, "team");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int questId = resultSet.getInt("id_quest");
+                Quest quest = importQuest(questId);
+                quests.add(quest);
+            }
+            preparedStatement.close();
+            resultSet.close();
+        }catch(SQLException | ClassNotFoundException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return quests;
+    }
+
+    public ArrayList<Quest> getIndividualQuests() {
+        ArrayList<Quest> quests = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT id_quest FROM quests WHERE type = ?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, "individual");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int questId = resultSet.getInt("id_quest");
+                Quest quest = importQuest(questId);
+                quests.add(quest);
+            }
+            preparedStatement.close();
+            resultSet.close();
+        }catch(SQLException | ClassNotFoundException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return quests;
+    }
+
 }
 

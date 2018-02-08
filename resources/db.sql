@@ -78,7 +78,6 @@ CREATE TABLE IF NOT EXISTS artifacts_in_wallets (
     id_artifact_in_wallet INTEGER PRIMARY KEY AUTOINCREMENT,
     id_artifact INTEGER NOT NULL,
     id_student INTEGER NOT NULL,
-    status TEXT NOT NULL,
     FOREIGN KEY('id_artifact') REFERENCES 'artifacts'('id_artifact') ON DELETE CASCADE,
     FOREIGN KEY('id_student') REFERENCES 'wallets'('id_student') ON DELETE CASCADE);
 
@@ -140,10 +139,10 @@ INSERT INTO quests_of_students VALUES (?, 1, 5);
 INSERT INTO quests_of_students VALUES (?, 2, 6);
 INSERT INTO quests_of_students VALUES (?, 3, 7);
 
-INSERT INTO artifacts_in_wallets VALUES (?, 1, 5, 'new');
-INSERT INTO artifacts_in_wallets VALUES (?, 2, 5, 'used');
-INSERT INTO artifacts_in_wallets VALUES (?, 3, 6, 'new');
-INSERT INTO artifacts_in_wallets VALUES (?, 1, 6, 'used');
-INSERT INTO artifacts_in_wallets VALUES (?, 2, 7, 'new');
-INSERT INTO artifacts_in_wallets VALUES (?, 3, 7, 'used');
+INSERT INTO artifacts_in_wallets VALUES (?, 1, 5);
+INSERT INTO artifacts_in_wallets VALUES (?, 2, 5);
+INSERT INTO artifacts_in_wallets VALUES (?, 3, 6);
+INSERT INTO artifacts_in_wallets VALUES (?, 1, 6);
+INSERT INTO artifacts_in_wallets VALUES (?, 2, 7);
+INSERT INTO artifacts_in_wallets VALUES (?, 3, 7);
 
