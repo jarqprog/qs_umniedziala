@@ -7,6 +7,7 @@ import model.*;
 import view.ViewTeam;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ControllerTeam implements IUserController {
 
@@ -31,7 +32,49 @@ public class ControllerTeam implements IUserController {
     }
 
     public void buyArtifact() {
-        
+        Artifact artifact = getArtifact("team");
+        int price = artifact.getValue();
+        viewTeam.displayText("This artifact costs " + price + " coins");
+
+        ArrayList<Student> students = team.getStudents();
+        int teamSize = team.getSize();
+
+        HashMap<Student, Integer> studentsToPrices = new HashMap<>();
+        for (Student student : students) {
+            studentsToPrices.put(student, price / teamSize);
+        }
+
+        int remainderCoins = (price % teamSize);
+        for (Student student : students) {
+            int amountToAdd = studentsToPrices.get(student) + 1;
+            studentsToPrices.put(student, amountToAdd);
+            remainderCoins--;
+            if (remainderCoins == 0) {
+                break;
+            }
+        }
+
+        for (Student student : studentsToPrices.keySet()) {
+            int coins_to_pay = studentsToPrices.get(student);
+            if (!student.hasEnoughCoins(coins_to_pay)) {
+                viewTeam.displayText("Students do not have enough money to buy this artifact");
+                return;
+            }
+        }
+
+        for (Student student : studentsToPrices.keySet()) {
+            int coinsToPay = studentsToPrices.get(student);
+            student.subtractCoins(coinsToPay);
+            student.addNewArtifact(artifact);
+
+            DaoWallet daoWallet = new DaoWallet();
+            daoWallet.updateWallet(student);
+            int artifactId = artifact.getItemId();
+            int studentId = student.getUserId();
+            daoWallet.exportStudentArtifact(artifactId, studentId);
+        }
+
+        viewTeam.displayText("Purchase of team artifact was successful");
     }
 
     public void splitTeamMoney() {
