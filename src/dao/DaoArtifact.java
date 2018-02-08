@@ -99,7 +99,7 @@ public class DaoArtifact{
         }
     }
 
-    public void exportArtifact(Artifact artifact) {
+    public boolean exportArtifact(Artifact artifact) {
 
         String query = "INSERT INTO artifacts VALUES (?, ?, ?, ?, ?);";
 
@@ -114,9 +114,10 @@ public class DaoArtifact{
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
 
         }catch (SQLException | ClassNotFoundException e){
-            System.out.println("Artifact insertion failed");
+            return false;
         }
     }
 

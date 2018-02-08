@@ -146,7 +146,12 @@ public class ControllerMentor implements IUserController{
 
         String artifactStatus = chooseType();
         Artifact artifact = daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
-        daoArtifact.exportArtifact(artifact);
+        boolean isInsert = daoArtifact.exportArtifact(artifact);
+        if(isInsert){
+            viewMentor.displayText("Creation artifact successful");
+        }else {
+            viewMentor.displayText("Creation artifact failed");
+        }
     }
 
     private String chooseType() {
