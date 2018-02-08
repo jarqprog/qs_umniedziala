@@ -80,12 +80,6 @@ public class ControllerAdmin implements IUserController {
 
     private Mentor getMentor() {
         DaoMentor daoMentor = new DaoMentor();
-
-        ArrayList<Mentor> mentors = daoMentor.getAllMentors();
-        for(Mentor mentor: mentors){
-            viewAdmin.displayText(mentor.toString());
-        }
-
         seeAllMentors();
         int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
 
@@ -189,7 +183,13 @@ public class ControllerAdmin implements IUserController {
 
         DaoLevel daoLevel = new DaoLevel();
         Level level = daoLevel.createLevel(levelName, coinsLimit);
-        daoLevel.exportLevel(level);
+        boolean isInsert = daoLevel.exportLevel(level);
+
+        if(isInsert){
+            viewAdmin.displayText("Creation level successful");
+        }else{
+            viewAdmin.displayText("Creation level failed");
+        }
 
     }
 

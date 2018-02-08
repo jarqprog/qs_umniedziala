@@ -43,7 +43,7 @@ public class DaoTeam{
         return team;
     }
 
-    public void exportTeam(Team team) {
+    public boolean exportTeam(Team team) {
         String teamName = team.getName();
         int teamCoins = team.getAvailableCoins();
 
@@ -57,8 +57,9 @@ public class DaoTeam{
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Team insertion failed");
+            return false;
         }
     }
 

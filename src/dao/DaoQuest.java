@@ -98,7 +98,7 @@ public class DaoQuest{
         }
     }
 
-    public void exportQuest(Quest quest) {
+    public boolean exportQuest(Quest quest) {
 
         String query = "INSERT INTO quests VALUES (?, ?, ?, ?, ?, ?);";
 
@@ -114,9 +114,10 @@ public class DaoQuest{
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
 
         }catch (SQLException | ClassNotFoundException e){
-            System.out.println("Quest insertion failed");
+            return false;
         }
     }
 

@@ -49,7 +49,12 @@ public class ControllerMentor implements IUserController{
         String teamName = viewMentor.getInputFromUser(nameRequest);
 
         Team team = daoTeam.createTeam(teamName);
-        daoTeam.exportTeam(team);
+        boolean isInsert = daoTeam.exportTeam(team);
+        if(isInsert){
+            viewMentor.displayText("Creation team successful");
+        }else{
+            viewMentor.displayText("Creation team failed");
+        }
     }
 
     public Student getStudent(){
@@ -124,7 +129,12 @@ public class ControllerMentor implements IUserController{
         String questCategory = chooseCategory();
 
         Quest quest = daoQuest.createQuest(questName, questValue, questDescription, questType, questCategory);
-        daoQuest.exportQuest(quest);
+        boolean isInsert = daoQuest.exportQuest(quest);
+        if(isInsert){
+            viewMentor.displayText("Creation quest successful");
+        }else {
+            viewMentor.displayText("Creation quest failed");
+        }
     }
 
     public void addArtifact() {
@@ -141,7 +151,12 @@ public class ControllerMentor implements IUserController{
 
         String artifactStatus = chooseType();
         Artifact artifact = daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
-        daoArtifact.exportArtifact(artifact);
+        boolean isInsert = daoArtifact.exportArtifact(artifact);
+        if(isInsert){
+            viewMentor.displayText("Creation artifact successful");
+        }else {
+            viewMentor.displayText("Creation artifact failed");
+        }
     }
 
     private String chooseType() {
