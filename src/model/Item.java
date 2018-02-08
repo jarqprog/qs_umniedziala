@@ -71,11 +71,11 @@ public abstract class Item {
     }
 
     public String toString() {
-        return "name: " + name
+        return "Item id: " + itemId
+                +", name: " + name
                 + ", value: " + value
                 + ", description: " + description
-                + ", type: " + type
-                + ", item id: " + itemId;
+                + ", type: " + type;
     }
 
 }
