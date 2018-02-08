@@ -67,6 +67,28 @@ public class ControllerMentor implements IUserController{
         return daoTeam.importTeam(teamId);
     }
 
+    public Quest getTeamQuest(){
+        DaoQuest daoQuest = new DaoQuest();
+
+        viewMentor.displayText("Available team quests:\n");
+        viewMentor.displayList(daoQuest.getTeamQuests());
+
+        Integer questId = viewMentor.getIntInputFromUser("Enter id of chosen quest");
+
+        return daoQuest.importQuest(questId);
+    }
+
+    public Quest getIndividualQuest(){
+        DaoQuest daoQuest = new DaoQuest();
+
+        viewMentor.displayText("Available individual quests:\n");
+        viewMentor.displayList(daoQuest.getIndividualQuests());
+
+        Integer questId = viewMentor.getIntInputFromUser("Enter id of chosen quest");
+
+        return daoQuest.importQuest(questId);
+    }
+
     public void addQuest(){
 
         DaoQuest daoQuest = new DaoQuest();
@@ -307,12 +329,25 @@ public class ControllerMentor implements IUserController{
     }
 
     public void markQuest() {
-        toBeImplemented();
+        String mentorOption = "";
+        while (!mentorOption.equals("0")) {
+
+            viewMentor.displayText("\nWhat would like to do?");
+            viewMentor.displayList(viewMentor.getChooseTeamOrStudent());
+
+            mentorOption = viewMentor.getInputFromUser("Option: ");
+            switch (mentorOption) {
+                case "1": markTeamAchivedQuest();
+                    break;
+                case "2":markStudentAchivedQuest();
+                    break;
+                case "0": break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }
     }
 
-    public void markArtifact() {
-        toBeImplemented();
-    }
 
     public void markBoughtArtifact(){
         Student student = getStudent();
@@ -329,11 +364,25 @@ public class ControllerMentor implements IUserController{
     }
 
     public void markStudentAchivedQuest() {
-        toBeImplemented();
+
+        Student student = getStudent();
+        Quest quest = getIndividualQuest();
+        int coins = quest.getValue();
+        student.addCoins(coins);
+        DaoWallet daoWallet = new DaoWallet();
+        daoWallet.updateWallet(student);// na innym branchu
+
     }
 
     public void markTeamAchivedQuest() {
-        toBeImplemented();
+
+        Team team = getTeam();
+        Quest quest = getTeamQuest();
+        int coins = quest.getValue();
+        team.addCoins(coins);
+        DaoTeam daoTeam = new DaoTeam();
+        daoTeam.updateTeamData(team);
+
     }
 
     public void markStudentBoughtArtifact() {

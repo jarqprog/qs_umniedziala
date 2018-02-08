@@ -13,6 +13,9 @@ public class ViewMentor extends View{
 
     private static ArrayList <String> assignStudentToTeamOptions = new ArrayList <String>(Arrays.asList("1. Assign student to chosen team", "0. Go back"));
 
+    private static ArrayList <String> chooseTeamOrStudent = new ArrayList<>(Arrays.asList("1. Mark team quest", "2. Mark sigle student quest",
+            "0. Go back"));
+
     private static ArrayList <String> artifactEditOptions = new ArrayList<>(Arrays.asList("1. Change name",
             "2. Change value", "3. Change description", "4. Change type", "5. Change category"));
 
@@ -30,6 +33,7 @@ public class ViewMentor extends View{
         return mentorOptions;
     }
 
+    public static ArrayList<String> getChooseTeamOrStudent() { return chooseTeamOrStudent; }
 
     public static ArrayList<String> getArtifactEditOptions() {
         return artifactEditOptions;
@@ -48,4 +52,5 @@ public class ViewMentor extends View{
     }
 
     public ArrayList<String> getAssignStudentToTeamOptions() { return assignStudentToTeamOptions; }
+
 }

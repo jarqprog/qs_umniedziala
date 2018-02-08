@@ -36,7 +36,14 @@ public class Wallet{
         this.availableCoins = availableCoins;
     }
 
-    public int getAvailableCoins() { return this.availableCoins; }
+    public int getAvailableCoins() {
+        return this.availableCoins;
+    }
+
+    public void addCoins(int coins) {
+        availableCoins += coins;
+        allCoins += coins;
+    }
 
     public ArrayList<Artifact> getNewArtifacts() { return newArtifacts; }
 
