@@ -3,6 +3,7 @@ package controller;
 //import dao.DaoArtifact;
 import dao.DaoLevel;
 //import dao.DaoQuest;
+import dao.DaoTeam;
 import model.*;
 import dao.DaoArtifact;
 import dao.DaoWallet;
@@ -68,7 +69,7 @@ public class ControllerStudent implements IUserController{
     }
 
     public void manageTeam() {
-        Team team = new Team("ziomki");//testowo, do zmiany jak bedzie metoda w DAO
+        Team team = new DaoTeam().getTeamByStudentId(student.getUserId());
         ControllerTeam controllerTeam = new ControllerTeam(team);
         controllerTeam.runMenu();
     }

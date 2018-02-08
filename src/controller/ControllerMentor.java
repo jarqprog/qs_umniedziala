@@ -25,10 +25,14 @@ public class ControllerMentor implements IUserController{
         Student student = daoStudent.createInstance(studentName, studentPassword, studentEmail);
         daoStudent.exportInstance(student);
         Student studentWithId = daoStudent.importNewStudent(studentEmail);
+
         DaoWallet daoWallet = new DaoWallet();
         Wallet wallet = daoWallet.createWallet();
         studentWithId.setWallet(wallet);
         daoWallet.exportWallet(studentWithId);
+
+        CodecoolClass codecoolClass = getCodecoolClass();
+        new DaoClass().assignStudentToClass(studentWithId.getUserId(), codecoolClass.getGroupId());
 
     }
 
@@ -48,9 +52,23 @@ public class ControllerMentor implements IUserController{
         viewMentor.displayText("Available students:\n");
         viewMentor.displayList(daoStudent.getAllStudents());
 
-        int studentId = viewMentor.getIntInputFromUser("\nEnter id of student: ");
+        Integer studentId = viewMentor.getIntInputFromUser("\nEnter id of student: ");
 
         return daoStudent.importInstance(studentId);
+    }
+
+    public CodecoolClass getCodecoolClass(){
+        DaoClass daoClass = new DaoClass();
+
+        viewMentor.displayText("Available classes: ");
+        ArrayList <CodecoolClass> allClasses = daoClass.getAllClasses();
+        for(CodecoolClass codecoolClass: allClasses){
+            viewMentor.displayText(codecoolClass.getBasicInfo());
+        }
+
+        Integer classId = viewMentor.getIntInputFromUser("\nEnter id of chosen class: ");
+
+        return daoClass.importClass(classId);
     }
 
     public Team getTeam(){
@@ -323,10 +341,6 @@ public class ControllerMentor implements IUserController{
         return artifact;
     }
 
-    public void toBeImplemented(){
-        String text = "Implementation in progress";
-        viewMentor.displayText(text);
-    }
 
     public void markQuest() {
         String mentorOption = "";
@@ -385,13 +399,9 @@ public class ControllerMentor implements IUserController{
 
     }
 
-    public void markStudentBoughtArtifact() {
-        toBeImplemented();
-    }
+    public void markStudentBoughtArtifact() { }
 
-    public void markTeamBoughtArtifact() {
-        toBeImplemented();
-    }
+    public void markTeamBoughtArtifact() { }
 
     public void seeAllWallets() {
         DaoClass daoClass = new DaoClass();
