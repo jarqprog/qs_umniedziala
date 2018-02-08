@@ -55,22 +55,28 @@ public class ControllerAdmin implements IUserController {
     public void editMentor() {
 
         Mentor mentor = getMentor();
-        String editMentorOption = "";
-        while (!editMentorOption.equals("0")) {
+        if(mentor != null) {
+            String editMentorOption = "";
+            while (!editMentorOption.equals("0")) {
 
-            viewAdmin.displayText("\nWhat would like to do?");
-            viewAdmin.displayList(viewAdmin.getEditMentorOptions1());
+                viewAdmin.displayText("\nWhat would like to do?");
+                viewAdmin.displayList(viewAdmin.getEditMentorOptions1());
 
-            editMentorOption = viewAdmin.getInputFromUser("Option: ");
-            switch (editMentorOption) {
-                case "1": editMentorEmail(mentor);
-                    break;
-                case "2": editMentorClass(mentor);
-                    break;
-                case "0": break;
+                editMentorOption = viewAdmin.getInputFromUser("Option: ");
+                switch (editMentorOption) {
+                    case "1":
+                        editMentorEmail(mentor);
+                        break;
+                    case "2":
+                        editMentorClass(mentor);
+                        break;
+                    case "0":
+                        break;
 
-                default: viewAdmin.displayText("Wrong option. Try again!");
-                    break;
+                    default:
+                        viewAdmin.displayText("Wrong option. Try again!");
+                        break;
+                }
             }
         }
     }
