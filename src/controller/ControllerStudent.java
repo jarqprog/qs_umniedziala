@@ -1,7 +1,7 @@
 package controller;
 
 //import dao.DaoArtifact;
-//import dao.DaoLevel;
+import dao.DaoLevel;
 //import dao.DaoQuest;
 import model.*;
 import view.ViewStudent;
@@ -44,9 +44,13 @@ public class ControllerStudent implements IUserController{
     }
 
     public void seeExpLevel() {
-//        DaoLevel daoLevels = new DaoLevel();
-//        Level level = daoLevels.checkLevel(this.student.getWallet().getCoins());
-//        System.out.println(level);
+        DaoLevel daoLevel = new DaoLevel();
+        Level level = daoLevel.importLevelByCoins(this.student.getWallet().getAllCoins());
+        viewStudent.displayText("Your wallet: ");
+        viewStudent.displayText(student.getWallet().toString());
+        viewStudent.displayText("Your level: ");
+        String levelString = level.toString();
+        viewStudent.displayText(levelString);
     }
 
     public void manageTeam() {
