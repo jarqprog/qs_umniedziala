@@ -321,7 +321,7 @@ public class ControllerMentor implements IUserController{
         viewMentor.displayList(student.getAllNewArtifacts());
         Integer artifactId = viewMentor.getIntInputFromUser("Choose id artifact to be marked as bougth: ");
 
-        Artifact artifactToBeBougth = getArtifact(artifactId);
+        Artifact artifactToBeBougth = new DaoArtifact().importArtifact(artifactId);
         student.markArtifactAsBougth(artifactToBeBougth);
 
         new DaoWallet().updateStudentsArtifact(artifactToBeBougth.getItemId(), student.getUserId());
