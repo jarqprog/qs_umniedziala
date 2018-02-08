@@ -78,6 +78,8 @@ public class ControllerAdmin implements IUserController {
                         break;
                 }
             }
+        }else {
+            viewAdmin.displayText("No such mentor");
         }
     }
 
