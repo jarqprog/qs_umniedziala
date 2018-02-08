@@ -1,11 +1,23 @@
 package controller;
 
-import model.Student;
+import model.*;
+import view.ViewTeam;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ControllerTeam{
+public class ControllerTeam implements IUserController {
+
+    private ViewTeam viewTeam;
+    private Team team;
+
+    public ControllerTeam(Team team) {
+        this.viewTeam = new ViewTeam();
+        this.team = team;
+    }
+
+    public void buyArtifact() {
+    }
 
     private boolean checkTeamCoinsDivisibleByTeamSize(int teamCoins, int teamSize) {
         return (teamCoins % teamSize) == 0;
@@ -61,4 +73,28 @@ public class ControllerTeam{
         }
     }
 
+    public void runMenu() {
+
+        String teamOption = "";
+        while (!teamOption.equals("0")) {
+
+            viewTeam.displayText(this.team.getBasicInfo());
+            viewTeam.displayText("\nWhat would like to do?");
+            viewTeam.displayList(viewTeam.getStudentOptions());
+
+            teamOption = viewTeam.getInputFromUser("Option: ");
+            switch (teamOption) {
+                case "1":
+                    buyArtifact();
+                    break;
+                case "2":
+                    splitTeamMoney();
+                    break;
+                case "0":
+                    break;
+                default: viewTeam.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }
+    }
 }

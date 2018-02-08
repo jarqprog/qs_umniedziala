@@ -36,7 +36,7 @@ public class DaoStudent implements IDaoUser <Student> {
                 String email = resultSet.getString("email");
 
                 student = createInstance(userId, name, password, email);
-                Wallet wallet = new DaoWallet().importInstance(studentId);
+                Wallet wallet = new DaoWallet().importWallet(studentId);
                 student.setWallet(wallet);
 
                 resultSet.close();

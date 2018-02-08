@@ -7,18 +7,21 @@ import java.util.ArrayList;
 public class Wallet{
     private int allCoins;
     private int availableCoins;
-    private ArrayList<Artifact> artifacts;
+    private ArrayList<Artifact> newArtifacts;
+    private ArrayList<Artifact> usedArtifacts;
 
     public Wallet(){
         this.allCoins = 0;
         this.availableCoins = 0;
-        artifacts = new ArrayList<>();
+        newArtifacts = new ArrayList<>();
+        usedArtifacts = new ArrayList<>();
     }
 
-    public Wallet(int allCoins, int availableCoins, ArrayList<Artifact> artifacts){
+    public Wallet(int allCoins, int availableCoins, ArrayList<Artifact> newArtifacts,  ArrayList<Artifact> usedArtifacts){
         this.allCoins = allCoins;
         this.availableCoins = availableCoins;
-        this.artifacts = artifacts;
+        this.newArtifacts = newArtifacts;
+        this.usedArtifacts = usedArtifacts;
     }
 
     public void setAllCoins(int allCoins){
@@ -33,15 +36,63 @@ public class Wallet{
         this.availableCoins = availableCoins;
     }
 
-    public int getAvailableCoins() { return this.availableCoins; }
+    public int getAvailableCoins() {
+        return this.availableCoins;
+    }
+
+    public void addCoins(int coins) {
+        availableCoins += coins;
+        allCoins += coins;
+    }
+
+    public ArrayList<Artifact> getNewArtifacts() { return newArtifacts; }
+
+    public ArrayList<Artifact> getUsedArtifacts() { return usedArtifacts; }
+
+    public void addNewArtifact(Artifact artifact) { this.newArtifacts.add(artifact); }
+
+    public void removeNewArtifact(int artifactId) {
+        for (Artifact artifact : this.newArtifacts) {
+            if (artifact.getItemId() == artifactId) {
+                this.newArtifacts.remove(artifact);
+                break;
+            }
+
+        }
+    }
+
+    public boolean hasEnoughCoins(int value) {
+        return (availableCoins - value) >= 0;
+    }
+
+    public void subtractCoins(int coins) {
+        availableCoins -= coins;
+    }
+
+    public void addUsedArtifact(Artifact artifact) { this.usedArtifacts.add(artifact); }
 
     public String toString(){
-        MyIterator <Artifact> myIterator = new MyIterator<>(this.artifacts);
-        String myWallet = "Wallet contains " + this.availableCoins + " coolcoins\n\nArtifacts:\n";
-        while(myIterator.hasNext()){
-            myWallet += myIterator.next().toString() + "\n";
-        }
+        String myWallet = "Wallet contains:\n";
+        myWallet += this.availableCoins + " available coolcoins\n";
+        myWallet += this.allCoins + " earned coolcoins";
+        myWallet += "\n\nNew Artifacts:\n" + getStudentArtifacts(newArtifacts);
+        myWallet += "\n\nUsed Artifacts:\n" + getStudentArtifacts(usedArtifacts);
 
         return myWallet;
+    }
+
+    private String getStudentArtifacts(ArrayList<Artifact> artifacts){
+        String allArtifacts = "";
+        if(artifacts.size() == 0){
+            allArtifacts = "No artifacts";
+        }else {
+            MyIterator<Artifact> myIterator = new MyIterator<>(artifacts);
+            while (myIterator.hasNext()) {
+                allArtifacts += myIterator.next().toString() + "\n";
+            }
+        }
+
+        return allArtifacts;
+
     }
 }

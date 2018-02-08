@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
 import model.Level;
 import model.Mentor;
 
@@ -85,5 +87,54 @@ public class DaoLevel{
         }
 
         return levels;
+    }
+
+    public Level importLevelByCoins(int allCoins){
+
+        ArrayList <Level> levels = getMatchingLevels(allCoins);
+        Level level = getRightLevel(levels, allCoins);
+        return level;
+    }
+
+    public ArrayList <Level> getMatchingLevels(int allCoins){
+
+        Level level = null;
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT * from levels WHERE coins_limit <= ?";
+        ArrayList <Level> levels = new ArrayList<>();
+
+        try{
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, allCoins);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int limitCoins = resultSet.getInt("coins_limit");
+                level = createLevel(name, limitCoins);
+                levels.add(level);
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        }catch(SQLException | ClassNotFoundException e){
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+        return levels;
+
+    }
+
+    public Level getRightLevel(ArrayList <Level> levels, int availableCoins){
+
+        Level level = levels.get(0);
+
+        for(Level elem: levels){
+            if(elem.getCoinsLimit() >= level.getCoinsLimit()){
+                level = elem;
+            }
+        }
+
+        return level;
+
     }
 }

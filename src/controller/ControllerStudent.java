@@ -1,8 +1,11 @@
 package controller;
 
 //import dao.DaoArtifact;
-//import dao.DaoLevel;
+import dao.DaoLevel;
 //import dao.DaoQuest;
+import model.*;
+import dao.DaoArtifact;
+import dao.DaoWallet;
 import model.Artifact;
 import model.Student;
 import model.Wallet;
@@ -24,36 +27,50 @@ public class ControllerStudent implements IUserController{
     }
 
     public void buyArtifact() {
-//        seeArtifacts();
-//
-//        DaoArtifact daoArtifact = new DaoArtifact();
-//	    int artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact you want to buy: ");
-//        Artifact artifact = daoArtifact.getArtifactById(artifactId);
-//
-//        while (artifact == null) {
-//            viewStudent.displayText("No artifact with such id found!");
-//	        artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact you want to buy: ");
-//	        artifact = daoArtifact.getArtifactById(artifactId);
-//        }
-//
-//        Wallet wallet = student.getWallet();
-//        if (wallet.getCoins() < artifact.getValue()) {
-//            viewStudent.displayText("You do not hav enough money to buy this artifact!");
-//        } else {
-//            wallet.setCoins(wallet.getCoins() - artifact.getValue());
-//            wallet.addArtifact(artifact);
-//            viewStudent.displayText("Artifact was added to wallet!");
-//        }
+        Artifact artifact = getArtifact("individual");
+        int artifactId = artifact.getItemId();
+        int studentId = student.getUserId();
+
+        int price = artifact.getValue();
+        if (student.hasEnoughCoins(price)) {
+            student.subtractCoins(price);
+            student.addNewArtifact(artifact);
+
+            DaoWallet daoWallet = new DaoWallet();
+            daoWallet.updateWallet(student);
+            daoWallet.exportStudentArtifact(artifactId, studentId);
+
+        } else {
+            viewStudent.displayText("You do not have enough money to buy this artifact!");
+        }
+    }
+
+    public Artifact getArtifact(String type) {
+        DaoArtifact daoArtifact = new DaoArtifact();
+
+        viewStudent.displayText("Available artifacts:\n");
+        viewStudent.displayList(daoArtifact.getArtifacts(type));
+
+        int artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact: ");
+        Artifact artifact = daoArtifact.importArtifact(artifactId);
+
+        return artifact;
     }
 
     public void seeExpLevel() {
-//        DaoLevel daoLevels = new DaoLevel();
-//        Level level = daoLevels.checkLevel(this.student.getWallet().getCoins());
-//        System.out.println(level);
+        DaoLevel daoLevel = new DaoLevel();
+        Level level = daoLevel.importLevelByCoins(this.student.getWallet().getAllCoins());
+        viewStudent.displayText("Your wallet: ");
+        viewStudent.displayText(student.getWallet().toString());
+        viewStudent.displayText("Your level: ");
+        String levelString = level.toString();
+        viewStudent.displayText(levelString);
     }
 
     public void manageTeam() {
-        viewStudent.displayText("Implementation in progress");
+        Team team = new Team("ziomki");//testowo, do zmiany jak bedzie metoda w DAO
+        ControllerTeam controllerTeam = new ControllerTeam(team);
+        controllerTeam.runMenu();
     }
 
     public void seeQuests() {
@@ -65,6 +82,7 @@ public class ControllerStudent implements IUserController{
 //        viewStudent.displayText("Available artifacts: ");
 //        viewStudent.displayList(new DaoArtifact().importData());
     }
+
 
     public void runMenu() {
 
@@ -87,6 +105,8 @@ public class ControllerStudent implements IUserController{
                 case "5": seeQuests();
                         break;
                 case "6": seeArtifacts();
+                        break;
+                case "7": manageTeam();
                         break;
                 case "0": break;
 
