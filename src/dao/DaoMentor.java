@@ -73,7 +73,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
         }
     }
 
-    public void updateInstance(Mentor mentor){
+    public boolean updateInstance(Mentor mentor){
         String name = mentor.getName();
         String password = mentor.getPassword();
         String email = mentor.getEmail();
@@ -91,8 +91,9 @@ public class DaoMentor implements IDaoUser <Mentor> {
             preparedStatement.setInt(4, mentorId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
         } catch (SQLException | ClassNotFoundException e){
-            System.out.println("Mentor update failed");
+            return false;
         }
     }
 

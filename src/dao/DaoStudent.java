@@ -112,7 +112,7 @@ public class DaoStudent implements IDaoUser <Student>{
         }
     }
 
-    public void updateInstance(Student student) {
+    public boolean updateInstance(Student student) {
         String name = student.getName();
         String password = student.getPassword();
         String email = student.getEmail();
@@ -131,9 +131,10 @@ public class DaoStudent implements IDaoUser <Student>{
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Student update failed");
+            return false;
         }
     }
 
