@@ -209,6 +209,8 @@ public class ControllerMentor implements IUserController{
         Quest quest = getIndividualQuest();
         int coins = quest.getValue();
         student.addCoins(coins);
+        DaoWallet daoWallet = new DaoWallet();
+        daoWallet.updateWallet(student);// na innym branchu
 
     }
 
@@ -218,6 +220,9 @@ public class ControllerMentor implements IUserController{
         Quest quest = getTeamQuest();
         int coins = quest.getValue();
         team.addCoins(coins);
+        DaoTeam daoTeam = new DaoTeam();
+        daoTeam.updateTeamData(team);
+
     }
 
     public void markStudentBoughtArtifact() {
