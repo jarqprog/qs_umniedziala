@@ -32,7 +32,7 @@ public class Team extends Group {
         return super.toString() + "\nTeam coins: " + this.availableCoins;
     }
 
-    public String getBasicInfo() {
+    public String getBasicTeamInfo() {
         return "Your Team: " + this.name + "\nTeam coins: " + this.availableCoins;
     }
 
