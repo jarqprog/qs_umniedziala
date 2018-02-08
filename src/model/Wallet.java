@@ -57,7 +57,7 @@ public class Wallet{
 
     public String toString(){
         String myWallet = "Wallet contains:\n";
-        myWallet += this.availableCoins + " available coolcoins";
+        myWallet += this.availableCoins + " available coolcoins\n";
         myWallet += this.allCoins + " earned coolcoins";
         myWallet += "\n\nNew Artifacts:\n" + getStudentArtifacts(newArtifacts);
         myWallet += "\n\nUsed Artifacts:\n" + getStudentArtifacts(usedArtifacts);
