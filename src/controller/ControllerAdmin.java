@@ -98,7 +98,13 @@ public class ControllerAdmin implements IUserController {
         DaoMentor daoMentor = new DaoMentor();
         String newEmail = viewAdmin.getInputFromUser("\nEnter mentor's new email: ");
         mentor.setEmail(newEmail);
-        daoMentor.updateInstance(mentor);
+        boolean isInsert = daoMentor.updateInstance(mentor);
+
+        if(isInsert){
+            viewAdmin.displayText("Edit mentor successful");
+        }else {
+            viewAdmin.displayText("Edit mentor failed");
+        }
     }
 
     private void editMentorClass(Mentor mentor){
