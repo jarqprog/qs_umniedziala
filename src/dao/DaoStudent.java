@@ -20,7 +20,7 @@ public class DaoStudent implements IDaoUser <Student>{
     public Student importInstance(int studentId) {
         Student student = null;
         PreparedStatement preparedStatement = null;
-        int roleId = getRoleID("mentor");
+        int roleId = getRoleID("student");
 
         String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
 
@@ -58,7 +58,7 @@ public class DaoStudent implements IDaoUser <Student>{
 
         Student student = null;
         PreparedStatement preparedStatement = null;
-        int roleId = getRoleID("mentor");
+        int roleId = getRoleID("student");
 
         String query = "SELECT * FROM users WHERE email = ? AND id_role = ?;";
 
@@ -123,7 +123,7 @@ public class DaoStudent implements IDaoUser <Student>{
         String password = student.getPassword();
         String email = student.getEmail();
         int studentId = student.getUserId();
-        int roleId = getRoleID("mentor");
+        int roleId = getRoleID("student");
 
 
         PreparedStatement preparedStatement = null;
