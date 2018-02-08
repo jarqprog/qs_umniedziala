@@ -1,6 +1,5 @@
 package controller;
 
-
 import dao.DaoArtifact;
 import dao.DaoTeam;
 import dao.DaoWallet;
@@ -8,7 +7,6 @@ import model.*;
 import view.ViewTeam;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ControllerTeam implements IUserController {
 
@@ -33,69 +31,32 @@ public class ControllerTeam implements IUserController {
     }
 
     public void buyArtifact() {
-
-    }
-
-    private boolean checkTeamCoinsDivisibleByTeamSize(int teamCoins, int teamSize) {
-        return (teamCoins % teamSize) == 0;
-    }
-
-    private Student popRandomStudent(ArrayList<Student> students) {
-        int randomIndex = new Random().nextInt(students.size());
-        Student randomStudent = students.get(randomIndex);
-        students.remove(randomStudent);
-        return randomStudent;
-    }
-
-    private void splitMoneyEqually() {
-        ArrayList<Student> students = team.getStudents();
-        int teamCoins = team.getAvailableCoins();
-        int teamSize = team.getSize();
-
-        int coinsForOneStudent = teamCoins / teamSize;
-
-        for (Student student: students) {
-            student.addCoins(coinsForOneStudent);
-            new DaoWallet().updateWallet(student);
-        }
-    }
-
-    private void splitMoneyAlmostEqually() {
-        ArrayList<Student> students = team.getStudents();
-        ArrayList<Student> students_clone = (ArrayList<Student>) students.clone();
-
-        int teamCoins = team.getAvailableCoins();
-        int teamSize = team.getSize();
-
-        splitMoneyEqually();
-        int remainderCoins = (teamCoins % teamSize);
-
-        Student luckyStudent;
-        while (remainderCoins > 0) {
-            luckyStudent = popRandomStudent(students_clone);
-            luckyStudent.addCoins(1);
-            new DaoWallet().updateWallet(luckyStudent);
-            remainderCoins--;
-        }
+        
     }
 
     public void splitTeamMoney() {
-        int teamCoins = team.getAvailableCoins();
-        int teamSize = team.getSize();
+        ArrayList<Student> students = team.getStudents();
+        int remainderCoins = team.getAvailableCoins();
 
-        if (teamCoins == 0) {
+        if (remainderCoins == 0) {
             viewTeam.displayText("Team has no coins to split");
             return;
         }
 
-        if (checkTeamCoinsDivisibleByTeamSize(teamCoins, teamSize)) {
-            splitMoneyEqually();
-        } else {
-            splitMoneyAlmostEqually();
+        for (Student student: students) {
+            String name = student.getName();
+            int coins = viewTeam.getIntInputFromUser("How much should student " + name + " get?");
+            if (coins <= remainderCoins) {
+                student.addCoins(coins);
+                team.subtractCoins(coins);
+                new DaoWallet().updateWallet(student);
+                new DaoTeam().updateTeamData(team);
+                remainderCoins -= coins;
+            } else {
+                viewTeam.displayText("You do not have enough money");
+            }
         }
 
-        team.setAvailableCoins(0);
-        new DaoTeam().updateTeamData(team);
     }
 
     public void runMenu() {
