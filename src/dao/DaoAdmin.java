@@ -46,7 +46,7 @@ public class DaoAdmin implements IDaoUser <Admin>  {
         return admin;
     }
 
-    public void exportInstance(Admin admin){
+    public boolean exportInstance(Admin admin){
         String name = admin.getName();
         String password = admin.getPassword();
         String email = admin.getEmail();
@@ -64,9 +64,10 @@ public class DaoAdmin implements IDaoUser <Admin>  {
             preparedStatement.setInt(4, roleId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
 
         }catch (SQLException | ClassNotFoundException e){
-            System.out.println("Admin insertion failed");
+            return false;
         }
     }
     public void updateInstance(Admin admin){

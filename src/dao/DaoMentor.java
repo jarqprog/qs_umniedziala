@@ -46,7 +46,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
         return mentor;
     }
 
-    public void exportInstance(Mentor mentor) {
+    public boolean exportInstance(Mentor mentor) {
 
         String name = mentor.getName();
         String password = mentor.getPassword();
@@ -66,9 +66,10 @@ public class DaoMentor implements IDaoUser <Mentor> {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
 
         }catch (SQLException | ClassNotFoundException e){
-            System.out.println("Mentor insertion failed");
+            return false;
         }
     }
 

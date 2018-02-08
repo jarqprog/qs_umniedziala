@@ -29,7 +29,12 @@ public class ControllerAdmin implements IUserController {
         String mentorEmail = viewAdmin.getInputFromUser("Enter email of new mentor: ");
 
         Mentor mentor = daoMentor.createInstance(mentorName, mentorPassword, mentorEmail);
-        daoMentor.exportInstance(mentor);
+        boolean isInsert = daoMentor.exportInstance(mentor);
+         if(isInsert){
+             viewAdmin.displayText("Mentor creation successful");
+         }else {
+             viewAdmin.displayText("Mentor creation failed");
+         }
     }
 
     public void createClass() {
