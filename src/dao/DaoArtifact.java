@@ -71,7 +71,7 @@ public class DaoArtifact{
         return artifacts;
     }
 
-    public void updateArtifact(Artifact artifact) {
+    public boolean updateArtifact(Artifact artifact) {
         int itemId = artifact.getItemId();
         String name = artifact.getName();
         int value = artifact.getValue();
@@ -94,8 +94,9 @@ public class DaoArtifact{
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Artifact update failed");
+            return false;
         }
     }
 
