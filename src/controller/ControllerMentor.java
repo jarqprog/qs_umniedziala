@@ -241,31 +241,44 @@ public class ControllerMentor implements IUserController{
     public void updateQuestName(Quest quest){
         String name = viewMentor.getInputFromUser("Pass new quest name: ");
         quest.setName(name);
-        new DaoQuest().updateQuest(quest);
+        boolean isUpdate = new DaoQuest().updateQuest(quest);
+        updateInfo(isUpdate);
     }
 
     public void updateQuestDescription(Quest quest){
         String description = viewMentor.getInputFromUser("Pass new quest description: ");
         quest.setDescription(description);
-        new DaoQuest().updateQuest(quest);
+        boolean isUpdate = new DaoQuest().updateQuest(quest);
+        updateInfo(isUpdate);
     }
 
     public void updateQuestValue(Quest quest){
         Integer value = viewMentor.getIntInputFromUser("Pass new quest value: ");
         quest.setValue(value);
-        new DaoQuest().updateQuest(quest);
+        boolean isUpdate = new DaoQuest().updateQuest(quest);
+        updateInfo(isUpdate);
     }
 
     public void updateQuestType(Quest quest){
         String type = chooseType();
         quest.setType(type);
-        new DaoQuest().updateQuest(quest);
+        boolean isUpdate = new DaoQuest().updateQuest(quest);
+        updateInfo(isUpdate);
     }
 
     public void updateQuestCategory(Quest quest){
         String category = chooseCategory();
         quest.setCategory(category);
-        new DaoQuest().updateQuest(quest);
+        boolean isUpdate = new DaoQuest().updateQuest(quest);
+        updateInfo(isUpdate);
+    }
+
+    public void updateInfo(boolean isInsert){
+        if(isInsert){
+            viewMentor.displayText("Update was succesful");
+        }else {
+            viewMentor.displayText("Update failed");
+        }
     }
 
     public void updateArtifact() {

@@ -42,7 +42,13 @@ public class ControllerAdmin implements IUserController {
         String className = viewAdmin.getInputFromUser("Enter the name of the class:");
         DaoClass daoClass = new DaoClass();
         CodecoolClass codecoolClass = daoClass.createClass(className);
-        daoClass.exportClass(codecoolClass);
+        boolean isInsert = daoClass.exportClass(codecoolClass);
+
+        if(isInsert){
+            viewAdmin.displayText("Creation class successful");
+        }else {
+            viewAdmin.displayText("Creation class failed");
+        }
 
     }
 
@@ -92,7 +98,13 @@ public class ControllerAdmin implements IUserController {
         DaoMentor daoMentor = new DaoMentor();
         String newEmail = viewAdmin.getInputFromUser("\nEnter mentor's new email: ");
         mentor.setEmail(newEmail);
-        daoMentor.updateInstance(mentor);
+        boolean isInsert = daoMentor.updateInstance(mentor);
+
+        if(isInsert){
+            viewAdmin.displayText("Edit mentor successful");
+        }else {
+            viewAdmin.displayText("Edit mentor failed");
+        }
     }
 
     private void editMentorClass(Mentor mentor){
@@ -144,7 +156,10 @@ public class ControllerAdmin implements IUserController {
         DaoClass daoClass = new DaoClass();
 
         viewAdmin.displayText("Available classes: ");
-        viewAdmin.displayList(daoClass.getAllClasses());
+        ArrayList<CodecoolClass> codecoolClasses = daoClass.getAllClasses();
+        for(CodecoolClass codecoolClass : codecoolClasses) {
+            viewAdmin.displayText(codecoolClass.getBasicInfo());
+        }
 
         Integer classId = viewAdmin.getIntInputFromUser("\nEnter id of chosen class: ");
 

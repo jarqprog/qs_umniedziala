@@ -45,7 +45,7 @@ public class DaoClass{
         return codecoolClass;
     }
 
-    public void exportClass(CodecoolClass codecoolClass) {
+    public boolean exportClass(CodecoolClass codecoolClass) {
 
         String name = codecoolClass.getName();
 
@@ -58,9 +58,10 @@ public class DaoClass{
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Class insertion failed");
+            return false;
         }
     }
 

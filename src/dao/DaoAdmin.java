@@ -72,7 +72,7 @@ public class DaoAdmin implements IDaoUser <Admin>  {
             return false;
         }
     }
-    public void updateInstance(Admin admin){
+    public boolean updateInstance(Admin admin){
         String name = admin.getName();
         String password = admin.getPassword();
         String email = admin.getEmail();
@@ -93,8 +93,9 @@ public class DaoAdmin implements IDaoUser <Admin>  {
             preparedStatement.setInt(5, roleId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
         } catch (SQLException | ClassNotFoundException e){
-            System.out.println("Admin update failed");
+            return false;
         }
     }
 
