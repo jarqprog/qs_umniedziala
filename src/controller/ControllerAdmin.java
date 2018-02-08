@@ -42,7 +42,13 @@ public class ControllerAdmin implements IUserController {
         String className = viewAdmin.getInputFromUser("Enter the name of the class:");
         DaoClass daoClass = new DaoClass();
         CodecoolClass codecoolClass = daoClass.createClass(className);
-        daoClass.exportClass(codecoolClass);
+        boolean isInsert = daoClass.exportClass(codecoolClass);
+
+        if(isInsert){
+            viewAdmin.displayText("Creation class successful");
+        }else {
+            viewAdmin.displayText("Creation class failed");
+        }
 
     }
 
