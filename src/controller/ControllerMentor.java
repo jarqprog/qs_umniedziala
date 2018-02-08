@@ -140,19 +140,14 @@ public class ControllerMentor implements IUserController{
     public void addArtifact() {
         DaoArtifact daoArtifact = new DaoArtifact();
 
-        String nameRequest = "Enter name of new artifact: ";
-        String artifactName = viewMentor.getInputFromUser(nameRequest);
-
-        String valueRequest = "Enter value of new artifact: ";
-        int artifactValue = viewMentor.getIntInputFromUser(valueRequest);
-
-        String descriptionRequest = "Enter description of new artifact";
-        String artifactDescription = viewMentor.getInputFromUser(descriptionRequest);
-
+        String artifactName = viewMentor.getInputFromUser("Enter name of new artifact: ");
+        int artifactValue = viewMentor.getIntInputFromUser("Enter value of new artifact: ");
+        String artifactDescription = viewMentor.getInputFromUser("Enter description of new artifact");
         String artifactStatus = chooseType();
+
         Artifact artifact = daoArtifact.createArtifact(artifactName, artifactValue, artifactDescription, artifactStatus);
-        boolean isInsert = daoArtifact.exportArtifact(artifact);
-        if(isInsert){
+
+        if(daoArtifact.exportArtifact(artifact)){
             viewMentor.displayText("Creation artifact successful");
         }else {
             viewMentor.displayText("Creation artifact failed");
