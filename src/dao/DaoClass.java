@@ -110,6 +110,23 @@ public class DaoClass{
         }
     }
 
+    public void assignStudentToClass(Integer studentId, Integer classId){
+        PreparedStatement preparedStatement = null;
+        String query = "INSERT into students_in_classes (id_codecool_class, id_student) values (?, ?);";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, classId);
+            preparedStatement.setInt(2, studentId);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Assigning student to class failed");
+        }
+    }
+
     public void updateMentorInClass(Integer mentorId, Integer classId){
         PreparedStatement preparedStatement = null;
         String query = "UPDATE mentors_in_classes SET id_codecool_class=? WHERE id_mentor=?;";

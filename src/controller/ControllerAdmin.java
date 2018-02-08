@@ -141,16 +141,15 @@ public class ControllerAdmin implements IUserController {
         new DaoClass().updateMentorInClass(userId, codecoolClass.getGroupId());
     }
 
-    private CodecoolClass getCodecoolClass(){
-        ArrayList<CodecoolClass> classes = new DaoClass().getAllClasses();
+    public CodecoolClass getCodecoolClass(){
+        DaoClass daoClass = new DaoClass();
 
-        MyIterator<CodecoolClass> iterator = new MyIterator <CodecoolClass>(classes);
-        while(iterator.hasNext()){
-            viewAdmin.displayText(iterator.next().getBasicInfo());
-        }
+        viewAdmin.displayText("Available classes: ");
+        viewAdmin.displayList(daoClass.getAllClasses());
 
-        Integer classId = viewAdmin.getIntInputFromUser("Choose class by id: ");
-        return new DaoClass().importClass(classId);
+        Integer classId = viewAdmin.getIntInputFromUser("\nEnter id of chosen class: ");
+
+        return daoClass.importClass(classId);
     }
 
     public void seeMentorData() {

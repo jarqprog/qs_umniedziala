@@ -17,7 +17,7 @@ public abstract class View{
         String userInput ="";
         do{
             try {
-                displayText(request);
+                System.out.print(request);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 userInput = reader.readLine(); 
                 } 
@@ -38,8 +38,7 @@ public abstract class View{
             try{
                 displayText(request);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                String userInput = reader.readLine();
-                number = Integer.parseInt(userInput);
+                int userInput = reader.read();
                 correctInput = false;
                 }
             catch (IOException | NumberFormatException e){
