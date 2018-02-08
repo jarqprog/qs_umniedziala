@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Student extends User{
     private Wallet wallet;
 
@@ -25,6 +27,20 @@ public class Student extends User{
 
     public void addCoins(int coins) {
         wallet.addCoins(coins);
+    }
+
+    public ArrayList<Artifact> getAllNewArtifacts(){
+        return this.wallet.getNewArtifacts();
+    }
+
+    public void addNewArtifact(Artifact artifact){
+        this.wallet.addNewArtifact(artifact);
+    }
+
+    public void markArtifactAsBougth(Artifact artifact){
+        this.wallet.removeNewArtifact(artifact.getItemId());
+        this.wallet.addUsedArtifact(artifact);
+
     }
 
 }

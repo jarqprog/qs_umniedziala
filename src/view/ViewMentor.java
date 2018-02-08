@@ -16,9 +16,41 @@ public class ViewMentor extends View{
     private static ArrayList <String> chooseTeamOrStudent = new ArrayList<>(Arrays.asList("1. Mark team quest", "2. Mark sigle student quest",
             "0. Go back"));
 
-    public ArrayList<String> getMentorOptions() { return mentorOptions; }
+    private static ArrayList <String> artifactEditOptions = new ArrayList<>(Arrays.asList("1. Change name",
+            "2. Change value", "3. Change description", "4. Change type", "5. Change category"));
+
+    private static ArrayList <String> updateArtifactsOptions = new ArrayList <String>(Arrays.asList("1. Update artifacts name",
+            "2. Update artifacts description", "3. Update artifacts value", "4. Update artifacts type",
+            "0. Go back"));
+
+    private static ArrayList <String> updateArtifactTypeOptions = new ArrayList <String>(Arrays.asList("1. Type individual",
+            "2. Type team", "0. Go back"));
+    
+  private static ArrayList <String> questEditOptions = new ArrayList<>(Arrays.asList("1. Change name",
+            "2. Change description", "3. Change value", "4. Change type", "5. Change category", "0. Go back"));
+
+    public ArrayList<String> getMentorOptions() {
+        return mentorOptions;
+    }
+
+    public static ArrayList<String> getChooseTeamOrStudent() { return chooseTeamOrStudent; }
+
+    public static ArrayList<String> getArtifactEditOptions() {
+        return artifactEditOptions;
+    }
+
+    public static ArrayList<String> getEditQuestOptions() {
+        return questEditOptions;
+    }
+
+    public ArrayList<String> getUpdateArtifactsOptions() {
+        return updateArtifactsOptions;
+    }
+
+    public ArrayList<String> getUpdateArtifactTypeOptions() {
+        return updateArtifactTypeOptions;
+    }
 
     public ArrayList<String> getAssignStudentToTeamOptions() { return assignStudentToTeamOptions; }
 
-    public static ArrayList<String> getChooseTeamOrStudent() { return chooseTeamOrStudent; }
 }
