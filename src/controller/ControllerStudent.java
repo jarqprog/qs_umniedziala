@@ -108,8 +108,6 @@ public class ControllerStudent implements IUserController{
                         break;
                 case "4": manageTeam();
                         break;
-                case "5": manageTeam();
-                        break;
                 case "0": break;
 
                 default: viewStudent.displayText("Wrong option. Try again!");
