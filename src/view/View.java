@@ -43,7 +43,7 @@ public abstract class View{
                 if(number > 0) {
                     correctInput = false;
                 }else {
-                    displayText("No negative values allowed");
+                    displayText("No non-positive values allowed");
                 }
             }
             catch (IOException | NumberFormatException e){
