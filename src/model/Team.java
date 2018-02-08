@@ -25,3 +25,4 @@ public class Team extends Group{
         return super.toString() + "\nTeam coins: " + this.availableCoins;
     }
 }
+    public String getBasicInfo() {return super.getBasicInfo() + "\nTeam coins: " + this.availableCoins;}
