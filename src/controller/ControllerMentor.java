@@ -49,7 +49,12 @@ public class ControllerMentor implements IUserController{
         String teamName = viewMentor.getInputFromUser(nameRequest);
 
         Team team = daoTeam.createTeam(teamName);
-        daoTeam.exportTeam(team);
+        boolean isInsert = daoTeam.exportTeam(team);
+        if(isInsert){
+            viewMentor.displayText("Creation team successful");
+        }else{
+            viewMentor.displayText("Creation team failed");
+        }
     }
 
     public Student getStudent(){
