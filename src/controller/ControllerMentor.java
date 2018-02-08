@@ -314,6 +314,20 @@ public class ControllerMentor implements IUserController{
         toBeImplemented();
     }
 
+    public void markBoughtArtifact(){
+        Student student = getStudent();
+
+        viewMentor.displayText("Student new artifacts:\n");
+        viewMentor.displayList(student.getAllNewArtifacts());
+        Integer artifactId = viewMentor.getIntInputFromUser("Choose id artifact to be marked as used: ");
+
+        Artifact artifactToBeBougth = new DaoArtifact().importArtifact(artifactId);
+        student.markArtifactAsBougth(artifactToBeBougth);
+
+        new DaoWallet().updateStudentsArtifact(artifactToBeBougth.getItemId(), student.getUserId());
+
+    }
+
     public void markStudentAchivedQuest() {
         toBeImplemented();
     }
@@ -406,7 +420,7 @@ public class ControllerMentor implements IUserController{
                 break;
         case "7": markQuest();
                 break;
-        case "8": markArtifact();
+        case "8": markBoughtArtifact();
                 break;
         case "9": seeAllWallets();
                 break;
