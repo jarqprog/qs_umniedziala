@@ -52,12 +52,21 @@ public class Wallet{
     public void addNewArtifact(Artifact artifact) { this.newArtifacts.add(artifact); }
 
     public void removeNewArtifact(int artifactId) {
-        for(Artifact artifact: this.newArtifacts){
-            if(artifact.getItemId() == artifactId){
+        for (Artifact artifact : this.newArtifacts) {
+            if (artifact.getItemId() == artifactId) {
                 this.newArtifacts.remove(artifact);
                 break;
             }
+
         }
+    }
+
+    public boolean hasEnoughCoins(int value) {
+        return (availableCoins - value) >= 0;
+    }
+
+    public void subtractCoins(int coins) {
+        availableCoins -= coins;
     }
 
     public void addUsedArtifact(Artifact artifact) { this.usedArtifacts.add(artifact); }

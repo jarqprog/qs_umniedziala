@@ -18,7 +18,7 @@ public class DaoWallet{
         return new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
     }
 
-    public Wallet importInstance(int userID) {
+    public Wallet importWallet(int userID) {
         Wallet wallet = null;
         PreparedStatement preparedStatement = null;
         ArrayList<Artifact> artifacts = null;

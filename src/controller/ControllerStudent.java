@@ -4,6 +4,12 @@ package controller;
 import dao.DaoLevel;
 //import dao.DaoQuest;
 import model.*;
+import dao.DaoArtifact;
+import dao.DaoWallet;
+import model.Artifact;
+import model.Student;
+import model.Wallet;
+import model.Level;
 import view.ViewStudent;
 
 public class ControllerStudent implements IUserController{
@@ -21,26 +27,34 @@ public class ControllerStudent implements IUserController{
     }
 
     public void buyArtifact() {
-//        seeArtifacts();
-//
-//        DaoArtifact daoArtifact = new DaoArtifact();
-//	    int artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact you want to buy: ");
-//        Artifact artifact = daoArtifact.getArtifactById(artifactId);
-//
-//        while (artifact == null) {
-//            viewStudent.displayText("No artifact with such id found!");
-//	        artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact you want to buy: ");
-//	        artifact = daoArtifact.getArtifactById(artifactId);
-//        }
-//
-//        Wallet wallet = student.getWallet();
-//        if (wallet.getCoins() < artifact.getValue()) {
-//            viewStudent.displayText("You do not hav enough money to buy this artifact!");
-//        } else {
-//            wallet.setCoins(wallet.getCoins() - artifact.getValue());
-//            wallet.addArtifact(artifact);
-//            viewStudent.displayText("Artifact was added to wallet!");
-//        }
+        Artifact artifact = getArtifact("individual");
+        int artifactId = artifact.getItemId();
+        int studentId = student.getUserId();
+
+        int price = artifact.getValue();
+        if (student.hasEnoughCoins(price)) {
+            student.subtractCoins(price);
+            student.addNewArtifact(artifact);
+
+            DaoWallet daoWallet = new DaoWallet();
+            daoWallet.updateWallet(student);
+            daoWallet.exportStudentArtifact(artifactId, studentId);
+
+        } else {
+            viewStudent.displayText("You do not have enough money to buy this artifact!");
+        }
+    }
+
+    public Artifact getArtifact(String type) {
+        DaoArtifact daoArtifact = new DaoArtifact();
+
+        viewStudent.displayText("Available artifacts:\n");
+        viewStudent.displayList(daoArtifact.getArtifacts(type));
+
+        int artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact: ");
+        Artifact artifact = daoArtifact.importArtifact(artifactId);
+
+        return artifact;
     }
 
     public void seeExpLevel() {

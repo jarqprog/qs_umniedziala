@@ -37,10 +37,17 @@ public class Student extends User{
         this.wallet.addNewArtifact(artifact);
     }
 
-    public void markArtifactAsBougth(Artifact artifact){
+    public void markArtifactAsBougth(Artifact artifact) {
         this.wallet.removeNewArtifact(artifact.getItemId());
         this.wallet.addUsedArtifact(artifact);
+    }
 
+    public boolean hasEnoughCoins(int value) {
+        return wallet.hasEnoughCoins(value);
+    }
+
+    public void subtractCoins(int coins) {
+        wallet.subtractCoins(coins);
     }
 
 }
