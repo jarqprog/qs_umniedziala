@@ -189,7 +189,13 @@ public class ControllerAdmin implements IUserController {
 
         DaoLevel daoLevel = new DaoLevel();
         Level level = daoLevel.createLevel(levelName, coinsLimit);
-        daoLevel.exportLevel(level);
+        boolean isInsert = daoLevel.exportLevel(level);
+
+        if(isInsert){
+            viewAdmin.displayText("Creation level successful");
+        }else{
+            viewAdmin.displayText("Creation level failed");
+        }
 
     }
 

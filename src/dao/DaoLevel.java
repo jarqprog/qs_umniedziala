@@ -18,7 +18,7 @@ public class DaoLevel{
         return new Level(levelId, name, coinsLimit);
     }
 
-    public void exportLevel(Level level){
+    public boolean exportLevel(Level level){
 
         String name = level.getName();
         int coinsLimit = level.getCoinsLimit();
@@ -33,9 +33,10 @@ public class DaoLevel{
             preparedStatement.setInt(2, coinsLimit);
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
 
         }catch (SQLException | ClassNotFoundException e){
-            System.out.println("Level insertion failed");
+            return false;
         }
     }
 
