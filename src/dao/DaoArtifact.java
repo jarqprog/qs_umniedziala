@@ -68,7 +68,27 @@ public class DaoArtifact{
     }
 
     public ArrayList<Artifact> getArtifacts(String type) {
-        return new ArrayList<Artifact>();
+        ArrayList<Artifact> artifacts = new ArrayList<>();
+        String query = "SELECT id_artifact FROM artifacts WHERE type = ?;";
+
+        try {
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, type);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                int artifactId = resultSet.getInt("id_artifact");
+                Artifact artifact = importArtifact(artifactId);
+                artifacts.add(artifact);
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+        return artifacts;
     }
         
 }
