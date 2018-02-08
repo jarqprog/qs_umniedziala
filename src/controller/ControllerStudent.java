@@ -74,17 +74,6 @@ public class ControllerStudent implements IUserController{
         controllerTeam.runMenu();
     }
 
-    public void seeQuests() {
-//        viewStudent.displayText("Available quests: ");
-//        viewStudent.displayList(new DaoQuest().importData());
-    }
-
-    public void seeArtifacts() {
-//        viewStudent.displayText("Available artifacts: ");
-//        viewStudent.displayList(new DaoArtifact().importData());
-    }
-
-
     public void runMenu() {
 
         String studentOption = "";
@@ -103,11 +92,7 @@ public class ControllerStudent implements IUserController{
                         break;
                 case "4": manageTeam();
                         break;
-                case "5": seeQuests();
-                        break;
-                case "6": seeArtifacts();
-                        break;
-                case "7": manageTeam();
+                case "5": manageTeam();
                         break;
                 case "0": break;
 
