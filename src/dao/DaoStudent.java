@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 import model.*;
 
-public class DaoStudent{
+public class DaoStudent implements IDaoUser <Student>{
 
     public Student createInstance(String name, String password, String email) {
         return new Student(name, password, email);
