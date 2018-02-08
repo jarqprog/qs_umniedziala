@@ -13,7 +13,8 @@ public class ViewMentor extends View{
 
     private static ArrayList <String> assignStudentToTeamOptions = new ArrayList <String>(Arrays.asList("1. Assign student to chosen team", "0. Go back"));
 
-    private static ArrayList <String> chooseTeamOrStudent = new ArrayList<>(Arrays.asList("1. Mark team quest", "2. Mark sigle student quest"));
+    private static ArrayList <String> chooseTeamOrStudent = new ArrayList<>(Arrays.asList("1. Mark team quest", "2. Mark sigle student quest",
+            "0. Go back"));
 
     public ArrayList<String> getMentorOptions() { return mentorOptions; }
 

@@ -182,12 +182,26 @@ public class ControllerMentor implements IUserController{
     }
 
     public void markQuest() {
-        toBeImplemented();
+        String mentorOption = "";
+        while (!mentorOption.equals("0")) {
+
+            viewMentor.displayText("\nWhat would like to do?");
+            viewMentor.displayList(viewMentor.getChooseTeamOrStudent());
+
+            mentorOption = viewMentor.getInputFromUser("Option: ");
+            switch (mentorOption) {
+                case "1": markTeamAchivedQuest();
+                    break;
+                case "2":markStudentAchivedQuest();
+                    break;
+                case "0": break;
+                default: viewMentor.displayText("Wrong option. Try again!");
+                    break;
+            }
+        }
     }
 
-    public void markArtifact() {
-        toBeImplemented();
-    }
+    public void markArtifact() { toBeImplemented(); }
 
     public void markStudentAchivedQuest() {
         toBeImplemented();
