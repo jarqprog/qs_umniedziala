@@ -420,7 +420,7 @@ public class ControllerMentor implements IUserController{
                 break;
         case "7": markQuest();
                 break;
-        case "8": markArtifact();
+        case "8": markBoughtArtifact();
                 break;
         case "9": seeAllWallets();
                 break;
