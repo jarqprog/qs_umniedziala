@@ -152,6 +152,8 @@ public class ControllerMentor implements IUserController{
         Artifact artifactToBeBougth = getArtifact(artifactId);
         student.markArtifactAsBougth(artifactToBeBougth);
 
+        new DaoWallet().updateStudentsArtifact(artifactToBeBougth.getItemId(), student.getUserId());
+
     }
 
     public void markStudentAchivedQuest() {
