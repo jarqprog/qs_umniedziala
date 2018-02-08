@@ -1,5 +1,7 @@
 package controller;
 
+import dao.DaoTeam;
+import dao.DaoWallet;
 import model.*;
 import view.ViewTeam;
 
@@ -39,12 +41,13 @@ public class ControllerTeam implements IUserController {
 
         for (Student student: students) {
             student.addCoins(coinsForOneStudent);
+            new DaoWallet().updateWallet(student);
         }
     }
 
     private void splitMoneyAlmostEqually() {
-//        ArrayList<Student> students = team.getStudents().clone();
-        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Student> students = team.getStudents();
+        ArrayList<Student> students_clone = (ArrayList<Student>) students.clone();
 
         int teamCoins = team.getAvailableCoins();
         int teamSize = team.getSize();
@@ -52,9 +55,11 @@ public class ControllerTeam implements IUserController {
         splitMoneyEqually();
         int remainderCoins = (teamCoins % teamSize);
 
+        Student luckyStudent;
         while (remainderCoins > 0) {
-            Student luckyStudent = popRandomStudent(students);
+            luckyStudent = popRandomStudent(students_clone);
             luckyStudent.addCoins(1);
+            new DaoWallet().updateWallet(luckyStudent);
             remainderCoins--;
         }
     }
@@ -73,6 +78,9 @@ public class ControllerTeam implements IUserController {
         } else {
             splitMoneyAlmostEqually();
         }
+
+        team.setAvailableCoins(0);
+        new DaoTeam().updateTeamData(team);
     }
 
     public void runMenu() {
