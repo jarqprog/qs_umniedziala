@@ -40,5 +40,7 @@ public class Team extends Group {
         availableCoins += coins;
     }
 
-    public void subtractCoins(Integer coins){ availableCoins -= coins; }
+    public void subtractCoins(Integer coins){ this.availableCoins -= coins; }
+
+    public boolean hasEnoughCoins(Integer coins){ return (this.availableCoins - coins) >= 0; }
 }
