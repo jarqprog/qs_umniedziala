@@ -89,14 +89,14 @@ public class DaoLevel{
         return levels;
     }
 
-    public Level importLevelByCoins(int availableCoins){
+    public Level importLevelByCoins(int allCoins){
 
-        ArrayList <Level> levels = getMatchingLevels(availableCoins);
-        Level level = getRightLevel(levels, availableCoins);
+        ArrayList <Level> levels = getMatchingLevels(allCoins);
+        Level level = getRightLevel(levels, allCoins);
         return level;
     }
 
-    public ArrayList <Level> getMatchingLevels(int availableCoins){
+    public ArrayList <Level> getMatchingLevels(int allCoins){
 
         Level level = null;
         PreparedStatement preparedStatement = null;
@@ -105,7 +105,7 @@ public class DaoLevel{
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, availableCoins);
+            preparedStatement.setInt(1, allCoins);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

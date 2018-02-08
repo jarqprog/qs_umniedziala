@@ -48,7 +48,7 @@ public class ControllerStudent implements IUserController{
 
     public void seeExpLevel() {
         DaoLevel daoLevel = new DaoLevel();
-        Level level = daoLevel.importLevelByCoins(this.student.getWallet().getAvailableCoins());
+        Level level = daoLevel.importLevelByCoins(this.student.getWallet().getAllCoins());
         viewStudent.displayText("Your wallet: ");
         viewStudent.displayText(student.getWallet().toString());
         viewStudent.displayText("Your level: ");
