@@ -1,12 +1,9 @@
 package controller;
 
 //import dao.DaoArtifact;
-import dao.DaoLevel;
+import dao.*;
 //import dao.DaoQuest;
-import dao.DaoTeam;
 import model.*;
-import dao.DaoArtifact;
-import dao.DaoWallet;
 import model.Artifact;
 import model.Student;
 import model.Wallet;
@@ -72,6 +69,7 @@ public class ControllerStudent implements IUserController{
         Team team = new DaoTeam().getTeamByStudentId(student.getUserId());
         ControllerTeam controllerTeam = new ControllerTeam(team);
         controllerTeam.runMenu();
+        student = new DaoStudent().importInstance(student.getUserId());
     }
 
     public void seeQuests() {

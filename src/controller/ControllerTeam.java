@@ -65,7 +65,13 @@ public class ControllerTeam implements IUserController {
         for (Student student : studentsToPrices.keySet()) {
             int coinsToPay = studentsToPrices.get(student);
             student.subtractCoins(coinsToPay);
-            new DaoWallet().updateWallet(student);
+            student.addNewArtifact(artifact);
+
+            DaoWallet daoWallet = new DaoWallet();
+            daoWallet.updateWallet(student);
+            int artifactId = artifact.getItemId();
+            int studentId = student.getUserId();
+            daoWallet.exportStudentArtifact(artifactId, studentId);
         }
 
         viewTeam.displayText("Purchase of team artifact was successful");
