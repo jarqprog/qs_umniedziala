@@ -1,5 +1,6 @@
 package controller;
 
+import dao.DaoArtifact;
 import model.*;
 import view.ViewTeam;
 
@@ -16,7 +17,20 @@ public class ControllerTeam implements IUserController {
         this.team = team;
     }
 
+    public Artifact getArtifact(String type) {
+        DaoArtifact daoArtifact = new DaoArtifact();
+
+        viewTeam.displayText("Available artifacts:\n");
+        viewTeam.displayList(daoArtifact.getArtifacts(type));
+
+        int artifactId = viewTeam.getIntInputFromUser("\nEnter id of artifact: ");
+        Artifact artifact = daoArtifact.importArtifact(artifactId);
+
+        return artifact;
+    }
+
     public void buyArtifact() {
+
     }
 
     private boolean checkTeamCoinsDivisibleByTeamSize(int teamCoins, int teamSize) {
