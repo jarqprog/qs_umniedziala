@@ -108,7 +108,6 @@ public class DaoTeam{
 
         return team;
     }
-}
 
     public ArrayList<Student> getStudentsOfTeam(int teamId) {
         ArrayList<Student> studentsOfTeam = new ArrayList<Student>();
