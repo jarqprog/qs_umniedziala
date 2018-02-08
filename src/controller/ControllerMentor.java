@@ -37,7 +37,7 @@ public class ControllerMentor implements IUserController{
             new DaoClass().assignStudentToClass(studentWithId.getUserId(), codecoolClass.getGroupId());
         }
         else{
-            viewMentor.displayText("You entered wrong data for student");
+            viewMentor.displayText("Creation student failed");
         }
 
     }
