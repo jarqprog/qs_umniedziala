@@ -156,7 +156,10 @@ public class ControllerAdmin implements IUserController {
         DaoClass daoClass = new DaoClass();
 
         viewAdmin.displayText("Available classes: ");
-        viewAdmin.displayList(daoClass.getAllClasses());
+        ArrayList<CodecoolClass> codecoolClasses = daoClass.getAllClasses();
+        for(CodecoolClass codecoolClass : codecoolClasses) {
+            viewAdmin.displayText(codecoolClass.getBasicInfo());
+        }
 
         Integer classId = viewAdmin.getIntInputFromUser("\nEnter id of chosen class: ");
 
