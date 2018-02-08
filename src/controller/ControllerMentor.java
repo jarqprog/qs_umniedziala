@@ -124,7 +124,12 @@ public class ControllerMentor implements IUserController{
         String questCategory = chooseCategory();
 
         Quest quest = daoQuest.createQuest(questName, questValue, questDescription, questType, questCategory);
-        daoQuest.exportQuest(quest);
+        boolean isInsert = daoQuest.exportQuest(quest);
+        if(isInsert){
+            viewMentor.displayText("Creation quest successful");
+        }else {
+            viewMentor.displayText("Creation quest failed");
+        }
     }
 
     public void addArtifact() {
