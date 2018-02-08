@@ -345,16 +345,14 @@ public class ControllerMentor implements IUserController{
     }
 
     public void seeAllWallets() {
-//        int idOfMentorClass = mentor.getClassId();
-//        viewMentor.displayText("Wallets of students of class: ");
-//
-//        DaoStudent daoStudent = new DaoStudent();
-//        ArrayList<Student> allStudentsOfClass = daoStudent.getStudentsByClassId(idOfMentorClass);
-//        MyIterator <Student> myIterator = new MyIterator<>(allStudentsOfClass);
-//        while(myIterator.hasNext()){
-//            Student student = myIterator.next();
-//            viewMentor.displayText(student.toString() + "/n" + student.getWallet().toString());
-//        }
+        DaoClass daoClass = new DaoClass();
+        CodecoolClass mentorsClass = daoClass.getMentorsClass(mentor.getUserId());
+        viewMentor.displayText("Wallets of students of class: \n");
+        for (Student student : mentorsClass.getStudents()) {
+            Wallet wallet = student.getWallet();
+            viewMentor.displayText(student.toString());
+            viewMentor.displayText(wallet.toString());
+        }
     }
     private ArrayList<Wallet> getWalletsOfStudents(ArrayList<Student> students) {
         ArrayList<Wallet> walletsOfStudents = new ArrayList<>();
