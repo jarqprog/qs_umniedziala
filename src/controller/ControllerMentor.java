@@ -204,11 +204,20 @@ public class ControllerMentor implements IUserController{
     public void markArtifact() { toBeImplemented(); }
 
     public void markStudentAchivedQuest() {
-        toBeImplemented();
+
+        Student student = getStudent();
+        Quest quest = getIndividualQuest();
+        int coins = quest.getValue();
+        student.addCoins(coins);
+
     }
 
     public void markTeamAchivedQuest() {
-        toBeImplemented();
+
+        Team team = getTeam();
+        Quest quest = getTeamQuest();
+        int coins = quest.getValue();
+        team.addCoins(coins);
     }
 
     public void markStudentBoughtArtifact() {
