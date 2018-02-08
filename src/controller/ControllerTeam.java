@@ -24,6 +24,7 @@ public class ControllerTeam implements IUserController {
         String teamOption = "";
         while (!teamOption.equals("0")) {
 
+            viewTeam.displayText(this.team.getBasicInfo());
             viewTeam.displayText("\nWhat would like to do?");
             viewTeam.displayList(viewTeam.getStudentOptions());
 
