@@ -54,4 +54,6 @@ public class DaoTeam{
             System.out.println(" insertion failed");
         }
     }
+
+    public Team getTeamByStudentId(Integer studentId){}
 }
