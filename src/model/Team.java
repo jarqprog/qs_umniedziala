@@ -32,11 +32,15 @@ public class Team extends Group {
         return super.toString() + "\nTeam coins: " + this.availableCoins;
     }
 
-    public String getBasicInfo() {
+    public String getBasicTeamInfo() {
         return "Your Team: " + this.name + "\nTeam coins: " + this.availableCoins;
     }
 
     public void addCoins(int coins) {
         availableCoins += coins;
     }
+
+    public void subtractCoins(Integer coins){ this.availableCoins -= coins; }
+
+    public boolean hasEnoughCoins(Integer coins){ return (this.availableCoins - coins) >= 0; }
 }
