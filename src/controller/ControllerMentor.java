@@ -25,10 +25,14 @@ public class ControllerMentor implements IUserController{
         Student student = daoStudent.createInstance(studentName, studentPassword, studentEmail);
         daoStudent.exportInstance(student);
         Student studentWithId = daoStudent.importNewStudent(studentEmail);
+
         DaoWallet daoWallet = new DaoWallet();
         Wallet wallet = daoWallet.createWallet();
         studentWithId.setWallet(wallet);
         daoWallet.exportWallet(studentWithId);
+
+        CodecoolClass codecoolClass = getCodecoolClass();
+        new DaoClass().assignStudentToClass(studentWithId.getUserId(), codecoolClass.getGroupId());
 
     }
 
@@ -334,10 +338,6 @@ public class ControllerMentor implements IUserController{
         return artifact;
     }
 
-    public void toBeImplemented(){
-        String text = "Implementation in progress";
-        viewMentor.displayText(text);
-    }
 
     public void markQuest() {
         String mentorOption = "";
