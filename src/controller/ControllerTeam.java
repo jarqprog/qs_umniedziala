@@ -46,8 +46,8 @@ public class ControllerTeam implements IUserController {
     }
 
     private void splitMoneyAlmostEqually() {
-//        ArrayList<Student> students = team.getStudents().clone();
-        ArrayList<Student> students = new ArrayList<>();
+        ArrayList<Student> students = team.getStudents();
+        ArrayList<Student> students_clone = (ArrayList<Student>) students.clone();
 
         int teamCoins = team.getAvailableCoins();
         int teamSize = team.getSize();
@@ -57,7 +57,7 @@ public class ControllerTeam implements IUserController {
 
         Student luckyStudent;
         while (remainderCoins > 0) {
-            luckyStudent = popRandomStudent(students);
+            luckyStudent = popRandomStudent(students_clone);
             luckyStudent.addCoins(1);
             new DaoWallet().updateWallet(luckyStudent);
             remainderCoins--;
