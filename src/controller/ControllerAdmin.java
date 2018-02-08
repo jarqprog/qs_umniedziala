@@ -80,12 +80,6 @@ public class ControllerAdmin implements IUserController {
 
     private Mentor getMentor() {
         DaoMentor daoMentor = new DaoMentor();
-
-        ArrayList<Mentor> mentors = daoMentor.getAllMentors();
-        for(Mentor mentor: mentors){
-            viewAdmin.displayText(mentor.toString());
-        }
-
         seeAllMentors();
         int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
 
