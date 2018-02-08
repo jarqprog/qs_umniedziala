@@ -151,7 +151,7 @@ public class ControllerMentor implements IUserController{
 
         String questName = viewMentor.getInputFromUser("Enter name of new quest: ");
         int questValue = viewMentor.getIntInputFromUser( "Enter value of new quest: ");
-        String questDescription = viewMentor.getInputFromUser("Enter description of quest");
+        String questDescription = viewMentor.getInputFromUser("Enter description of quest: ");
         String questType = chooseType();
         String questCategory = chooseCategory();
 
