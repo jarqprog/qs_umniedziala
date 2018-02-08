@@ -1,5 +1,6 @@
 package controller;
 
+import dao.DaoTeam;
 import dao.DaoWallet;
 import model.*;
 import view.ViewTeam;
@@ -77,6 +78,9 @@ public class ControllerTeam implements IUserController {
         } else {
             splitMoneyAlmostEqually();
         }
+
+        team.setAvailableCoins(0);
+        new DaoTeam().updateTeamData(team);
     }
 
     public void runMenu() {
