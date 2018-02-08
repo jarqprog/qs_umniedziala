@@ -317,7 +317,7 @@ public class ControllerMentor implements IUserController{
     public void markBoughtArtifact(){
         Student student = getStudent();
 
-        viewMentor.displayText("Student artifacts:\n");
+        viewMentor.displayText("Student new artifacts:\n");
         viewMentor.displayList(student.getAllNewArtifacts());
         Integer artifactId = viewMentor.getIntInputFromUser("Choose id artifact to be marked as used: ");
 
