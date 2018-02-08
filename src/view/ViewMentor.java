@@ -33,6 +33,7 @@ public class ViewMentor extends View{
 
     public static ArrayList<String> getArtifactEditOptions() {
         return artifactEditOptions;
+    }
 
     public static ArrayList<String> getEditQuestOptions() {
         return questEditOptions;

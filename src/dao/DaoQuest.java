@@ -2,12 +2,18 @@ package dao;
 
 import model.*;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DaoQuest{
+
+    public Quest createQuest(String name, int value, String description, String type, String category) {
+        return new Quest(name, value, description, type, category);
+    }
+
     public Quest createQuest(int itemId, String name, int value, String description, String type, String category) {
         return new Quest(itemId, name, value, description, type, category);
     }
@@ -88,6 +94,28 @@ public class DaoQuest{
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Quest update failed");
+        }
+    }
+
+    public void exportQuest(Quest quest) {
+
+        String query = "INSERT INTO quests VALUES (?, ?, ?, ?, ?, ?);";
+
+        try{
+            Connection connection = DbConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(2, quest.getName());
+            preparedStatement.setInt(3, quest.getValue());
+            preparedStatement.setString(4, quest.getDescription());
+            preparedStatement.setString(5, quest.getType());
+            preparedStatement.setString(6, quest.getCategory());
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println("Quest insertion failed");
         }
     }
 }
