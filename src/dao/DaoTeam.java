@@ -3,6 +3,7 @@ package dao;
 import model.*;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -55,5 +56,29 @@ public class DaoTeam{
         }
     }
 
-    public Team getTeamByStudentId(Integer studentId){}
+    public Team getTeamByStudentId(Integer studentId){
+        PreparedStatement preparedStatement;
+        Team team = null;
+
+        String query = "SELECT id_team FROM students_in_teams WHERE id_student=?;";
+
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, studentId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()){
+                Integer teamId = resultSet.getInt("id_team");
+
+                team = importTeam(teamId);
+                resultSet.close();
+            }
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Selecting students team failed");
+        }
+
+        return team;
+    }
 }
