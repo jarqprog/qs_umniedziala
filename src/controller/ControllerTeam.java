@@ -24,7 +24,7 @@ public class ControllerTeam implements IUserController {
     }
 
     private Student popRandomStudent(ArrayList<Student> students) {
-        int randomIndex = new Random.nextInt(students.size());
+        int randomIndex = new Random().nextInt(students.size());
         Student randomStudent = students.get(randomIndex);
         students.remove(randomStudent);
         return randomStudent;
@@ -43,14 +43,16 @@ public class ControllerTeam implements IUserController {
     }
 
     private void splitMoneyAlmostEqually() {
-        ArrayList<Student> students = team.getStudents().clone();
+//        ArrayList<Student> students = team.getStudents().clone();
+        ArrayList<Student> students = new ArrayList<>();
+
         int teamCoins = team.getAvailableCoins();
         int teamSize = team.getSize();
 
         splitMoneyEqually();
         int remainderCoins = (teamCoins % teamSize);
 
-        while (ramainderCoins > 0) {
+        while (remainderCoins > 0) {
             Student luckyStudent = popRandomStudent(students);
             luckyStudent.addCoins(1);
             remainderCoins--;
@@ -62,7 +64,7 @@ public class ControllerTeam implements IUserController {
         int teamSize = team.getSize();
 
         if (teamCoins == 0) {
-            teamView.displayText("Team has no coins to split");
+            viewTeam.displayText("Team has no coins to split");
             return;
         }
 
