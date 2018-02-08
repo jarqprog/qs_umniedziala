@@ -48,9 +48,20 @@ public class ControllerMentor implements IUserController{
         viewMentor.displayText("Available students:\n");
         viewMentor.displayList(daoStudent.getAllStudents());
 
-        int studentId = viewMentor.getIntInputFromUser("\nEnter id of student: ");
+        Integer studentId = viewMentor.getIntInputFromUser("\nEnter id of student: ");
 
         return daoStudent.importInstance(studentId);
+    }
+
+    public CodecoolClass getCodecoolClass(){
+        DaoClass daoClass = new DaoClass();
+
+        viewMentor.displayText("Available classes: ");
+        viewMentor.displayList(daoClass.getAllClasses());
+
+        Integer classId = viewMentor.getIntInputFromUser("\nEnter id of chosen class: ");
+
+        return daoClass.importClass(classId);
     }
 
     public Team getTeam(){
