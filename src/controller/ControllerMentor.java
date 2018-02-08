@@ -61,7 +61,10 @@ public class ControllerMentor implements IUserController{
         DaoClass daoClass = new DaoClass();
 
         viewMentor.displayText("Available classes: ");
-        viewMentor.displayList(daoClass.getAllClasses());
+        ArrayList <CodecoolClass> allClasses = daoClass.getAllClasses();
+        for(CodecoolClass codecoolClass: allClasses){
+            viewMentor.displayText(codecoolClass.getBasicInfo());
+        }
 
         Integer classId = viewMentor.getIntInputFromUser("\nEnter id of chosen class: ");
 
@@ -396,13 +399,9 @@ public class ControllerMentor implements IUserController{
 
     }
 
-    public void markStudentBoughtArtifact() {
-        toBeImplemented();
-    }
+    public void markStudentBoughtArtifact() { }
 
-    public void markTeamBoughtArtifact() {
-        toBeImplemented();
-    }
+    public void markTeamBoughtArtifact() { }
 
     public void seeAllWallets() {
         DaoClass daoClass = new DaoClass();
