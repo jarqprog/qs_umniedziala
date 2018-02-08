@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 import model.*;
 
-public class DaoStudent implements IDaoUser <Student> {
+public class DaoStudent{
 
     public Student createInstance(String name, String password, String email) {
         return new Student(name, password, email);
@@ -85,7 +85,7 @@ public class DaoStudent implements IDaoUser <Student> {
     }
 
 
-    public void exportInstance(Student student) {
+    public boolean exportInstance(Student student) {
 
         String name = student.getName();
         String password = student.getPassword();
@@ -105,9 +105,10 @@ public class DaoStudent implements IDaoUser <Student> {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Student insertion failed");
+            return false;
         }
     }
 

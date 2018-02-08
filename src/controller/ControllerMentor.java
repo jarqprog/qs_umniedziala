@@ -23,16 +23,22 @@ public class ControllerMentor implements IUserController{
         String studentEmail = viewMentor.getInputFromUser( "Enter email of new student: ");
 
         Student student = daoStudent.createInstance(studentName, studentPassword, studentEmail);
-        daoStudent.exportInstance(student);
-        Student studentWithId = daoStudent.importNewStudent(studentEmail);
+        boolean isInsert = daoStudent.exportInstance(student);
 
-        DaoWallet daoWallet = new DaoWallet();
-        Wallet wallet = daoWallet.createWallet();
-        studentWithId.setWallet(wallet);
-        daoWallet.exportWallet(studentWithId);
+        if(isInsert) {
+            Student studentWithId = daoStudent.importNewStudent(studentEmail);
 
-        CodecoolClass codecoolClass = getCodecoolClass();
-        new DaoClass().assignStudentToClass(studentWithId.getUserId(), codecoolClass.getGroupId());
+            DaoWallet daoWallet = new DaoWallet();
+            Wallet wallet = daoWallet.createWallet();
+            studentWithId.setWallet(wallet);
+            daoWallet.exportWallet(studentWithId);
+
+            CodecoolClass codecoolClass = getCodecoolClass();
+            new DaoClass().assignStudentToClass(studentWithId.getUserId(), codecoolClass.getGroupId());
+        }
+        else{
+            viewMentor.displayText("You entered wrong data for student");
+        }
 
     }
 
