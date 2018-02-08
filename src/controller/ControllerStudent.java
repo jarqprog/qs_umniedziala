@@ -35,10 +35,10 @@ public class ControllerStudent implements IUserController{
         int price = artifact.getValue();
         if (student.hasEnoughCoins(price)) {
             student.subtractCoins(price);
-            student.getWallet().addArtifact();
+            student.addNewArtifact(artifact);
 
             DaoWallet daoWallet = new DaoWallet();
-            daoWallet.updateWallet(studentId);
+            daoWallet.updateWallet(student);
             daoWallet.exportStudentArtifact(artifactId, studentId);
 
         } else {
