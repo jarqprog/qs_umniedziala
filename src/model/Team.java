@@ -29,7 +29,7 @@ public class Team extends Group {
     }
 
     public String getBasicInfo() {
-        return super.getBasicInfo() + "\nTeam coins: " + this.availableCoins;
+        return "Your Team: " + this.name + "\nTeam coins: " + this.availableCoins;
     }
 
     public void addCoins(int coins) {
