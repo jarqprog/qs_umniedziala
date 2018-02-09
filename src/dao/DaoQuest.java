@@ -67,7 +67,7 @@ public class DaoQuest{
         return quests;
     }
 
-    public void updateQuest(Quest quest) {
+    public boolean updateQuest(Quest quest) {
         int itemId = quest.getItemId();
         String name = quest.getName();
         int value = quest.getValue();
@@ -93,12 +93,13 @@ public class DaoQuest{
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Quest update failed");
+            return false;
         }
     }
 
-    public void exportQuest(Quest quest) {
+    public boolean exportQuest(Quest quest) {
 
         String query = "INSERT INTO quests VALUES (?, ?, ?, ?, ?, ?);";
 
@@ -114,9 +115,10 @@ public class DaoQuest{
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
 
         }catch (SQLException | ClassNotFoundException e){
-            System.out.println("Quest insertion failed");
+            return false;
         }
     }
 

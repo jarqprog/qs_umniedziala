@@ -21,11 +21,13 @@ public class DaoMentor implements IDaoUser <Mentor> {
     public Mentor importInstance(int mentorId) {
         Mentor mentor = null;
         PreparedStatement preparedStatement = null;
-        String query = "SELECT * FROM users WHERE id_user = ?;";
+        int roleId = getRoleID("mentor");
+        String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, mentorId);
+            preparedStatement.setInt(2, roleId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(!resultSet.isClosed()) {
@@ -73,15 +75,17 @@ public class DaoMentor implements IDaoUser <Mentor> {
         }
     }
 
-    public void updateInstance(Mentor mentor){
+    public boolean updateInstance(Mentor mentor){
         String name = mentor.getName();
         String password = mentor.getPassword();
         String email = mentor.getEmail();
         int mentorId = mentor.getUserId();
+        int roleId = getRoleID("mentor");
+
 
         PreparedStatement preparedStatement = null;
         String query = "update users SET name = ?, password = ?, email = ? "+
-                "where id_user= ?;";
+                "where id_user= ? AND id_role = ?;";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -89,10 +93,12 @@ public class DaoMentor implements IDaoUser <Mentor> {
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, mentorId);
+            preparedStatement.setInt(5, roleId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            return true;
         } catch (SQLException | ClassNotFoundException e){
-            System.out.println("Mentor update failed");
+            return false;
         }
     }
 

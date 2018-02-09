@@ -45,7 +45,9 @@ public class DaoWallet{
     }
 
     public void exportWallet(Student student){
-
+        if(student == null){
+            return;
+        }
         int value = student.getUserId();
         int allCoins = student.getWallet().getAllCoins();
         int availableCoins = student.getWallet().getAvailableCoins();

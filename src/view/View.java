@@ -40,7 +40,11 @@ public abstract class View{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 String userInput = reader.readLine();
                 number = Integer.parseInt(userInput);
-                correctInput = false;
+                if(number > 0) {
+                    correctInput = false;
+                }else {
+                    displayText("No non-positive values allowed");
+                }
             }
             catch (IOException | NumberFormatException e){
                 displayText("Wrong input");

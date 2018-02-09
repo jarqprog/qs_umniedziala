@@ -42,30 +42,44 @@ public class ControllerAdmin implements IUserController {
         String className = viewAdmin.getInputFromUser("Enter the name of the class:");
         DaoClass daoClass = new DaoClass();
         CodecoolClass codecoolClass = daoClass.createClass(className);
-        daoClass.exportClass(codecoolClass);
+        boolean isInsert = daoClass.exportClass(codecoolClass);
+
+        if(isInsert){
+            viewAdmin.displayText("Creation class successful");
+        }else {
+            viewAdmin.displayText("Creation class failed");
+        }
 
     }
 
     public void editMentor() {
 
         Mentor mentor = getMentor();
-        String editMentorOption = "";
-        while (!editMentorOption.equals("0")) {
+        if(mentor != null) {
+            String editMentorOption = "";
+            while (!editMentorOption.equals("0")) {
 
-            viewAdmin.displayText("\nWhat would like to do?");
-            viewAdmin.displayList(viewAdmin.getEditMentorOptions1());
+                viewAdmin.displayText("\nWhat would like to do?");
+                viewAdmin.displayList(viewAdmin.getEditMentorOptions1());
 
-            editMentorOption = viewAdmin.getInputFromUser("Option: ");
-            switch (editMentorOption) {
-                case "1": editMentorEmail(mentor);
-                    break;
-                case "2": editMentorClass(mentor);
-                    break;
-                case "0": break;
+                editMentorOption = viewAdmin.getInputFromUser("Option: ");
+                switch (editMentorOption) {
+                    case "1":
+                        editMentorEmail(mentor);
+                        break;
+                    case "2":
+                        editMentorClass(mentor);
+                        break;
+                    case "0":
+                        break;
 
-                default: viewAdmin.displayText("Wrong option. Try again!");
-                    break;
+                    default:
+                        viewAdmin.displayText("Wrong option. Try again!");
+                        break;
+                }
             }
+        }else {
+            viewAdmin.displayText("No such mentor");
         }
     }
 
@@ -75,21 +89,24 @@ public class ControllerAdmin implements IUserController {
         ArrayList<Mentor> mentorList = daoMentor.getAllMentors();
 
         viewAdmin.displayText("Mentor's list:");
-        viewAdmin.displayList(mentorList);
+        if(mentorList.size() == 0){
+            viewAdmin.displayText("No mentors to print");
+        }
+        else {
+            viewAdmin.displayList(mentorList);
+        }
     }
 
     private Mentor getMentor() {
+        Mentor mentor = null;
         DaoMentor daoMentor = new DaoMentor();
-
-        ArrayList<Mentor> mentors = daoMentor.getAllMentors();
-        for(Mentor mentor: mentors){
-            viewAdmin.displayText(mentor.toString());
-        }
-
         seeAllMentors();
-        int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
 
-        Mentor mentor = daoMentor.importInstance(mentorId);
+        if(daoMentor.getAllMentors().size() != 0) {
+            int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
+
+            mentor = daoMentor.importInstance(mentorId);
+        }
 
         return mentor;
     }
@@ -98,7 +115,13 @@ public class ControllerAdmin implements IUserController {
         DaoMentor daoMentor = new DaoMentor();
         String newEmail = viewAdmin.getInputFromUser("\nEnter mentor's new email: ");
         mentor.setEmail(newEmail);
-        daoMentor.updateInstance(mentor);
+        boolean isInsert = daoMentor.updateInstance(mentor);
+
+        if(isInsert){
+            viewAdmin.displayText("Edit mentor successful");
+        }else {
+            viewAdmin.displayText("Edit mentor failed");
+        }
     }
 
     private void editMentorClass(Mentor mentor){
@@ -118,7 +141,7 @@ public class ControllerAdmin implements IUserController {
                 adminOption = viewAdmin.getInputFromUser("Option: ");
                 switch (adminOption) {
                     case "1": unsignMentorFromClass(userId);
-                        adminOption = "0"; //to leave menu when operation is done
+                        adminOption = "0";
                         break;
                     case "2": changeMentorClass(userId);
                         adminOption = "0";
@@ -134,7 +157,11 @@ public class ControllerAdmin implements IUserController {
 
     private void assignMentorToClass(Integer userId){
         CodecoolClass codecoolClass = getCodecoolClass();
-        new DaoClass().assignMentorToClass(userId, codecoolClass.getGroupId());
+        if(codecoolClass != null) {
+            new DaoClass().assignMentorToClass(userId, codecoolClass.getGroupId());
+        }else{
+            viewAdmin.displayText("No such class");
+        }
     }
 
     private void unsignMentorFromClass(Integer userId){
@@ -143,53 +170,78 @@ public class ControllerAdmin implements IUserController {
 
     private void changeMentorClass(Integer userId){
         CodecoolClass codecoolClass = getCodecoolClass();
-        new DaoClass().updateMentorInClass(userId, codecoolClass.getGroupId());
+        if(codecoolClass != null) {
+            new DaoClass().updateMentorInClass(userId, codecoolClass.getGroupId());
+            viewAdmin.displayText("Update was successful");
+        }else{
+            viewAdmin.displayText("Update failed");
+        }
     }
 
-    public CodecoolClass getCodecoolClass(){
+    public CodecoolClass getCodecoolClass() {
         DaoClass daoClass = new DaoClass();
+        CodecoolClass chosenClass = null;
 
         viewAdmin.displayText("Available classes: ");
-        viewAdmin.displayList(daoClass.getAllClasses());
+        ArrayList<CodecoolClass> codecoolClasses = daoClass.getAllClasses();
+        if (codecoolClasses.size() != 0) {
+            for (CodecoolClass codecoolClass : codecoolClasses) {
+                viewAdmin.displayText(codecoolClass.getBasicInfo());
+            }
 
-        Integer classId = viewAdmin.getIntInputFromUser("\nEnter id of chosen class: ");
+            Integer classId = viewAdmin.getIntInputFromUser("\nEnter id of chosen class: ");
 
-        return daoClass.importClass(classId);
+            chosenClass = daoClass.importClass(classId);
+        } else {
+            viewAdmin.displayText("No classes found");
+        }
+        return  chosenClass;
     }
+
 
     public void seeMentorData() {
         Mentor mentor = getMentor();
-        CodecoolClass mentorsClass = new DaoClass().getMentorsClass(mentor.getUserId());
+        if(mentor != null) {
+            CodecoolClass mentorsClass = new DaoClass().getMentorsClass(mentor.getUserId());
 
-        viewAdmin.displayText(mentor.toString());
-        if(mentorsClass != null){
-            viewAdmin.displayText("");
-            viewAdmin.displayText(mentorsClass.toString());
+            viewAdmin.displayText(mentor.toString());
+            if (mentorsClass != null) {
+                viewAdmin.displayText("");
+                viewAdmin.displayText(mentorsClass.toString());
+            }
         }
 
     }
 
     private void seeAllLevels() {
-
         DaoLevel daoLevel = new DaoLevel();
         ArrayList<Level> levelList = daoLevel.getAllLevels();
 
         viewAdmin.displayText("List of existing levels:");
-        viewAdmin.displayList(levelList);
+        if(levelList.size() != 0) {
+            viewAdmin.displayList(levelList);
+        }else {
+            viewAdmin.displayText("No levels found");
+        }
     }
 
     public void createLevel() {
         seeAllLevels();
 
-        String nameRequest = "Enter name of new level: ";
-        String levelName = viewAdmin.getInputFromUser(nameRequest);
-
-        String coinsLimitRequest = "Enter the number of coins required for level: ";
-        int coinsLimit = viewAdmin.getIntInputFromUser(coinsLimitRequest);
+        String levelName = viewAdmin.getInputFromUser("Enter name of new level: ");
+        int coinsLimit = viewAdmin.getIntInputFromUser("Enter the number of coins required for level: ");
 
         DaoLevel daoLevel = new DaoLevel();
         Level level = daoLevel.createLevel(levelName, coinsLimit);
-        daoLevel.exportLevel(level);
+        if(level != null) {
+            boolean isInsert = daoLevel.exportLevel(level);
+
+            if (isInsert) {
+                viewAdmin.displayText("Creation level successful");
+            } else {
+                viewAdmin.displayText("Creation level failed");
+            }
+        }
 
     }
 
