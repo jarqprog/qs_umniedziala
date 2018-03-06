@@ -9,14 +9,17 @@ import java.sql.SQLException;
 
 public class DaoAdmin implements IDaoAdmin  {
 
+    @Override
     public Admin createAdmin (String name, String password, String email){
         return new Admin(name, password, email);
     }
+    @Override
 
     public Admin createAdmin(int userId, String name, String password, String email){
         return new Admin(userId, name, password, email);
     }
 
+    @Override
     public Admin importAdmin(int adminId){
         Admin admin = null;
         PreparedStatement preparedStatement = null;
@@ -47,7 +50,7 @@ public class DaoAdmin implements IDaoAdmin  {
         }
         return admin;
     }
-
+    @Override
     public boolean exportAdmin(Admin admin){
         String name = admin.getName();
         String password = admin.getPassword();
@@ -72,6 +75,8 @@ public class DaoAdmin implements IDaoAdmin  {
             return false;
         }
     }
+
+    @Override
     public boolean updateAdmin(Admin admin){
         String name = admin.getName();
         String password = admin.getPassword();
