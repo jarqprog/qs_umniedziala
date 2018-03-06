@@ -9,15 +9,18 @@ import java.util.List;
 import model.Level;
 import model.Mentor;
 
-public class DaoLevel{
+public class DaoLevel implements IDaoLevel {
+    @Override
     public Level createLevel(String name, int coinsLimit) {
         return new Level(name, coinsLimit);
     }
 
+    @Override
     public Level createLevel(int levelId, String name, int coinsLimit) {
         return new Level(levelId, name, coinsLimit);
     }
 
+    @Override
     public boolean exportLevel(Level level){
 
         String name = level.getName();
@@ -41,6 +44,7 @@ public class DaoLevel{
     }
 
 
+    @Override
     public Level importLevel(int levelId) {
         Level level = null;
         PreparedStatement preparedStatement = null;
@@ -65,6 +69,7 @@ public class DaoLevel{
         return level;
     }
 
+    @Override
     public ArrayList<Level> getAllLevels() {
         ArrayList<Level> levels = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -90,6 +95,7 @@ public class DaoLevel{
         return levels;
     }
 
+    @Override
     public Level importLevelByCoins(int allCoins){
 
         ArrayList <Level> levels = getMatchingLevels(allCoins);
@@ -97,6 +103,7 @@ public class DaoLevel{
         return level;
     }
 
+    @Override
     public ArrayList <Level> getMatchingLevels(int allCoins){
 
         Level level = null;
@@ -125,7 +132,8 @@ public class DaoLevel{
 
     }
 
-    public Level getRightLevel(ArrayList <Level> levels, int availableCoins){
+    @Override
+    public Level getRightLevel(ArrayList<Level> levels, int availableCoins){
 
         Level level = levels.get(0);
 
