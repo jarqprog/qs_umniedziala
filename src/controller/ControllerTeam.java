@@ -14,8 +14,8 @@ public class ControllerTeam implements IUserController {
     private ViewTeam viewTeam;
     private Team team;
 
-    public ControllerTeam(Team team) {
-        this.viewTeam = new ViewTeam();
+    public ControllerTeam(Team team, ViewTeam viewTeam) {
+        this.viewTeam = viewTeam;
         this.team = team;
     }
 
