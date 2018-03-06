@@ -9,16 +9,19 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class DaoQuest{
+public class DaoQuest implements IDaoQuest {
 
+    @Override
     public Quest createQuest(String name, int value, String description, String type, String category) {
         return new Quest(name, value, description, type, category);
     }
 
+    @Override
     public Quest createQuest(int itemId, String name, int value, String description, String type, String category) {
         return new Quest(itemId, name, value, description, type, category);
     }
 
+    @Override
     public Quest importQuest(int itemId) {
         Quest quest = null;
         PreparedStatement preparedStatement = null;
@@ -45,6 +48,7 @@ public class DaoQuest{
         }
         return quest;
     }
+    @Override
     public ArrayList<Quest> getAllQuests() {
         ArrayList<Quest> quests = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -67,6 +71,7 @@ public class DaoQuest{
         return quests;
     }
 
+    @Override
     public boolean updateQuest(Quest quest) {
         int itemId = quest.getItemId();
         String name = quest.getName();
@@ -99,6 +104,7 @@ public class DaoQuest{
         }
     }
 
+    @Override
     public boolean exportQuest(Quest quest) {
 
         String query = "INSERT INTO quests VALUES (?, ?, ?, ?, ?, ?);";
@@ -122,6 +128,7 @@ public class DaoQuest{
         }
     }
 
+    @Override
     public ArrayList<Quest> getTeamQuests() {
         ArrayList<Quest> quests = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -145,6 +152,7 @@ public class DaoQuest{
         return quests;
     }
 
+    @Override
     public ArrayList<Quest> getIndividualQuests() {
         ArrayList<Quest> quests = new ArrayList<>();
         PreparedStatement preparedStatement = null;
