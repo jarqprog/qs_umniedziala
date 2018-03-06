@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import iterator.MyIterator;
 
 public abstract class Group{
-    protected String name;
-    protected ArrayList<Student> students;
-    protected int groupId;
+    private String name;
+    private ArrayList<Student> students;
+    private int groupId;
 
     public Group(String name){
         this.name = name;
