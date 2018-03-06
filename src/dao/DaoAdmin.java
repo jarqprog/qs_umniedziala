@@ -19,28 +19,25 @@ public class DaoAdmin implements IDaoUser <Admin>  {
 
     public Admin importInstance(int adminId){
         Admin admin = null;
-        PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
         int roleId = getRoleID("admin");
 
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, adminId);
             preparedStatement.setInt(2, roleId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            if(!resultSet.isClosed()) {
-                int userId = resultSet.getInt("id_user");
-                String name = resultSet.getString("name");
-                String password = resultSet.getString("password");
-                String email = resultSet.getString("email");
+                if(!resultSet.isClosed()) {
+                    int userId = resultSet.getInt("id_user");
+                    String name = resultSet.getString("name");
+                    String password = resultSet.getString("password");
+                    String email = resultSet.getString("email");
 
-                admin = createInstance(userId, name, password, email);
-
-                resultSet.close();
+                    admin = createInstance(userId, name, password, email);
+                }
             }
-            preparedStatement.close();
 
         } catch (SQLException  e) {
             return admin;
@@ -54,18 +51,17 @@ public class DaoAdmin implements IDaoUser <Admin>  {
         String email = admin.getEmail();
         int roleId = getRoleID("admin");
 
-        PreparedStatement preparedStatement = null;
         String query = "INSERT into users (name, password, email, id_role)" +
                 "values (?, ?, ?, ?);";
 
-        try{
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, roleId);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
             return true;
 
         }catch (SQLException  e){
@@ -79,43 +75,40 @@ public class DaoAdmin implements IDaoUser <Admin>  {
         int adminId = admin.getUserId();
         int roleId = getRoleID("admin");
 
-        PreparedStatement preparedStatement = null;
         String query = "update users SET name = ?, password = ?, email = ?"+
                 "where id_user= ? AND id_role = ?;";
 
-        try{
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, adminId);
             preparedStatement.setInt(5, roleId);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
             return true;
+
         } catch (SQLException  e){
             return false;
         }
     }
 
     public int getRoleID(String roleName){
-
         int roleId = 0;
-        PreparedStatement preparedStatement = null;
-
         String query = "SELECT id_role from roles where name = ?;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, roleName);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            if(!resultSet.isClosed()) {
-                roleId = resultSet.getInt("id_role");
-                resultSet.close();
+            preparedStatement.setString(1, roleName);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (!resultSet.isClosed()) {
+                    roleId = resultSet.getInt("id_role");
+                    resultSet.close();
+                }
             }
-            preparedStatement.close();
 
         }catch (SQLException  e){
             System.out.println("Role not found");
