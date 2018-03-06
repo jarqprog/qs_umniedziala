@@ -31,8 +31,8 @@ public class ControllerAdmin implements IUserController {
         String mentorPassword = viewAdmin.getInputFromUser("Enter password of new mentor: ");
         String mentorEmail = viewAdmin.getInputFromUser("Enter email of new mentor: ");
 
-        Mentor mentor = daoMentor.createInstance(mentorName, mentorPassword, mentorEmail);
-        boolean isInsert = daoMentor.exportInstance(mentor);
+        Mentor mentor = daoMentor.createMentor(mentorName, mentorPassword, mentorEmail);
+        boolean isInsert = daoMentor.exportMentor(mentor);
          if(isInsert){
              viewAdmin.displayText("Mentor creation successful");
          }else {
@@ -103,7 +103,7 @@ public class ControllerAdmin implements IUserController {
         if(daoMentor.getAllMentors().size() != 0) {
             int mentorId = viewAdmin.getIntInputFromUser("\nEnter id of mentor: ");
 
-            mentor = daoMentor.importInstance(mentorId);
+            mentor = daoMentor.importMentor(mentorId);
         }
 
         return mentor;
@@ -112,7 +112,7 @@ public class ControllerAdmin implements IUserController {
     private void editMentorEmail(Mentor mentor) {
         String newEmail = viewAdmin.getInputFromUser("\nEnter mentor's new email: ");
         mentor.setEmail(newEmail);
-        boolean isInsert = daoMentor.updateInstance(mentor);
+        boolean isInsert = daoMentor.updateMentor(mentor);
 
         if(isInsert){
             viewAdmin.displayText("Edit mentor successful");
