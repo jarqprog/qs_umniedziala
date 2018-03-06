@@ -8,15 +8,18 @@ import model.*;
 
 public class DaoStudent implements IDaoStudent{
 
+    @Override
     public Student createInstance(String name, String password, String email) {
         return new Student(name, password, email);
     }
 
+    @Override
     public Student createInstance(int userId, String name, String password, String email) {
         return new Student(userId, name, password, email);
     }
 
 
+    @Override
     public Student importInstance(int studentId) {
         Student student = null;
         PreparedStatement preparedStatement = null;
@@ -54,6 +57,7 @@ public class DaoStudent implements IDaoStudent{
         return student;
     }
 
+    @Override
     public Student importNewStudent(String userEmail){
 
         Student student = null;
@@ -91,6 +95,7 @@ public class DaoStudent implements IDaoStudent{
     }
 
 
+    @Override
     public boolean exportInstance(Student student) {
 
         String name = student.getName();
@@ -118,6 +123,7 @@ public class DaoStudent implements IDaoStudent{
         }
     }
 
+    @Override
     public boolean updateInstance(Student student) {
         String name = student.getName();
         String password = student.getPassword();
@@ -147,6 +153,7 @@ public class DaoStudent implements IDaoStudent{
         }
     }
 
+    @Override
     public int getRoleID(String roleName){
 
         int roleId = 0;
@@ -173,6 +180,7 @@ public class DaoStudent implements IDaoStudent{
 
     }
 
+    @Override
     public ArrayList<Student> getAllStudents() {
         ArrayList<Student> students = new ArrayList<>();
         int roleId = getRoleID("student");
