@@ -1,8 +1,10 @@
 import controller.ControllerLogin;
+import view.ViewLogin;
 
 public class App{
     public static void main(String [] args){
-        ControllerLogin login = new ControllerLogin();
+        ViewLogin viewLogin = new ViewLogin();
+        ControllerLogin login = new ControllerLogin(viewLogin);
         login.runMenu();
     }
 }
