@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DaoArtifact{
+public class DaoArtifact implements IDaoArtifact{
 
     public Artifact createArtifact(String name, int value, String description, String type) {
         return new Artifact(name, value, description, type);
