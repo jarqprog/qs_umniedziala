@@ -2,11 +2,11 @@ package model;
 
 public abstract class Item {
 
-    protected int itemId;
-    protected String name;
-    protected int value;
-    protected String description;
-    protected String type;
+    private int itemId;
+    private String name;
+    private int value;
+    private String description;
+    private String type;
 
     public Item(String name,
                 int value,
