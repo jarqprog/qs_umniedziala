@@ -35,7 +35,7 @@ public class DaoLevel{
             preparedStatement.close();
             return true;
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException  e){
             return false;
         }
     }
@@ -59,7 +59,7 @@ public class DaoLevel{
             }
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             return level;
         }
         return level;
@@ -83,7 +83,7 @@ public class DaoLevel{
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
@@ -118,7 +118,7 @@ public class DaoLevel{
             resultSet.close();
             preparedStatement.close();
 
-        }catch(SQLException | ClassNotFoundException e){
+        }catch(SQLException  e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return levels;

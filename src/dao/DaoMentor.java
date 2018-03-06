@@ -42,7 +42,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
             }
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             return mentor;
         }
         return mentor;
@@ -70,7 +70,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
             preparedStatement.close();
             return true;
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException  e){
             return false;
         }
     }
@@ -97,7 +97,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
-        } catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException  e){
             return false;
         }
     }
@@ -120,7 +120,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
             }
             preparedStatement.close();
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException  e){
             System.out.println("Role not found");
         }
 
@@ -145,7 +145,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
             }
             preparedStatement.close();
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException  e){
             System.out.println("Class not found");
         }
 
@@ -179,7 +179,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("No mentors");
         }
         return mentorList;

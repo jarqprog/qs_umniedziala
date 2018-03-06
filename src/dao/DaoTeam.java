@@ -37,7 +37,7 @@ public class DaoTeam{
             }
             preparedStatement.close();
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException  e){
             System.out.println("Team not found");
         }
         return team;
@@ -58,7 +58,7 @@ public class DaoTeam{
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             return false;
         }
     }
@@ -79,7 +79,7 @@ public class DaoTeam{
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println(" insertion failed");
         }
     }
@@ -103,7 +103,7 @@ public class DaoTeam{
             }
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("Selecting students team failed");
         }
 
@@ -130,7 +130,7 @@ public class DaoTeam{
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("No students");
         }
         return studentsOfTeam;
@@ -153,7 +153,7 @@ public class DaoTeam{
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return teams;
@@ -169,7 +169,7 @@ public class DaoTeam{
             preparedStatement.setInt(2, studentId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("Assignment of student to team failed");
         }
     }

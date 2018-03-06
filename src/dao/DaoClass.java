@@ -38,7 +38,7 @@ public class DaoClass{
             }
             preparedStatement.close();
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException  e){
             System.out.println("Class not found");
         }
 
@@ -60,7 +60,7 @@ public class DaoClass{
             preparedStatement.close();
             return true;
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             return false;
         }
     }
@@ -88,7 +88,7 @@ public class DaoClass{
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("No Classes");
         }
         return allCodecoolClasses;
@@ -106,7 +106,7 @@ public class DaoClass{
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("Assigning mentor to class failed");
         }
     }
@@ -123,7 +123,7 @@ public class DaoClass{
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("Assigning student to class failed");
         }
     }
@@ -140,7 +140,7 @@ public class DaoClass{
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("updating mentors class assignment failed");
         }
     }
@@ -156,7 +156,7 @@ public class DaoClass{
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("Unsigning mentor from class failed");
         }
     }
@@ -181,7 +181,7 @@ public class DaoClass{
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("No students");
         }
         return studentsInClass;
@@ -206,7 +206,7 @@ public class DaoClass{
             }
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.out.println("updating mentors class assignment failed");
         }
 
