@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DaoAdmin implements IDaoUser <Admin>  {
+public class DaoAdmin implements IDaoAdmin  {
 
     public Admin createInstance (String name, String password, String email){
         return new Admin(name, password, email);
