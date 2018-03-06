@@ -6,16 +6,18 @@ import model.Admin;
 import model.Mentor;
 import model.Student;
 import model.User;
+import view.View;
 import view.ViewLogin;
 import dao.DaoLogin;
 
 import java.sql.SQLException;
 
 public class ControllerLogin{
-    private ViewLogin viewLogin = new ViewLogin();
+    private ViewLogin viewLogin;
     private DaoLogin daoLogin;
 
-    public ControllerLogin(){
+    public ControllerLogin(ViewLogin viewLogin){
+        this.viewLogin = viewLogin;
         this.daoLogin = new DaoLogin();
     }
 
