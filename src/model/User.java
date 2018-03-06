@@ -1,10 +1,10 @@
 package model;
 
 public abstract class User{
-    protected String name;
-    protected String password;
-    protected String email;
-    protected int userId;
+    private String name;
+    private String password;
+    private String email;
+    private int userId;
 
     public User(String name, String password, String email) {
         this.name = name;
