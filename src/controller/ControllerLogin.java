@@ -74,14 +74,11 @@ public class ControllerLogin{
         IUserController controller = null;
 
         if(user instanceof Admin){
-            ViewAdmin viewAdmin = new ViewAdmin();
-            controller = new ControllerAdmin((Admin)user, viewAdmin);
+            controller = new ControllerAdmin((Admin)user, new ViewAdmin());
         }else if(user instanceof Mentor){
-            ViewMentor viewMentor = new ViewMentor();
-            controller = new ControllerMentor((Mentor)user, viewMentor);
+            controller = new ControllerMentor((Mentor)user, new ViewMentor());
         }else if(user instanceof Student){
-            ViewStudent viewStudent = new ViewStudent();
-            controller = new ControllerStudent((Student)user, viewStudent);
+            controller = new ControllerStudent((Student)user, new ViewStudent());
         }
 
         return controller;
