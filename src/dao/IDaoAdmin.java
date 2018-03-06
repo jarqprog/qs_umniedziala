@@ -3,9 +3,9 @@ package dao;
 import model.Admin;
 
 public interface IDaoAdmin {
-    Admin createInstance(String name, String password, String email);
-    Admin createInstance(int userId, String name, String password, String email);
-    Admin importInstance(int userId);
-    boolean exportInstance(Admin user);
-    boolean updateInstance(Admin user);
+    Admin createAdmin(String name, String password, String email);
+    Admin createAdmin(int userId, String name, String password, String email);
+    Admin importAdmin(int userId);
+    boolean exportAdmin(Admin user);
+    boolean updateAdmin(Admin user);
 }
