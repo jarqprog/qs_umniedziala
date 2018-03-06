@@ -81,7 +81,7 @@ public class DaoLogin implements IDaoLogin {
                 user = new DaoAdmin().importAdmin(userId);
                 break;
             case "MENTOR":
-                user = new DaoMentor().importInstance(userId);
+                user = new DaoMentor().importMentor(userId);
                 break;
             case "STUDENT":
                 user = new DaoStudent().importInstance(userId);

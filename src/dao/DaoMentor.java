@@ -11,17 +11,17 @@ import java.util.List;
 public class DaoMentor implements IDaoMentor {
 
     @Override
-    public Mentor createInstance(String name, String password, String email) {
+    public Mentor createMentor(String name, String password, String email) {
         return new Mentor(name, password, email);
     }
 
     @Override
-    public Mentor createInstance(int userId, String name, String password, String email) {
+    public Mentor createMentor(int userId, String name, String password, String email) {
         return new Mentor(userId, name, password, email);
     }
 
     @Override
-    public Mentor importInstance(int mentorId) {
+    public Mentor importMentor(int mentorId) {
         Mentor mentor = null;
         PreparedStatement preparedStatement = null;
         int roleId = getRoleID("mentor");
@@ -39,7 +39,7 @@ public class DaoMentor implements IDaoMentor {
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                mentor = createInstance(userId, name, password, email);
+                mentor = createMentor(userId, name, password, email);
 
                 resultSet.close();
             }
@@ -52,7 +52,7 @@ public class DaoMentor implements IDaoMentor {
     }
 
     @Override
-    public boolean exportInstance(Mentor mentor) {
+    public boolean exportMentor(Mentor mentor) {
 
         String name = mentor.getName();
         String password = mentor.getPassword();
@@ -80,7 +80,7 @@ public class DaoMentor implements IDaoMentor {
     }
 
     @Override
-    public boolean updateInstance(Mentor mentor){
+    public boolean updateMentor(Mentor mentor){
         String name = mentor.getName();
         String password = mentor.getPassword();
         String email = mentor.getEmail();
@@ -107,7 +107,6 @@ public class DaoMentor implements IDaoMentor {
         }
     }
 
-    @Override
     public int getRoleID(String roleName){
 
         int roleId = 0;
@@ -180,7 +179,7 @@ public class DaoMentor implements IDaoMentor {
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                mentor = createInstance(userId, name, password, email);
+                mentor = createMentor(userId, name, password, email);
                 mentorList.add(mentor);
 
             }
