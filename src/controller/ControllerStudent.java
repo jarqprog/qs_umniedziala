@@ -17,8 +17,8 @@ public class ControllerStudent implements IUserController{
     private ViewStudent viewStudent;
     private Student student;
 
-    public ControllerStudent(Student student) {
-        this.viewStudent = new ViewStudent();
+    public ControllerStudent(Student student, ViewStudent viewStudent) {
+        this.viewStudent = viewStudent;
         this.student = student;
     }
 
