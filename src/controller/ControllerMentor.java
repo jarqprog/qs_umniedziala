@@ -10,8 +10,8 @@ public class ControllerMentor implements IUserController{
     private ViewMentor viewMentor;
     private Mentor mentor;
 
-    public ControllerMentor(Mentor mentor){
-        this.viewMentor = new ViewMentor();
+    public ControllerMentor(Mentor mentor, ViewMentor viewMentor){
+        this.viewMentor = viewMentor;
         this.mentor = mentor;
     }
 
