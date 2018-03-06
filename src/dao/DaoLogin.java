@@ -7,8 +7,9 @@ import model.Student;
 
 import java.sql.*;
 
-public class DaoLogin{
+public class DaoLogin implements IDaoLogin {
 
+    @Override
     public User getUser(String email, String password){
         User user = null;
         PreparedStatement preparedStatement = null;
@@ -34,6 +35,7 @@ public class DaoLogin{
         return user;
     }
 
+    @Override
     public String getRole(int id_role){
 
         String role = null;
