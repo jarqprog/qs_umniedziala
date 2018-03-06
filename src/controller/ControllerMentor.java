@@ -134,7 +134,7 @@ public class ControllerMentor implements IUserController{
         ArrayList<Quest> allQuests = daoQuest.getIndividualQuests();
         viewMentor.displayText("Available individual quests:\n");
 
-        if(allQuests.size() == 0) {
+        if(allQuests.size() != 0) {
             viewMentor.displayList(allQuests);
             Integer questId = viewMentor.getIntInputFromUser("Enter id of chosen quest");
             chosenQuest = daoQuest.importQuest(questId);
@@ -444,7 +444,7 @@ public class ControllerMentor implements IUserController{
         }
 
         viewMentor.displayText("Student new artifacts:\n");
-        ArrayList<Artifact> allNewArtifacts = student.getAllNewArtifacts();
+        ArrayList<Artifact> allNewArtifacts = student.getAllNewArtifacts();  //nie wszytskie, tylko indywidualne (bez teamowych)
         Artifact artifactToBeBougth = null;
 
         if(allNewArtifacts.size() != 0) {
