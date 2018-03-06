@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ViewStudent extends View{
 
-    private static ArrayList <String> studentOptions = new ArrayList <String>(Arrays.asList("1. See wallet details",
+    private ArrayList <String> studentOptions = new ArrayList <String>(Arrays.asList("1. See wallet details",
         "2. Buy artifact", "3. Check experience level", "4. Manage team", "0. Log out"));
 
     public ArrayList<String> getStudentOptions() {
