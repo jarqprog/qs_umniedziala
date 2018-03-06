@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoMentor implements IDaoUser <Mentor> {
+public class DaoMentor implements IDaoMentor {
 
     public Mentor createInstance(String name, String password, String email) {
         return new Mentor(name, password, email);
