@@ -5,19 +5,17 @@ import model.Student;
 import java.util.ArrayList;
 
 public interface IDaoStudent {
-    Student createInstance(String name, String password, String email);
+    Student createStudent(String name, String password, String email);
 
-    Student createInstance(int userId, String name, String password, String email);
+    Student createStudent(int userId, String name, String password, String email);
 
-    Student importInstance(int studentId);
+    Student importStudent(int studentId);
 
     Student importNewStudent(String userEmail);
 
-    boolean exportInstance(Student student);
+    boolean exportStudent(Student student);
 
-    boolean updateInstance(Student student);
-
-    int getRoleID(String roleName);
+    boolean updateStudent(Student student);
 
     ArrayList<Student> getAllStudents();
 }
