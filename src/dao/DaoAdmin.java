@@ -9,15 +9,15 @@ import java.sql.SQLException;
 
 public class DaoAdmin implements IDaoAdmin  {
 
-    public Admin createInstance (String name, String password, String email){
+    public Admin createAdmin (String name, String password, String email){
         return new Admin(name, password, email);
     }
 
-    public Admin createInstance(int userId, String name, String password, String email){
+    public Admin createAdmin(int userId, String name, String password, String email){
         return new Admin(userId, name, password, email);
     }
 
-    public Admin importInstance(int adminId){
+    public Admin importAdmin(int adminId){
         Admin admin = null;
         PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
@@ -36,7 +36,7 @@ public class DaoAdmin implements IDaoAdmin  {
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                admin = createInstance(userId, name, password, email);
+                admin = createAdmin(userId, name, password, email);
 
                 resultSet.close();
             }
@@ -48,7 +48,7 @@ public class DaoAdmin implements IDaoAdmin  {
         return admin;
     }
 
-    public boolean exportInstance(Admin admin){
+    public boolean exportAdmin(Admin admin){
         String name = admin.getName();
         String password = admin.getPassword();
         String email = admin.getEmail();
@@ -72,7 +72,7 @@ public class DaoAdmin implements IDaoAdmin  {
             return false;
         }
     }
-    public boolean updateInstance(Admin admin){
+    public boolean updateAdmin(Admin admin){
         String name = admin.getName();
         String password = admin.getPassword();
         String email = admin.getEmail();

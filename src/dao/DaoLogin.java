@@ -78,7 +78,7 @@ public class DaoLogin implements IDaoLogin {
 
         switch (role.toUpperCase()) {
             case "ADMIN":
-                user = new DaoAdmin().importInstance(userId);
+                user = new DaoAdmin().importAdmin(userId);
                 break;
             case "MENTOR":
                 user = new DaoMentor().importInstance(userId);
