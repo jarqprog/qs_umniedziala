@@ -9,18 +9,18 @@ import model.*;
 public class DaoStudent implements IDaoStudent{
 
     @Override
-    public Student createInstance(String name, String password, String email) {
+    public Student createStudent(String name, String password, String email) {
         return new Student(name, password, email);
     }
 
     @Override
-    public Student createInstance(int userId, String name, String password, String email) {
+    public Student createStudent(int userId, String name, String password, String email) {
         return new Student(userId, name, password, email);
     }
 
 
     @Override
-    public Student importInstance(int studentId) {
+    public Student importStudent(int studentId) {
         Student student = null;
         PreparedStatement preparedStatement = null;
         int roleId = getRoleID("student");
@@ -41,7 +41,7 @@ public class DaoStudent implements IDaoStudent{
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                student = createInstance(userId, name, password, email);
+                student = createStudent(userId, name, password, email);
                 Wallet wallet = new DaoWallet().importWallet(studentId);
                 student.setWallet(wallet);
 
@@ -80,7 +80,7 @@ public class DaoStudent implements IDaoStudent{
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                student = createInstance(userId, name, password, email);
+                student = createStudent(userId, name, password, email);
 
                 resultSet.close();
             }
@@ -96,7 +96,7 @@ public class DaoStudent implements IDaoStudent{
 
 
     @Override
-    public boolean exportInstance(Student student) {
+    public boolean exportStudent(Student student) {
 
         String name = student.getName();
         String password = student.getPassword();
@@ -124,7 +124,7 @@ public class DaoStudent implements IDaoStudent{
     }
 
     @Override
-    public boolean updateInstance(Student student) {
+    public boolean updateStudent(Student student) {
         String name = student.getName();
         String password = student.getPassword();
         String email = student.getEmail();
@@ -153,7 +153,6 @@ public class DaoStudent implements IDaoStudent{
         }
     }
 
-    @Override
     public int getRoleID(String roleName){
 
         int roleId = 0;
@@ -194,7 +193,7 @@ public class DaoStudent implements IDaoStudent{
 
             while (resultSet.next()){
                 int userId = resultSet.getInt("id_user");
-                Student student = importInstance(userId);
+                Student student = importStudent(userId);
                 students.add(student);
             }
 

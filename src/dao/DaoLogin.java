@@ -84,7 +84,7 @@ public class DaoLogin implements IDaoLogin {
                 user = new DaoMentor().importMentor(userId);
                 break;
             case "STUDENT":
-                user = new DaoStudent().importInstance(userId);
+                user = new DaoStudent().importStudent(userId);
                 break;
         }
 

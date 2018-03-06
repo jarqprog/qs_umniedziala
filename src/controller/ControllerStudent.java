@@ -93,7 +93,7 @@ public class ControllerStudent implements IUserController{
         if (team != null) {
             ControllerTeam controllerTeam = new ControllerTeam(team, new ViewTeam(), daoArtifact, daoTeam, daoWallet);
             controllerTeam.runMenu();
-            student = daoStudent.importInstance(student.getUserId());
+            student = daoStudent.importStudent(student.getUserId());
         }
     }
 

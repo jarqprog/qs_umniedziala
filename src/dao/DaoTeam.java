@@ -131,7 +131,7 @@ public class DaoTeam implements IDaoTeam {
 
             while(resultSet.next()) {
                 int userId = resultSet.getInt("id_user");
-                Student student = new DaoStudent().importInstance(userId);
+                Student student = new DaoStudent().importStudent(userId);
                 studentsOfTeam.add(student);
             }
             resultSet.close();

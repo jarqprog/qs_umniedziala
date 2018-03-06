@@ -35,8 +35,8 @@ public class ControllerMentor implements IUserController{
         String studentPassword = viewMentor.getInputFromUser("Enter password of new student: ");
         String studentEmail = viewMentor.getInputFromUser( "Enter email of new student: ");
 
-        Student student = daoStudent.createInstance(studentName, studentPassword, studentEmail);
-        boolean isInsert = daoStudent.exportInstance(student);
+        Student student = daoStudent.createStudent(studentName, studentPassword, studentEmail);
+        boolean isInsert = daoStudent.exportStudent(student);
 
         if(isInsert) {
             Student studentWithId = daoStudent.importNewStudent(studentEmail);
@@ -74,7 +74,7 @@ public class ControllerMentor implements IUserController{
         if(allStudents.size() != 0) {
             viewMentor.displayList(allStudents);
             Integer studentId = viewMentor.getIntInputFromUser("\nEnter id of student: ");
-            student = daoStudent.importInstance(studentId);
+            student = daoStudent.importStudent(studentId);
         }else{
             viewMentor.displayText("No students");
         }

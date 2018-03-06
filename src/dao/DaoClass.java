@@ -185,7 +185,7 @@ public class DaoClass implements IDaoClass {
             while(resultSet.next()) {
                 int userId = resultSet.getInt("id_user");
 
-                studentsInClass.add(new DaoStudent().importInstance(userId));
+                studentsInClass.add(new DaoStudent().importStudent(userId));
 
             }
             resultSet.close();
