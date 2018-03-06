@@ -106,7 +106,6 @@ public class DaoAdmin implements IDaoUser <Admin>  {
 
                 if (!resultSet.isClosed()) {
                     roleId = resultSet.getInt("id_role");
-                    resultSet.close();
                 }
             }
 
