@@ -5,18 +5,16 @@ import model.Mentor;
 import java.util.ArrayList;
 
 public interface IDaoMentor {
-    Mentor createInstance(String name, String password, String email);
+    Mentor createMentor(String name, String password, String email);
 
-    Mentor createInstance(int userId, String name, String password, String email);
+    Mentor createMentor(int userId, String name, String password, String email);
 
-    Mentor importInstance(int mentorId);
+    Mentor importMentor(int mentorId);
 
-    boolean exportInstance(Mentor mentor);
+    boolean exportMentor(Mentor mentor);
 
-    boolean updateInstance(Mentor mentor);
-
-    int getRoleID(String roleName);
-
+    boolean updateMentor(Mentor mentor);
+    
     Integer getMentorClassId(Mentor mentor);
 
     ArrayList<Mentor> getAllMentors();
