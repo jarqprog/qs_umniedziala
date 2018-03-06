@@ -1,8 +1,6 @@
 package controller;
 
-import dao.DaoArtifact;
-import dao.DaoTeam;
-import dao.DaoWallet;
+import dao.*;
 import model.*;
 import view.ViewTeam;
 
@@ -13,10 +11,16 @@ public class ControllerTeam implements IUserController {
 
     private ViewTeam viewTeam;
     private Team team;
+    private IDaoArtifact daoArtifact;
+    private IDaoTeam daoTeam;
+    private IDaoWallet daoWallet;
 
-    public ControllerTeam(Team team, ViewTeam viewTeam) {
+    public ControllerTeam(Team team, ViewTeam viewTeam, IDaoArtifact daoArtifact, IDaoTeam daoTeam, IDaoWallet daoWallet) {
         this.viewTeam = viewTeam;
         this.team = team;
+        this.daoArtifact = daoArtifact;
+        this.daoTeam = daoTeam;
+        this.daoWallet = daoWallet;
     }
 
     public Artifact getArtifact(String type) {

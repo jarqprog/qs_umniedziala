@@ -1,14 +1,13 @@
 package controller;
 
 
-import dao.DbConnection;
+import dao.*;
 import model.Admin;
 import model.Mentor;
 import model.Student;
 import model.User;
 import view.ViewAdmin;
 import view.ViewLogin;
-import dao.DaoLogin;
 import view.ViewMentor;
 import view.ViewStudent;
 
@@ -74,11 +73,19 @@ public class ControllerLogin{
         IUserController controller = null;
 
         if(user instanceof Admin){
-            controller = new ControllerAdmin((Admin)user, new ViewAdmin());
+            controller = new ControllerAdmin((Admin)user, new ViewAdmin(),
+                                            new DaoMentor(), new DaoClass(),
+                                            new DaoLevel());
         }else if(user instanceof Mentor){
-            controller = new ControllerMentor((Mentor)user, new ViewMentor());
+            controller = new ControllerMentor((Mentor)user, new ViewMentor(),
+                                            new DaoStudent(), new DaoClass(),
+                                            new DaoArtifact(), new DaoQuest(),
+                                            new DaoTeam(), new DaoWallet());
         }else if(user instanceof Student){
-            controller = new ControllerStudent((Student)user, new ViewStudent());
+            controller = new ControllerStudent((Student)user, new ViewStudent(),
+                                            new DaoWallet(), new DaoStudent(),
+                                            new DaoArtifact(), new DaoLevel(),
+                                            new DaoTeam());
         }
 
         return controller;
