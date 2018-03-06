@@ -8,15 +8,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DaoTeam{
+public class DaoTeam implements IDaoTeam {
+    @Override
     public Team createTeam(String name) {
         return new Team(name);
     }
 
-    public Team createTeam (int groupId, String name, ArrayList<Student> students, int availableCoins) {
+    @Override
+    public Team createTeam(int groupId, String name, ArrayList<Student> students, int availableCoins) {
         return new Team(groupId, name, students, availableCoins);
     }
 
+    @Override
     public Team importTeam(int teamId) {
         Team team = null;
         String query = "SELECT name, available_coins FROM teams WHERE id_team = ?;";
@@ -43,6 +46,7 @@ public class DaoTeam{
         return team;
     }
 
+    @Override
     public boolean exportTeam(Team team) {
         String teamName = team.getName();
         int teamCoins = team.getAvailableCoins();
@@ -63,6 +67,7 @@ public class DaoTeam{
         }
     }
 
+    @Override
     public void updateTeamData(Team team) {
         String teamName = team.getName();
         int teamId = team.getGroupId();
@@ -84,6 +89,7 @@ public class DaoTeam{
         }
     }
 
+    @Override
     public Team getTeamByStudentId(Integer studentId){
         PreparedStatement preparedStatement;
         Team team = null;
@@ -110,6 +116,7 @@ public class DaoTeam{
         return team;
     }
 
+    @Override
     public ArrayList<Student> getStudentsOfTeam(int teamId) {
         ArrayList<Student> studentsOfTeam = new ArrayList<Student>();
         String query = "SELECT id_user FROM users JOIN students_in_teams "
@@ -136,6 +143,7 @@ public class DaoTeam{
         return studentsOfTeam;
     }
 
+    @Override
     public ArrayList<Team> getAllTeams() {
         ArrayList<Team> teams = new ArrayList<Team>();
         String query = "SELECT id_team FROM teams;";
@@ -159,6 +167,7 @@ public class DaoTeam{
         return teams;
     }
 
+    @Override
     public void assignStudentToTeam(int studentId, int teamId) {
         String query = "INSERT INTO students_in_teams (id_team, id_student) VALUES (?, ?);";
 
