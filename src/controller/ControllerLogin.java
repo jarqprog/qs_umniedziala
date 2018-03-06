@@ -6,7 +6,7 @@ import model.Admin;
 import model.Mentor;
 import model.Student;
 import model.User;
-import view.View;
+import view.ViewAdmin;
 import view.ViewLogin;
 import dao.DaoLogin;
 
@@ -72,7 +72,8 @@ public class ControllerLogin{
         IUserController controller = null;
 
         if(user instanceof Admin){
-            controller = new ControllerAdmin((Admin)user);
+            ViewAdmin viewAdmin = new ViewAdmin();
+            controller = new ControllerAdmin((Admin)user, viewAdmin);
         }else if(user instanceof Mentor){
             controller = new ControllerMentor((Mentor)user);
         }else if(user instanceof Student){
