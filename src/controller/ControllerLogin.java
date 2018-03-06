@@ -6,16 +6,20 @@ import model.Admin;
 import model.Mentor;
 import model.Student;
 import model.User;
+import view.ViewAdmin;
 import view.ViewLogin;
 import dao.DaoLogin;
+import view.ViewMentor;
+import view.ViewStudent;
 
 import java.sql.SQLException;
 
 public class ControllerLogin{
-    private ViewLogin viewLogin = new ViewLogin();
+    private ViewLogin viewLogin;
     private DaoLogin daoLogin;
 
-    public ControllerLogin(){
+    public ControllerLogin(ViewLogin viewLogin){
+        this.viewLogin = viewLogin;
         this.daoLogin = new DaoLogin();
     }
 
@@ -70,11 +74,11 @@ public class ControllerLogin{
         IUserController controller = null;
 
         if(user instanceof Admin){
-            controller = new ControllerAdmin((Admin)user);
+            controller = new ControllerAdmin((Admin)user, new ViewAdmin());
         }else if(user instanceof Mentor){
-            controller = new ControllerMentor((Mentor)user);
+            controller = new ControllerMentor((Mentor)user, new ViewMentor());
         }else if(user instanceof Student){
-            controller = new ControllerStudent((Student)user);
+            controller = new ControllerStudent((Student)user, new ViewStudent());
         }
 
         return controller;

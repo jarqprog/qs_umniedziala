@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import dao.DaoLevel;
 import dao.DaoMentor;
 import dao.DaoClass;
-import dao.DaoMentor;
-import iterator.MyIterator;
 import model.Admin;
 import model.CodecoolClass;
 import model.Mentor;
@@ -17,8 +15,8 @@ public class ControllerAdmin implements IUserController {
     private ViewAdmin viewAdmin;
     private Admin admin;
 
-    public ControllerAdmin(Admin admin) {
-        this.viewAdmin = new ViewAdmin();
+    public ControllerAdmin(Admin admin, ViewAdmin viewAdmin) {
+        this.viewAdmin = viewAdmin;
         this.admin = admin;
     }
 

@@ -25,7 +25,7 @@ public class Team extends Group {
     }
 
     public int getSize() {
-        return students.size();
+        return getStudents().size();
     }
 
     public String toString() {
@@ -33,7 +33,7 @@ public class Team extends Group {
     }
 
     public String getBasicTeamInfo() {
-        return "Your Team: " + this.name + "\nTeam coins: " + this.availableCoins;
+        return "Your Team: " + this.getName() + "\nTeam coins: " + this.availableCoins;
     }
 
     public void addCoins(int coins) {

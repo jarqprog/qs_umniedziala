@@ -9,6 +9,7 @@ import model.Student;
 import model.Wallet;
 import model.Level;
 import view.ViewStudent;
+import view.ViewTeam;
 
 import java.util.ArrayList;
 
@@ -17,8 +18,8 @@ public class ControllerStudent implements IUserController{
     private ViewStudent viewStudent;
     private Student student;
 
-    public ControllerStudent(Student student) {
-        this.viewStudent = new ViewStudent();
+    public ControllerStudent(Student student, ViewStudent viewStudent) {
+        this.viewStudent = viewStudent;
         this.student = student;
     }
 
@@ -83,7 +84,8 @@ public class ControllerStudent implements IUserController{
         Team team = new DaoTeam().getTeamByStudentId(student.getUserId());
 
         if (team != null) {
-            ControllerTeam controllerTeam = new ControllerTeam(team);
+            ViewTeam viewTeam = new ViewTeam();
+            ControllerTeam controllerTeam = new ControllerTeam(team, viewTeam);
             controllerTeam.runMenu();
             student = new DaoStudent().importInstance(student.getUserId());
         }
