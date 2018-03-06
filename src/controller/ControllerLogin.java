@@ -9,6 +9,7 @@ import model.User;
 import view.ViewAdmin;
 import view.ViewLogin;
 import dao.DaoLogin;
+import view.ViewMentor;
 
 import java.sql.SQLException;
 
@@ -75,7 +76,8 @@ public class ControllerLogin{
             ViewAdmin viewAdmin = new ViewAdmin();
             controller = new ControllerAdmin((Admin)user, viewAdmin);
         }else if(user instanceof Mentor){
-            controller = new ControllerMentor((Mentor)user);
+            ViewMentor viewMentor = new ViewMentor();
+            controller = new ControllerMentor((Mentor)user, viewMentor);
         }else if(user instanceof Student){
             controller = new ControllerStudent((Student)user);
         }
