@@ -40,22 +40,25 @@ public class ControllerStudent implements IUserController{
 
     public void buyArtifact() {
         Artifact artifact = getArtifact("individual");
-        if(artifact == null){
-            return;
+        if(artifact != null && artifact instanceof Artifact) {
+
+            int artifactId = artifact.getItemId();
+            int studentId = student.getUserId();
+
+            int price = artifact.getValue();
+            if (student.hasEnoughCoins(price)) {
+                student.subtractCoins(price);
+                student.addNewArtifact(artifact);
+
+                daoWallet.updateWallet(student);
+                daoWallet.exportStudentArtifact(artifactId, studentId);
+
+            } else {
+                viewStudent.displayText("You do not have enough money to buy this artifact!");
+            }
         }
-        int artifactId = artifact.getItemId();
-        int studentId = student.getUserId();
-
-        int price = artifact.getValue();
-        if (student.hasEnoughCoins(price)) {
-            student.subtractCoins(price);
-            student.addNewArtifact(artifact);
-
-            daoWallet.updateWallet(student);
-            daoWallet.exportStudentArtifact(artifactId, studentId);
-
-        } else {
-            viewStudent.displayText("You do not have enough money to buy this artifact!");
+        else {
+            viewStudent.displayText("\nWrong id of artifact.");
         }
     }
 
@@ -67,9 +70,13 @@ public class ControllerStudent implements IUserController{
         if(allArtifacts.size() != 0) {
             viewStudent.displayList(allArtifacts);
             int artifactId = viewStudent.getIntInputFromUser("\nEnter id of artifact: ");
-            artifact = daoArtifact.importArtifact(artifactId);
+            for(Artifact choosenArtifact : allArtifacts) {
+                if(choosenArtifact.getItemId() == artifactId) {
+                    return choosenArtifact;
+                }
+            }
         }else {
-            viewStudent.displayText("No artifacts");
+            viewStudent.displayText("\nNo artifacts");
         }
 
         return artifact;
