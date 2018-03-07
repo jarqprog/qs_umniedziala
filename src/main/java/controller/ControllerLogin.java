@@ -45,6 +45,8 @@ public class ControllerLogin{
 
             DbConnection.getConnection().close();
             }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

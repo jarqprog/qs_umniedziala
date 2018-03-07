@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
@@ -24,22 +23,25 @@ public class DaoClass implements IDaoClass {
     @Override
     public CodecoolClass importClass(Integer classID){
         CodecoolClass codecoolClass = null;
+        PreparedStatement preparedStatement;
+
         String query = "SELECT * FROM codecool_classes WHERE id_codecool_class = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, classID);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-                if (!resultSet.isClosed()) {
-                    String name = resultSet.getString("name");
-                    ArrayList<Student> students = getStudentsOfClass(classID);
-                    codecoolClass = createClass(classID, name, students);
-                }
+            if(!resultSet.isClosed()) {
+                String name = resultSet.getString("name");
+                ArrayList<Student> students = getStudentsOfClass(classID);
+
+                codecoolClass = createClass(classID, name, students);
+                resultSet.close();
             }
+            preparedStatement.close();
 
-        }catch (SQLException  e){
+        }catch (SQLException | ClassNotFoundException e){
             System.out.println("Class not found");
         }
 
@@ -48,17 +50,21 @@ public class DaoClass implements IDaoClass {
 
     @Override
     public boolean exportClass(CodecoolClass codecoolClass) {
+
         String name = codecoolClass.getName();
+
+        PreparedStatement preparedStatement = null;
         String query = "INSERT INTO codecool_classes (name) VALUES (?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, name);
+
             preparedStatement.executeUpdate();
+            preparedStatement.close();
             return true;
 
-        } catch (SQLException  e) {
+        } catch (SQLException | ClassNotFoundException e) {
             return false;
         }
     }
@@ -66,12 +72,14 @@ public class DaoClass implements IDaoClass {
     @Override
     public ArrayList<CodecoolClass> getAllClasses(){
         ArrayList <CodecoolClass> allCodecoolClasses = new ArrayList <CodecoolClass> ();
+
+        PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM codecool_classes;";
         CodecoolClass codecoolClass;
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()) {
                 int classId = resultSet.getInt("id_codecool_class");
@@ -80,9 +88,12 @@ public class DaoClass implements IDaoClass {
 
                 codecoolClass = createClass(classId, name, students);
                 allCodecoolClasses.add(codecoolClass);
-            }
 
-        } catch (SQLException  e) {
+            }
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("No Classes");
         }
         return allCodecoolClasses;
@@ -90,85 +101,97 @@ public class DaoClass implements IDaoClass {
 
     @Override
     public void assignMentorToClass(Integer mentorId, Integer classId){
+        PreparedStatement preparedStatement = null;
         String query = "INSERT INTO mentors_in_classes (id_codecool_class, id_mentor) VALUES (?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, classId);
             preparedStatement.setInt(2, mentorId);
-            preparedStatement.executeUpdate();
 
-        } catch (SQLException  e) {
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Assigning mentor to class failed");
         }
     }
 
     @Override
     public void assignStudentToClass(Integer studentId, Integer classId){
+        PreparedStatement preparedStatement = null;
         String query = "INSERT INTO students_in_classes (id_codecool_class, id_student) VALUES (?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, classId);
             preparedStatement.setInt(2, studentId);
-            preparedStatement.executeUpdate();
 
-        } catch (SQLException  e) {
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Assigning student to class failed");
         }
     }
 
     @Override
     public void updateMentorInClass(Integer mentorId, Integer classId){
+        PreparedStatement preparedStatement = null;
         String query = "UPDATE mentors_in_classes SET id_codecool_class=? WHERE id_mentor=?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, classId);
             preparedStatement.setInt(2, mentorId);
-            preparedStatement.executeUpdate();
 
-        } catch (SQLException  e) {
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("updating mentors class assignment failed");
         }
     }
 
     @Override
     public void unsignMentorFromClass(Integer mentorId){
+        PreparedStatement preparedStatement = null;
         String query = "DELETE FROM mentors_in_classes WHERE id_mentor=?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, mentorId);
-            preparedStatement.executeUpdate();
 
-        } catch (SQLException  e) {
-            System.out.println("Unsigning mentor from class failed");
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Unsigning mentor FROM class failed");
         }
     }
 
     @Override
     public ArrayList<Student> getStudentsOfClass(Integer classID){
         ArrayList <Student> studentsInClass = new ArrayList <> ();
+
+        PreparedStatement preparedStatement = null;
         String query = "SELECT id_user FROM users JOIN students_in_classes WHERE students_in_classes.id_codecool_class=? AND students_in_classes.id_student=users.id_user;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, classID);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-                while (resultSet.next()) {
-                    int userId = resultSet.getInt("id_user");
-                    studentsInClass.add(new DaoStudent().importStudent(userId));
-                }
+            while(resultSet.next()) {
+                int userId = resultSet.getInt("id_user");
+
+                studentsInClass.add(new DaoStudent().importStudent(userId));
+
             }
+            resultSet.close();
+            preparedStatement.close();
 
-        } catch (SQLException  e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("No students");
         }
         return studentsInClass;
@@ -176,22 +199,25 @@ public class DaoClass implements IDaoClass {
 
     @Override
     public CodecoolClass getMentorsClass(Integer mentorId){
+        PreparedStatement preparedStatement;
         CodecoolClass mentorsClass = null;
+
         String query = "SELECT id_codecool_class FROM mentors_in_classes WHERE id_mentor=?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
+        try {
+            preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, mentorId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-                if (!resultSet.isClosed()) {
-                    Integer classId = resultSet.getInt("id_codecool_class");
-                    mentorsClass = importClass(classId);
-                }
+            if(!resultSet.isClosed()){
+                Integer classId = resultSet.getInt("id_codecool_class");
+
+                mentorsClass = importClass(classId);
+                resultSet.close();
             }
+            preparedStatement.close();
 
-        } catch (SQLException  e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("updating mentors class assignment failed");
         }
 
