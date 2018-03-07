@@ -60,8 +60,8 @@ public class DaoMentor implements IDaoMentor {
         int roleId = getRoleID("mentor");
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into users (name, password, email, id_role)" +
-                       "values (?, ?, ?, ?);";
+        String query = "INSERT INTO users (name, password, email, id_role)" +
+                       "VALUES (?, ?, ?, ?);";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -89,8 +89,8 @@ public class DaoMentor implements IDaoMentor {
 
 
         PreparedStatement preparedStatement = null;
-        String query = "update users SET name = ?, password = ?, email = ? "+
-                "where id_user= ? AND id_role = ?;";
+        String query = "UPDATE users SET name = ?, password = ?, email = ? "+
+                "WHERE id_user= ? AND id_role = ?;";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -112,7 +112,7 @@ public class DaoMentor implements IDaoMentor {
         int roleId = 0;
         PreparedStatement preparedStatement = null;
 
-        String query = "SELECT id_role from roles where name = ?;";
+        String query = "SELECT id_role FROM roles WHERE name = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -138,7 +138,7 @@ public class DaoMentor implements IDaoMentor {
         Integer classId = null;
         PreparedStatement preparedStatement;
 
-        String query = "SELECT id_codecool_class from mentors_in_classes where id_mentor = ?;";
+        String query = "SELECT id_codecool_class FROM mentors_in_classes WHERE id_mentor = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);

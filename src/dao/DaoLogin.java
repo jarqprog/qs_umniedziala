@@ -13,7 +13,7 @@ public class DaoLogin implements IDaoLogin {
     public User getUser(String email, String password){
         User user = null;
         PreparedStatement preparedStatement = null;
-        String query = "SELECT * from users where email= ? AND password= ?;";
+        String query = "SELECT * FROM users WHERE email= ? AND password= ?;";
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, email);
@@ -40,7 +40,7 @@ public class DaoLogin implements IDaoLogin {
 
         String role = null;
         PreparedStatement preparedStatement = null;
-        String query = "Select name from roles where id_role= ?;";
+        String query = "SELECT name FROM roles WHERE id_role= ?;";
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, id_role);
