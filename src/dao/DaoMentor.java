@@ -8,17 +8,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoMentor implements IDaoUser <Mentor> {
+public class DaoMentor implements IDaoMentor {
 
-    public Mentor createInstance(String name, String password, String email) {
+    @Override
+    public Mentor createMentor(String name, String password, String email) {
         return new Mentor(name, password, email);
     }
 
-    public Mentor createInstance(int userId, String name, String password, String email) {
+    @Override
+    public Mentor createMentor(int userId, String name, String password, String email) {
         return new Mentor(userId, name, password, email);
     }
 
-    public Mentor importInstance(int mentorId) {
+    @Override
+    public Mentor importMentor(int mentorId) {
         Mentor mentor = null;
         PreparedStatement preparedStatement = null;
         int roleId = getRoleID("mentor");
@@ -36,7 +39,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                mentor = createInstance(userId, name, password, email);
+                mentor = createMentor(userId, name, password, email);
 
                 resultSet.close();
             }
@@ -48,7 +51,8 @@ public class DaoMentor implements IDaoUser <Mentor> {
         return mentor;
     }
 
-    public boolean exportInstance(Mentor mentor) {
+    @Override
+    public boolean exportMentor(Mentor mentor) {
 
         String name = mentor.getName();
         String password = mentor.getPassword();
@@ -75,7 +79,8 @@ public class DaoMentor implements IDaoUser <Mentor> {
         }
     }
 
-    public boolean updateInstance(Mentor mentor){
+    @Override
+    public boolean updateMentor(Mentor mentor){
         String name = mentor.getName();
         String password = mentor.getPassword();
         String email = mentor.getEmail();
@@ -128,6 +133,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
 
     }
 
+    @Override
     public Integer getMentorClassId(Mentor mentor){
         Integer classId = null;
         PreparedStatement preparedStatement;
@@ -152,6 +158,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
         return classId;
     }
 
+    @Override
     public ArrayList <Mentor> getAllMentors(){
 
         ArrayList <Mentor> mentorList = new ArrayList <Mentor> ();
@@ -172,7 +179,7 @@ public class DaoMentor implements IDaoUser <Mentor> {
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                mentor = createInstance(userId, name, password, email);
+                mentor = createMentor(userId, name, password, email);
                 mentorList.add(mentor);
 
             }

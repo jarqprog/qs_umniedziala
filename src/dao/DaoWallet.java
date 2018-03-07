@@ -7,17 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DaoWallet{
+public class DaoWallet implements IDaoWallet {
 
+    @Override
     public Wallet createWallet(){
         return new Wallet();
     }
 
+    @Override
     public Wallet createWallet(int allCoins, int availableCoins, ArrayList<Artifact> newArtifacts,
-                               ArrayList <Artifact> usedArtifacts){
+                               ArrayList<Artifact> usedArtifacts){
         return new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
     }
 
+    @Override
     public Wallet importWallet(int userID) {
         Wallet wallet = null;
         PreparedStatement preparedStatement = null;
@@ -44,6 +47,7 @@ public class DaoWallet{
         return wallet;
     }
 
+    @Override
     public void exportWallet(Student student){
         if(student == null){
             return;
@@ -101,6 +105,7 @@ public class DaoWallet{
         return artifacts;
     }
 
+    @Override
     public void updateWallet(Student student){
 
         int allCoins = student.getWallet().getAllCoins();
@@ -123,6 +128,7 @@ public class DaoWallet{
         }
     }
 
+    @Override
     public void exportStudentArtifact(int idArtifact, int idStudent) {
 
         String status = "new";
@@ -145,6 +151,7 @@ public class DaoWallet{
         }
     }
 
+    @Override
     public void updateStudentsArtifact(int idArtifact, int idStudent){
 
         String statusArtifact = "used";

@@ -8,16 +8,19 @@ import model.CodecoolClass;
 import model.Mentor;
 import model.Student;
 
-public class DaoClass{
+public class DaoClass implements IDaoClass {
 
+    @Override
     public CodecoolClass createClass(String name){
         return new CodecoolClass(name);
     }
 
+    @Override
     public CodecoolClass createClass(int groupId, String name, ArrayList<Student> students){
         return new CodecoolClass(groupId, name, students);
     }
 
+    @Override
     public CodecoolClass importClass(Integer classID){
         CodecoolClass codecoolClass = null;
         PreparedStatement preparedStatement;
@@ -45,6 +48,7 @@ public class DaoClass{
         return codecoolClass;
     }
 
+    @Override
     public boolean exportClass(CodecoolClass codecoolClass) {
 
         String name = codecoolClass.getName();
@@ -65,6 +69,7 @@ public class DaoClass{
         }
     }
 
+    @Override
     public ArrayList<CodecoolClass> getAllClasses(){
         ArrayList <CodecoolClass> allCodecoolClasses = new ArrayList <CodecoolClass> ();
 
@@ -94,6 +99,7 @@ public class DaoClass{
         return allCodecoolClasses;
     }
 
+    @Override
     public void assignMentorToClass(Integer mentorId, Integer classId){
         PreparedStatement preparedStatement = null;
         String query = "INSERT into mentors_in_classes (id_codecool_class, id_mentor) values (?, ?);";
@@ -111,6 +117,7 @@ public class DaoClass{
         }
     }
 
+    @Override
     public void assignStudentToClass(Integer studentId, Integer classId){
         PreparedStatement preparedStatement = null;
         String query = "INSERT into students_in_classes (id_codecool_class, id_student) values (?, ?);";
@@ -128,6 +135,7 @@ public class DaoClass{
         }
     }
 
+    @Override
     public void updateMentorInClass(Integer mentorId, Integer classId){
         PreparedStatement preparedStatement = null;
         String query = "UPDATE mentors_in_classes SET id_codecool_class=? WHERE id_mentor=?;";
@@ -145,6 +153,7 @@ public class DaoClass{
         }
     }
 
+    @Override
     public void unsignMentorFromClass(Integer mentorId){
         PreparedStatement preparedStatement = null;
         String query = "DELETE FROM mentors_in_classes WHERE id_mentor=?;";
@@ -161,6 +170,7 @@ public class DaoClass{
         }
     }
 
+    @Override
     public ArrayList<Student> getStudentsOfClass(Integer classID){
         ArrayList <Student> studentsInClass = new ArrayList <> ();
 
@@ -175,7 +185,7 @@ public class DaoClass{
             while(resultSet.next()) {
                 int userId = resultSet.getInt("id_user");
 
-                studentsInClass.add(new DaoStudent().importInstance(userId));
+                studentsInClass.add(new DaoStudent().importStudent(userId));
 
             }
             resultSet.close();
@@ -187,6 +197,7 @@ public class DaoClass{
         return studentsInClass;
     }
 
+    @Override
     public CodecoolClass getMentorsClass(Integer mentorId){
         PreparedStatement preparedStatement;
         CodecoolClass mentorsClass = null;

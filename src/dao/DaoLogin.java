@@ -7,8 +7,9 @@ import model.Student;
 
 import java.sql.*;
 
-public class DaoLogin{
+public class DaoLogin implements IDaoLogin {
 
+    @Override
     public User getUser(String email, String password){
         User user = null;
         PreparedStatement preparedStatement = null;
@@ -34,6 +35,7 @@ public class DaoLogin{
         return user;
     }
 
+    @Override
     public String getRole(int id_role){
 
         String role = null;
@@ -76,13 +78,13 @@ public class DaoLogin{
 
         switch (role.toUpperCase()) {
             case "ADMIN":
-                user = new DaoAdmin().importInstance(userId);
+                user = new DaoAdmin().importAdmin(userId);
                 break;
             case "MENTOR":
-                user = new DaoMentor().importInstance(userId);
+                user = new DaoMentor().importMentor(userId);
                 break;
             case "STUDENT":
-                user = new DaoStudent().importInstance(userId);
+                user = new DaoStudent().importStudent(userId);
                 break;
         }
 

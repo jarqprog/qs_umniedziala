@@ -1,12 +1,10 @@
 package controller;
 
-//import dao.DaoArtifact;
 import dao.*;
 //import dao.DaoQuest;
 import model.*;
 import model.Artifact;
 import model.Student;
-import model.Wallet;
 import model.Level;
 import view.ViewStudent;
 import view.ViewTeam;
@@ -17,10 +15,23 @@ public class ControllerStudent implements IUserController{
 
     private ViewStudent viewStudent;
     private Student student;
+    private IDaoWallet daoWallet;
+    private IDaoStudent daoStudent;
+    private IDaoArtifact daoArtifact;
+    private IDaoLevel daoLevel;
+    private IDaoTeam daoTeam;
 
-    public ControllerStudent(Student student, ViewStudent viewStudent) {
+    public ControllerStudent(Student student, ViewStudent viewStudent,
+                             IDaoWallet daoWallet, IDaoStudent daoStudent,
+                             IDaoArtifact daoArtifact, IDaoLevel daoLevel,
+                             IDaoTeam daoTeam) {
         this.viewStudent = viewStudent;
         this.student = student;
+        this.daoWallet = daoWallet;
+        this.daoStudent = daoStudent;
+        this.daoArtifact = daoArtifact;
+        this.daoLevel = daoLevel;
+        this.daoTeam = daoTeam;
     }
 
     public void seeWallet() {
@@ -40,7 +51,6 @@ public class ControllerStudent implements IUserController{
             student.subtractCoins(price);
             student.addNewArtifact(artifact);
 
-            DaoWallet daoWallet = new DaoWallet();
             daoWallet.updateWallet(student);
             daoWallet.exportStudentArtifact(artifactId, studentId);
 
@@ -50,8 +60,6 @@ public class ControllerStudent implements IUserController{
     }
 
     public Artifact getArtifact(String type) {
-        DaoArtifact daoArtifact = new DaoArtifact();
-
         viewStudent.displayText("Available artifacts:\n");
         ArrayList<Artifact> allArtifacts = daoArtifact.getArtifacts(type);
         Artifact artifact = null;
@@ -68,7 +76,6 @@ public class ControllerStudent implements IUserController{
     }
 
     public void seeExpLevel() {
-        DaoLevel daoLevel = new DaoLevel();
         Level level = daoLevel.importLevelByCoins(this.student.getWallet().getAllCoins());
         if (level == null){
             return;
@@ -81,13 +88,12 @@ public class ControllerStudent implements IUserController{
     }
 
     public void manageTeam() {
-        Team team = new DaoTeam().getTeamByStudentId(student.getUserId());
+        Team team = daoTeam.getTeamByStudentId(student.getUserId());
 
         if (team != null) {
-            ViewTeam viewTeam = new ViewTeam();
-            ControllerTeam controllerTeam = new ControllerTeam(team, viewTeam);
+            ControllerTeam controllerTeam = new ControllerTeam(team, new ViewTeam(), daoArtifact, daoTeam, daoWallet);
             controllerTeam.runMenu();
-            student = new DaoStudent().importInstance(student.getUserId());
+            student = daoStudent.importStudent(student.getUserId());
         }
     }
 

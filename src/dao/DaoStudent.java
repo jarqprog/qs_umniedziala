@@ -6,18 +6,21 @@ import java.util.Calendar;
 
 import model.*;
 
-public class DaoStudent implements IDaoUser <Student>{
+public class DaoStudent implements IDaoStudent{
 
-    public Student createInstance(String name, String password, String email) {
+    @Override
+    public Student createStudent(String name, String password, String email) {
         return new Student(name, password, email);
     }
 
-    public Student createInstance(int userId, String name, String password, String email) {
+    @Override
+    public Student createStudent(int userId, String name, String password, String email) {
         return new Student(userId, name, password, email);
     }
 
 
-    public Student importInstance(int studentId) {
+    @Override
+    public Student importStudent(int studentId) {
         Student student = null;
         PreparedStatement preparedStatement = null;
         int roleId = getRoleID("student");
@@ -38,7 +41,7 @@ public class DaoStudent implements IDaoUser <Student>{
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                student = createInstance(userId, name, password, email);
+                student = createStudent(userId, name, password, email);
                 Wallet wallet = new DaoWallet().importWallet(studentId);
                 student.setWallet(wallet);
 
@@ -54,6 +57,7 @@ public class DaoStudent implements IDaoUser <Student>{
         return student;
     }
 
+    @Override
     public Student importNewStudent(String userEmail){
 
         Student student = null;
@@ -76,7 +80,7 @@ public class DaoStudent implements IDaoUser <Student>{
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                student = createInstance(userId, name, password, email);
+                student = createStudent(userId, name, password, email);
 
                 resultSet.close();
             }
@@ -91,7 +95,8 @@ public class DaoStudent implements IDaoUser <Student>{
     }
 
 
-    public boolean exportInstance(Student student) {
+    @Override
+    public boolean exportStudent(Student student) {
 
         String name = student.getName();
         String password = student.getPassword();
@@ -118,7 +123,8 @@ public class DaoStudent implements IDaoUser <Student>{
         }
     }
 
-    public boolean updateInstance(Student student) {
+    @Override
+    public boolean updateStudent(Student student) {
         String name = student.getName();
         String password = student.getPassword();
         String email = student.getEmail();
@@ -173,6 +179,7 @@ public class DaoStudent implements IDaoUser <Student>{
 
     }
 
+    @Override
     public ArrayList<Student> getAllStudents() {
         ArrayList<Student> students = new ArrayList<>();
         int roleId = getRoleID("student");
@@ -186,7 +193,7 @@ public class DaoStudent implements IDaoUser <Student>{
 
             while (resultSet.next()){
                 int userId = resultSet.getInt("id_user");
-                Student student = importInstance(userId);
+                Student student = importStudent(userId);
                 students.add(student);
             }
 
