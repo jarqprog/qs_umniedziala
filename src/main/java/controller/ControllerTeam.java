@@ -26,57 +26,73 @@ public class ControllerTeam implements IUserController {
     public Artifact getArtifact(String type) {
 
         viewTeam.displayText("Available artifacts:\n");
-        viewTeam.displayList(daoArtifact.getArtifacts(type));
+        ArrayList<Artifact> artifacts = daoArtifact.getArtifacts(type);
+        viewTeam.displayList(artifacts);
 
-        int artifactId = viewTeam.getIntInputFromUser("\nEnter id of artifact: ");
-        Artifact artifact = daoArtifact.importArtifact(artifactId);
+        Artifact artifact = null;
 
+        if(artifacts.size() != 0) {
+            int artifactId = viewTeam.getIntInputFromUser("\nEnter id of artifact: ");
+            for(Artifact choosenArtifact: artifacts) {
+                if(choosenArtifact.getItemId() == artifactId) {
+                    return choosenArtifact;
+                }
+            }
+        }
+        else {
+            viewTeam.displayText("\nNo artifacts");
+        }
         return artifact;
     }
 
     public void buyArtifact() {
         Artifact artifact = getArtifact("team");
-        int price = artifact.getValue();
-        viewTeam.displayText("This artifact costs " + price + " coins");
+        if(artifact != null) {
+            int price = artifact.getValue();
+            viewTeam.displayText("This artifact costs " + price + " coins");
 
-        ArrayList<Student> students = team.getStudents();
-        int teamSize = team.getSize();
+            ArrayList<Student> students = team.getStudents();
+            int teamSize = team.getSize();
 
-        HashMap<Student, Integer> studentsToPrices = new HashMap<>();
-        for (Student student : students) {
-            studentsToPrices.put(student, price / teamSize);
-        }
-
-        int remainderCoins = (price % teamSize);
-        for (Student student : students) {
-            int amountToAdd = studentsToPrices.get(student) + 1;
-            studentsToPrices.put(student, amountToAdd);
-            remainderCoins--;
-            if (remainderCoins == 0) {
-                break;
+            HashMap<Student, Integer> studentsToPrices = new HashMap<>();
+            for (Student student : students) {
+                studentsToPrices.put(student, price / teamSize);
             }
-        }
 
-        for (Student student : studentsToPrices.keySet()) {
-            int coins_to_pay = studentsToPrices.get(student);
-            if (!student.hasEnoughCoins(coins_to_pay)) {
-                viewTeam.displayText("Students do not have enough money to buy this artifact");
-                return;
+            int remainderCoins = (price % teamSize);
+            for (Student student : students) {
+                int amountToAdd = studentsToPrices.get(student) + 1;
+                studentsToPrices.put(student, amountToAdd);
+                remainderCoins--;
+                if (remainderCoins == 0) {
+                    break;
+                }
             }
+
+            for (Student student : studentsToPrices.keySet()) {
+                int coins_to_pay = studentsToPrices.get(student);
+                if (!student.hasEnoughCoins(coins_to_pay)) {
+                    viewTeam.displayText("Students do not have enough money to buy this artifact");
+                    return;
+                }
+            }
+
+            for (Student student : studentsToPrices.keySet()) {
+                int coinsToPay = studentsToPrices.get(student);
+                student.subtractCoins(coinsToPay);
+                student.addNewArtifact(artifact);
+
+                daoWallet.updateWallet(student);
+                int artifactId = artifact.getItemId();
+                int studentId = student.getUserId();
+                daoWallet.exportStudentArtifact(artifactId, studentId);
+            }
+
+            viewTeam.displayText("Purchase of team artifact was successful");
         }
-
-        for (Student student : studentsToPrices.keySet()) {
-            int coinsToPay = studentsToPrices.get(student);
-            student.subtractCoins(coinsToPay);
-            student.addNewArtifact(artifact);
-
-            daoWallet.updateWallet(student);
-            int artifactId = artifact.getItemId();
-            int studentId = student.getUserId();
-            daoWallet.exportStudentArtifact(artifactId, studentId);
+        else {
+            viewTeam.displayText("\nWrong id of artifact");
         }
-
-        viewTeam.displayText("Purchase of team artifact was successful");
     }
 
     public void splitTeamMoney() {
