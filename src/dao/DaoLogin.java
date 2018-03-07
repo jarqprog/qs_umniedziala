@@ -12,24 +12,23 @@ public class DaoLogin implements IDaoLogin {
     @Override
     public User getUser(String email, String password){
         User user = null;
-        PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM users WHERE email= ? AND password= ?;";
-        try{
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            if(!resultSet.isClosed()) {
-                int id_role = resultSet.getInt("id_role");
-                String role = getRole(id_role);
-
-                user = createUser(resultSet, role);
-                resultSet.close();
+                if (!resultSet.isClosed()) {
+                    int id_role = resultSet.getInt("id_role");
+                    String role = getRole(id_role);
+                    user = createUser(resultSet, role);
+                }
             }
-            preparedStatement.close();
 
-        }catch(SQLException | ClassNotFoundException e){
+        }catch(SQLException  e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return user;
@@ -37,22 +36,21 @@ public class DaoLogin implements IDaoLogin {
 
     @Override
     public String getRole(int id_role){
-
         String role = null;
-        PreparedStatement preparedStatement = null;
         String query = "SELECT name FROM roles WHERE id_role= ?;";
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, id_role);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()) {
-                role = resultSet.getString("name");
-                resultSet.close();
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, id_role);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (!resultSet.isClosed()) {
+                    role = resultSet.getString("name");
+                }
             }
 
-            preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException  e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
