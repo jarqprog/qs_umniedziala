@@ -58,8 +58,8 @@ public class DaoAdmin implements IDaoAdmin  {
         int roleId = getRoleID("admin");
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into users (name, password, email, id_role)" +
-                "values (?, ?, ?, ?);";
+        String query = "INSERT INTO users (name, password, email, id_role)" +
+                "VALUES (?, ?, ?, ?);";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -85,8 +85,8 @@ public class DaoAdmin implements IDaoAdmin  {
         int roleId = getRoleID("admin");
 
         PreparedStatement preparedStatement = null;
-        String query = "update users SET name = ?, password = ?, email = ?"+
-                "where id_user= ? AND id_role = ?;";
+        String query = "UPDATE users SET name = ?, password = ?, email = ?"+
+                "WHERE id_user= ? AND id_role = ?;";
 
         try{
 
@@ -109,7 +109,7 @@ public class DaoAdmin implements IDaoAdmin  {
         int roleId = 0;
         PreparedStatement preparedStatement = null;
 
-        String query = "SELECT id_role from roles where name = ?;";
+        String query = "SELECT id_role FROM roles WHERE name = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);

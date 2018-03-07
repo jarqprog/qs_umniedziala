@@ -25,7 +25,7 @@ public class DaoClass implements IDaoClass {
         CodecoolClass codecoolClass = null;
         PreparedStatement preparedStatement;
 
-        String query = "SELECT * from codecool_classes where id_codecool_class = ?;";
+        String query = "SELECT * FROM codecool_classes WHERE id_codecool_class = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -54,7 +54,7 @@ public class DaoClass implements IDaoClass {
         String name = codecoolClass.getName();
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into codecool_classes (name) values (?);";
+        String query = "INSERT INTO codecool_classes (name) VALUES (?);";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -102,7 +102,7 @@ public class DaoClass implements IDaoClass {
     @Override
     public void assignMentorToClass(Integer mentorId, Integer classId){
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into mentors_in_classes (id_codecool_class, id_mentor) values (?, ?);";
+        String query = "INSERT INTO mentors_in_classes (id_codecool_class, id_mentor) VALUES (?, ?);";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -120,7 +120,7 @@ public class DaoClass implements IDaoClass {
     @Override
     public void assignStudentToClass(Integer studentId, Integer classId){
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into students_in_classes (id_codecool_class, id_student) values (?, ?);";
+        String query = "INSERT INTO students_in_classes (id_codecool_class, id_student) VALUES (?, ?);";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -166,7 +166,7 @@ public class DaoClass implements IDaoClass {
             preparedStatement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Unsigning mentor from class failed");
+            System.out.println("Unsigning mentor FROM class failed");
         }
     }
 

@@ -25,7 +25,7 @@ public class DaoWallet implements IDaoWallet {
         Wallet wallet = null;
         PreparedStatement preparedStatement = null;
         ArrayList<Artifact> artifacts = null;
-        String query = "Select * from wallets where id_student= ?";
+        String query = "SELECT * FROM wallets WHERE id_student= ?";
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, userID);
@@ -57,8 +57,8 @@ public class DaoWallet implements IDaoWallet {
         int availableCoins = student.getWallet().getAvailableCoins();
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into wallets (id_student, all_coins, available_coins)" +
-                "values (?, ?, ?);";
+        String query = "INSERT INTO wallets (id_student, all_coins, available_coins)" +
+                "VALUES (?, ?, ?);";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -79,9 +79,9 @@ public class DaoWallet implements IDaoWallet {
 
         ArrayList<Artifact> artifacts = new ArrayList<>();
         PreparedStatement preparedStatement = null;
-        String query = "Select artifacts.id_artifact from artifacts inner join artifacts_in_wallets "
+        String query = "SELECT artifacts.id_artifact FROM artifacts inner join artifacts_in_wallets "
                        + "on artifacts.id_artifact = artifacts_in_wallets.id_artifact "
-                       + "where artifacts_in_wallets.id_student = ? and artifacts_in_wallets.status = ?;";
+                       + "WHERE artifacts_in_wallets.id_student = ? and artifacts_in_wallets.status = ?;";
 
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -113,8 +113,8 @@ public class DaoWallet implements IDaoWallet {
         int userId = student.getUserId();
 
         PreparedStatement preparedStatement = null;
-        String query = "update wallets SET all_coins = ?, available_coins = ?"+
-                "where id_student= ?;";
+        String query = "UPDATE wallets SET all_coins = ?, available_coins = ?"+
+                "WHERE id_student= ?;";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -157,8 +157,8 @@ public class DaoWallet implements IDaoWallet {
         String statusArtifact = "used";
 
         PreparedStatement preparedStatement = null;
-        String query = "update artifacts_in_wallets SET status = ?"+
-                    "where id_artifact= ? and id_student = ?;";
+        String query = "UPDATE artifacts_in_wallets SET status = ?"+
+                    "WHERE id_artifact= ? and id_student = ?;";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);

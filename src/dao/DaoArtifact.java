@@ -21,7 +21,7 @@ public class DaoArtifact implements IDaoArtifact{
     public Artifact importArtifact(int itemId) {
         Artifact artifact = null;
         PreparedStatement preparedStatement = null;
-        String query = "Select * from artifacts where id_artifact = ?";
+        String query = "SELECT * FROM artifacts WHERE id_artifact = ?";
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, itemId);

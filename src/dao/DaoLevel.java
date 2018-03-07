@@ -27,8 +27,8 @@ public class DaoLevel implements IDaoLevel {
         int coinsLimit = level.getCoinsLimit();
 
         PreparedStatement preparedStatement = null;
-        String query = "INSERT into levels (name, coins_limit)" +
-                "values (?, ?);";
+        String query = "INSERT INTO levels (name, coins_limit)" +
+                "VALUES (?, ?);";
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -108,7 +108,7 @@ public class DaoLevel implements IDaoLevel {
 
         Level level = null;
         PreparedStatement preparedStatement = null;
-        String query = "SELECT * from levels WHERE coins_limit <= ?";
+        String query = "SELECT * FROM levels WHERE coins_limit <= ?";
         ArrayList <Level> levels = new ArrayList<>();
 
         try{
