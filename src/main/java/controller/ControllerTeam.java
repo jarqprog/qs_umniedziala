@@ -24,7 +24,6 @@ public class ControllerTeam implements IUserController {
     }
 
     public Artifact getArtifact(String type) {
-        DaoArtifact daoArtifact = new DaoArtifact();
 
         viewTeam.displayText("Available artifacts:\n");
         viewTeam.displayList(daoArtifact.getArtifacts(type));
@@ -71,7 +70,6 @@ public class ControllerTeam implements IUserController {
             student.subtractCoins(coinsToPay);
             student.addNewArtifact(artifact);
 
-            DaoWallet daoWallet = new DaoWallet();
             daoWallet.updateWallet(student);
             int artifactId = artifact.getItemId();
             int studentId = student.getUserId();
@@ -96,8 +94,8 @@ public class ControllerTeam implements IUserController {
             if (coins <= remainderCoins) {
                 student.addCoins(coins);
                 team.subtractCoins(coins);
-                new DaoWallet().updateWallet(student);
-                new DaoTeam().updateTeamData(team);
+                daoWallet.updateWallet(student);
+                daoTeam.updateTeamData(team);
                 remainderCoins -= coins;
             } else {
                 viewTeam.displayText("You do not have enough money");
