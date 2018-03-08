@@ -22,14 +22,14 @@ public class DaoStudent implements IDaoStudent{
     @Override
     public Student importStudent(int studentId) {
         Student student = null;
-        PreparedStatement preparedStatement = null;
+
         int roleId = getRoleID("student");
 
         String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, studentId);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             preparedStatement.setInt(1, studentId);
             preparedStatement.setInt(2, roleId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -44,10 +44,7 @@ public class DaoStudent implements IDaoStudent{
                 student = createStudent(userId, name, password, email);
                 Wallet wallet = new DaoWallet().importWallet(studentId);
                 student.setWallet(wallet);
-
-                resultSet.close();
             }
-            preparedStatement.close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -61,30 +58,30 @@ public class DaoStudent implements IDaoStudent{
     public Student importNewStudent(String userEmail){
 
         Student student = null;
-        PreparedStatement preparedStatement = null;
+
         int roleId = getRoleID("student");
 
         String query = "SELECT * FROM users WHERE email = ? AND id_role = ?;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, userEmail);
             preparedStatement.setInt(2, roleId);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()){
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                int userId = resultSet.getInt("id_user");
+                if (!resultSet.isClosed()) {
 
-                String name = resultSet.getString("name");
-                String password = resultSet.getString("password");
-                String email = resultSet.getString("email");
+                    int userId = resultSet.getInt("id_user");
 
-                student = createStudent(userId, name, password, email);
+                    String name = resultSet.getString("name");
+                    String password = resultSet.getString("password");
+                    String email = resultSet.getString("email");
 
-                resultSet.close();
+                    student = createStudent(userId, name, password, email);
+                }
             }
-            preparedStatement.close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -103,19 +100,19 @@ public class DaoStudent implements IDaoStudent{
         String email = student.getEmail();
         int roleId = getRoleID("student");
 
-        PreparedStatement preparedStatement = null;
+
         String query = "INSERT INTO users (name, password, email, id_role)" +
                 "VALUES (?, ?, ?, ?);";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
             preparedStatement.setInt(4, roleId);
 
             preparedStatement.executeUpdate();
-            preparedStatement.close();
             return true;
 
         } catch (SQLException e) {
@@ -131,12 +128,10 @@ public class DaoStudent implements IDaoStudent{
         int studentId = student.getUserId();
         int roleId = getRoleID("student");
 
-
-        PreparedStatement preparedStatement = null;
         String query = "UPDATE users set name = ?, password = ?, email = ? WHERE id_user= ? AND id_role = ?;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -145,8 +140,7 @@ public class DaoStudent implements IDaoStudent{
             preparedStatement.setInt(5, roleId);
 
             preparedStatement.executeUpdate();
-            preparedStatement.close();
-            return true;
+             return true;
 
         } catch (SQLException e) {
             return false;
@@ -156,20 +150,19 @@ public class DaoStudent implements IDaoStudent{
     public int getRoleID(String roleName){
 
         int roleId = 0;
-        PreparedStatement preparedStatement = null;
-
         String query = "SELECT id_role FROM roles WHERE name = ?;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, roleName);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            if(!resultSet.isClosed()) {
-                roleId = resultSet.getInt("id_role");
-                resultSet.close();
+            preparedStatement.setString(1, roleName);
+
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (!resultSet.isClosed()) {
+                    roleId = resultSet.getInt("id_role");
+                }
             }
-            preparedStatement.close();
 
         }catch (SQLException e){
             System.out.println("Role not found");
@@ -185,20 +178,19 @@ public class DaoStudent implements IDaoStudent{
         int roleId = getRoleID("student");
         String query = "SELECT id_user FROM users WHERE id_role = ?;";
 
-        try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setInt(1, roleId);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()){
-                int userId = resultSet.getInt("id_user");
-                Student student = importStudent(userId);
-                students.add(student);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    int userId = resultSet.getInt("id_user");
+                    Student student = importStudent(userId);
+                    students.add(student);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
 
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
