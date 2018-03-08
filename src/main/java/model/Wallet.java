@@ -3,12 +3,13 @@ package model;
 import iterator.MyIterator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Wallet{
     private int allCoins;
     private int availableCoins;
-    private ArrayList<Artifact> newArtifacts;
-    private ArrayList<Artifact> usedArtifacts;
+    private List<Artifact> newArtifacts;
+    private List<Artifact> usedArtifacts;
 
     public Wallet(){
         this.allCoins = 0;
@@ -17,7 +18,7 @@ public class Wallet{
         usedArtifacts = new ArrayList<>();
     }
 
-    public Wallet(int allCoins, int availableCoins, ArrayList<Artifact> newArtifacts,  ArrayList<Artifact> usedArtifacts){
+    public Wallet(int allCoins, int availableCoins, List<Artifact> newArtifacts, List<Artifact> usedArtifacts){
         this.allCoins = allCoins;
         this.availableCoins = availableCoins;
         this.newArtifacts = newArtifacts;
@@ -45,9 +46,9 @@ public class Wallet{
         allCoins += coins;
     }
 
-    public ArrayList<Artifact> getNewArtifacts() { return newArtifacts; }
+    public List<Artifact> getNewArtifacts() { return newArtifacts; }
 
-    public ArrayList<Artifact> getUsedArtifacts() { return usedArtifacts; }
+    public List<Artifact> getUsedArtifacts() { return usedArtifacts; }
 
     public void addNewArtifact(Artifact artifact) { this.newArtifacts.add(artifact); }
 
@@ -81,7 +82,7 @@ public class Wallet{
         return myWallet;
     }
 
-    private String getStudentArtifacts(ArrayList<Artifact> artifacts){
+    private String getStudentArtifacts(List<Artifact> artifacts){
         String allArtifacts = "";
         if(artifacts.size() == 0){
             allArtifacts = "No artifacts";

@@ -70,8 +70,8 @@ public class DaoClass implements IDaoClass {
     }
 
     @Override
-    public ArrayList<CodecoolClass> getAllClasses(){
-        ArrayList <CodecoolClass> allCodecoolClasses = new ArrayList <CodecoolClass> ();
+    public List<CodecoolClass> getAllClasses(){
+        List <CodecoolClass> allCodecoolClasses = new ArrayList <CodecoolClass> ();
 
         PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM codecool_classes;";

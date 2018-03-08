@@ -34,7 +34,7 @@ public class DaoTeam implements IDaoTeam {
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
                 int availableCoins = resultSet.getInt("available_coins");
-                ArrayList<Student> students = getStudentsOfTeam(teamId);
+                List<Student> students = getStudentsOfTeam(teamId);
 
                 team = createTeam(teamId, name, students, availableCoins);
                 resultSet.close();
@@ -118,8 +118,8 @@ public class DaoTeam implements IDaoTeam {
     }
 
     @Override
-    public ArrayList<Student> getStudentsOfTeam(int teamId) {
-        ArrayList<Student> studentsOfTeam = new ArrayList<Student>();
+    public List<Student> getStudentsOfTeam(int teamId) {
+        List<Student> studentsOfTeam = new ArrayList<Student>();
         String query = "SELECT id_user FROM users JOIN students_in_teams "
                      + "ON users.id_user = students_in_teams.id_student "
                      + "WHERE students_in_teams.id_team = ?;";
@@ -145,8 +145,8 @@ public class DaoTeam implements IDaoTeam {
     }
 
     @Override
-    public ArrayList<Team> getAllTeams() {
-        ArrayList<Team> teams = new ArrayList<Team>();
+    public List<Team> getAllTeams() {
+        List<Team> teams = new ArrayList<Team>();
         String query = "SELECT id_team FROM teams;";
 
         try {

@@ -85,7 +85,7 @@ public class ControllerAdmin implements IUserController {
     }
 
     private void seeAllMentors() {
-        ArrayList<Mentor> mentorList = daoMentor.getAllMentors();
+        List<Mentor> mentorList = daoMentor.getAllMentors();
 
         viewAdmin.displayText("Mentor's list:");
         if(mentorList.size() == 0){
@@ -179,7 +179,7 @@ public class ControllerAdmin implements IUserController {
         CodecoolClass chosenClass = null;
 
         viewAdmin.displayText("Available classes: ");
-        ArrayList<CodecoolClass> codecoolClasses = daoClass.getAllClasses();
+        List<CodecoolClass> codecoolClasses = daoClass.getAllClasses();
         if (codecoolClasses.size() != 0) {
             for (CodecoolClass codecoolClass : codecoolClasses) {
                 viewAdmin.displayText(codecoolClass.getBasicInfo());
@@ -210,7 +210,7 @@ public class ControllerAdmin implements IUserController {
     }
 
     private void seeAllLevels() {
-        ArrayList<Level> levelList = daoLevel.getAllLevels();
+        List<Level> levelList = daoLevel.getAllLevels();
 
         viewAdmin.displayText("List of existing levels:");
         if(levelList.size() != 0) {
