@@ -3,12 +3,12 @@ package dao;
 import model.Student;
 import model.Team;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IDaoTeam {
     Team createTeam(String name);
 
-    Team createTeam (int groupId, String name, ArrayList<Student> students, int availableCoins);
+    Team createTeam (int groupId, String name, List<Student> students, int availableCoins);
 
     Team importTeam(int teamId);
 
@@ -18,9 +18,9 @@ public interface IDaoTeam {
 
     Team getTeamByStudentId(Integer studentId);
 
-    ArrayList<Student> getStudentsOfTeam(int teamId);
+    List<Student> getStudentsOfTeam(int teamId);
 
-    ArrayList<Team> getAllTeams();
+    List<Team> getAllTeams();
 
     void assignStudentToTeam(int studentId, int teamId);
 }

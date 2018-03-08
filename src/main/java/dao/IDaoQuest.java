@@ -2,7 +2,7 @@ package dao;
 
 import model.Quest;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IDaoQuest {
     Quest createQuest(String name, int value, String description, String type, String category);
@@ -11,13 +11,13 @@ public interface IDaoQuest {
 
     Quest importQuest(int itemId);
 
-    ArrayList<Quest> getAllQuests();
+    List<Quest> getAllQuests();
 
     boolean updateQuest(Quest quest);
 
     boolean exportQuest(Quest quest);
 
-    ArrayList<Quest> getTeamQuests();
+    List<Quest> getTeamQuests();
 
-    ArrayList<Quest> getIndividualQuests();
+    List<Quest> getIndividualQuests();
 }

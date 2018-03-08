@@ -2,7 +2,7 @@ package dao;
 
 import model.Mentor;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IDaoMentor {
     Mentor createMentor(String name, String password, String email);
@@ -17,5 +17,5 @@ public interface IDaoMentor {
     
     Integer getMentorClassId(Mentor mentor);
 
-    ArrayList<Mentor> getAllMentors();
+    List<Mentor> getAllMentors();
 }
