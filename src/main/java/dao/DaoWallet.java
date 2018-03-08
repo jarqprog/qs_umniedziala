@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DaoWallet implements IDaoWallet {
 
@@ -15,8 +16,8 @@ public class DaoWallet implements IDaoWallet {
     }
 
     @Override
-    public Wallet createWallet(int allCoins, int availableCoins, ArrayList<Artifact> newArtifacts,
-                               ArrayList<Artifact> usedArtifacts){
+    public Wallet createWallet(int allCoins, int availableCoins, List<Artifact> newArtifacts,
+                               List<Artifact> usedArtifacts){
         return new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
     }
 
@@ -24,7 +25,7 @@ public class DaoWallet implements IDaoWallet {
     public Wallet importWallet(int userID) {
         Wallet wallet = null;
         PreparedStatement preparedStatement = null;
-        ArrayList<Artifact> artifacts = null;
+        List<Artifact> artifacts = null;
         String query = "SELECT * FROM wallets WHERE id_student= ?";
         try {
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -34,8 +35,8 @@ public class DaoWallet implements IDaoWallet {
             if (!resultSet.isClosed()) {
                 int allCoins = resultSet.getInt("all_coins");
                 int availableCoins = resultSet.getInt("available_coins");
-                ArrayList <Artifact> newArtifacts = getUserArtifacts(userID, "new");
-                ArrayList <Artifact> usedArtifacts = getUserArtifacts(userID, "used");
+                List <Artifact> newArtifacts = getUserArtifacts(userID, "new");
+                List <Artifact> usedArtifacts = getUserArtifacts(userID, "used");
                 wallet = new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
                 resultSet.close();
             }
@@ -75,9 +76,9 @@ public class DaoWallet implements IDaoWallet {
 
     }
 
-    private ArrayList<Artifact> getUserArtifacts(int userID, String status) {
+    private List<Artifact> getUserArtifacts(int userID, String status) {
 
-        ArrayList<Artifact> artifacts = new ArrayList<>();
+        List<Artifact> artifacts = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         String query = "SELECT artifacts.id_artifact FROM artifacts inner join artifacts_in_wallets "
                        + "on artifacts.id_artifact = artifacts_in_wallets.id_artifact "

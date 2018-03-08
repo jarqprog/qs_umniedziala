@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DaoArtifact implements IDaoArtifact{
 
@@ -46,8 +47,8 @@ public class DaoArtifact implements IDaoArtifact{
     }
 
 
-    public ArrayList<Artifact> getAllArtifacts() {
-        ArrayList<Artifact> artifacts = new ArrayList<>();
+    public List<Artifact> getAllArtifacts() {
+        List<Artifact> artifacts = new ArrayList<>();
         String query = "SELECT id_artifact FROM artifacts;";
 
         try {
@@ -122,8 +123,8 @@ public class DaoArtifact implements IDaoArtifact{
         }
     }
 
-    public ArrayList<Artifact> getArtifacts(String type) {
-        ArrayList<Artifact> artifacts = new ArrayList<>();
+    public List<Artifact> getArtifacts(String type) {
+        List<Artifact> artifacts = new ArrayList<>();
         String query = "SELECT id_artifact FROM artifacts WHERE type = ?;";
 
         try {

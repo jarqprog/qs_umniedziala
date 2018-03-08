@@ -2,10 +2,10 @@ package dao;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import model.CodecoolClass;
-import model.Mentor;
 import model.Student;
 
 public class DaoClass implements IDaoClass {
@@ -16,7 +16,7 @@ public class DaoClass implements IDaoClass {
     }
 
     @Override
-    public CodecoolClass createClass(int groupId, String name, ArrayList<Student> students){
+    public CodecoolClass createClass(int groupId, String name, List<Student> students){
         return new CodecoolClass(groupId, name, students);
     }
 
@@ -34,7 +34,7 @@ public class DaoClass implements IDaoClass {
 
             if(!resultSet.isClosed()) {
                 String name = resultSet.getString("name");
-                ArrayList<Student> students = getStudentsOfClass(classID);
+                List<Student> students = getStudentsOfClass(classID);
 
                 codecoolClass = createClass(classID, name, students);
                 resultSet.close();
@@ -70,8 +70,8 @@ public class DaoClass implements IDaoClass {
     }
 
     @Override
-    public ArrayList<CodecoolClass> getAllClasses(){
-        ArrayList <CodecoolClass> allCodecoolClasses = new ArrayList <CodecoolClass> ();
+    public List<CodecoolClass> getAllClasses(){
+        List <CodecoolClass> allCodecoolClasses = new ArrayList <CodecoolClass> ();
 
         PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM codecool_classes;";
@@ -84,7 +84,7 @@ public class DaoClass implements IDaoClass {
             while(resultSet.next()) {
                 int classId = resultSet.getInt("id_codecool_class");
                 String name = resultSet.getString("name");
-                ArrayList<Student> students = getStudentsOfClass(classId);
+                List<Student> students = getStudentsOfClass(classId);
 
                 codecoolClass = createClass(classId, name, students);
                 allCodecoolClasses.add(codecoolClass);
@@ -171,8 +171,8 @@ public class DaoClass implements IDaoClass {
     }
 
     @Override
-    public ArrayList<Student> getStudentsOfClass(Integer classID){
-        ArrayList <Student> studentsInClass = new ArrayList <> ();
+    public List<Student> getStudentsOfClass(Integer classID){
+        List <Student> studentsInClass = new ArrayList <> ();
 
         PreparedStatement preparedStatement = null;
         String query = "SELECT id_user FROM users JOIN students_in_classes WHERE students_in_classes.id_codecool_class=? AND students_in_classes.id_student=users.id_user;";

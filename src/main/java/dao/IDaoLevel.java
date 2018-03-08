@@ -2,7 +2,7 @@ package dao;
 
 import model.Level;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IDaoLevel {
     Level createLevel(String name, int coinsLimit);
@@ -13,11 +13,11 @@ public interface IDaoLevel {
 
     Level importLevel(int levelId);
 
-    ArrayList<Level> getAllLevels();
+    List<Level> getAllLevels();
 
     Level importLevelByCoins(int allCoins);
 
-    ArrayList <Level> getMatchingLevels(int allCoins);
+    List <Level> getMatchingLevels(int allCoins);
 
-    Level getRightLevel(ArrayList<Level> levels, int availableCoins);
+    Level getRightLevel(List<Level> levels, int availableCoins);
 }

@@ -1,12 +1,12 @@
 package iterator;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MyIterator <T> implements IIterator{
     private int index = 0;
-    private ArrayList<T> collection;
+    private List<T> collection;
     
-    public MyIterator(ArrayList<T> collection){
+    public MyIterator(List<T> collection){
         this.collection = collection;
     }
     

@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CodecoolClass extends Group{
 
@@ -8,7 +8,7 @@ public class CodecoolClass extends Group{
         super(name);
     }
     
-    public CodecoolClass(int groupId, String name, ArrayList<Student> students){
+    public CodecoolClass(int groupId, String name, List<Student> students){
         super(groupId, name, students);
     }
 }
