@@ -58,7 +58,7 @@ public abstract class View{
         System.out.println(text);
     }
 
-    public <T> void displayList(ArrayList <T> list){
+    public <T> void displayList(List <T> list){
 
         MyIterator <T> iterator = new MyIterator <T>(list);
         while(iterator.hasNext()){
