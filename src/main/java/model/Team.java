@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Team extends Group {
     private int availableCoins;
@@ -11,7 +12,7 @@ public class Team extends Group {
 
     }
 
-    public Team(int groupId, String name, ArrayList<Student> students, int availableCoins) {
+    public Team(int groupId, String name, List<Student> students, int availableCoins) {
         super(groupId, name, students);
         this.availableCoins = availableCoins;
     }

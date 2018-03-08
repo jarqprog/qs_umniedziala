@@ -14,7 +14,7 @@ public abstract class Group{
         this.students = new ArrayList<>();
     }
 
-    public Group(int groupId, String name, ArrayList<Student> students){
+    public Group(int groupId, String name, List<Student> students){
         this.groupId = groupId;
         this.name = name;
         this.students = students;
@@ -36,7 +36,7 @@ public abstract class Group{
         return this.name;
     }
 
-    public void setStudents(ArrayList<Student> students){
+    public void setStudents(List<Student> students){
         this.students = students;
     }
 
