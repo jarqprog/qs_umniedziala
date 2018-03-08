@@ -5,9 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbConnection {
-    private static Connection firstInstance = setConnection();
 
-    private static Connection setConnection() {
+    public static Connection getConnection() {
         Connection connection = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -17,9 +16,7 @@ public class DbConnection {
             System.exit(0);
         }
         return connection;
+
     }
 
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        return firstInstance;
-    }
 }

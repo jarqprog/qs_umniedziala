@@ -21,10 +21,11 @@ public class DaoArtifact implements IDaoArtifact{
 
     public Artifact importArtifact(int itemId) {
         Artifact artifact = null;
-        PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM artifacts WHERE id_artifact = ?";
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)){
+            
             preparedStatement.setInt(1, itemId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -35,11 +36,11 @@ public class DaoArtifact implements IDaoArtifact{
                 String type = resultSet.getString("type");
 
                 artifact = new Artifact(itemId, name, value, description, type);
-                resultSet.close();
+                
             }
 
-            preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException e) {
+            
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
@@ -51,10 +52,9 @@ public class DaoArtifact implements IDaoArtifact{
         List<Artifact> artifacts = new ArrayList<>();
         String query = "SELECT id_artifact FROM artifacts;";
 
-        try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()){
                 int artifactId = resultSet.getInt("id_artifact");
@@ -62,10 +62,7 @@ public class DaoArtifact implements IDaoArtifact{
                 artifacts.add(artifact);
             }
 
-            resultSet.close();
-            preparedStatement.close();
-
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
@@ -79,14 +76,15 @@ public class DaoArtifact implements IDaoArtifact{
         String description = artifact.getDescription();
         String type = artifact.getType();
 
-        PreparedStatement preparedStatement = null;
+        
 
         String query = "UPDATE artifacts SET " +
                 "name = ?, value = ?, description = ?, type = ? " +
                 "WHERE id_artifact = ?;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, value);
             preparedStatement.setString(3, description);
@@ -94,9 +92,9 @@ public class DaoArtifact implements IDaoArtifact{
             preparedStatement.setInt(5, itemId);
 
             preparedStatement.executeUpdate();
-            preparedStatement.close();
+            
             return true;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
@@ -105,9 +103,8 @@ public class DaoArtifact implements IDaoArtifact{
 
         String query = "INSERT INTO artifacts VALUES (?, ?, ?, ?, ?);";
 
-        try{
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(2, artifact.getName());
             preparedStatement.setInt(3, artifact.getValue());
@@ -115,10 +112,10 @@ public class DaoArtifact implements IDaoArtifact{
             preparedStatement.setString(5, artifact.getType());
 
             preparedStatement.executeUpdate();
-            preparedStatement.close();
+            
             return true;
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             return false;
         }
     }
@@ -127,21 +124,21 @@ public class DaoArtifact implements IDaoArtifact{
         List<Artifact> artifacts = new ArrayList<>();
         String query = "SELECT id_artifact FROM artifacts WHERE type = ?;";
 
-        try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+
             preparedStatement.setString(1, type);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            while (resultSet.next()){
-                int artifactId = resultSet.getInt("id_artifact");
-                Artifact artifact = importArtifact(artifactId);
-                artifacts.add(artifact);
+                while (resultSet.next()) {
+                    int artifactId = resultSet.getInt("id_artifact");
+                    Artifact artifact = importArtifact(artifactId);
+                    artifacts.add(artifact);
+                }
             }
-            resultSet.close();
-            preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return artifacts;
