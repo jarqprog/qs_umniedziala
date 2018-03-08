@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,16 +27,15 @@ public class DaoLevel implements IDaoLevel {
         String name = level.getName();
         int coinsLimit = level.getCoinsLimit();
 
-        PreparedStatement preparedStatement = null;
         String query = "INSERT INTO levels (name, coins_limit)" +
                 "VALUES (?, ?);";
 
-        try{
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, coinsLimit);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
             return true;
 
         }catch (SQLException e){
@@ -47,21 +47,21 @@ public class DaoLevel implements IDaoLevel {
     @Override
     public Level importLevel(int levelId) {
         Level level = null;
-        PreparedStatement preparedStatement = null;
         String query = "SELECT name, coins_limit FROM levels WHERE id_level = ?;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, levelId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             preparedStatement.setInt(1, levelId);
 
-            if(!resultSet.isClosed()) {
-                String name = resultSet.getString("name");
-                int coinsLimit = resultSet.getInt("coins_limit");
-                level = createLevel(levelId, name, coinsLimit);
-                resultSet.close();
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (!resultSet.isClosed()) {
+                    String name = resultSet.getString("name");
+                    int coinsLimit = resultSet.getInt("coins_limit");
+                    level = createLevel(levelId, name, coinsLimit);
+
+                }
             }
-            preparedStatement.close();
 
         } catch (SQLException e) {
             return level;
@@ -72,21 +72,18 @@ public class DaoLevel implements IDaoLevel {
     @Override
     public List<Level> getAllLevels() {
         List<Level> levels = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
+
         String query = "SELECT id_level FROM levels ORDER BY coins_limit;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()){
                 int levelId = resultSet.getInt("id_level");
                 Level level = importLevel(levelId);
                 levels.add(level);
             }
-
-            resultSet.close();
-            preparedStatement.close();
 
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -107,23 +104,24 @@ public class DaoLevel implements IDaoLevel {
     public List <Level> getMatchingLevels(int allCoins){
 
         Level level = null;
-        PreparedStatement preparedStatement = null;
+
         String query = "SELECT * FROM levels WHERE coins_limit <= ?";
         List <Level> levels = new ArrayList<>();
 
-        try{
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)){
             preparedStatement.setInt(1, allCoins);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                int limitCoins = resultSet.getInt("coins_limit");
-                level = createLevel(name, limitCoins);
-                levels.add(level);
+            try( ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    int limitCoins = resultSet.getInt("coins_limit");
+                    level = createLevel(name, limitCoins);
+                    levels.add(level);
+                }
             }
-            resultSet.close();
-            preparedStatement.close();
+
 
         }catch(SQLException e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
