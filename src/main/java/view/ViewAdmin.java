@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class ViewAdmin extends View {
 
     private List<String> adminOptions = new ArrayList<String>(Arrays.asList("1. Create mentor",
