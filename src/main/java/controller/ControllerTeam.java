@@ -27,7 +27,7 @@ public class ControllerTeam implements IUserController {
     public Artifact getArtifact(String type) {
 
         viewTeam.displayText("Available artifacts:\n");
-        ArrayList<Artifact> artifacts = daoArtifact.getArtifacts(type);
+        List<Artifact> artifacts = daoArtifact.getArtifacts(type);
         viewTeam.displayList(artifacts);
 
         Artifact artifact = null;
