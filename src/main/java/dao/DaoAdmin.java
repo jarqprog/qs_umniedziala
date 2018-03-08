@@ -89,7 +89,7 @@ public class DaoAdmin implements IDaoAdmin  {
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)){
-            
+
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, email);
