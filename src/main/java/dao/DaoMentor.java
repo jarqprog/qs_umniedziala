@@ -159,9 +159,9 @@ public class DaoMentor implements IDaoMentor {
     }
 
     @Override
-    public ArrayList <Mentor> getAllMentors(){
+    public List <Mentor> getAllMentors(){
 
-        ArrayList <Mentor> mentorList = new ArrayList <Mentor> ();
+        List <Mentor> mentorList = new ArrayList <Mentor> ();
         int roleId = getRoleID("mentor");
 
         PreparedStatement preparedStatement = null;

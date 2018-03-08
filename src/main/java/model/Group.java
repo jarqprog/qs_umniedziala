@@ -2,18 +2,19 @@ package model;
 
 import java.util.ArrayList;
 import iterator.MyIterator;
+import java.util.List;
 
 public abstract class Group{
     private String name;
-    private ArrayList<Student> students;
+    private List<Student> students;
     private int groupId;
 
     public Group(String name){
         this.name = name;
-        this.students = new ArrayList<Student>();
+        this.students = new ArrayList<>();
     }
 
-    public Group(int groupId, String name, ArrayList<Student> students){
+    public Group(int groupId, String name, List<Student> students){
         this.groupId = groupId;
         this.name = name;
         this.students = students;
@@ -35,11 +36,11 @@ public abstract class Group{
         return this.name;
     }
 
-    public void setStudents(ArrayList<Student> students){
+    public void setStudents(List<Student> students){
         this.students = students;
     }
 
-    public ArrayList<Student> getStudents(){
+    public List<Student> getStudents(){
         return this.students;
     }
 

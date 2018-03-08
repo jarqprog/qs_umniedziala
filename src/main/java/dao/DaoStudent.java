@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.List;
 
 import model.*;
 
@@ -180,8 +180,8 @@ public class DaoStudent implements IDaoStudent{
     }
 
     @Override
-    public ArrayList<Student> getAllStudents() {
-        ArrayList<Student> students = new ArrayList<>();
+    public List<Student> getAllStudents() {
+        List<Student> students = new ArrayList<>();
         int roleId = getRoleID("student");
         String query = "SELECT id_user FROM users WHERE id_role = ?;";
 

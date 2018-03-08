@@ -1,7 +1,7 @@
 package controller;
 
 import dao.*;
-//import dao.DaoQuest;
+
 import model.*;
 import model.Artifact;
 import model.Student;
@@ -9,7 +9,7 @@ import model.Level;
 import view.ViewStudent;
 import view.ViewTeam;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerStudent implements IUserController{
 
@@ -64,7 +64,7 @@ public class ControllerStudent implements IUserController{
 
     public Artifact getArtifact(String type) {
         viewStudent.displayText("Available artifacts:\n");
-        ArrayList<Artifact> allArtifacts = daoArtifact.getArtifacts(type);
+        List<Artifact> allArtifacts = daoArtifact.getArtifacts(type);
         Artifact artifact = null;
 
         if(allArtifacts.size() != 0) {

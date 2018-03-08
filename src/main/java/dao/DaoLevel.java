@@ -70,8 +70,8 @@ public class DaoLevel implements IDaoLevel {
     }
 
     @Override
-    public ArrayList<Level> getAllLevels() {
-        ArrayList<Level> levels = new ArrayList<>();
+    public List<Level> getAllLevels() {
+        List<Level> levels = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         String query = "SELECT id_level FROM levels ORDER BY coins_limit;";
 
@@ -98,18 +98,18 @@ public class DaoLevel implements IDaoLevel {
     @Override
     public Level importLevelByCoins(int allCoins){
 
-        ArrayList <Level> levels = getMatchingLevels(allCoins);
+        List <Level> levels = getMatchingLevels(allCoins);
         Level level = getRightLevel(levels, allCoins);
         return level;
     }
 
     @Override
-    public ArrayList <Level> getMatchingLevels(int allCoins){
+    public List <Level> getMatchingLevels(int allCoins){
 
         Level level = null;
         PreparedStatement preparedStatement = null;
         String query = "SELECT * FROM levels WHERE coins_limit <= ?";
-        ArrayList <Level> levels = new ArrayList<>();
+        List <Level> levels = new ArrayList<>();
 
         try{
             preparedStatement = DbConnection.getConnection().prepareStatement(query);
@@ -133,7 +133,7 @@ public class DaoLevel implements IDaoLevel {
     }
 
     @Override
-    public Level getRightLevel(ArrayList<Level> levels, int availableCoins){
+    public Level getRightLevel(List<Level> levels, int availableCoins){
 
         Level level = levels.get(0);
 

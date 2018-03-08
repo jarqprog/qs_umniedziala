@@ -2,7 +2,7 @@ package dao;
 
 import model.Student;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IDaoStudent {
     Student createStudent(String name, String password, String email);
@@ -17,5 +17,5 @@ public interface IDaoStudent {
 
     boolean updateStudent(Student student);
 
-    ArrayList<Student> getAllStudents();
+    List<Student> getAllStudents();
 }

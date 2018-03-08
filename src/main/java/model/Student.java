@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Student extends User{
     private Wallet wallet;
@@ -29,7 +30,7 @@ public class Student extends User{
         wallet.addCoins(coins);
     }
 
-    public ArrayList<Artifact> getAllNewArtifacts(){
+    public List<Artifact> getAllNewArtifacts(){
         return this.wallet.getNewArtifacts();
     }
 

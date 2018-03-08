@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DaoQuest implements IDaoQuest {
 
@@ -49,8 +50,8 @@ public class DaoQuest implements IDaoQuest {
         return quest;
     }
     @Override
-    public ArrayList<Quest> getAllQuests() {
-        ArrayList<Quest> quests = new ArrayList<>();
+    public List<Quest> getAllQuests() {
+        List<Quest> quests = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         String query = "SELECT id_quest FROM quests";
 
@@ -129,8 +130,8 @@ public class DaoQuest implements IDaoQuest {
     }
 
     @Override
-    public ArrayList<Quest> getTeamQuests() {
-        ArrayList<Quest> quests = new ArrayList<>();
+    public List<Quest> getTeamQuests() {
+        List<Quest> quests = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         String query = "SELECT id_quest FROM quests WHERE type = ?;";
 
@@ -153,8 +154,8 @@ public class DaoQuest implements IDaoQuest {
     }
 
     @Override
-    public ArrayList<Quest> getIndividualQuests() {
-        ArrayList<Quest> quests = new ArrayList<>();
+    public List<Quest> getIndividualQuests() {
+        List<Quest> quests = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         String query = "SELECT id_quest FROM quests WHERE type = ?;";
 

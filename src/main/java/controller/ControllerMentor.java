@@ -4,7 +4,7 @@ import view.ViewMentor;
 import dao.*;
 import model.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerMentor implements IUserController{
     private ViewMentor viewMentor;
@@ -70,7 +70,7 @@ public class ControllerMentor implements IUserController{
         Student student = null;
 
         viewMentor.displayText("Available students:\n");
-        ArrayList<Student> allStudents = daoStudent.getAllStudents();
+        List<Student> allStudents = daoStudent.getAllStudents();
         if(allStudents.size() != 0) {
             viewMentor.displayList(allStudents);
             Integer studentId = viewMentor.getIntInputFromUser("\nEnter id of student: ");
@@ -86,7 +86,7 @@ public class ControllerMentor implements IUserController{
         CodecoolClass chosenClass = null;
 
         viewMentor.displayText("Available classes: ");
-        ArrayList <CodecoolClass> allClasses = daoClass.getAllClasses();
+        List <CodecoolClass> allClasses = daoClass.getAllClasses();
         if(allClasses.size() != 0) {
             for (CodecoolClass codecoolClass : allClasses) {
                 viewMentor.displayText(codecoolClass.getBasicInfo());
@@ -104,7 +104,7 @@ public class ControllerMentor implements IUserController{
         Team chosenTeam = null;
 
         viewMentor.displayText("Available teams:\n");
-        ArrayList<Team> teams = daoTeam.getAllTeams();
+        List<Team> teams = daoTeam.getAllTeams();
         if(teams.size() != 0) {
             for (Team team : teams) {
                 viewMentor.displayText(team.getBasicInfo());
@@ -123,7 +123,7 @@ public class ControllerMentor implements IUserController{
         Quest chosenQuest = null;
 
         viewMentor.displayText("Available team quests:\n");
-        ArrayList<Quest> allQuests = daoQuest.getTeamQuests();
+        List<Quest> allQuests = daoQuest.getTeamQuests();
 
         if(allQuests.size() != 0) {
             viewMentor.displayList(allQuests);
@@ -138,7 +138,7 @@ public class ControllerMentor implements IUserController{
     public Quest getIndividualQuest(){
         Quest chosenQuest = null;
 
-        ArrayList<Quest> allQuests = daoQuest.getIndividualQuests();
+        List<Quest> allQuests = daoQuest.getIndividualQuests();
         viewMentor.displayText("Available individual quests:\n");
 
         if(allQuests.size() != 0) {
@@ -234,7 +234,7 @@ public class ControllerMentor implements IUserController{
         Quest chosenQuest = null;
 
         viewMentor.displayText("Available quests:\n");
-        ArrayList<Quest> allQuests = daoQuest.getAllQuests();
+        List<Quest> allQuests = daoQuest.getAllQuests();
 
         if(allQuests.size() != 0) {
             viewMentor.displayList(allQuests);
@@ -392,7 +392,7 @@ public class ControllerMentor implements IUserController{
     }
 
     private boolean seeAllArtifacts() {
-        ArrayList<Artifact> artifactList = daoArtifact.getAllArtifacts();
+        List<Artifact> artifactList = daoArtifact.getAllArtifacts();
         boolean isListNotEmpty = false;
 
         viewMentor.displayText("List of artifacts:");
@@ -443,7 +443,7 @@ public class ControllerMentor implements IUserController{
         }
 
         viewMentor.displayText("Student new artifacts:\n");
-        ArrayList<Artifact> allNewArtifacts = student.getAllNewArtifacts();  //nie wszytskie, tylko indywidualne (bez teamowych)
+        List<Artifact> allNewArtifacts = student.getAllNewArtifacts();  //nie wszytskie, tylko indywidualne (bez teamowych)
         Artifact artifactToBeBougth = null;
 
         if(allNewArtifacts.size() != 0) {

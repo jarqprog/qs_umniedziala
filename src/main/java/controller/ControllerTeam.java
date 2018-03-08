@@ -6,6 +6,7 @@ import view.ViewTeam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ControllerTeam implements IUserController {
 
@@ -51,8 +52,9 @@ public class ControllerTeam implements IUserController {
             int price = artifact.getValue();
             viewTeam.displayText("This artifact costs " + price + " coins");
 
-            ArrayList<Student> students = team.getStudents();
-            int teamSize = team.getSize();
+
+        List<Student> students = team.getStudents();
+        int teamSize = team.getSize();
 
             HashMap<Student, Integer> studentsToPrices = new HashMap<>();
             for (Student student : students) {
@@ -96,7 +98,7 @@ public class ControllerTeam implements IUserController {
     }
 
     public void splitTeamMoney() {
-        ArrayList<Student> students = team.getStudents();
+        List<Student> students = team.getStudents();
         int remainderCoins = team.getAvailableCoins();
 
         if (remainderCoins == 0) {
