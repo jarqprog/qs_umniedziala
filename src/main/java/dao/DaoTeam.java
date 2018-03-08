@@ -25,21 +25,21 @@ public class DaoTeam implements IDaoTeam {
         Team team = null;
         String query = "SELECT name, available_coins FROM teams WHERE id_team = ?;";
 
-        try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setInt(1, teamId);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                String name = resultSet.getString("name");
-                int availableCoins = resultSet.getInt("available_coins");
-                List<Student> students = getStudentsOfTeam(teamId);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                team = createTeam(teamId, name, students, availableCoins);
-                resultSet.close();
+                if (resultSet.next()) {
+                    String name = resultSet.getString("name");
+                    int availableCoins = resultSet.getInt("available_coins");
+                    List<Student> students = getStudentsOfTeam(teamId);
+
+                    team = createTeam(teamId, name, students, availableCoins);
+                }
             }
-            preparedStatement.close();
 
         }catch (SQLException e){
             System.out.println("Team not found");
@@ -51,18 +51,15 @@ public class DaoTeam implements IDaoTeam {
     public boolean exportTeam(Team team) {
         String teamName = team.getName();
         int teamCoins = team.getAvailableCoins();
-
-        PreparedStatement preparedStatement = null;
         String query = "INSERT INTO teams (name, available_coins) VALUES (?, ?);";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, teamName);
             preparedStatement.setInt(2, teamCoins);
-
             preparedStatement.executeUpdate();
-            preparedStatement.close();
-            return true;
+             return true;
         } catch (SQLException e) {
             return false;
         }
@@ -74,41 +71,40 @@ public class DaoTeam implements IDaoTeam {
         int teamId = team.getGroupId();
         int teamCoins = team.getAvailableCoins();
 
-        PreparedStatement preparedStatement = null;
         String query = "UPDATE teams SET name = ?, available_coins = ? WHERE id_team = ?;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, teamName);
             preparedStatement.setInt(2, teamCoins);
             preparedStatement.setInt(3, teamId);
 
             preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
+         } catch (SQLException e) {
             System.out.println(" insertion failed");
         }
     }
 
     @Override
     public Team getTeamByStudentId(Integer studentId){
-        PreparedStatement preparedStatement;
+
         Team team = null;
 
         String query = "SELECT id_team FROM students_in_teams WHERE id_student=?;";
 
-        try {
-            preparedStatement = DbConnection.getConnection().prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setInt(1, studentId);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()){
-                Integer teamId = resultSet.getInt("id_team");
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                team = importTeam(teamId);
-                resultSet.close();
+                if (!resultSet.isClosed()) {
+                    Integer teamId = resultSet.getInt("id_team");
+                    team = importTeam(teamId);
+                }
             }
-            preparedStatement.close();
 
         } catch (SQLException e) {
             System.out.println("Selecting students team failed");
@@ -124,19 +120,19 @@ public class DaoTeam implements IDaoTeam {
                      + "ON users.id_user = students_in_teams.id_student "
                      + "WHERE students_in_teams.id_team = ?;";
 
-        try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, teamId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            while(resultSet.next()) {
-                int userId = resultSet.getInt("id_user");
-                Student student = new DaoStudent().importStudent(userId);
-                studentsOfTeam.add(student);
+            preparedStatement.setInt(1, teamId);
+
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    int userId = resultSet.getInt("id_user");
+                    Student student = new DaoStudent().importStudent(userId);
+                    studentsOfTeam.add(student);
+                }
             }
-            resultSet.close();
-            preparedStatement.close();
 
         } catch (SQLException e) {
             System.out.println("No students");
@@ -149,18 +145,15 @@ public class DaoTeam implements IDaoTeam {
         List<Team> teams = new ArrayList<Team>();
         String query = "SELECT id_team FROM teams;";
 
-        try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()){
 
             while (resultSet.next()){
                 int teamId = resultSet.getInt("id_team");
                 Team team = importTeam(teamId);
                 teams.add(team);
             }
-            resultSet.close();
-            preparedStatement.close();
 
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -172,14 +165,13 @@ public class DaoTeam implements IDaoTeam {
     public void assignStudentToTeam(int studentId, int teamId) {
         String query = "INSERT INTO students_in_teams (id_team, id_student) VALUES (?, ?);";
 
-        try {
-            Connection connection = DbConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setInt(1, teamId);
             preparedStatement.setInt(2, studentId);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
+         } catch (SQLException e) {
             System.out.println("Assignment of student to team failed");
         }
     }
