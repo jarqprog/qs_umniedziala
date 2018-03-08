@@ -19,7 +19,7 @@ public class DbConnection {
         return connection;
     }
 
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
+    public static Connection getConnection() {
         return firstInstance;
     }
 }

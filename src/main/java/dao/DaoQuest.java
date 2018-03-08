@@ -44,7 +44,7 @@ public class DaoQuest implements IDaoQuest {
             }
 
             preparedStatement.close();
-        }catch(SQLException | ClassNotFoundException e) {
+        }catch(SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return quest;
@@ -66,7 +66,7 @@ public class DaoQuest implements IDaoQuest {
             }
             preparedStatement.close();
             resultSet.close();
-        }catch(SQLException | ClassNotFoundException e) {
+        }catch(SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return quests;
@@ -100,7 +100,7 @@ public class DaoQuest implements IDaoQuest {
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
@@ -124,7 +124,7 @@ public class DaoQuest implements IDaoQuest {
             preparedStatement.close();
             return true;
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             return false;
         }
     }
@@ -147,7 +147,7 @@ public class DaoQuest implements IDaoQuest {
             }
             preparedStatement.close();
             resultSet.close();
-        }catch(SQLException | ClassNotFoundException e) {
+        }catch(SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return quests;
@@ -171,7 +171,7 @@ public class DaoQuest implements IDaoQuest {
             }
             preparedStatement.close();
             resultSet.close();
-        }catch(SQLException | ClassNotFoundException e) {
+        }catch(SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return quests;

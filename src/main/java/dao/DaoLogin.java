@@ -29,7 +29,7 @@ public class DaoLogin implements IDaoLogin {
             }
             preparedStatement.close();
 
-        }catch(SQLException | ClassNotFoundException e){
+        }catch(SQLException e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return user;
@@ -52,7 +52,7 @@ public class DaoLogin implements IDaoLogin {
             }
 
             preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 

@@ -39,7 +39,7 @@ public class DaoArtifact implements IDaoArtifact{
             }
 
             preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
@@ -65,7 +65,7 @@ public class DaoArtifact implements IDaoArtifact{
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
@@ -96,7 +96,7 @@ public class DaoArtifact implements IDaoArtifact{
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
@@ -118,7 +118,7 @@ public class DaoArtifact implements IDaoArtifact{
             preparedStatement.close();
             return true;
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             return false;
         }
     }
@@ -141,7 +141,7 @@ public class DaoArtifact implements IDaoArtifact{
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return artifacts;

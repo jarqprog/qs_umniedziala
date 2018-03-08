@@ -45,7 +45,7 @@ public class DaoAdmin implements IDaoAdmin  {
             }
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return admin;
         }
         return admin;
@@ -71,7 +71,7 @@ public class DaoAdmin implements IDaoAdmin  {
             preparedStatement.close();
             return true;
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             return false;
         }
     }
@@ -99,7 +99,7 @@ public class DaoAdmin implements IDaoAdmin  {
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
-        } catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException e){
             return false;
         }
     }
@@ -122,7 +122,7 @@ public class DaoAdmin implements IDaoAdmin  {
             }
             preparedStatement.close();
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             System.out.println("Role not found");
         }
 

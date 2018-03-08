@@ -42,7 +42,7 @@ public class DaoWallet implements IDaoWallet {
             }
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return wallet;
@@ -70,7 +70,7 @@ public class DaoWallet implements IDaoWallet {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             System.out.println("Wallet insertion failed");
         }
 
@@ -99,7 +99,7 @@ public class DaoWallet implements IDaoWallet {
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
@@ -124,7 +124,7 @@ public class DaoWallet implements IDaoWallet {
             preparedStatement.setInt(3, userId);
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        } catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException e){
             System.out.println("Wallet update failed");
         }
     }
@@ -147,7 +147,7 @@ public class DaoWallet implements IDaoWallet {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.out.println("Artifact insertion failed");
         }
     }
@@ -170,7 +170,7 @@ public class DaoWallet implements IDaoWallet {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             System.out.println("Artifact update failed");
         }
     }

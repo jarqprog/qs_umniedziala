@@ -38,7 +38,7 @@ public class DaoLevel implements IDaoLevel {
             preparedStatement.close();
             return true;
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             return false;
         }
     }
@@ -63,7 +63,7 @@ public class DaoLevel implements IDaoLevel {
             }
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return level;
         }
         return level;
@@ -88,7 +88,7 @@ public class DaoLevel implements IDaoLevel {
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
@@ -125,7 +125,7 @@ public class DaoLevel implements IDaoLevel {
             resultSet.close();
             preparedStatement.close();
 
-        }catch(SQLException | ClassNotFoundException e){
+        }catch(SQLException e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
         return levels;

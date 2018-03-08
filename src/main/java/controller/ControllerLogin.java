@@ -23,34 +23,22 @@ public class ControllerLogin{
     }
 
     public void runMenu(){
-        try {
-            if(DbConnection.getConnection() != null){
+        String userOption = "";
+        while (!userOption.equals("0")) {
 
-                String userOption = "";
-                while (!userOption.equals("0")) {
+            System.out.println("\nWhat would like to do?");
+            viewLogin.displayList(viewLogin.getLoginOptions());
 
-                    System.out.println("\nWhat would like to do?");
-                    viewLogin.displayList(viewLogin.getLoginOptions());
+            userOption = viewLogin.getInputFromUser("Option: ");
+            switch (userOption) {
+                case "1": login();
+                break;
+                case "0": break;
 
-                    userOption = viewLogin.getInputFromUser("Option: ");
-                    switch (userOption) {
-                        case "1": login();
-                                break;
-                        case "0": break;
-
-                        default: System.out.println("Wrong option. Try again!");
-                                 break;
-                    }
-                }
-
-            DbConnection.getConnection().close();
+                default: System.out.println("Wrong option. Try again!");
+                break;
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
     }
 
     public void login(){

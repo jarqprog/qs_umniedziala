@@ -49,7 +49,7 @@ public class DaoStudent implements IDaoStudent{
             }
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             return student;
         }
@@ -86,7 +86,7 @@ public class DaoStudent implements IDaoStudent{
             }
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             return student;
         }
@@ -118,7 +118,7 @@ public class DaoStudent implements IDaoStudent{
             preparedStatement.close();
             return true;
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
@@ -148,7 +148,7 @@ public class DaoStudent implements IDaoStudent{
             preparedStatement.close();
             return true;
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
@@ -171,7 +171,7 @@ public class DaoStudent implements IDaoStudent{
             }
             preparedStatement.close();
 
-        }catch (SQLException | ClassNotFoundException e){
+        }catch (SQLException e){
             System.out.println("Role not found");
         }
 
@@ -200,7 +200,7 @@ public class DaoStudent implements IDaoStudent{
             resultSet.close();
             preparedStatement.close();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
