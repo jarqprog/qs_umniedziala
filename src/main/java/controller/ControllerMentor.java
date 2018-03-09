@@ -46,7 +46,7 @@ public class ControllerMentor implements IUserController{
             daoWallet.exportWallet(studentWithId);
 
             CodecoolClass codecoolClass = getCodecoolClass();
-            new DaoClass().assignStudentToClass(studentWithId.getUserId(), codecoolClass.getGroupId());
+            daoClass.assignStudentToClass(studentWithId.getUserId(), codecoolClass.getGroupId());
         }
         else{
             viewMentor.displayText("Creation student failed");
@@ -84,20 +84,29 @@ public class ControllerMentor implements IUserController{
 
     public CodecoolClass getCodecoolClass(){
         CodecoolClass chosenClass = null;
+        while(isClassNotChosen(chosenClass)) {
+            viewMentor.displayText("Available classes: ");
+            List <CodecoolClass> allClasses = daoClass.getAllClasses();
+            if(allClasses.size() != 0) {
+                for (CodecoolClass codecoolClass : allClasses) {
+                    viewMentor.displayText(codecoolClass.getBasicInfo());
+                }
 
-        viewMentor.displayText("Available classes: ");
-        List <CodecoolClass> allClasses = daoClass.getAllClasses();
-        if(allClasses.size() != 0) {
-            for (CodecoolClass codecoolClass : allClasses) {
-                viewMentor.displayText(codecoolClass.getBasicInfo());
+                Integer classId = viewMentor.getIntInputFromUser("\nEnter id of chosen class: ");
+                chosenClass = daoClass.importClass(classId);
+            }else{
+                viewMentor.displayText("No classes");
             }
 
-            Integer classId = viewMentor.getIntInputFromUser("\nEnter id of chosen class: ");
-            chosenClass = daoClass.importClass(classId);
-        }else{
-            viewMentor.displayText("No classes");
+            if (isClassNotChosen(chosenClass)) {
+                viewMentor.displayText("Wrong id of class. Try again.");
+            }
         }
         return chosenClass;
+    }
+
+    private boolean isClassNotChosen(CodecoolClass codecoolClass) {
+        return codecoolClass == null;
     }
 
     public Team getTeam(){
