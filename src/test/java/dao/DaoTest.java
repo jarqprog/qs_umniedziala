@@ -7,14 +7,11 @@ import org.junit.rules.TestWatchman;
 import org.junit.runners.model.FrameworkMethod;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public abstract class DaoTest {
 
     public abstract void setUp();
     public abstract void tearDown();
-    private Connection connection;
 
     @BeforeClass
     public static void prepareDatabase() {
@@ -30,27 +27,12 @@ public abstract class DaoTest {
 
     @Before
     public void prepareTest() {
-        try {
-            connection = DbConnection.getConnection();
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Problem occurred while preparing test in: " + getClass().getSimpleName());
-            System.exit(1);
-        }
+        // can't implement rollback() because Dao has own Connection object
         setUp();  // implement in concrete DaoTest class
     }
 
     @After
     public void cleanAfterTest() {
-        try {
-            connection.rollback();
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Problem occurred while ending test in: " + getClass().getSimpleName());
-            System.exit(1);
-        }
         tearDown();  // implement in concrete DaoTest class
     }
 
