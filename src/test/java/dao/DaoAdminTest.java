@@ -1,26 +1,18 @@
 package dao;
 
 import model.Admin;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.MethodRule;
-import org.junit.rules.TestWatchman;
-import org.junit.runners.model.FrameworkMethod;
 
 import static org.junit.Assert.*;
 
-public class DaoAdminTest {
+public class DaoAdminTest extends DaoTest {
 
     private DaoAdmin dao;
 
-    @Before
     public void setUp() {
         dao = new DaoAdmin();
     }
 
-    @After
     public void tearDown() {
         dao = null;
     }
@@ -33,45 +25,62 @@ public class DaoAdminTest {
 
     @Test
     public void createAdminUsingThreeParameters() {
-        Admin admin = dao.createAdmin("Ludwik", "12321", "ludwik@cc.com");
+
+        String name = "Testing";
+        String password = "test";
+        String email = "test12@test.com";
+        Admin admin = dao.createAdmin(name, password, email);
         assertNotNull(admin);
-        String expected = "Ludwik";
-        assertEquals(expected, admin.getName());
-        expected = "12321";
-        assertEquals(expected, admin.getPassword());
-        expected = "ludwik@cc.com";
-        assertEquals(expected, admin.getEmail());
+        assertEquals(name, admin.getName());
+        assertEquals(password, admin.getPassword());
+        assertEquals(email, admin.getEmail());
     }
 
 
     @Test
     public void createAdminUsingFourParameters() {
-        Admin admin = dao.createAdmin(1, "Marcin", "12321", "marcin@cc.com");
+        Integer id = 1;
+        String name = "Testing";
+        String password = "test";
+        String email = "test12@test.com";
+
+        Admin admin = dao.createAdmin(id, name, password, email);
         assertNotNull(admin);
-        String expected = "Marcin";
-        assertEquals(expected, admin.getName());
-        expected = "12321";
-        assertEquals(expected, admin.getPassword());
-        expected = "marcin@cc.com";
-        assertEquals(expected, admin.getEmail());
+        assertEquals(name, admin.getName());
+        assertEquals(password, admin.getPassword());
+        assertEquals(email, admin.getEmail());
     }
 
     @Test
     public void importAdmin() {
-        Admin admin = dao.importAdmin(1);
+        int adminId = 1;
+        Admin admin = dao.importAdmin(adminId);
         assertNotNull(admin);
-        int expected = 1;
-        assertEquals(expected, admin.getUserId());
+        assertEquals(adminId, admin.getUserId());
         assertEquals(Admin.class, admin.getClass());
     }
 
     @Test
     public void exportAdmin() {
-        // todo
+        int adminId = 100000;
+        Admin admin = createTestAdmin(adminId);
+        Boolean isDone = dao.exportAdmin(admin);
+//        assertTrue(isDone);
+//        Admin imported = dao.importAdmin(adminId);
+//        assertNotNull(imported);
+//        assertEquals(admin.getUserId(), imported.getUserId());
+//        assertEquals(admin.getName(), imported.getName());
+//        assertEquals(admin.getPassword(), imported.getPassword());
+//        assertEquals(admin.getEmail(), imported.getEmail());
     }
 
     @Test
     public void updateAdmin() {
+
+
+
+
+
         // todo
     }
 
@@ -82,10 +91,10 @@ public class DaoAdminTest {
         assertEquals(expected, dao.getRoleID(idName));
     }
 
-    @Rule
-    public MethodRule watchman = new TestWatchman() {
-        public void starting(FrameworkMethod method) {
-            System.out.println("Starting test: " + method.getName());
-        }
-    };
+    private Admin createTestAdmin(int adminId) {
+        String name = "Testing";
+        String password = "test";
+        String email = "test@cc.com";
+        return new Admin(adminId, name, password, email);
+    }
 }
