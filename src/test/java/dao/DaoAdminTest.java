@@ -53,35 +53,31 @@ public class DaoAdminTest extends DaoTest {
 
     @Test
     public void importAdmin() {
-        int adminId = 1;
+        int adminId = 2;
         Admin admin = dao.importAdmin(adminId);
         assertNotNull(admin);
+        String name = "Adam Mad";
+        String password = "adam";
+        String email = "adam@cc.com";
         assertEquals(adminId, admin.getUserId());
-        assertEquals(Admin.class, admin.getClass());
+        assertEquals(name, admin.getName());
+        assertEquals(password, admin.getPassword());
+        assertEquals(email, admin.getEmail());
     }
 
     @Test
-    public void exportAdmin() {
-        int adminId = 100000;
-        Admin admin = createTestAdmin(adminId);
-        Boolean isDone = dao.exportAdmin(admin);
-//        assertTrue(isDone);
-//        Admin imported = dao.importAdmin(adminId);
-//        assertNotNull(imported);
-//        assertEquals(admin.getUserId(), imported.getUserId());
-//        assertEquals(admin.getName(), imported.getName());
-//        assertEquals(admin.getPassword(), imported.getPassword());
-//        assertEquals(admin.getEmail(), imported.getEmail());
+    public void exportNewAdmin() {
+        assertTrue(dao.exportAdmin(createTestAdminWhichIsNotInDatabase()));
+    }
+
+    @Test
+    public void exportAdminThatExistsInDatabase() {
+        assertFalse(dao.exportAdmin(createTestAdminThatAlreadyExistsInDatabase()));
     }
 
     @Test
     public void updateAdmin() {
-
-
-
-
-
-        // todo
+        assertTrue(dao.updateAdmin(createTestAdminThatAlreadyExistsInDatabase()));
     }
 
     @Test
@@ -91,10 +87,18 @@ public class DaoAdminTest extends DaoTest {
         assertEquals(expected, dao.getRoleID(idName));
     }
 
-    private Admin createTestAdmin(int adminId) {
-        String name = "Testing";
+    private Admin createTestAdminWhichIsNotInDatabase() {
+        String name = "Brand New";
         String password = "test";
         String email = "test@cc.com";
-        return new Admin(adminId, name, password, email);
+        return new Admin(name, password, email);
+    }
+
+    private Admin createTestAdminThatAlreadyExistsInDatabase() {
+        Integer id = 2;
+        String name = "Adam Mad";
+        String password = "adam";
+        String email = "adam@cc.com";
+        return new Admin(id, name, password, email);
     }
 }
