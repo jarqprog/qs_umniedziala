@@ -86,6 +86,7 @@ INSERT INTO roles VALUES (?, 'mentor');
 INSERT INTO roles VALUES (?, 'student');
 
 INSERT INTO users VALUES (?, 'Jerzy Jeżyk', 'jerzy', 'jerzy@cc.com', 1);
+INSERT INTO users VALUES (?, 'Adam Mad', 'adam', 'adam@cc.com', 1);
 
 INSERT INTO users VALUES (?, 'Dominik Starzyk', 'dominik', 'dominik@cc.com', 2);
 INSERT INTO users VALUES (?, 'Piotr Tomaszewski', 'piotr', 'piotr@cc.com', 2);
