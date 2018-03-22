@@ -102,5 +102,5 @@ public class TeamTest {
     public void testGroupToString() {
         assertEquals("Students in \"Team\" group:\n\nTeam coins: 100", team.toString());
     }
-    
+
 }
