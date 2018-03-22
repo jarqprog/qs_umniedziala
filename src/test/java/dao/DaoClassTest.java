@@ -103,15 +103,6 @@ public class DaoClassTest extends DaoTest {
     }
 
     @Test
-    public void assignMentorToClassWhichNotExists() {
-        int mentorId = 2;
-        int classId = 1001;
-        dao.assignMentorToClass(mentorId, classId);
-        String expectedInfo = "Assigning mentor to class failed";
-        assertEquals(expectedInfo, outContent.toString().trim());
-    }
-
-    @Test
     public void assignStudentToClass() {
         int studentId = 21;  // not existing student (we can assign him)
         int classId = 2;
