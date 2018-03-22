@@ -93,8 +93,19 @@ public class DaoArtifactTest extends DaoTest {
     }
 
     @Test
+    public void updateArtifactWithSQLInjection() {
+        assertTrue(dao.updateArtifact(createArtifactWithSQLInjectionInParameters()));
+    }
+
+
+    @Test
     public void exportArtifactWhichIsNotInDatabase() {
         assertTrue(dao.exportArtifact(createArtifactWhichIsNotInDatabase()));
+    }
+
+    @Test
+    public void exportArtifactWithSQLInjection() {
+        assertTrue(dao.exportArtifact(createArtifactWithSQLInjectionInParameters()));
     }
 
     @Test
@@ -104,6 +115,13 @@ public class DaoArtifactTest extends DaoTest {
         assertNotNull(artifacts);
         artifacts.forEach(Assert::assertNotNull);
         assertTrue(artifacts.stream().allMatch(a -> a.getType().equals(artifactsType)));
+    }
+
+    @Test
+    public void getArtifactsByTypeWithSQLInjection() {
+        String artifactsType = "105 OR 10=10";
+        List<Artifact> artifacts = dao.getArtifacts(artifactsType);
+        assertNotNull(artifacts);
     }
 
     @Test
@@ -129,6 +147,15 @@ public class DaoArtifactTest extends DaoTest {
         int value = 50;
         String description = "Private mentoring";
         String type = "individual";
+        return new Artifact(id, name, value, description, type);
+    }
+
+    private Artifact createArtifactWithSQLInjectionInParameters() {
+        int id = 101;
+        String name = "105 OR 1=1";
+        int value = 50;
+        String description = "105 OR 1=1 true '' ";
+        String type = "105 OR 1=1";
         return new Artifact(id, name, value, description, type);
     }
 }

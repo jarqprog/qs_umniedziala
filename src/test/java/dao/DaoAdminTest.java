@@ -19,13 +19,11 @@ public class DaoAdminTest extends DaoTest {
 
     @Test
     public void constructorTest() {
-        DaoAdmin testDao = new DaoAdmin();
-        assertNotNull(testDao);
+        assertNotNull(dao);
     }
 
     @Test
     public void createAdminUsingThreeParameters() {
-
         String name = "Testing";
         String password = "test";
         String email = "test12@test.com";
@@ -76,8 +74,18 @@ public class DaoAdminTest extends DaoTest {
     }
 
     @Test
+    public void exportAdminWithSQLInjection() {
+        assertTrue(dao.exportAdmin(createAdminWithSQLInjectionInParameters()));
+    }
+
+    @Test
     public void updateAdmin() {
         assertTrue(dao.updateAdmin(createTestAdminThatAlreadyExistsInDatabase()));
+    }
+
+    @Test
+    public void updateAdminWithSQLInjection() {
+        assertTrue(dao.updateAdmin(createAdminWithSQLInjectionInParameters()));
     }
 
     @Test
@@ -100,5 +108,12 @@ public class DaoAdminTest extends DaoTest {
         String password = "adam";
         String email = "adam@cc.com";
         return new Admin(id, name, password, email);
+    }
+
+    private Admin createAdminWithSQLInjectionInParameters() {
+        String name = "105 OR 1=1";
+        String password = "105 OR 1=1";
+        String email = "test_johnSQL_admin@test.com";
+        return new Admin(name, password, email);
     }
 }

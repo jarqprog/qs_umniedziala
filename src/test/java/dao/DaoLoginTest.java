@@ -29,6 +29,14 @@ public class DaoLoginTest extends  DaoTest{
     }
 
     @Test
+    public void testGetUserWithSQLInjection() {
+        String email = "105 OR 101=101";
+        String password = "105 OR 101=101";
+        assertNull(dao.getUser(email, password));
+
+    }
+
+    @Test
     public void testUserDoesNotExist() {
         User user = dao.getUser(" ", " ");
         assertEquals(null, user);
