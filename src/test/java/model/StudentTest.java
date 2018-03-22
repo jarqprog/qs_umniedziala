@@ -63,15 +63,15 @@ public class StudentTest {
 
     @Test
     public void testHasEnoughCoins() {
-        assertEquals(true, student.hasEnoughCoins(99));
-        assertEquals(false, student.hasEnoughCoins(101));
+        assertTrue(student.hasEnoughCoins(99));
+        assertFalse(student.hasEnoughCoins(101));
     }
 
     @Test
     public void testHasEnoughCoins2() {
         student.subtractCoins(100);
         System.out.println(student.getWallet().getAvailableCoins());
-        assertEquals(true, student.hasEnoughCoins(0));
+        assertTrue(student.hasEnoughCoins(0));
     }
 
     @Test
