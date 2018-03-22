@@ -97,11 +97,6 @@ public class DaoArtifactTest extends DaoTest {
         assertTrue(dao.exportArtifact(createArtifactWhichIsNotInDatabase()));
     }
 
-//    @Test
-//    public void exportArtifactThatAlreadyExistsInDatabase() {
-//        assertFalse(dao.exportArtifact(createArtifactThatAlreadyExistsInDatabase()));
-//    }
-
     @Test
     public void getArtifactsByType() {
         String artifactsType = "individual";
