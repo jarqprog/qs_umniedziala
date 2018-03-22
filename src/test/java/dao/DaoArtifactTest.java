@@ -103,7 +103,15 @@ public class DaoArtifactTest extends DaoTest {
         List<Artifact> artifacts = dao.getArtifacts(artifactsType);
         assertNotNull(artifacts);
         artifacts.forEach(Assert::assertNotNull);
-        assertTrue(artifacts.stream().anyMatch(a -> a.getType().equals(artifactsType)));
+        assertTrue(artifacts.stream().allMatch(a -> a.getType().equals(artifactsType)));
+    }
+
+    @Test
+    public void getArtifactsByTypeThatNotExists() {
+        String artifactsType = "testing101";
+        List<Artifact> artifacts = dao.getArtifacts(artifactsType);
+        assertNotNull(artifacts);
+        assertTrue(artifacts.size() == 0);
     }
 
     private Artifact createArtifactWhichIsNotInDatabase() {
