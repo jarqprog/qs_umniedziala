@@ -56,4 +56,51 @@ public class TeamTest {
     public void testHasEnoughCoins() {
         assertEquals(true, team.hasEnoughCoins(90));
     }
+
+    @Test
+    public void testGetStudents(){
+        assertEquals(students, team.getStudents() );
+    }
+
+    @Test
+    public void testSetStudents() {
+        List<Student> students1 = new ArrayList<>();
+        Student student = new Student("artur", "1", "1");
+        students1.add(student);
+        team.setStudents(students1);
+        assertEquals(students1, team.getStudents());
+    }
+
+    @Test
+    public void testSetGroupID() {
+        team.setGroupId(2);
+        assertEquals(2, team.getGroupId());
+    }
+
+    @Test
+    public void testGetGroupID() {
+        assertEquals(1, team.getGroupId());
+    }
+
+    @Test
+    public void testSetGroupName() {
+        team.setName("OOO");
+        assertEquals("OOO", team.getName());
+    }
+
+    @Test
+    public void testGetName() {
+        assertEquals("Team", team.getName());
+    }
+
+    @Test
+    public void testNewGroupConstructor() {
+        assertNotNull(team);
+    }
+
+    @Test
+    public void testGroupToString() {
+        assertEquals("Students in \"Team\" group:\n\nTeam coins: 100", team.toString());
+    }
+
 }
