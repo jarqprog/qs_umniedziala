@@ -77,6 +77,11 @@ public class DaoClassTest extends DaoTest {
     }
 
     @Test
+    public void exportClassWithSQLInjection() {
+        assertTrue(dao.exportClass(createClassWithSQLInjectionInParameters()));
+    }
+
+    @Test
     public void getAllClasses() {
         List<CodecoolClass> classes = dao.getAllClasses();
 
@@ -186,6 +191,11 @@ public class DaoClassTest extends DaoTest {
 
     private CodecoolClass createCodeCoolClass() {
         String name = "2018-1-test";
+        return new CodecoolClass(name);
+    }
+
+    private CodecoolClass createClassWithSQLInjectionInParameters() {
+        String name = "105 OR 101=101";
         return new CodecoolClass(name);
     }
 }
