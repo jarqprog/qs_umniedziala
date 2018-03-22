@@ -19,13 +19,11 @@ public class DaoAdminTest extends DaoTest {
 
     @Test
     public void constructorTest() {
-        DaoAdmin testDao = new DaoAdmin();
-        assertNotNull(testDao);
+        assertNotNull(dao);
     }
 
     @Test
     public void createAdminUsingThreeParameters() {
-
         String name = "Testing";
         String password = "test";
         String email = "test12@test.com";

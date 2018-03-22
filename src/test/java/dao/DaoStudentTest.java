@@ -94,7 +94,7 @@ public class DaoStudentTest extends DaoTest {
     public void testUpdateStudentWithSQLInjectionInParameters() {
         assertTrue(dao.updateStudent(createStudentWithSQLInjectionInParameters()));
     }
-    
+
     @Test
     public void testGetRoleID() {
         int classId = dao.getRoleID("student");
