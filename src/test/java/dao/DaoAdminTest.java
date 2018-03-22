@@ -1,26 +1,18 @@
 package dao;
 
 import model.Admin;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.MethodRule;
-import org.junit.rules.TestWatchman;
-import org.junit.runners.model.FrameworkMethod;
 
 import static org.junit.Assert.*;
 
-public class DaoAdminTest {
+public class DaoAdminTest extends DaoTest {
 
     private DaoAdmin dao;
 
-    @Before
     public void setUp() {
         dao = new DaoAdmin();
     }
 
-    @After
     public void tearDown() {
         dao = null;
     }
@@ -33,46 +25,59 @@ public class DaoAdminTest {
 
     @Test
     public void createAdminUsingThreeParameters() {
-        Admin admin = dao.createAdmin("Ludwik", "12321", "ludwik@cc.com");
+
+        String name = "Testing";
+        String password = "test";
+        String email = "test12@test.com";
+        Admin admin = dao.createAdmin(name, password, email);
         assertNotNull(admin);
-        String expected = "Ludwik";
-        assertEquals(expected, admin.getName());
-        expected = "12321";
-        assertEquals(expected, admin.getPassword());
-        expected = "ludwik@cc.com";
-        assertEquals(expected, admin.getEmail());
+        assertEquals(name, admin.getName());
+        assertEquals(password, admin.getPassword());
+        assertEquals(email, admin.getEmail());
     }
 
 
     @Test
     public void createAdminUsingFourParameters() {
-        Admin admin = dao.createAdmin(1, "Marcin", "12321", "marcin@cc.com");
+        Integer id = 1;
+        String name = "Testing";
+        String password = "test";
+        String email = "test12@test.com";
+
+        Admin admin = dao.createAdmin(id, name, password, email);
         assertNotNull(admin);
-        String expected = "Marcin";
-        assertEquals(expected, admin.getName());
-        expected = "12321";
-        assertEquals(expected, admin.getPassword());
-        expected = "marcin@cc.com";
-        assertEquals(expected, admin.getEmail());
+        assertEquals(name, admin.getName());
+        assertEquals(password, admin.getPassword());
+        assertEquals(email, admin.getEmail());
     }
 
     @Test
     public void importAdmin() {
-        Admin admin = dao.importAdmin(1);
+        int adminId = 10;
+        Admin admin = dao.importAdmin(adminId);
         assertNotNull(admin);
-        int expected = 1;
-        assertEquals(expected, admin.getUserId());
-        assertEquals(Admin.class, admin.getClass());
+        String name = "Adam Mad";
+        String password = "adam";
+        String email = "adam@cc.com";
+        assertEquals(adminId, admin.getUserId());
+        assertEquals(name, admin.getName());
+        assertEquals(password, admin.getPassword());
+        assertEquals(email, admin.getEmail());
     }
 
     @Test
-    public void exportAdmin() {
-        // todo
+    public void exportNewAdmin() {
+        assertTrue(dao.exportAdmin(createTestAdminWhichIsNotInDatabase()));
+    }
+
+    @Test
+    public void exportAdminThatExistsInDatabase() {
+        assertFalse(dao.exportAdmin(createTestAdminThatAlreadyExistsInDatabase()));
     }
 
     @Test
     public void updateAdmin() {
-        // todo
+        assertTrue(dao.updateAdmin(createTestAdminThatAlreadyExistsInDatabase()));
     }
 
     @Test
@@ -82,10 +87,18 @@ public class DaoAdminTest {
         assertEquals(expected, dao.getRoleID(idName));
     }
 
-    @Rule
-    public MethodRule watchman = new TestWatchman() {
-        public void starting(FrameworkMethod method) {
-            System.out.println("Starting test: " + method.getName());
-        }
-    };
+    private Admin createTestAdminWhichIsNotInDatabase() {
+        String name = "Brand New";
+        String password = "test";
+        String email = "test@cc.com";
+        return new Admin(name, password, email);
+    }
+
+    private Admin createTestAdminThatAlreadyExistsInDatabase() {
+        Integer id = 10;
+        String name = "Adam Mad";
+        String password = "adam";
+        String email = "adam@cc.com";
+        return new Admin(id, name, password, email);
+    }
 }
