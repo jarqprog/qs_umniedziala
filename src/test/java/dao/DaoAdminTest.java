@@ -53,7 +53,7 @@ public class DaoAdminTest extends DaoTest {
 
     @Test
     public void importAdmin() {
-        int adminId = 2;
+        int adminId = 10;
         Admin admin = dao.importAdmin(adminId);
         assertNotNull(admin);
         String name = "Adam Mad";
@@ -95,7 +95,7 @@ public class DaoAdminTest extends DaoTest {
     }
 
     private Admin createTestAdminThatAlreadyExistsInDatabase() {
-        Integer id = 2;
+        Integer id = 10;
         String name = "Adam Mad";
         String password = "adam";
         String email = "adam@cc.com";
