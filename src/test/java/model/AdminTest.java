@@ -4,9 +4,9 @@ import org.junit.*;
 
 import static junit.framework.Assert.*;
 
-public class AdminTest {
+public class AdminTest extends ModelTest {
 
-    User admin;
+    private User admin;
 
     @Before
     public void instance() {
@@ -47,8 +47,8 @@ public class AdminTest {
 
     @Test
     public void testSetEmail() {
-        admin.setEmail("dupa");
-        assertEquals("dupa", admin.getEmail());
+        admin.setEmail("tylek");
+        assertEquals("tylek", admin.getEmail());
     }
 
     @Test

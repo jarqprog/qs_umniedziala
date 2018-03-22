@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
-public class TeamTest {
+public class TeamTest extends ModelTest {
 
-    Team team;
-    List<Student> students;
+    private Team team;
+    private List<Student> students;
 
     @Before
     public void instance() {
@@ -54,7 +55,7 @@ public class TeamTest {
 
     @Test
     public void testHasEnoughCoins() {
-        assertEquals(true, team.hasEnoughCoins(90));
+        assertTrue(team.hasEnoughCoins(90));
     }
 
     @Test
@@ -64,11 +65,11 @@ public class TeamTest {
 
     @Test
     public void testSetStudents() {
-        List<Student> students1 = new ArrayList<>();
-        Student student = new Student("artur", "1", "1");
-        students1.add(student);
-        team.setStudents(students1);
-        assertEquals(students1, team.getStudents());
+        List<Student> otherStudents = new ArrayList<>();
+        Student student = mock(Student.class);
+        otherStudents.add(student);
+        team.setStudents(otherStudents);
+        assertEquals(otherStudents, team.getStudents());
     }
 
     @Test

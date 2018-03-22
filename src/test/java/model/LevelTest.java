@@ -4,7 +4,7 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
-public class LevelTest {
+public class LevelTest extends ModelTest {
 
     private Level level;
 

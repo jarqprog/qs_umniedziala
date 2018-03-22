@@ -1,17 +1,12 @@
 package model;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.MethodRule;
-import org.junit.rules.TestWatchman;
-import org.junit.runners.model.FrameworkMethod;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
-public class StudentTest {
+public class StudentTest extends ModelTest {
 
     private Student student;
     private Artifact artifact;
@@ -20,7 +15,7 @@ public class StudentTest {
     public void createStudent() {
         student = new Student(1, "name", "password",  "email");
         student.addCoins(100);
-        artifact = new Artifact("artifactName", 10, "artifactDescription", "artifactType");
+        artifact = mock(Artifact.class);
         student.addNewArtifact(artifact);
     }
 
@@ -31,9 +26,9 @@ public class StudentTest {
 
     @Test
     public void testSetWallet() {
-        Wallet newWallet = new Wallet(12, 24, new ArrayList<Artifact>(), new ArrayList<Artifact>());
-        student.setWallet(newWallet);
-        assertEquals(newWallet, student.getWallet());
+        Wallet wallet = mock(Wallet.class);
+        student.setWallet(wallet);
+        assertEquals(wallet, student.getWallet());
     }
 
     @Test
@@ -49,9 +44,9 @@ public class StudentTest {
 
     @Test
     public void testAddNewArtifact() {
-        Artifact artifact = new Artifact("Name", 10, "Description", "Type");
+        Artifact artifact = mock(Artifact.class);
         student.addNewArtifact(artifact);
-        assertEquals(2, student.getWallet().getNewArtifacts().size());
+        assertTrue(student.getWallet().getNewArtifacts().size() > 0);
     }
 
     @Test
@@ -122,12 +117,4 @@ public class StudentTest {
     public void testToString() {
         assertEquals("ID: 1, Name: name, Email: email", student.toString());
     }
-
-    @Rule
-    public MethodRule watchman = new TestWatchman() {
-        public void starting(FrameworkMethod method) {
-            System.out.println("Starting test: " + method.getName());
-        }
-    };
-
 }
