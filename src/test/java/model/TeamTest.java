@@ -97,4 +97,10 @@ public class TeamTest {
     public void testNewGroupConstructor() {
         assertNotNull(team);
     }
+
+    @Test
+    public void testGroupToString() {
+        assertEquals("Students in \"Team\" group:\n\nTeam coins: 100", team.toString());
+    }
+    
 }
