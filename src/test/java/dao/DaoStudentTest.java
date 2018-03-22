@@ -45,11 +45,11 @@ public class DaoStudentTest extends DaoTest{
 
     @Test
     public void testImportStudent() {
-        int id = 9;
+        int id = 7;
         Student student = dao.importStudent(id);
-        String name = "Mariusz Trąbalski";
-        String password = "mariusz";
-        String email = "mariusz@cc.com";
+        String name = "Joanna Baran";
+        String password = "joanna";
+        String email = "joanna@cc.com";
         assertEquals(name, student.getName());
         assertEquals(password, student.getPassword());
         assertEquals(email, student.getEmail());
@@ -57,11 +57,11 @@ public class DaoStudentTest extends DaoTest{
 
     @Test
     public void testImportNewStudent() {
-        String email = "mariusz@cc.com";
+        String email = "joanna@cc.com";
         Student student = dao.importNewStudent(email);
-        int id = 9;
-        String name = "Mariusz Trąbalski";
-        String password = "mariusz";
+        int id = 7;
+        String name = "Joanna Baran";
+        String password = "joanna";
         assertEquals(id, student.getUserId());
         assertEquals(name, student.getName());
         assertEquals(password, student.getPassword());
