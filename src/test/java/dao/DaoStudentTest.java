@@ -1,15 +1,15 @@
 package dao;
 
 import model.Student;
+import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
-public class DaoStudentTest extends DaoTest{
+public class DaoStudentTest extends DaoTest {
 
     private DaoStudent dao;
 
@@ -27,20 +27,27 @@ public class DaoStudentTest extends DaoTest{
     }
 
     @Test
-    public void testCreateStudent() {
-        Student student = dao.createStudent(1, "A", "B", "C");
-        assertEquals(1, student.getUserId());
-        assertEquals("A", student.getName());
-        assertEquals("B", student.getPassword());
-        assertEquals("C", student.getEmail());
+    public void testCreateStudentUsingThreeParameters() {
+        String name = "Brand New Student";
+        String password = "test";
+        String email = "test_student_29@cc.com";
+        Student student = dao.createStudent(name, password, email);
+        assertEquals(name, student.getName());
+        assertEquals(password, student.getPassword());
+        assertEquals(email, student.getEmail());
     }
 
     @Test
-    public void testCreateStudent1() {
-        Student student = dao.createStudent("D", "F", "G");
-        assertEquals("D", student.getName());
-        assertEquals("F", student.getPassword());
-        assertEquals("G", student.getEmail());
+    public void testCreateStudentUsingFourParameters() {
+        int id = 1009;
+        String name = "Brand New Student";
+        String password = "test";
+        String email = "test_student_29@cc.com";
+        Student student = dao.createStudent(id, name, password, email);
+        assertEquals(id, student.getUserId());
+        assertEquals(name, student.getName());
+        assertEquals(password, student.getPassword());
+        assertEquals(email, student.getEmail());
     }
 
     @Test
@@ -70,41 +77,61 @@ public class DaoStudentTest extends DaoTest{
 
     @Test
     public void testExportStudent() {
-        assertTrue(dao.exportStudent(new Student("F", "D", "C")));
+        assertTrue(dao.exportStudent(createStudentWhichIsNotInDatabase()));
+    }
+
+    @Test
+    public void testExportStudentWithSQLInjectionInParameters() {
+        assertTrue(dao.exportStudent(createStudentWithSQLInjectionInParameters()));
     }
 
     @Test
     public void testUpdateStudent() {
-        Student student = dao.importStudent(9);
-        assertTrue(dao.updateStudent(student));
+        assertTrue(dao.updateStudent(createStudentThatAlreadyExistsInDatabase()));
     }
 
     @Test
+    public void testUpdateStudentWithSQLInjectionInParameters() {
+        assertTrue(dao.updateStudent(createStudentWithSQLInjectionInParameters()));
+    }
+    
+    @Test
     public void testGetRoleID() {
-        assertEquals(3, dao.getRoleID("student"));
-        assertEquals(2, dao.getRoleID("mentor"));
-        assertEquals(1, dao.getRoleID("admin"));
-        assertEquals(0, dao.getRoleID(" "));
+        int classId = dao.getRoleID("student");
+        int expectedClassId = 3;
+        assertEquals(expectedClassId, classId);
     }
 
     @Test
     public void getAllStudents() {
-        List<Student> students = new ArrayList<>();
-        Student student0 = dao.importStudent(5);
-        Student student1 = dao.importStudent(6);
-        Student student2 = dao.importStudent(7);
-        Student student3 = dao.importStudent(8);
-        Student student4 = dao.importStudent(9);
-        students.add(student0);
-        students.add(student1);
-        students.add(student2);
-        students.add(student3);
-        students.add(student4);
-        List<Student> importedStudents = dao.getAllStudents();
-        assertEquals(students.get(0).getName(), importedStudents.get(0).getName());
-        assertEquals(students.get(1).getName(), importedStudents.get(1).getName());
-        assertEquals(students.get(2).getName(), importedStudents.get(2).getName());
-        assertEquals(students.get(3).getName(), importedStudents.get(3).getName());
-        assertEquals(students.get(4).getName(), importedStudents.get(4).getName());
+        List<Student> artifacts = dao.getAllStudents();
+        assertNotNull(artifacts);
+        artifacts.forEach(Assert::assertNotNull);
+        assertTrue(artifacts
+                .stream().filter(a -> a.getEmail().equals("jadzia@cc.com"))
+                .collect(Collectors.toList())
+                .size() > 0);
+    }
+
+    private Student createStudentWhichIsNotInDatabase() {
+        String name = "Brand New Student";
+        String password = "test";
+        String email = "test_student@cc.com";
+        return new Student(name, password, email);
+    }
+
+    private Student createStudentThatAlreadyExistsInDatabase() {
+        Integer id = 8;
+        String name = "Jadzia Kot";
+        String password = "jadzia";
+        String email = "jadzia@cc.com";
+        return new Student(id, name, password, email);
+    }
+
+    private Student createStudentWithSQLInjectionInParameters() {
+        String name = "Jadzia OR 1=1";
+        String password = "109 OR 1=1";
+        String email = "test_johnSQL_student@test.com";
+        return new Student(name, password, email);
     }
 }
