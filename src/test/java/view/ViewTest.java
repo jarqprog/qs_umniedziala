@@ -3,7 +3,11 @@ package view;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.MethodRule;
+import org.junit.rules.TestWatchman;
+import org.junit.runners.model.FrameworkMethod;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -60,4 +64,11 @@ public class ViewTest {
         assertEquals("one\ntwo", outContent.toString().trim());
 
     }
+
+    @Rule
+    public MethodRule watchman = new TestWatchman() {
+        public void starting(FrameworkMethod method) {
+            System.out.println("Starting test: " + method.getName());
+        }
+    };
 }
