@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 
-public class WalletTest {
+public class WalletTest extends ModelTest {
 
    private Student student;
    private Artifact artifact;
@@ -72,9 +73,8 @@ public class WalletTest {
 
     @Test
     public void addNewArtifact() {
-        artifact = new Artifact (2, "Blind glasses",123,
-                                "when are worn you are blind", "Individual");
-        student.getWallet().addNewArtifact(artifact);
+        Artifact newArtifact = mock(Artifact.class);
+        student.getWallet().addNewArtifact(newArtifact);
         assertEquals(2, student.getWallet().getNewArtifacts().size());
 
     }
@@ -105,6 +105,4 @@ public class WalletTest {
         student.getWallet().addUsedArtifact(artifact);
         assertEquals(1, student.getWallet().getUsedArtifacts().size());
     }
-
-
 }

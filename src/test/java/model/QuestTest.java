@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class QuestTest {
+public class QuestTest extends ModelTest {
 
     private Quest quest;
 

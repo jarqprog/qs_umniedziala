@@ -1,17 +1,13 @@
 package model;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.MethodRule;
-import org.junit.rules.TestWatchman;
-import org.junit.runners.model.FrameworkMethod;
 
 import static org.junit.Assert.*;
 
-public class ArtifactTest {
+public class ArtifactTest extends ModelTest {
 
-    Artifact artifact;
+    private Artifact artifact;
 
     @Before
     public void createArtifact() {
@@ -78,12 +74,4 @@ public class ArtifactTest {
     public void testToString() {
         assertEquals("Item id: 1, name: test, value: 100, description: desc, type: type", artifact.toString());
     }
-
-    @Rule
-    public MethodRule watchman = new TestWatchman() {
-        public void starting(FrameworkMethod method) {
-            System.out.println("Starting test: " + method.getName());
-        }
-    };
-
 }
