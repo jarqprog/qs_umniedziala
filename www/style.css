@@ -1,0 +1,148 @@
+@font-face {
+  font-family: bitwise;
+  src: url(fonts/old.ttf);
+}
+
+
+body {
+    background-color: black;
+    font-family: bitwise;
+    color: rgb(50,205,50);
+}
+
+/* header elements: */
+
+header {
+    position: static;
+    width: 100%;
+    padding: 5px;
+}
+
+ #logo {
+     float: left;
+     margin-left: 40px;
+     margin-top: -10px;
+ }
+
+ #title {
+     float:left;
+     margin-left: 50px;
+     margin-top: -80px;
+     text-align: justify;
+     color: rgb(154,205,50);
+
+ }
+
+ #title-main {
+     font-size: 56px;
+     font-variant: small-caps;
+ }
+
+#title-description {
+    margin-top: -90px;
+    font-size: 24px;
+}
+
+#header-right-box {
+    position: absolute;
+    right: 0px;
+    margin-top: -20px;
+    float: left;
+    padding: 5px;
+    font-size: 16px;
+    text-align: right;
+}
+
+#calendar {
+    clear: both;
+}
+
+#user-and-login-button {
+    clear: both;
+    margin-top: -20px;
+}
+
+#user {
+    float: left;
+    margin-top: -10px;
+    padding: 5px;
+    color: rgb(154,205,50);
+}
+
+#login-button {
+    float: left;
+    margin-top: -10px;
+    padding: 5px;
+}
+
+/* main content: */
+
+main {
+    clear: both;
+    width: 100%;
+    min-height: 60%;
+    min-height: 60vh;
+    text-align: justify;
+    padding: 5px;
+    font-size: 18px;
+}
+
+#main-menu-box {
+    float: left;
+    width: 8%;
+    height: 100%;
+}
+
+.main-menu-button {
+    clear: both;
+    margin-left: 60px;
+    margin-bottom: 5px;
+    background-color: rgb(0,100,0);
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    border-color: black;
+    border-style: dotted;
+    border-width: 5px;
+}
+
+.main-menu-button:hover {
+    color: rgb(154,205,50);
+    background-color: rgb(34,139,34);
+    padding-right: 40px;
+}
+
+#main-content {
+    float: left;
+    min-height: 70%;
+    min-height: 70vh;
+    min-width: 70%;
+    background-color: #000a00;
+    margin-left: 145px;
+    padding: 5px;
+}
+
+/* footer: */
+
+footer {
+    clear: both;
+    position: absolute;
+    bottom: 0px;
+    text-align: left;
+    margin-left: 250px;
+    padding: 5px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.link {
+    cursor: pointer;
+    color: rgb(50,205,50);
+}
+
+.link:hover {
+    color: #ffffff;
+    color: rgb(154,205,50);
+    font-size: 110%;
+}
