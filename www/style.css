@@ -1,8 +1,10 @@
-@font-face {
-  font-family: bitwise;
-  src: url(fonts/old.ttf);
-}
 
+/* custom fonts */
+
+@font-face {
+    font-family: bitwise;
+    src: url(fonts/old.ttf);
+}
 
 body {
     background-color: black;
@@ -19,108 +21,125 @@ header {
 }
 
  #logo {
-     float: left;
-     margin-left: 40px;
-     margin-top: -10px;
+    float: left;
+    margin-left: 40px;
+    margin-top: -10px;
  }
 
  #title {
-     float:left;
-     margin-left: 50px;
-     margin-top: -80px;
-     text-align: justify;
-     color: rgb(154,205,50);
+    float:left;
+    margin-left: 30px;
+    text-align: justify;
+    color: rgb(154,205,50);
 
  }
 
  #title-main {
-     font-size: 56px;
-     font-variant: small-caps;
+    margin-top: -50px;
+    font-size: 56px;
+    font-variant: small-caps;
  }
 
 #title-description {
-    margin-top: -90px;
+    margin-top: -70px;
     font-size: 24px;
 }
 
 #header-right-box {
+    width: 20%;
     position: absolute;
     right: 0px;
-    margin-top: -20px;
-    float: left;
     padding: 5px;
-    font-size: 16px;
-    text-align: right;
 }
 
 #calendar {
-    clear: both;
+    padding: 5px;
+    text-align: right;
+    font-size: 22px;
 }
 
 #user-and-login-button {
-    clear: both;
-    margin-top: -20px;
+    position: absolute;
+    right: 0px;
+    font-size: 22px;
+    padding: 5px;
 }
 
 #user {
     float: left;
-    margin-top: -10px;
+    margin-top: 3px;
+    margin-right: 10px;
     padding: 5px;
     color: rgb(154,205,50);
+    text-align: right;
 }
 
 #login-button {
     float: left;
-    margin-top: -10px;
     padding: 5px;
+    background-color: rgb(0,100,0);
+    border-style: dotted;
+    border-color: black;
+    border-width: 2px;
+    text-align: right;
+}
+
+
+#login-button:hover {
+    color: rgb(154,205,50);
+    background-color: rgb(34,139,34);
 }
 
 /* main content: */
 
 main {
-    clear: both;
     width: 100%;
     min-height: 60%;
     min-height: 60vh;
     text-align: justify;
-    padding: 5px;
     font-size: 18px;
+    border-color: green;
+    border-style: solid;
+    border-width: 1px;
+    border-bottom-width: 2px;
+    display: flex;
 }
 
 #main-menu-box {
     float: left;
-    width: 8%;
-    height: 100%;
+    width: 230px;
+    height: auto;
+    border-color: green;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .main-menu-button {
     clear: both;
-    margin-left: 60px;
-    margin-bottom: 5px;
     background-color: rgb(0,100,0);
-    height: 20px;
-    width: 100%;
     text-align: center;
     padding: 5px;
     border-color: black;
     border-style: dotted;
-    border-width: 5px;
+    border-width: 2px;
 }
 
 .main-menu-button:hover {
     color: rgb(154,205,50);
     background-color: rgb(34,139,34);
-    padding-right: 40px;
+    padding-left: 80px;
 }
 
 #main-content {
     float: left;
     min-height: 70%;
     min-height: 70vh;
-    min-width: 70%;
+    width: 100%;
     background-color: #000a00;
-    margin-left: 145px;
-    padding: 5px;
+    border-color: green;
+    border-style: solid;
+    border-width: 1px;
+    padding-left: 15px;
 }
 
 /* footer: */
@@ -130,7 +149,7 @@ footer {
     position: absolute;
     bottom: 0px;
     text-align: left;
-    margin-left: 250px;
+    margin-left: 230px;
     padding: 5px;
     text-align: left;
     font-size: 16px;
