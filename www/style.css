@@ -53,8 +53,9 @@ header {
 }
 
 #calendar {
+    width: 150px;
     padding: 5px;
-    text-align: right;
+    text-align: center;
     font-size: 22px;
 }
 
@@ -167,6 +168,38 @@ footer {
     font-size: 110%;
 }
 
+/* login */
+
+form {
+  width: 300px;
+  text-align: center;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type=text],
+input[type=password] {
+  background-color: chartreuse;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 3px;
+}
+
+input[type=text]:hover {
+  background-color: darkgreen;
+  color: white;
+}
+
+input[type=submit] {
+  background-color: darkgreen;
+  margin-top: 15px;
+  border-color: dimgray;
+  border-radius: 5px;
+  padding: 5px 15px;
 /* user profile: */
 
 .user-name {
