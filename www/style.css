@@ -20,13 +20,6 @@ header {
     padding: 5px;
 }
 
-.option-header {
-  font-size: 60px;
-  width: 400px;
-  margin: 0;
-  padding: 0;
-}
-
  #logo {
     float: left;
     margin-left: 40px;
@@ -139,6 +132,7 @@ main {
 }
 
 #main-content {
+    text-align: center;
     float: left;
     min-height: 70%;
     min-height: 70vh;
@@ -151,8 +145,12 @@ main {
 }
 
 #main-content > h1 {
-    margin-left: 475px;
     font-size: 100px;
+    margin: 1px;
+}
+
+#main-content > p {
+    margin: 3px;
 }
 
 /* footer: */
@@ -213,8 +211,13 @@ input[type=submit] {
   border-color: dimgray;
   border-radius: 5px;
   padding: 5px 15px;
-
 }
+
+input[type=radio] {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 /* user profile: */
 
 .user-name {
@@ -238,4 +241,8 @@ input[type=text] {
 input[type=text]:hover {
   background-color: darkgreen;
   color: white;
+}
+
+#number {
+  display: inline;
 }
