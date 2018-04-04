@@ -31,7 +31,6 @@
         <div id="header-right-box">
 
             <div id="calendar">
-                <div id="calendar">
                 <!-- java script calendar function -->
                 <script language="javascript">
                     new imageclock.display()
@@ -57,25 +56,31 @@
         <!-- menu -->
 
         <div id="main-menu-box">
-            <div class="main-menu-button"><a href="create_mentor.html" class="link">Create mentor</a></div>
-            <div class="main-menu-button"><a href="create_class.html" class="link">Create class</a></div>
-            <div class="main-menu-button"><a href="edit_mentor.html" class="link">Edit mentor</a></div>
-            <div class="main-menu-button"><a href="display_mentor.html" class="link">See mentor data</a></div>
-            <div class="main-menu-button"><a href="create_level.html" class="link">Create level of expirence</a></div>
+            <div class="main-menu-button"><a href="create_student.html" class="link">Create student</a></div>
+            <div class="main-menu-button"><a href="create_team.html" class="link">Create team</a></div>
+            <div class="main-menu-button"><a href="add_quest.html" class="link">Add quest</a></div>
+            <div class="main-menu-button"><a href="add_artifact.html" class="link">Add artifact</a></div>
+            <div class="main-menu-button"><a href="update_quest.html" class="link">Update quest</a></div>
+            <div class="main-menu-button"><a href="update_artifact.html" class="link">Update artifact</a></div>
+            <div class="main-menu-button"><a href="mark_quest.html" class="link">Mark quest</a></div>
+            <div class="main-menu-button"><a href="mark_bought_artifact.html" class="link">Mark bought artifact</a></div>
+            <div class="main-menu-button"><a href="see_all_wallets.html" class="link">See all wallets</a></div>
         </div>
 
 
+
         <div id="main-content">
-            <h1>Create mentor</h1>
-                    <input type="text" placeholder="First name">
-                    <br/><br/>
-                    <input type="text" placeholder="Last name">
-                    <br/><br/>
-                    <input type="password" placeholder="Password">
-                    <br/><br/>
-                    <input type="text" placeholder="Email">
-                    <br/><br/>
-                    <input type="submit" value="create">
+
+          <h1>Add artifact</h1>
+          <p>Enter name of new artifact:</p>
+          <input type="text" name="artifactname">
+          <p>Enter value of new artifact:</p>
+          <input type="text" name="value">
+          <p>Enter description of new artifact:</p>
+          <input type="text" name="desription"><br/>
+          <input type="radio" name="type" value="individual" checked> Individual
+          <input type="radio" name="type" value="team"> Team<br/>
+          <input type="submit" value="Send">
 
         </div>
         <!-- content -end-->
