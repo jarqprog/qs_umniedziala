@@ -20,6 +20,13 @@ header {
     padding: 5px;
 }
 
+.option-header {
+  font-size: 60px;
+  width: 400px;
+  margin: 0;
+  padding: 0;
+}
+
  #logo {
     float: left;
     margin-left: 40px;
@@ -181,7 +188,7 @@ form {
   transform: translate(-50%, -50%);
 }
 
-input[type=text],
+input[type=login],
 input[type=password] {
   background-color: chartreuse;
   text-align: center;
@@ -189,7 +196,7 @@ input[type=password] {
   border-radius: 3px;
 }
 
-input[type=text]:hover,
+input[type=login]:hover,
 input[type=password]:hover {
   background-color: darkgreen;
   color: white;
@@ -211,4 +218,19 @@ input[type=submit] {
 
 .user-info {
     font-size: 25px;
+}
+
+/* Inputs */
+
+input[type=text] {
+  background-color: chartreuse;
+  text-align: center;
+  padding: 5px 20px;
+  border-radius: 3px;
+  margin: 5px;
+}
+
+input[type=text]:hover {
+  background-color: darkgreen;
+  color: white;
 }

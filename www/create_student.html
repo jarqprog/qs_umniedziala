@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="css/fontello.css" type="text/css"/>
     <script type="text/javascript" src="js/javascript.js"></script>
 
-
-
 </head>
 
 <body>
@@ -34,10 +32,6 @@
 
             <div id="calendar">
                 <!-- java script calendar function -->
-                <script language="javascript">
-                  new imageclock.display()
-                </script>
-                <br/>
                 <script language="javascript">displayCalendar()</script>
             </div>
 
@@ -57,18 +51,33 @@
 
         <!-- menu -->
 
+        <div id="main-menu-box">
+            <div class="main-menu-button"><a href="create_student.html" class="link">Create student</a></div>
+            <div class="main-menu-button"><a href="create_team.html" class="link">Create team</a></div>
+            <div class="main-menu-button"><a href="add_quest.html" class="link">Add quest</a></div>
+            <div class="main-menu-button"><a href="add_artifact.html" class="link">Add artifact</a></div>
+            <div class="main-menu-button"><a href="update_quest.html" class="link">Update quest</a></div>
+            <div class="main-menu-button"><a href="update_artifact.html" class="link">Update artifact</a></div>
+            <div class="main-menu-button"><a href="mark_quest.html" class="link">Mark quest</a></div>
+            <div class="main-menu-button"><a href="mark_bought_artifact.html" class="link">Mark bought artifact</a></div>
+            <div class="main-menu-button"><a href="see_all_wallets.html" class="link">See all wallets</a></div>
+        </div>
+
+
+
         <div id="main-content">
-          <div id="container">
-            <form>
-
-             <input type="login" placeholder="Enter login">
-             <br/><br/>
-             <input type="password" placeholder="Enter password">
-             <br/><br/>
-             <input type="submit" value="Send">
-
-           </form>
-         </div>
+          <h1 class="option-header">Create student</h1>
+          Enter name of new student:<br>
+          <input type="text" name="firstname"><br>
+          Enter password of new student:<br>
+          <input type="text" name="password"><br>
+          Enter email of new student:<br>
+          <input type="text" name="email"><br>
+          <strong>TODO
+            Tutaj lista dostepnych klas!!!</strong><br>
+          Enter id of chosen class:<br>
+          <input type="text" name="classId"><br>
+          <input type="submit" value="Send">
 
         </div>
         <!-- content -end-->
