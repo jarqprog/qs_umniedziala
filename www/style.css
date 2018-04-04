@@ -159,6 +159,7 @@ footer {
 .link {
     cursor: pointer;
     color: rgb(50,205,50);
+    text-decoration: none;
 }
 
 .link:hover {
@@ -199,4 +200,12 @@ input[type=submit] {
   border-color: dimgray;
   border-radius: 5px;
   padding: 5px 15px;
+/* user profile: */
+
+.user-name {
+    font-size: 75px;
+}
+
+.user-info {
+    font-size: 25px;
 }
