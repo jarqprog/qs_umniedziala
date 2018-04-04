@@ -189,7 +189,8 @@ input[type=password] {
   border-radius: 3px;
 }
 
-input[type=text]:hover {
+input[type=text]:hover,
+input[type=password]:hover {
   background-color: darkgreen;
   color: white;
 }
