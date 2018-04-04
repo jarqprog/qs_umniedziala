@@ -158,10 +158,21 @@ footer {
 .link {
     cursor: pointer;
     color: rgb(50,205,50);
+    text-decoration: none;
 }
 
 .link:hover {
     color: #ffffff;
     color: rgb(154,205,50);
     font-size: 110%;
+}
+
+/* user profile: */
+
+.user-name {
+    font-size: 75px;
+}
+
+.user-info {
+    font-size: 25px;
 }
