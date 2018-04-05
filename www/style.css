@@ -123,12 +123,28 @@ main {
     border-style: solid;
 }
 
+#main-content-edit-quest {
+    float: left;
+    width: 100%;
+    background-color: #000a00;
+    border-color: green;
+    border-style: solid;
+    max-height: 600px;
+}
+
+
 #main-login {
     background-color: #000a00;
     text-align: center;
 }
+#edit-quest-header{
+    text-align: center;
+    font-size: 100px;
+    margin: 0px;
+}
 
 #main-content > h1 {
+
     text-align: center;
     font-size: 56px;
     margin: 0;
@@ -222,4 +238,37 @@ input[type=text]:hover {
 
 #number {
   display: inline;
+}
+.pick-list{
+    float: left;
+    width: 50%;
+    height: 80%;
+    overflow-y:scroll;
+    padding-right: 2%;
+    }
+
+ul{
+    margin: 0px;
+    max-height: 45%;
+    font-size: 25px;
+}
+ul li:after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 10px;
+    background: white;
+}
+body::-webkit-scrollbar {
+    width: 1em;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(50,205,50);
+  outline: 1px solid slategrey;
+}
+body::-webkit-scroll {
+  background-color: rgb(50,205,50);
+  outline: 1px solid slategrey;
 }
