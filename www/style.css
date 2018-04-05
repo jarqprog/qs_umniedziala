@@ -144,13 +144,16 @@ main {
     padding-left: 15px;
 }
 
-#main-content > h1 {
-    font-size: 100px;
-    margin: 1px;
-}
-
 #main-content > p {
     margin: 3px;
+}
+
+#container {
+    align-content: center;  
+}
+
+#container > h1 {
+    font-size: 100px;
 }
 
 /* footer: */
