@@ -122,7 +122,7 @@ main {
 #main-login {
     background-color: #000a00;
     text-align: center;
-}   
+}
 
 #main-content > h1 {
     text-align: center;
@@ -146,14 +146,10 @@ main {
 /* footer: */
 
 #footer {
-    bottom: 0px;
-    text-align: center;
-    margin-left: 230px;
-    padding: 5px;
-    text-align: left;
-    font-size: 16px;
-    color: rgb(50,205,50);
+    width: 100%;
+    bottom:0px;
 }
+
 
 .link {
     cursor: pointer;
@@ -168,7 +164,7 @@ main {
 }
 
 
-input[type=login], 
+input[type=login],
 input[type=password] {
   background-color: chartreuse;
   text-align: center;
@@ -193,7 +189,7 @@ input[type=submit] {
 input[type=radio] {
   margin-top: 10px;
   margin-bottom: 10px;
-  
+
 }
 
 /* user profile: */
