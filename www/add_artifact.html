@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html lang=en-us>
+<head>
+    <meta charset="utf-8"/>
+    <title>Quest Store </title>
+    <meta name="description" content="Quest Store System website."/>
+    <meta name="keywords" content="it students, CodeCool"/>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <link rel="stylesheet" href="css/fontello.css" type="text/css"/>
+    <script type="text/javascript" src="js/javascript.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <!-- logo & Title -->
+        <div id="logo">
+            <img src="img/logo.jpg" alt="logo" style="height: 100px; width: 160px">
+        </div>
+
+        <div id="title">
+            <div id="title-main">
+                <p>Quest Store</p>
+            </div>
+
+            <div id="title-description">
+                <p>a system to make your life better</p>
+            </div>
+        </div>
+
+        <div id="header-right-box">
+
+            <div id="calendar">
+                <!-- java script calendar function -->
+                <script language="javascript">
+                    new imageclock.display()
+                </script>
+                <br/>
+                <script language="javascript">displayCalendar()</script>
+            </div>
+
+            <div id="user-and-login-button">
+                <div id="user">
+                    <script language="javascript">displayUser()</script>
+                </div>
+                <div class="link" id="login-button">
+                    <script language="javascript">displayLoginButton()</script>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- content -->
+
+        <!-- menu -->
+
+        <div id="main-menu-box">
+            <div class="main-menu-button"><a href="create_student.html" class="link">Create student</a></div>
+            <div class="main-menu-button"><a href="create_team.html" class="link">Create team</a></div>
+            <div class="main-menu-button"><a href="add_quest.html" class="link">Add quest</a></div>
+            <div class="main-menu-button"><a href="add_artifact.html" class="link">Add artifact</a></div>
+            <div class="main-menu-button"><a href="update_quest.html" class="link">Update quest</a></div>
+            <div class="main-menu-button"><a href="update_artifact.html" class="link">Update artifact</a></div>
+            <div class="main-menu-button"><a href="mark_quest.html" class="link">Mark quest</a></div>
+            <div class="main-menu-button"><a href="mark_bought_artifact.html" class="link">Mark bought artifact</a></div>
+            <div class="main-menu-button"><a href="see_all_wallets.html" class="link">See all wallets</a></div>
+        </div>
+
+
+
+        <div id="main-content">
+
+          <h1>Add artifact</h1>
+          <p>Enter name of new artifact:</p>
+          <input type="text" name="artifactname">
+          <p>Enter value of new artifact:</p>
+          <input type="text" name="value">
+          <p>Enter description of new artifact:</p>
+          <input type="text" name="desription"><br/>
+          <input type="radio" name="type" value="individual" checked> Individual
+          <input type="radio" name="type" value="team"> Team<br/>
+          <input type="submit" value="Send">
+
+        </div>
+        <!-- content -end-->
+    </main>
+
+    <footer>
+        COPYRIGHT &copy; 2018 Quest Store System. Contact information: <a class="link" href="mailto:jarqprog@gmail.com"><i class="icon-mail-3"></i></a> authors: Szyfratorzy team
+    </footer>
+</body>
+</html>
