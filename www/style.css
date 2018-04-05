@@ -130,6 +130,14 @@ main {
     font-size: 56px;
 }
 
+#container {
+    align-content: center;  
+}
+
+#container > h1 {
+    font-size: 100px;
+}
+
 /* footer: */
 
 #footer {
@@ -187,6 +195,7 @@ input[type=submit] {
   border-color: dimgray;
   border-radius: 5px;
   /* padding: 5px 15px; */
+}
 
 input[type=radio] {
   margin-top: 10px;
