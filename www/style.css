@@ -272,3 +272,9 @@ body::-webkit-scroll {
   background-color: rgb(50,205,50);
   outline: 1px solid slategrey;
 }
+#song{
+    float: left;
+    max-width: 50px;
+
+
+}
