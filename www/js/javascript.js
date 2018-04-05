@@ -28,6 +28,7 @@ function displayCalendar() {
 function displayLoginButton() {
     // implement function!
     // if user isn't logged: "login" else: "logout"
+    // var url = document.URL;
 
     var toDisplay = "logout";
     return toDisplay;
