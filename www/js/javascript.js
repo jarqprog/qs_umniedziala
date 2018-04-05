@@ -3,7 +3,6 @@ var displayUser = function() {
     if(user == 'undefined') {
         user = "";
     }
-    // document.write(user);
     return user;
 }
 
