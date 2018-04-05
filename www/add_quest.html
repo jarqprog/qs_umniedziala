@@ -13,52 +13,56 @@
 
 <body>
 
-
-    <!-- header -->
-    <object id="header" name="header" type="text/html" data="header.html"></object>
+    <div id="container">
 
 
-    <main>
-        <!-- content -->
-
-        <!-- menu -->
-
-        <div id="main-menu-box">
-            <div class="main-menu-button"><a href="create_student.html" class="link">Create student</a></div>
-            <div class="main-menu-button"><a href="create_team.html" class="link">Create team</a></div>
-            <div class="main-menu-button"><a href="add_quest.html" class="link">Add quest</a></div>
-            <div class="main-menu-button"><a href="add_artifact.html" class="link">Add artifact</a></div>
-            <div class="main-menu-button"><a href="update_quest.html" class="link">Update quest</a></div>
-            <div class="main-menu-button"><a href="update_artifact.html" class="link">Update artifact</a></div>
-            <div class="main-menu-button"><a href="mark_quest.html" class="link">Mark quest</a></div>
-            <div class="main-menu-button"><a href="mark_bought_artifact.html" class="link">Mark bought artifact</a></div>
-            <div class="main-menu-button"><a href="see_all_wallets.html" class="link">See all wallets</a></div>
-        </div>
+        <!-- header -->
+        <object id="header" name="header" type="text/html" data="header.html"></object>
 
 
+        <main>
+            <!-- content -->
 
-        <div id="main-content">
+            <!-- menu -->
 
-          <h1>Add quest</h1>
-          <p>Enter name of new quest:</p>
-          <input type="text" name="questname">
-          <p>Enter value of new quest:</p>
-          <input type="text" name="value">
-          <p>Enter description of quest:</p>
-          <input type="text" name="description"><br/>
-          <input type="radio" name="type" value="individual" checked> Individual
-          <input type="radio" name="type" value="team"> Team<br/>
-          <p id="number">Choose category: 1. Basic 2. Extra</p>
-          <input type="number" name="quantity" min="1" max="2" value="1"><br/>
-          <input type="submit" value="Send">
-
-        </div>
-        <!-- content -end-->
-    </main>
+            <div id="main-menu-box">
+                <div class="main-menu-button"><a href="create_student.html" class="link">Create student</a></div>
+                <div class="main-menu-button"><a href="create_team.html" class="link">Create team</a></div>
+                <div class="main-menu-button"><a href="add_quest.html" class="link">Add quest</a></div>
+                <div class="main-menu-button"><a href="add_artifact.html" class="link">Add artifact</a></div>
+                <div class="main-menu-button"><a href="update_quest.html" class="link">Update quest</a></div>
+                <div class="main-menu-button"><a href="update_artifact.html" class="link">Update artifact</a></div>
+                <div class="main-menu-button"><a href="mark_quest.html" class="link">Mark quest</a></div>
+                <div class="main-menu-button"><a href="mark_bought_artifact.html" class="link">Mark bought artifact</a></div>
+                <div class="main-menu-button"><a href="see_all_wallets.html" class="link">See all wallets</a></div>
+            </div>
 
 
-    <!-- footer -->
-    <object id="footer" name="footer" type="text/html" data="footer.html"></object>
+
+            <div id="main-content">
+
+              <h1>Add quest</h1>
+              <p>Enter name of new quest:</p>
+              <input type="text" name="questname">
+              <p>Enter value of new quest:</p>
+              <input type="text" name="value">
+              <p>Enter description of quest:</p>
+              <input type="text" name="description"><br/>
+              <input type="radio" name="type" value="individual" checked> Individual
+              <input type="radio" name="type" value="team"> Team<br/>
+              <p id="number">Choose category: 1. Basic 2. Extra</p>
+              <input type="number" name="quantity" min="1" max="2" value="1"><br/>
+              <input type="submit" value="Send">
+
+            </div>
+            <!-- content -end-->
+        </main>
+
+
+        <!-- footer -->
+        <object id="footer" name="footer" type="text/html" data="footer.html"></object>
+
+    </div>
 
 </body>
 </html>
