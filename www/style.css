@@ -14,10 +14,15 @@ body {
 
 /* header elements: */
 
-header {
-    position: static;
+#container {
+    height: 100%;
     width: 100%;
-    padding: 5px;
+}
+
+#header {
+    height: 15%;
+    height: 15vh;
+    width: 100%;
 }
 
  #logo {
@@ -31,11 +36,10 @@ header {
     margin-left: 30px;
     text-align: justify;
     color: rgb(154,205,50);
-
  }
 
  #title-main {
-    margin-top: -50px;
+    margin-top: -60px;
     font-size: 56px;
     font-variant: small-caps;
  }
@@ -46,45 +50,21 @@ header {
 }
 
 #header-right-box {
-    width: 20%;
-    position: absolute;
+    float:right;;
+    position: static;
     right: 0px;
-    padding: 5px;
+    padding-right: 10px;
 }
 
-#calendar {
-    width: 150px;
-    padding: 5px;
-    text-align: center;
-    font-size: 22px;
-}
-
-#user-and-login-button {
-    position: absolute;
-    right: 0px;
-    font-size: 22px;
-    padding: 5px;
-}
-
-#user {
-    float: left;
-    margin-top: 3px;
-    margin-right: 10px;
-    padding: 5px;
-    color: rgb(154,205,50);
+#calendar-clock {
     text-align: right;
+    font-size: 22px;
 }
 
 #login-button {
-    float: left;
-    padding: 5px;
-    background-color: rgb(0,100,0);
-    border-style: dotted;
-    border-color: black;
-    border-width: 2px;
     text-align: right;
+    font-size: 22px;
 }
-
 
 #login-button:hover {
     color: rgb(154,205,50);
@@ -95,8 +75,8 @@ header {
 
 main {
     width: 100%;
-    min-height: 60%;
-    min-height: 60vh;
+    min-height: 65%;
+    min-height: 65vh;
     text-align: justify;
     font-size: 18px;
     border-color: green;
@@ -126,45 +106,69 @@ main {
 }
 
 .main-menu-button:hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 150%;
     color: rgb(154,205,50);
     background-color: rgb(34,139,34);
-    padding-left: 80px;
+    height: +10%;
 }
 
 #main-content {
-    text-align: center;
     float: left;
-    min-height: 70%;
-    min-height: 70vh;
     width: 100%;
     background-color: #000a00;
     border-color: green;
     border-style: solid;
-    border-width: 1px;
-    padding-left: 15px;
+}
+
+#main-content-edit-quest {
+    float: left;
+    width: 100%;
+    background-color: #000a00;
+    border-color: green;
+    border-style: solid;
+}
+
+
+#main-login {
+    background-color: #000a00;
+    text-align: center;
+}
+#edit-quest-header{
+    text-align: center;
+    font-size: 100px;
+    margin: 0px;
 }
 
 #main-content > h1 {
-    font-size: 100px;
-    margin: 1px;
+
+    text-align: center;
+    font-size: 56px;
+    margin: 0;
 }
 
-#main-content > p {
-    margin: 3px;
+#main-inner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+#main-inner-container > h1 {
+    font-size: 100px;
+    margin: 0;
 }
 
 /* footer: */
 
-footer {
-    clear: both;
-    position: absolute;
-    bottom: 0px;
-    text-align: left;
-    margin-left: 230px;
-    padding: 5px;
-    text-align: left;
-    font-size: 16px;
+#footer {
+    width: 100%;
+    bottom:0px;
 }
+
 
 .link {
     cursor: pointer;
@@ -178,24 +182,12 @@ footer {
     font-size: 110%;
 }
 
-/* login */
-
-form {
-  width: 300px;
-  text-align: center;
-  padding: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-}
 
 input[type=login],
 input[type=password] {
   background-color: chartreuse;
   text-align: center;
-  padding: 10px 20px;
+  padding: 5px 20px;
   border-radius: 3px;
 }
 
@@ -207,15 +199,15 @@ input[type=password]:hover {
 
 input[type=submit] {
   background-color: darkgreen;
-  margin-top: 15px;
   border-color: dimgray;
   border-radius: 5px;
-  padding: 5px 15px;
+  margin-bottom: 10px;
 }
 
 input[type=radio] {
   margin-top: 10px;
   margin-bottom: 10px;
+
 }
 
 /* user profile: */
@@ -245,4 +237,14 @@ input[type=text]:hover {
 
 #number {
   display: inline;
+}
+.pick-list{
+    float: left;
+    margin-right: 15%;
+    width: 50%;
+    padding: 0px;
+    }
+
+ol{
+    margin: 0px;
 }
