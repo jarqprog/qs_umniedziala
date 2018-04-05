@@ -1,19 +1,10 @@
-function changeLogo() {
-    // not used yet
-    if (document.getElementById("imgClickAndChange").src == "./img/logo.jpg") {
-        document.getElementById("imgClickAndChange").src = "./img/bean.jpg";
-    } else {
-        document.getElementById("imgClickAndChange").src = "./img/logo.jpg";
-    }
-}
-
-function displayUser() {
-    var toDisplay = "user online: ";
+var displayUser = function() {
     var user = "Konrad Gadzina";
     if(user == 'undefined') {
-        user = "n/a";
+        user = "";
     }
-    document.write(toDisplay + user);
+    // document.write(user);
+    return user;
 }
 
 function displayCalendar() {
@@ -33,7 +24,7 @@ function displayCalendar() {
     }
 
     today = dd + '-' + mm + '-' + yyyy;
-    document.write(today);
+    return today;
 }
 
 function displayLoginButton() {
@@ -41,7 +32,7 @@ function displayLoginButton() {
     // if user isn't logged: "login" else: "logout"
 
     var toDisplay = "logout";
-    document.write(toDisplay);
+    return toDisplay;
 }
 
 /***********************************************
@@ -90,5 +81,4 @@ var imageclock=new Object()
 		var currenttime=dateobj.getHours()+":"+dateobj.getMinutes()+":"+dateobj.getSeconds() //create time string
 		var currenttimeHTML=imageclock.imageHTML(currenttime)+'<img src="'+((dateobj.getHours()>=12)? imageclock.digits[11] : imageclock.digits[10])+'" />'
 		document.getElementById(this.spanid).innerHTML=currenttimeHTML
-
 	}
