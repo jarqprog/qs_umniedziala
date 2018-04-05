@@ -110,7 +110,6 @@ main {
     justify-content: center;
     align-items: center;
     font-size: 150%;
-    text-decoration-color:
     color: rgb(154,205,50);
     background-color: rgb(34,139,34);
     height: +10%;
@@ -124,12 +123,27 @@ main {
     border-style: solid;
 }
 
+#main-content-edit-quest {
+    float: left;
+    width: 100%;
+    background-color: #000a00;
+    border-color: green;
+    border-style: solid;
+}
+
+
 #main-login {
     background-color: #000a00;
     text-align: center;
 }
+#edit-quest-header{
+    text-align: center;
+    font-size: 100px;
+    margin: 0px;
+}
 
 #main-content > h1 {
+
     text-align: center;
     font-size: 56px;
     margin: 0;
@@ -223,4 +237,14 @@ input[type=text]:hover {
 
 #number {
   display: inline;
+}
+.pick-list{
+    float: left;
+    margin-right: 15%;
+    width: 50%;
+    padding: 0px;
+    }
+
+ol{
+    margin: 0px;
 }
