@@ -14,6 +14,11 @@ body {
 
 /* header elements: */
 
+#container {
+    height: 100%;
+    width: 100%;
+}
+
 #header {
     height: 15%;
     height: 15vh;
@@ -31,7 +36,6 @@ body {
     margin-left: 30px;
     text-align: justify;
     color: rgb(154,205,50);
-
  }
 
  #title-main {
@@ -130,8 +134,8 @@ main {
     font-size: 56px;
 }
 
-#container {
-    align-content: center;  
+#main-inner-container {
+    align-content: center;
 }
 
 #container > h1 {
