@@ -8,7 +8,6 @@
     <div id="logo">
         <img src="img/logo.jpg" alt="logo" style="height: 100px; width: 160px">
     </div>
-
     <div id="title">
         <div id="title-main">
             <p>Quest Store</p>
@@ -20,7 +19,6 @@
     </div>
 </a>
 <div id="header-right-box">
-
     <div id="calendar-clock">
         <!-- java script calendar function -->
             <script>
@@ -32,15 +30,21 @@
             </script>
         </p>
     </div>
-
-
-
-
-    <div id="song">
-        <a href="music/8-Bit Medieval - Original -.mp3"><img src="img/lutnia.png" alt="music button" style= "height:50px; width:50px;"></a>
-
-    </div>
-
-    <a href="system-req.html" target="_top" class="link"><div class="main-menu-button">System Requirements</div></a>
-
+    <a href="system-req.html" target="_top" class="link"><div class="main-menu-button" style="font-size:24px; background-color:transparent; text-align: left;">System Requirements</div></a>
 </div>
+
+<!-- music -->
+<a href="javascript:playMusic();"><img src="img/lutnia.png" alt="music button" style="height:50px; width:50px;" onclick="playMusic()" ondblclick="stopMusic()"></a>
+
+<audio id="audiotag1" src="music/8-Bit Medieval - Original -.mp3" preload="auto"></audio>
+<script type="text/javascript">
+	function playMusic() {
+        document.getElementById('audiotag1').src="music/8-Bit Medieval - Original -.mp3";
+		var ourMusic = document.getElementById('audiotag1');
+        ourMusic.play();
+
+	}
+    function stopMusic() {
+        document.getElementById('audiotag1').src="";
+    }
+</script>
