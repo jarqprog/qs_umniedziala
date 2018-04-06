@@ -215,10 +215,12 @@ input[type=radio] {
 
 .user-name {
     font-size: 75px;
+    padding-left: 15px;
 }
 
 .user-info {
     font-size: 25px;
+    padding-left: 15px;
 }
 
 /* Inputs */
@@ -258,8 +260,9 @@ ul li:after {
     height: 1px;
     width: 100%;
     margin: 10px;
-    background: white;
+    background: rgb(30,105,50);;
 }
+
 body::-webkit-scrollbar {
     width: 1em;
 }
@@ -271,4 +274,24 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scroll {
   background-color: rgb(50,205,50);
   outline: 1px solid slategrey;
+}
+
+
+.pick-list::-webkit-scrollbar {
+    width: 1em;
+}
+
+.pick-list::-webkit-scrollbar-thumb {
+  background-color: rgb(50,205,50);
+  outline: 1px solid slategrey;
+}
+.pick-list::-webkit-scroll {
+  background-color: rgb(50,205,50);
+  outline: 1px solid slategrey;
+}
+
+
+#song{
+    float: left;
+    max-width: 50px;
 }
