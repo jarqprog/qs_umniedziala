@@ -1,8 +1,8 @@
 package server;
 
-import com.codecool.krk.helpers.MimeTypeResolver;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import server.helpers.MimeTypeResolver;
 
 import java.io.File;
 import java.io.FileInputStream;
