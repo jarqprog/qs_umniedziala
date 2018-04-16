@@ -1,5 +1,6 @@
 package server;
 
+
 import server.helpers.MimeTypeResolver;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

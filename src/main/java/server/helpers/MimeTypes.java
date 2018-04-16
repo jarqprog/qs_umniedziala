@@ -43,7 +43,7 @@ public class MimeTypes {
     public static final String MIME_APPLICATION_X_FUTURESPLASH  = "application/x-futuresplash";
     public static final String MIME_APPLICATION_X_GTAR      = "application/x-gtar";
     public static final String MIME_APPLICATION_X_HDF     = "application/x-hdf";
-    public static final String MIME_APPLICATION_X_JAVASCRIPT  = "application/javascript";
+    public static final String MIME_APPLICATION_X_JAVASCRIPT  = "application/x-javascript";
     public static final String MIME_APPLICATION_X_KOAN      = "application/x-koan";
     public static final String MIME_APPLICATION_X_LATEX     = "application/x-latex";
     public static final String MIME_APPLICATION_X_NETCDF    = "application/x-netcdf";
@@ -297,7 +297,37 @@ public class MimeTypes {
                 put1("dll", MIME_APPLICATION_OCTET_STREAM);
                 put1("class", MIME_APPLICATION_OCTET_STREAM);
                 put1("jar", MIME_APPLICATION_JAVA_ARCHIVE);
-            }};
+                put1("ttf",MIME_APPLICATION_OCTET_STREAM);
+                }};
+    }
+
+    public static void main(String[] args) {
+        System.out.println(mimeTypeMapping.size());
+    }
+
+    /**
+     * Registers MIME type for provided extension. Existing extension type will be overriden.
+     */
+    public static void registerMimeType(String ext, String mimeType) {
+        mimeTypeMapping.put(ext, mimeType);
+    }
+
+    /**
+     * Returns the corresponding MIME type to the given extension.
+     * If no MIME type was found it returns 'application/octet-stream' type.
+     */
+    public static String getMimeType(String ext) {
+        String mimeType = lookupMimeType(ext);
+        if (mimeType == null) {
+            mimeType = MIME_APPLICATION_OCTET_STREAM;
+        }
+        return mimeType;
+    }
+
+    /**
+     * Simply returns MIME type or <code>null</code> if no type is found.
+     */
+    public static String lookupMimeType(String ext) {
+        return mimeTypeMapping.get(ext.toLowerCase());
     }
 }
-
