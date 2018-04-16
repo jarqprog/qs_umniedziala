@@ -1,11 +1,3 @@
-var displayUser = function() {
-    var user = "Konrad Gadzina";
-    if(user == 'undefined') {
-        user = "";
-    }
-    return user;
-}
-
 function displayCalendar() {
 
     var today = new Date();
@@ -25,13 +17,23 @@ function displayCalendar() {
     return today;
 }
 
-function displayLoginButton() {
-    // implement function!
-    // if user isn't logged: "login" else: "logout"
-    // var url = document.URL;
+function welcomeUser() {
+    var url = document.URL;
+    var admin = "user-admin";
+    var mentor = "user-mentor";
+    var student = "user-student";
+    var user;
+    if(url.includes(admin)) {
+        user = "Admin Admin";
+    }
+    else if(url.includes(mentor)) {
+        user = "Konrad Gadzina";
+    }
+    else {
+        user = "Artur Zborovskyy";
+    }
 
-    var toDisplay = "logout";
-    return toDisplay;
+    return user + ",<br>what do You want to do?";
 }
 
 /***********************************************

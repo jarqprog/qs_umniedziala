@@ -1,10 +1,9 @@
-import controller.ControllerLogin;
-import view.ViewLogin;
+import server.Server;
+
+import java.io.IOException;
 
 public class App{
-    public static void main(String [] args){
-        ViewLogin viewLogin = new ViewLogin();
-        ControllerLogin login = new ControllerLogin(viewLogin);
-        login.runMenu();
+    public static void main(String [] args) throws IOException {
+        Server.getInstance(8080).run();
     }
 }
