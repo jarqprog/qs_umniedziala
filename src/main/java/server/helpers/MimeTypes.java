@@ -2,7 +2,6 @@ package server.helpers;
 
 // Copyright (c) 2003-2009, Jodd Team (jodd.org). All Rights Reserved.
 
-
 import java.util.HashMap;
 
 /**
@@ -298,7 +297,8 @@ public class MimeTypes {
                 put1("dll", MIME_APPLICATION_OCTET_STREAM);
                 put1("class", MIME_APPLICATION_OCTET_STREAM);
                 put1("jar", MIME_APPLICATION_JAVA_ARCHIVE);
-            }};
+                put1("ttf",MIME_APPLICATION_OCTET_STREAM);
+                }};
     }
 
     public static void main(String[] args) {
