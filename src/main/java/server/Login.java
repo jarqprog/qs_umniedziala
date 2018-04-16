@@ -18,7 +18,7 @@ public class Login implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
      String response =   httpExchange.getRequestMethod();
      if(response.equals("GET")){
-         JtwigTemplate template = JtwigTemplate.classpathTemplate("www/index.html");
+         JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html");
          JtwigModel model = JtwigModel.newModel();
           response = template.render(model);
           httpExchange.sendResponseHeaders(200,response.length());
@@ -28,5 +28,6 @@ public class Login implements HttpHandler {
 
          }
      }
+
     }
 
