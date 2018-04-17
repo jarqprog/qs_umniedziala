@@ -26,46 +26,72 @@ public class Login implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        String response;
 
         if (method.equals("GET")) {
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html.twig");
-            JtwigModel model = JtwigModel.newModel();
-            response = template.render(model);
-            httpExchange.sendResponseHeaders(200, response.length());
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            dislayLoginPage(httpExchange);
         }
 
         if (method.equals("POST")) {
-            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-            BufferedReader br = new BufferedReader(isr);
-            String formData = br.readLine();
-            System.out.println(formData);
-            Map inputs = parseFormData(formData);
-
+            Map inputs = getInput(httpExchange);
             User user = getUser(inputs.get("email").toString(), inputs.get("password").toString());
 
-            String status = getUserRole(user);
-
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("static/user-"+status+"/"+status+"_profile.html.twig");
-
-            JtwigModel model = JtwigModel.newModel();
-
-            setModel(model, status, user);
-
-            response = template.render(model);
-
-            try {
-                httpExchange.sendResponseHeaders(200, response.length() + 1);
-                OutputStream os = httpExchange.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(user!=null) {
+                logUser(httpExchange, user);
+            } else {
+                displayLoginFailure(httpExchange);
             }
         }
+    }
+
+    private void displayLoginFailure(HttpExchange httpExchange) throws IOException {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("user", "invalid");
+        String response = template.render(model);
+
+        executeResponse(httpExchange, response, response.length());
+    }
+
+    private void logUser(HttpExchange httpExchange, User user) {
+        String status = getUserRole(user);
+        JtwigTemplate template =
+                                JtwigTemplate.classpathTemplate(
+                                "static/user-" + status + "/" + status + "_profile.html.twig");
+
+        JtwigModel model = JtwigModel.newModel();
+        setModel(model, status, user);
+        String response = template.render(model);
+        try {
+            executeResponse(httpExchange, response, response.length() + 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void executeResponse(HttpExchange httpExchange, String response, int i) throws IOException {
+        httpExchange.sendResponseHeaders(200, i);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+
+
+
+    private Map getInput(HttpExchange httpExchange) throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String formData = br.readLine();
+        System.out.println(formData);
+        return parseFormData(formData);
+    }
+
+    private void dislayLoginPage(HttpExchange httpExchange) throws IOException {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html.twig");
+        JtwigModel model = JtwigModel.newModel();
+        String response = template.render(model);
+
+        executeResponse(httpExchange, response, response.length());
     }
 
     private void setModel(JtwigModel model, String status, User user) {

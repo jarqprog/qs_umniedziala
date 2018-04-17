@@ -2,13 +2,14 @@
 /* custom fonts */
 
 @font-face {
-    font-family: bitwise;
-    src: url(fonts/old.ttf);
+    font-family: 'Play-Regular', sans-serif;
+    src: url(fonts/Play-Regular.ttf);
 }
 
 body {
     background-color: black;
-    font-family: bitwise;
+    font-family: 'Play-Regular', sans-serif;
+    src: url(fonts/Play-Regular.ttf);
     color: rgb(50,205,50);
 }
 
@@ -221,6 +222,10 @@ input[type=radio] {
 .user-info {
     font-size: 25px;
     padding-left: 15px;
+}
+
+form {
+  text-align: center;
 }
 
 /* Inputs */
