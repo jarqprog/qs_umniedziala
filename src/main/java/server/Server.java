@@ -2,10 +2,11 @@ package server;
 
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import dao.DaoLogin;
-import dao.IDaoLogin;
+import controller.ControllerAdmin;
+import dao.*;
 import server.sessions.ISessionManager;
 import server.sessions.SessionManager;
+import view.ViewAdmin;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -14,6 +15,9 @@ public class Server implements IServer {
 
 
     private final int PORT;
+
+    private final long MAX_SESSION_DURATION = 300000;  // in milliseconds
+    private final ISessionManager sessionManager = SessionManager.create(MAX_SESSION_DURATION);
 
     private Server(int port){
         PORT = port;
@@ -26,22 +30,32 @@ public class Server implements IServer {
     @Override
     public void run() throws IOException {
 
-        // initialize objects
-        IDaoLogin loginDao = new DaoLogin();
-
-        final long MAX_SESSION_DURATION = 300000;  // in milliseconds
-        ISessionManager sessionManager = SessionManager.create(MAX_SESSION_DURATION);
-
-        HttpHandler staticHandler = Static.create();
-        HttpHandler loginHandler = Login.create(loginDao, sessionManager);
-
         HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
-        server.createContext("/static", staticHandler);
-        server.createContext("/login", loginHandler);
+
+        server.createContext("/static", createStaticHandler());
+        server.createContext("/login", createLoginHandler());
+        server.createContext("/admin", createAdminHandler());
 
         // set routes
         server.setExecutor(null); // creates a default executor
         // start listening
         server.start();
+    }
+
+
+    // initialize objects
+
+    private HttpHandler createStaticHandler() {
+        return Static.create();
+    }
+
+    private HttpHandler createLoginHandler() {
+        return Login.create(new DaoLogin(), sessionManager);
+    }
+
+    private HttpHandler createAdminHandler() {
+        ControllerAdmin controller = ControllerAdmin
+                .createController(new ViewAdmin(), new DaoMentor(), new DaoClass(), new DaoLevel());
+        return AdminHandler.create(sessionManager, controller);
     }
 }

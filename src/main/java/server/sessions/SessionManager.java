@@ -64,7 +64,7 @@ public class SessionManager implements ISessionManager {
     @Override
     public boolean register(HttpExchange he, int userId) {
         String prefix = String.valueOf(getRandomNumber());
-        String sessionId = prefix + userId;
+        String sessionId = prefix + "==" + userId;
         he.getResponseHeaders().set("Set-Cookie", "sessionToken="+sessionId);
         sessions.put(sessionId, Calendar.getInstance());
         return true;
