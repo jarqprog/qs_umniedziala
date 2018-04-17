@@ -86,7 +86,7 @@ public class Login implements HttpHandler {
         return parseFormData(formData);
     }
 
-    private void disp   layLoginPage(HttpExchange httpExchange) throws IOException {
+    private void displayLoginPage(HttpExchange httpExchange) throws IOException {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html.twig");
         JtwigModel model = JtwigModel.newModel();
         String response = template.render(model);
