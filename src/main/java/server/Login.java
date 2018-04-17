@@ -62,7 +62,7 @@ public class Login implements HttpHandler {
         setModel(model, status, user);
         String response = template.render(model);
         try {
-            executeResponse(httpExchange, response, response.length() + 1);
+            executeResponse(httpExchange, response, response.length());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,6 +70,7 @@ public class Login implements HttpHandler {
     }
 
     private void executeResponse(HttpExchange httpExchange, String response, int i) throws IOException {
+
         httpExchange.sendResponseHeaders(200, i);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
