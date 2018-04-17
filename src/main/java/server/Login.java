@@ -9,6 +9,7 @@ import model.Student;
 import model.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import server.sessions.ISessionManager;
 
 import java.io.*;
 import java.net.URLDecoder;
@@ -17,10 +18,17 @@ import java.util.Map;
 
 public class Login implements HttpHandler {
 
-    private IDaoLogin loginDao;
+    private final IDaoLogin loginDao;
+    private final ISessionManager sessionManager;
 
-    public Login(IDaoLogin loginDao) {
+    public static HttpHandler create(IDaoLogin loginDao,
+                                     ISessionManager sessionManager) {
+        return new Login(loginDao, sessionManager);
+    }
+
+    private Login(IDaoLogin loginDao, ISessionManager sessionManager) {
         this.loginDao = loginDao;
+        this.sessionManager = sessionManager;
     }
 
     @Override
@@ -28,12 +36,12 @@ public class Login implements HttpHandler {
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {
-            dislayLoginPage(httpExchange);
+            displayLoginPage(httpExchange);
         }
 
         if (method.equals("POST")) {
-            Map inputs = getInput(httpExchange);
-            User user = getUser(inputs.get("email").toString(), inputs.get("password").toString());
+            Map<String,String> inputs = getInput(httpExchange);
+            User user = getUser(inputs.get("email"), inputs.get("password"));
 
             if(user!=null) {
                 logUser(httpExchange, user);
@@ -54,6 +62,9 @@ public class Login implements HttpHandler {
 
     private void logUser(HttpExchange httpExchange, User user) {
         String status = getUserRole(user);
+
+        registerNewUserSession(httpExchange, user);
+
         JtwigTemplate template =
                                 JtwigTemplate.classpathTemplate(
                                 "static/user-" + status + "/" + status + "_profile.html.twig");
@@ -66,7 +77,6 @@ public class Login implements HttpHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void executeResponse(HttpExchange httpExchange, String response, int i) throws IOException {
@@ -78,15 +88,15 @@ public class Login implements HttpHandler {
 
 
 
-    private Map getInput(HttpExchange httpExchange) throws IOException {
+    private Map<String,String> getInput(HttpExchange httpExchange) throws IOException {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
         String formData = br.readLine();
         System.out.println(formData);
-        return parseFormData(formData);
+        return parseFromData(formData);
     }
 
-    private void dislayLoginPage(HttpExchange httpExchange) throws IOException {
+    private void displayLoginPage(HttpExchange httpExchange) throws IOException {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html.twig");
         JtwigModel model = JtwigModel.newModel();
         String response = template.render(model);
@@ -95,12 +105,17 @@ public class Login implements HttpHandler {
     }
 
     private void setModel(JtwigModel model, String status, User user) {
-        if (status.equals("admin")) {
-            AdminPage.setModel(user, model);
-        } else if (status.equals("mentor")) {
-            MentorPage.setModel(((Mentor) user), model);
-        } else if (status.equals("student")) {
-            StudentPage.setModel(((Student) user), model);
+
+        switch(status) {
+            case("admin"):
+                AdminPage.setModel(user, model);
+                break;
+            case("mentor"):
+                MentorPage.setModel((Mentor) user, model);
+                break;
+            case("student"):
+                StudentPage.setModel((Student) user, model);
+                break;
         }
     }
 
@@ -120,15 +135,22 @@ public class Login implements HttpHandler {
         return loginDao.getUser(email, password);
     }
 
-    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
-        Map<String, String> map = new HashMap<>();
+    private Map<String,String> parseFromData(String formData) throws UnsupportedEncodingException {
+        Map<String,String> map = new HashMap<>();
         String[] pairs = formData.split("&");
         for(String pair : pairs){
             String[] keyValue = pair.split("=");
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
+            String value = URLDecoder.decode(keyValue[1], "UTF-8");
             map.put(keyValue[0], value);
         }
         return map;
     }
-}
 
+    private boolean registerNewUserSession(HttpExchange he, User user) {
+        if(! sessionManager.validate(he) ) {
+            sessionManager.register(he, user.getUserId());
+            return true;
+        }
+        return false;
+    }
+}

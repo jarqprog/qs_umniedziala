@@ -13,6 +13,13 @@ import java.net.URI;
 import java.net.URL;
 
 public class Static implements HttpHandler {
+
+    public static HttpHandler create() {
+        return new Static();
+    }
+
+    private Static() {}
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
@@ -24,8 +31,6 @@ public class Static implements HttpHandler {
         ClassLoader classLoader = getClass().getClassLoader();
         URL fileURL = classLoader.getResource(path);
 
-        OutputStream os = httpExchange.getResponseBody();
-
         if (fileURL == null) {
             // Object does not exist or is not a file: reject with 404 error.
             send404(httpExchange);
@@ -33,7 +38,6 @@ public class Static implements HttpHandler {
             // Object exists and is a file: accept with response code 200.
             sendFile(httpExchange, fileURL);
         }
-
     }
 
     private void send404(HttpExchange httpExchange) throws IOException {
@@ -59,7 +63,7 @@ public class Static implements HttpHandler {
         // send the file
         FileInputStream fs = new FileInputStream(file);
         final byte[] buffer = new byte[0x10000];
-        int count = 0;
+        int count;
         while ((count = fs.read(buffer)) >= 0) {
             os.write(buffer,0,count);
         }
