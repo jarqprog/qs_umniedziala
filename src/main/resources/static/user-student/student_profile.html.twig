@@ -12,29 +12,35 @@
 </head>
 
 <body>
+
     <div id="container">
+
         <!-- header -->
         <object id="header" name="header" type="text/html" data="static/header.html"></object>
 
-            <!-- content -->
         <main>
             <!-- menu -->
+            <object id="main-menu-box" name="main-menu-box" type="text/html" data="static/menu.html"></object>
 
+
+            <!-- content -->
             <div id="main-content">
-                <div id="main-inner-container">
-                    <h1>WELCOME, TRAVELER</h1>
-                    <input type="text" placeholder="Enter login">
-                    <br/><br/>
-                    <input type="password" placeholder="Enter password">
-                    <br/><br/>
-                    <a href="static/user-mentor/mentor_profile.html" target="_top" class="link"><input type="submit" value="Send"></a>
-                    <!-- <input type="submit" value="Send"> -->
+                <div class="user-name">Name: {{name}}</div>
+                <div class="user-info">
+                    <p>Email: {{email}}</p>
+                    <p>Coolcoins: {{money}}</p>
+                    <p>Current level: {{level}}</p>
+                    <p>Current team: {{team}}</p>
+                    <p>Current group: {{group}}</p>
                 </div>
             </div>
         </main>
 
         <!-- footer -->
         <object id="footer" name="footer" type="text/html" data="static/footer.html"></object>
+
     </div>
+
+
 </body>
 </html>
