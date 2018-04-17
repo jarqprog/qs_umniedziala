@@ -62,7 +62,7 @@ public class Login implements HttpHandler {
         setModel(model, status, user);
         String response = template.render(model);
         try {
-            executeResponse(httpExchange, response, response.length());
+            executeResponse(httpExchange, response, response.length()+1);
         } catch (IOException e) {
             e.printStackTrace();
         }
