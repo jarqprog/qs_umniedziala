@@ -5,19 +5,16 @@ import com.sun.net.httpserver.HttpExchange;
 
 import java.util.*;
 
-/*
-sample usage (in handler class):
-
-String userIdData = "mark10";  // use some unique properties of user (String)
-
-    if(! sessionManager.validate(httpExchange)) {  //  if
-    sessionManager.register(httpExchange, userIdData);
-    }
-
-in case of logout - use:
-
-    sessionManager.remove(httpExchange)
-*/
+/**
+ *    sample usage (in handler class):
+ *
+ *    if(! sessionManager.validate(httpExchange)) {  //  if there is no valid session for logged user
+ *        int userId = user.getUserId();
+ *        sessionManager.register(httpExchange, userId);
+ *    }
+ * in case of logout - use:
+ *    sessionManager.remove(httpExchange)
+ */
 
 public class SessionManager implements ISessionManager {
 
@@ -64,9 +61,10 @@ public class SessionManager implements ISessionManager {
         }
     }
 
-    public boolean register(HttpExchange he, String userUniqueData) {
+    @Override
+    public boolean register(HttpExchange he, int userId) {
         String prefix = String.valueOf(getRandomNumber());
-        String sessionId = prefix + userUniqueData;
+        String sessionId = prefix + userId;
         he.getResponseHeaders().set("Set-Cookie", "sessionToken="+sessionId);
         sessions.put(sessionId, Calendar.getInstance());
         return true;
