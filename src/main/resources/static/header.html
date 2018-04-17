@@ -1,0 +1,50 @@
+<head>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <script type="text/javascript" src="js/javascript.js"></script>
+</head>
+
+<!-- logo & Title -->
+<a href="/login" target="_top" class="link">
+    <div id="logo">
+        <img src="img/logo.jpg" alt="logo" style="height: 100px; width: 160px">
+    </div>
+    <div id="title">
+        <div id="title-main">
+            <p>Quest Store</p>
+        </div>
+
+        <div id="title-description">
+            <p>a system to make your life better</p>
+        </div>
+    </div>
+</a>
+<div id="header-right-box">
+    <div id="calendar-clock">
+        <!-- java script calendar function -->
+            <script>
+                new imageclock.display();
+            </script>
+        <p id="calendar-header">
+            <script>
+                document.getElementById("calendar-header").outerHTML = displayCalendar();
+            </script>
+        </p>
+    </div>
+    <a href="system-req.html" target="_top" class="link"><div class="main-menu-button" style="font-size:24px; background-color:transparent; text-align: left;">System Requirements</div></a>
+</div>
+
+<!-- music -->
+<a href="javascript:playMusic();"><img src="img/lutnia.png" alt="music button" style="height:50px; width:50px;" onclick="playMusic()" ondblclick="stopMusic()"></a>
+
+<audio id="audiotag1" src="music/8-Bit Medieval - Original -.mp3" preload="auto"></audio>
+<script type="text/javascript">
+	function playMusic() {
+        document.getElementById('audiotag1').src="music/8-Bit Medieval - Original -.mp3";
+		var ourMusic = document.getElementById('audiotag1');
+        ourMusic.play();
+
+	}
+    function stopMusic() {
+        document.getElementById('audiotag1').src="";
+    }
+</script>

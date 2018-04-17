@@ -1,0 +1,297 @@
+
+/* custom fonts */
+
+@font-face {
+    font-family: bitwise;
+    src: url(fonts/old.ttf);
+}
+
+body {
+    background-color: black;
+    font-family: bitwise;
+    color: rgb(50,205,50);
+}
+
+/* header elements: */
+
+#container {
+    height: 100%;
+    width: 100%;
+}
+
+#header {
+    height: 15%;
+    height: 15vh;
+    width: 100%;
+}
+
+ #logo {
+    float: left;
+    margin-left: 40px;
+    margin-top: -10px;
+ }
+
+ #title {
+    float:left;
+    margin-left: 30px;
+    text-align: justify;
+    color: rgb(154,205,50);
+ }
+
+ #title-main {
+    margin-top: -60px;
+    font-size: 56px;
+    font-variant: small-caps;
+ }
+
+#title-description {
+    margin-top: -70px;
+    font-size: 24px;
+}
+
+#header-right-box {
+    float:right;;
+    position: static;
+    right: 0px;
+    padding-right: 10px;
+}
+
+#calendar-clock {
+    text-align: right;
+    font-size: 22px;
+}
+
+#login-button {
+    text-align: right;
+    font-size: 22px;
+}
+
+#login-button:hover {
+    color: rgb(154,205,50);
+    background-color: rgb(34,139,34);
+}
+
+/* main content: */
+
+main {
+    width: 100%;
+    min-height: 65%;
+    min-height: 65vh;
+    text-align: justify;
+    font-size: 18px;
+    border-color: green;
+    border-style: solid;
+    border-width: 1px;
+    border-bottom-width: 2px;
+    display: flex;
+}
+
+#main-menu-box {
+    float: left;
+    width: 230px;
+    height: auto;
+    border-color: green;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.main-menu-button {
+    clear: both;
+    background-color: rgb(0,100,0);
+    text-align: center;
+    padding: 5px;
+    border-color: black;
+    border-style: dotted;
+    border-width: 2px;
+}
+
+.main-menu-button:hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 150%;
+    color: rgb(154,205,50);
+    background-color: rgb(34,139,34);
+    height: +10%;
+}
+
+#main-content {
+    float: left;
+    width: 100%;
+    background-color: #000a00;
+    border-color: green;
+    border-style: solid;
+}
+
+#main-content-edit-quest {
+    float: left;
+    width: 100%;
+    background-color: #000a00;
+    border-color: green;
+    border-style: solid;
+    max-height: 600px;
+}
+
+
+#main-login {
+    background-color: #000a00;
+    text-align: center;
+}
+#edit-quest-header{
+    text-align: center;
+    font-size: 100px;
+    margin: 0px;
+}
+
+#main-content > h1 {
+
+    text-align: center;
+    font-size: 56px;
+    margin: 0;
+}
+
+#main-inner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+#main-inner-container > h1 {
+    font-size: 100px;
+    margin: 0;
+}
+
+/* footer: */
+
+#footer {
+    width: 100%;
+    bottom:0px;
+}
+
+
+.link {
+    cursor: pointer;
+    color: rgb(50,205,50);
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #ffffff;
+    color: rgb(154,205,50);
+    font-size: 110%;
+}
+
+
+input[type=login],
+input[type=password] {
+  background-color: chartreuse;
+  text-align: center;
+  padding: 5px 20px;
+  border-radius: 3px;
+}
+
+input[type=login]:hover,
+input[type=password]:hover {
+  background-color: darkgreen;
+  color: white;
+}
+
+input[type=submit] {
+  background-color: darkgreen;
+  border-color: dimgray;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+input[type=radio] {
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+/* user profile: */
+
+.user-name {
+    font-size: 75px;
+    padding-left: 15px;
+}
+
+.user-info {
+    font-size: 25px;
+    padding-left: 15px;
+}
+
+/* Inputs */
+
+input[type=text] {
+  background-color: chartreuse;
+  text-align: center;
+  padding: 5px 20px;
+  border-radius: 3px;
+  margin: 5px;
+}
+
+input[type=text]:hover {
+  background-color: darkgreen;
+  color: white;
+}
+
+#number {
+  display: inline;
+}
+.pick-list{
+    float: left;
+    width: 50%;
+    height: 80%;
+    overflow-y:scroll;
+    padding-right: 2%;
+    }
+
+ul{
+    margin: 0px;
+    max-height: 45%;
+    font-size: 25px;
+}
+ul li:after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 10px;
+    background: rgb(30,105,50);;
+}
+
+body::-webkit-scrollbar {
+    width: 1em;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(50,205,50);
+  outline: 1px solid slategrey;
+}
+body::-webkit-scroll {
+  background-color: rgb(50,205,50);
+  outline: 1px solid slategrey;
+}
+
+
+.pick-list::-webkit-scrollbar {
+    width: 1em;
+}
+
+.pick-list::-webkit-scrollbar-thumb {
+  background-color: rgb(50,205,50);
+  outline: 1px solid slategrey;
+}
+.pick-list::-webkit-scroll {
+  background-color: rgb(50,205,50);
+  outline: 1px solid slategrey;
+}
+
+
+#song{
+    float: left;
+    max-width: 50px;
+}
