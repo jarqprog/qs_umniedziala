@@ -4,7 +4,6 @@ package server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import controller.ControllerAdmin;
 
 import dao.*;
 import model.Admin;
@@ -14,7 +13,6 @@ import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.sessions.ISessionManager;
 import server.webcontrollers.IAdminController;
-import server.webcontrollers.WebAdminController;
 
 import java.io.*;
 import java.net.URLDecoder;
@@ -41,9 +39,6 @@ public class AdminHandler implements HttpHandler {
         System.out.println(method);
         String response;
         int loggedUserId = sessionManager.getCurrentUserId(httpExchange);
-
-//        System.out.println("logged user: " + loggedUserId);
-
 
         if( loggedUserId == -1) {
 
@@ -94,14 +89,13 @@ public class AdminHandler implements HttpHandler {
         String mentorInfo = controller.seeMentorData(name);
         String uri = httpExchange.getRequestURI().toString();
         System.out.println("URI: " + uri);
-        DaoMentor mentorDao = new DaoMentor();
-        List<Mentor> mentors = mentorDao.getAllMentors();
-        List<String> mentorsNames = mentors.stream().map(User::getName).collect(Collectors.toList());
+        List<String> mentorsFullData = controller.getMentorsFullData();
+        List<String> mentorsNames = controller.getMentorsNames();
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/admin/display_mentor.html.twig");
         JtwigModel model = JtwigModel.newModel();
-        model.with("mentors", mentors);
+        model.with("mentors", mentorsFullData);
         model.with("MentorsNames", mentorsNames);
         model.with("MentorInfo", mentorInfo);
         String response = template.render(model);
@@ -109,15 +103,14 @@ public class AdminHandler implements HttpHandler {
     }
 
     private void displayMentor(HttpExchange httpExchange) {
-        DaoMentor mentorDao = new DaoMentor();
-        List<Mentor> mentors = mentorDao.getAllMentors();
-        List<String> mentorsNames = mentors.stream().map(User::getName).collect(Collectors.toList());
+        List<String> mentorsFullData = controller.getMentorsFullData();
+        List<String> mentorsNames = controller.getMentorsNames();
         String info = "choose mentor to display";
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/admin/display_mentor.html.twig");
         JtwigModel model = JtwigModel.newModel();
-        model.with("mentors", mentors);
+        model.with("mentors", mentorsFullData);
         model.with("MentorsNames", mentorsNames);
         model.with("MentorInfo", info);
         String response = template.render(model);
