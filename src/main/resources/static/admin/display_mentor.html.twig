@@ -5,8 +5,8 @@
     <title>Quest Store </title>
     <meta name="description" content="Quest Store System website."/>
     <meta name="keywords" content="it students, CodeCool"/>
-    <link rel="stylesheet" href="../style.css" type="text/css"/>
-    <link rel="stylesheet" href="../css/fontello.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/fontello.css" type="text/css"/>
     <script type="text/javascript" src="../js/javascript.js"></script>
 
 </head>
@@ -30,20 +30,21 @@
             </div>
 
                 <div class="pick-list">
-                    <ul>
-                      <form method="post">
-                        {%for mentor : mentors%}
-
-                        <li><input type="radio" name="type" value={{mentorId}}: {{mentorName}}</li>{{mentorId}}: {{mentorName}}
-
-                        {%endfor%}
-                      </form>
-                    </ul>
+                <form method="POST">
+                 <ol>
+                    {%for mentor in MentorsNames%}
+                        <li>
+                            <input type="radio" name="mentorName" value="{{mentor}}" checked> {{mentor}}
+                         </li>
+                    {%endfor%}
+                    </ol>
+                    <input type="submit" value="display mentor details">
+                 </form>
                 </div>
-
                 <div id="main-inner-container">
-                    {% mentorData %}
+                    {{MentorInfo}}
                 </div>
+
             </div>
 
     </main>
