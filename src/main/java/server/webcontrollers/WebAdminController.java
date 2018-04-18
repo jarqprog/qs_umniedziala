@@ -54,7 +54,7 @@ public class WebAdminController implements IAdminController {
     public String seeMentorData(String name) {
         for (Mentor mentor : daoMentor.getAllMentors()) {
             if(mentor.getName().equals(name)) {
-                return mentor.getName();
+                return mentor.toString();
             }
         }
         return "";
