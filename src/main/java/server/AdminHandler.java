@@ -82,15 +82,15 @@ public class AdminHandler implements HttpHandler {
                     case "/admin":
                         displayAdminHomePage(httpExchange);
                         break;
-                    case "/admin/display_mentor": showMentorDetails(httpExchange, mentorName, webAdminController);
+                    case "/admin/display_mentor": showMentorDetails(httpExchange, mentorName);
                 }
             }
         }
     }
 
 
-    private void showMentorDetails(HttpExchange httpExchange, String name, IAdminController webAdminController) {
-        String mentorInfo = webAdminController.seeMentorData(name);
+    private void showMentorDetails(HttpExchange httpExchange, String name) {
+        String mentorInfo = controller.seeMentorData(name);
         String uri = httpExchange.getRequestURI().toString();
         System.out.println("URI: " + uri);
         DaoMentor mentorDao = new DaoMentor();
