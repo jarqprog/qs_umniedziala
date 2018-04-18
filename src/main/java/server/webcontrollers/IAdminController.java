@@ -2,6 +2,7 @@ package server.webcontrollers;
 
 public interface IAdminController {
 
+    String getAdmin(int adminId);
     boolean createMentor(String name, String password, String email);
     boolean createClass(String name);
     boolean editMentor(String id);

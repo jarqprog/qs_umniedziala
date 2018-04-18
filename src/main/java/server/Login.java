@@ -34,7 +34,7 @@ public class Login implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        
+
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {

@@ -1,26 +1,42 @@
 package server.webcontrollers;
 
+import dao.IDaoAdmin;
 import dao.IDaoClass;
 import dao.IDaoLevel;
 import dao.IDaoMentor;
+import model.Admin;
 import model.CodecoolClass;
 import model.Level;
 import model.Mentor;
 
 public class WebAdminController implements IAdminController {
 
+    private IDaoAdmin daoAdmin;
     private IDaoMentor daoMentor;
     private IDaoClass daoClass;
     private IDaoLevel daoLevel;
 
-    public static IAdminController create(IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
-        return new WebAdminController(daoMentor, daoClass, daoLevel);
+    public static IAdminController create(IDaoAdmin daoAdmin, IDaoMentor daoMentor,
+                                          IDaoClass daoClass, IDaoLevel daoLevel) {
+        return new WebAdminController(daoAdmin, daoMentor, daoClass, daoLevel);
     }
 
-    private WebAdminController(IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
+    private WebAdminController(IDaoAdmin daoAdmin, IDaoMentor daoMentor,
+                               IDaoClass daoClass, IDaoLevel daoLevel) {
+        this.daoAdmin = daoAdmin;
         this.daoMentor = daoMentor;
         this.daoClass = daoClass;
         this.daoLevel = daoLevel;
+    }
+
+
+    @Override
+    public String getAdmin(int adminId) {
+        Admin admin = daoAdmin.importAdmin(adminId);
+        if(admin != null) {
+            return admin.getName();
+        }
+        return "";
     }
 
     public boolean createMentor(String name, String password, String email) {

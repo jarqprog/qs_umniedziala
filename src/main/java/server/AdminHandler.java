@@ -34,6 +34,8 @@ public class AdminHandler implements HttpHandler {
         String response;
         int loggedUserId = sessionManager.getCurrentUserId(httpExchange);
 //        System.out.println("logged user: " + loggedUserId);
+
+
         if( loggedUserId == -1) {
             response = "powinien wylogowac admina!!";
 
@@ -108,5 +110,9 @@ public class AdminHandler implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
+    }
+
+    private String getAdminName(int adminId) {
+        return controller.getAdmin(adminId);
     }
 }
