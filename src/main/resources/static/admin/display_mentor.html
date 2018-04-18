@@ -34,7 +34,7 @@
                       <form method="post">
                         {%for mentor : mentors%}
 
-                        <li><input type="radio" name="type" value={{mentorId}}: {{mentorName}}</li>{{mentorId}}: {{mentorName}}
+                        <li><input type="radio" name="type" value={{mentor.getName()}}</li>{{{mentor.getName()}}
 
                         {%endfor%}
                       </form>
