@@ -36,10 +36,10 @@
 <!-- music -->
 <a href="javascript:playMusic();"><img src="img/lutnia.png" alt="music button" style="height:50px; width:50px;" onclick="playMusic()" ondblclick="stopMusic()"></a>
 
-<audio id="audiotag1" src="music/8-Bit Medieval - Original -.mp3" preload="auto"></audio>
+<audio id="audiotag1" src="./music/8-Bit Medieval - Original -.mp3" preload="auto"></audio>
 <script type="text/javascript">
 	function playMusic() {
-        document.getElementById('audiotag1').src="music/8-Bit Medieval - Original -.mp3";
+        document.getElementById('audiotag1').src="./music/8-Bit Medieval - Original -.mp3";
 		var ourMusic = document.getElementById('audiotag1');
         ourMusic.play();
 

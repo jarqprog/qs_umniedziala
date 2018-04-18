@@ -3,6 +3,14 @@ package server;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.ControllerAdmin;
+
+import dao.DaoAdmin;
+import dao.IDaoLogin;
+import model.Admin;
+import model.Mentor;
+import model.Student;
+import model.User;
+
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.sessions.ISessionManager;
@@ -38,6 +46,10 @@ public class AdminHandler implements HttpHandler {
 
 
         } else {
+            DaoAdmin daoAdmin = new DaoAdmin();
+            int userId = this.sessionManager.getCurrentUserId(httpExchange);
+            Admin admin = daoAdmin.importAdmin(userId);
+
             JtwigTemplate template =
                                 JtwigTemplate.classpathTemplate(
                                         "static/user-admin/profile.html.twig");
@@ -50,8 +62,23 @@ public class AdminHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
 
+            model.with("name", admin.getName());
+            model.with("email", admin.getEmail());
+            response = template.render(model);
+            executeResponse(httpExchange, response);
+            return;
+
         }
 
 
     }
+
+    private void executeResponse(HttpExchange httpExchange, String response) throws IOException {
+        byte[] bytes = response.getBytes();
+        httpExchange.sendResponseHeaders(200, bytes.length);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+    
 }
