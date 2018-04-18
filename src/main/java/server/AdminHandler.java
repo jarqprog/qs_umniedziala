@@ -35,7 +35,7 @@ public class AdminHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
 
         String response;
-        if(! sessionManager.validate(httpExchange)) {
+        if( sessionManager.getCurrentUserId(httpExchange) == -1) {
             response = "powinien wylogowac admina!!";
         } else {
             response = "admin powinien byc zalogowany";
