@@ -5,6 +5,7 @@ package server;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.ControllerAdmin;
+
 import dao.*;
 import model.Admin;
 import model.Mentor;
@@ -21,14 +22,14 @@ import java.util.stream.Collectors;
 
 public class AdminHandler implements HttpHandler {
 
-    private final ControllerAdmin controller;
+    private final IAdminController controller;
     private final ISessionManager sessionManager;
 
-    public static HttpHandler create(ISessionManager sessionManager, ControllerAdmin controller) {
+    public static HttpHandler create(ISessionManager sessionManager, IAdminController controller) {
         return new AdminHandler(sessionManager, controller);
     }
 
-    private AdminHandler(ISessionManager sessionManager, ControllerAdmin controller) {
+    private AdminHandler(ISessionManager sessionManager, IAdminController controller) {
         this.sessionManager = sessionManager;
         this.controller = controller;
     }
@@ -37,12 +38,13 @@ public class AdminHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         WebAdminController webAdminController =  new WebAdminController( new DaoMentor(), new DaoClass(), new DaoLevel());
         String method = httpExchange.getRequestMethod();
+        System.out.println(method);
         String response;
         int loggedUserId = sessionManager.getCurrentUserId(httpExchange);
-        System.out.println("logged user: " + loggedUserId);
 
+//        System.out.println("logged user: " + loggedUserId);
+        if( loggedUserId == -1) {
 
-        if (loggedUserId == -1) {
             response = "powinien wylogowac admina!!";
 
             httpExchange.sendResponseHeaders(200, response.length());
@@ -58,6 +60,8 @@ public class AdminHandler implements HttpHandler {
                 switch (uri) {
                     case "/admin":
                         displayAdminHomePage(httpExchange);
+                        break;
+                    case "/admin/create_mentor": createMentor(httpExchange);
                         break;
                     case "/admin/display_mentor":
                         displayMentor(httpExchange);
@@ -78,11 +82,11 @@ public class AdminHandler implements HttpHandler {
                         displayAdminHomePage(httpExchange);
                         break;
                     case "/admin/display_mentor": showMentorDetails(httpExchange, mentorName, webAdminController);
-
                 }
             }
         }
     }
+
 
     private void showMentorDetails(HttpExchange httpExchange, String name, WebAdminController webAdminController) {
         String mentorInfo = webAdminController.seeMentorData(name);
@@ -115,6 +119,19 @@ public class AdminHandler implements HttpHandler {
         model.with("MentorsNames", mentorsNames);
         model.with("MentorInfo", info);
         String response = template.render(model);
+
+ 
+
+    private void createMentor(HttpExchange httpExchange) throws IOException {
+        String response;
+        System.out.println("jestem");
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/create_mentor.html");
+
+        JtwigModel model = JtwigModel.newModel();
+        response = template.render(model);
+
         executeResponse(httpExchange, response);
     }
 

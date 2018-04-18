@@ -6,7 +6,9 @@ import controller.ControllerAdmin;
 import dao.*;
 import server.sessions.ISessionManager;
 import server.sessions.SessionManager;
+import server.webcontrollers.IAdminController;
 import server.webcontrollers.IStudentController;
+import server.webcontrollers.WebAdminController;
 import server.webcontrollers.WebStudentController;
 import view.ViewAdmin;
 
@@ -57,8 +59,8 @@ public class Server implements IServer {
     }
 
     private HttpHandler createAdminHandler() {
-        ControllerAdmin controller = ControllerAdmin
-                .createController(new ViewAdmin(), new DaoMentor(), new DaoClass(), new DaoLevel());
+        IAdminController controller = WebAdminController
+                .create(new DaoMentor(), new DaoClass(), new DaoLevel());
         return AdminHandler.create(sessionManager, controller);
     }
 
