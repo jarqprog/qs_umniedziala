@@ -37,7 +37,6 @@ public class AdminHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        IAdminController webAdminController =   WebAdminController.create( new DaoMentor(), new DaoClass(), new DaoLevel());
         String method = httpExchange.getRequestMethod();
         System.out.println(method);
         String response;
