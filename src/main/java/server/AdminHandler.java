@@ -34,7 +34,7 @@ public class AdminHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-
+        String method = httpExchange.getRequestMethod();
         String response;
         if( sessionManager.getCurrentUserId(httpExchange) == -1) {
             response = "powinien wylogowac admina!!";
@@ -47,25 +47,35 @@ public class AdminHandler implements HttpHandler {
 
 
         } else {
-            DaoAdmin daoAdmin = new DaoAdmin();
-            int userId = this.sessionManager.getCurrentUserId(httpExchange);
-            Admin admin = daoAdmin.importAdmin(userId);
+            if (method.equals("GET")) {
+                String uri = httpExchange.getRequestURI().toString();
+                switch(uri){
+                    case "/admin": displayAdminHomePage(httpExchange);
+                    break;
+                }
+                return;
 
-            JtwigTemplate template =
-                                JtwigTemplate.classpathTemplate(
-                                "static/user-admin/admin_profile.html.twig");
 
-            JtwigModel model = JtwigModel.newModel();
-            model.with("name", admin.getName());
-            model.with("email", admin.getEmail());
-            response = template.render(model);
-            executeResponse(httpExchange, response);
-            return;
-
+            }
 
         }
+    }
 
+    private void displayAdminHomePage(HttpExchange httpExchange) throws IOException {
+        String response;
+        DaoAdmin daoAdmin = new DaoAdmin();
+        int userId = this.sessionManager.getCurrentUserId(httpExchange);
+        Admin admin = daoAdmin.importAdmin(userId);
 
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/user-admin/admin_profile.html.twig");
+
+        JtwigModel model = JtwigModel.newModel();
+        model.with("name", admin.getName());
+        model.with("email", admin.getEmail());
+        response = template.render(model);
+        executeResponse(httpExchange, response);
     }
 
     private void executeResponse(HttpExchange httpExchange, String response) throws IOException {
