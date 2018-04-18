@@ -35,7 +35,7 @@ public class Login implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
-        sessionManager.remove(httpExchange);
+//        sessionManager.remove(httpExchange);
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {

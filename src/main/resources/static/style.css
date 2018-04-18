@@ -72,6 +72,10 @@ body {
     background-color: rgb(34,139,34);
 }
 
+#main-content-header {
+  text-align: center;
+}
+
 /* main content: */
 
 main {
