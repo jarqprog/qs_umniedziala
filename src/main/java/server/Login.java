@@ -109,21 +109,6 @@ public class Login implements HttpHandler {
         executeResponse(httpExchange, response, response.length());
     }
 
-    private void setModel(JtwigModel model, String status, User user) {
-
-        switch(status) {
-            case("admin"):
-                AdminPage.setModel(user, model);
-                break;
-            case("mentor"):
-                MentorPage.setModel((Mentor) user, model);
-                break;
-            case("student"):
-                StudentPage.setModel((Student) user, model);
-                break;
-        }
-    }
-
     private String getUserRole(User user) {
         String status = null;
         if (user instanceof Admin) {
