@@ -33,6 +33,8 @@ public class Login implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+
+        sessionManager.remove(httpExchange);
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {
@@ -63,7 +65,7 @@ public class Login implements HttpHandler {
     private void logUser(HttpExchange httpExchange, User user) {
         String status = getUserRole(user);
 
-        registerNewUserSession(httpExchange, user);
+        sessionManager.register(httpExchange, user.getUserId());
 
         JtwigTemplate template =
                                 JtwigTemplate.classpathTemplate(
@@ -144,13 +146,5 @@ public class Login implements HttpHandler {
             map.put(keyValue[0], value);
         }
         return map;
-    }
-
-    private boolean registerNewUserSession(HttpExchange he, User user) {
-        if(! sessionManager.validate(he) ) {
-            sessionManager.register(he, user.getUserId());
-            return true;
-        }
-        return false;
     }
 }

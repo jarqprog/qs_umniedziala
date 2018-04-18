@@ -33,7 +33,7 @@ public class Server implements IServer {
         HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
 
         server.createContext("/static", createStaticHandler());
-        server.createContext("/login", createLoginHandler());
+        server.createContext("/", createLoginHandler());
         server.createContext("/admin", createAdminHandler());
 
         // set routes
