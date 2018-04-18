@@ -4,7 +4,8 @@ import com.sun.net.httpserver.HttpExchange;
 
 public interface ISessionManager {
 
-    boolean validate(HttpExchange he);
-    boolean register(HttpExchange he, int userId);
-    boolean remove(HttpExchange he);  // in case of logout
+    int getCurrentUserId(HttpExchange he);  //  use it in concrete user handler (eg. AdminHandler)
+    boolean register(HttpExchange he, int userId);  // use it while login (if user is verified)
+    boolean remove(HttpExchange he);  // use it in case of logout
+
 }

@@ -2,51 +2,54 @@ package server.sessions;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
-
 import java.util.*;
 
 /**
- *    sample usage (in handler class):
+ *    sample usage (in handlers classes):
  *
- *    if(! sessionManager.validate(httpExchange)) {  //  if there is no valid session for logged user
- *        int userId = user.getUserId();
- *        sessionManager.register(httpExchange, userId);
- *    }
- * in case of logout - use:
- *    sessionManager.remove(httpExchange)
+ *        sessionManager.register(httpExchange, userId);  use after successful login (register new session)
+ *        sessionManager.remove(httpExchange);  use after while logout (remove session for current user)
+ *        sessionManager.getCurrentUserId(httpExchange);  use in Admin/Student/Mentor handlers
+ *                                                        - it returns id of current user (if session is valid)
+ *                                                        - or -1 if there is no valid session
+ *
  */
 
 public class SessionManager implements ISessionManager {
 
     private Map<String,Calendar> sessions;
     private static ISessionManager instance;
-    private final long expirationTime;  // in milliseconds (recommended: 300000)
+    private final long sessionExpirationTime;  // in milliseconds (recommended: 300000)
 
     // singleton:
-    public static ISessionManager create(long expirationTime) {
+    public static ISessionManager create(long sessionExpirationTime) {
         if(instance == null) {
-            instance = new SessionManager(expirationTime);
+            instance = new SessionManager(sessionExpirationTime);
         }
         return instance;
     }
 
-    private SessionManager(long expirationTime) {
+    private SessionManager(long sessionExpirationTime) {
         sessions = new HashMap<>();
-        this.expirationTime = expirationTime;
+        this.sessionExpirationTime = sessionExpirationTime;
     }
 
     @Override
-    public boolean validate(HttpExchange he) {
+    public int getCurrentUserId(HttpExchange he) {
         deleteExpired();  // remove old sessions
         try {
             if(isLogged(he)) {
                 String sessionToken = extractToken(he);
                 sessions.put(sessionToken, Calendar.getInstance());  // time has been updated (session is current)
-                return true;
+
+                String splitRegex = "==";
+                int idIndex = 1;
+
+                return Integer.parseInt(sessionToken.split(splitRegex)[idIndex]);
             }
-            return false;
-        } catch (SessionException notUsed) {
-            return false;
+            return -1;
+        } catch (Exception notUsed) {
+            return -1;
         }
     }
 
@@ -63,6 +66,10 @@ public class SessionManager implements ISessionManager {
 
     @Override
     public boolean register(HttpExchange he, int userId) {
+        if( isLogged(he) ) {  // user is already registered and has active session
+            return false;
+        }
+
         String prefix = String.valueOf(getRandomNumber());
         String sessionId = prefix + "==" + userId;
         he.getResponseHeaders().set("Set-Cookie", "sessionToken="+sessionId);
@@ -76,7 +83,7 @@ public class SessionManager implements ISessionManager {
         long timeNow = Calendar.getInstance().getTimeInMillis();
         for(Map.Entry<String,Calendar> session : sessions.entrySet()) {
             long sessionTime = session.getValue().getTimeInMillis();
-            if((timeNow - sessionTime) < expirationTime) {
+            if((timeNow - sessionTime) < sessionExpirationTime) {
                 copy.put(session.getKey(), session.getValue());
             } else {
                 sessionsDeleted++;
@@ -88,6 +95,16 @@ public class SessionManager implements ISessionManager {
 
     private int getRandomNumber() {
         return new Random().nextInt(10000);
+    }
+
+    private boolean isLogged(HttpExchange he) {
+        try {
+            String sessionToken = extractToken(he);
+            return sessions.containsKey(sessionToken);
+
+        } catch (SessionException notUsed) {
+            return false;
+        }
     }
 
     private String extractToken(HttpExchange he) throws SessionException {
@@ -103,16 +120,6 @@ public class SessionManager implements ISessionManager {
             return cookie.replace(cookieMatcher, "");
         } catch (Exception notUsed) {
             throw new SessionException();
-        }
-    }
-
-    private boolean isLogged(HttpExchange he) {
-        try {
-            String sessionToken = extractToken(he);
-            return sessions.containsKey(sessionToken);
-
-        } catch (SessionException notUsed) {
-            return false;
         }
     }
 }
