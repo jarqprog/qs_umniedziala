@@ -13,6 +13,7 @@ import model.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.sessions.ISessionManager;
+import server.webcontrollers.IAdminController;
 import server.webcontrollers.WebAdminController;
 
 import java.io.*;
@@ -36,7 +37,7 @@ public class AdminHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        WebAdminController webAdminController =  new WebAdminController( new DaoMentor(), new DaoClass(), new DaoLevel());
+        IAdminController webAdminController =   WebAdminController.create( new DaoMentor(), new DaoClass(), new DaoLevel());
         String method = httpExchange.getRequestMethod();
         System.out.println(method);
         String response;
@@ -88,7 +89,7 @@ public class AdminHandler implements HttpHandler {
     }
 
 
-    private void showMentorDetails(HttpExchange httpExchange, String name, WebAdminController webAdminController) {
+    private void showMentorDetails(HttpExchange httpExchange, String name, IAdminController webAdminController) {
         String mentorInfo = webAdminController.seeMentorData(name);
         String uri = httpExchange.getRequestURI().toString();
         System.out.println("URI: " + uri);
@@ -119,6 +120,8 @@ public class AdminHandler implements HttpHandler {
         model.with("MentorsNames", mentorsNames);
         model.with("MentorInfo", info);
         String response = template.render(model);
+        executeResponse(httpExchange, response);
+    }
 
  
 
@@ -131,7 +134,6 @@ public class AdminHandler implements HttpHandler {
 
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
-
         executeResponse(httpExchange, response);
     }
 
