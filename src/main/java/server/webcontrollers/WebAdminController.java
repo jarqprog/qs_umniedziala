@@ -1,22 +1,22 @@
 package server.webcontrollers;
 
-import dao.DaoClass;
-import dao.DaoLevel;
-import dao.DaoMentor;
+import dao.IDaoClass;
+import dao.IDaoLevel;
+import dao.IDaoMentor;
 import model.CodecoolClass;
 import model.Level;
 import model.Mentor;
 
 public class WebAdminController implements IAdminController {
 
-    private DaoMentor daoMentor;
-    private DaoClass daoClass;
-    private DaoLevel daoLevel;
+    private IDaoMentor daoMentor;
+    private IDaoClass daoClass;
+    private IDaoLevel daoLevel;
 
-    public WebAdminController() {
-        daoMentor = new DaoMentor();
-        daoClass = new DaoClass();
-        daoLevel = new DaoLevel();
+    public WebAdminController(IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
+        this.daoMentor = daoMentor;
+        this.daoClass = daoClass;
+        this.daoLevel = daoLevel;
     }
 
     public boolean createMentor(String name, String password, String email) {
