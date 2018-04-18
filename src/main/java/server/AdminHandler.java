@@ -37,13 +37,29 @@ public class AdminHandler implements HttpHandler {
         String response;
         if(! sessionManager.validate(httpExchange)) {
             response = "powinien wylogowac admina!!";
+
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+
+
+
         } else {
-            response = "admin powinien byc zalogowany";
+            JtwigTemplate template =
+                                JtwigTemplate.classpathTemplate(
+                                "static/user-admin/admin_profile.html.twig");
+
+        JtwigModel model = JtwigModel.newModel();
+         response = template.render(model);
+
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+
         }
 
-        httpExchange.sendResponseHeaders(400, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+
     }
 }

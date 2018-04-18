@@ -1,5 +1,6 @@
 package server;
 
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.IDaoLogin;
@@ -65,18 +66,22 @@ public class Login implements HttpHandler {
 
         registerNewUserSession(httpExchange, user);
 
-        JtwigTemplate template =
-                                JtwigTemplate.classpathTemplate(
-                                "static/user-" + status + "/" + status + "_profile.html.twig");
-
-        JtwigModel model = JtwigModel.newModel();
-        setModel(model, status, user);
-        String response = template.render(model);
+//
+        if (status.equals("admin")) {
+        Headers responseHeaders = httpExchange.getResponseHeaders();
+        responseHeaders.add("Location", "/admin");
         try {
-            executeResponse(httpExchange, response, response.length()+1);
+            httpExchange.sendResponseHeaders(302, -1);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        }
+        httpExchange.close();
+//        try {
+//            executeResponse(httpExchange, response, response.length()+1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void executeResponse(HttpExchange httpExchange, String response, int i) throws IOException {
