@@ -19,21 +19,21 @@ function displayCalendar() {
 
 function welcomeUser() {
     var url = document.URL;
-    var admin = "user-admin";
-    var mentor = "user-mentor";
-    var student = "user-student";
+    var admin = "admin";
+    var mentor = "mentor";
+    var student = "student";
     var user;
     if(url.includes(admin)) {
-        user = "Admin Admin";
+        user = admin;
     }
     else if(url.includes(mentor)) {
-        user = "Konrad Gadzina";
+        user = mentor;
     }
     else {
-        user = "Artur Zborovskyy";
+        user = student;
     }
 
-    return user + ",<br>what do You want to do?";
+    return "Hello " + user.toLocaleUpperCase() + ",<br>what do You want to do?";
 }
 
 

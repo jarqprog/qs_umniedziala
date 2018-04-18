@@ -40,6 +40,7 @@ public class Server implements IServer {
         server.createContext("/", createLoginHandler());
         server.createContext("/admin", createAdminHandler());
         server.createContext("/student", createStudentHandler());
+        server.createContext("/logout", createLogoutHandler());
 
         // set routes
         server.setExecutor(null); // creates a default executor
@@ -60,7 +61,7 @@ public class Server implements IServer {
 
     private HttpHandler createAdminHandler() {
         IAdminController controller = WebAdminController
-                .create(new DaoMentor(), new DaoClass(), new DaoLevel());
+                .create(new DaoAdmin(), new DaoMentor(), new DaoClass(), new DaoLevel());
         return AdminHandler.create(sessionManager, controller);
     }
 
@@ -68,5 +69,9 @@ public class Server implements IServer {
         IStudentController controller = WebStudentController
                 .create(new DaoWallet(), new DaoStudent(), new DaoArtifact(), new DaoLevel(), new DaoTeam());
         return StudentHandler.create(sessionManager, controller);
+    }
+
+    private HttpHandler createLogoutHandler() {
+        return Logout.create(sessionManager);
     }
 }
