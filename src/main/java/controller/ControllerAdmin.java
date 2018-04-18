@@ -22,6 +22,8 @@ public class ControllerAdmin implements IUserController {
         return new ControllerAdmin(viewAdmin, daoMentor, daoClass, daoLevel);
     }
 
+    public ControllerAdmin(){};
+
     public ControllerAdmin(Admin admin, ViewAdmin viewAdmin, IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
         this.viewAdmin = viewAdmin;
         this.admin = admin;

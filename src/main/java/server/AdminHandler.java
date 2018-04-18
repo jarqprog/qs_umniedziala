@@ -3,19 +3,11 @@ package server;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.ControllerAdmin;
-import dao.IDaoLogin;
-import model.Admin;
-import model.Mentor;
-import model.Student;
-import model.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.sessions.ISessionManager;
 
 import java.io.*;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
 
@@ -48,12 +40,12 @@ public class AdminHandler implements HttpHandler {
         } else {
             JtwigTemplate template =
                                 JtwigTemplate.classpathTemplate(
-                                "static/user-admin/admin_profile.html.twig");
+                                        "static/user-admin/profile.html.twig");
 
-        JtwigModel model = JtwigModel.newModel();
-         response = template.render(model);
-
-            httpExchange.sendResponseHeaders(200, response.length());
+            JtwigModel model = JtwigModel.newModel();
+            response = template.render(model);
+            byte [] bytes = response.getBytes();
+            httpExchange.sendResponseHeaders(200, bytes.length);
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
