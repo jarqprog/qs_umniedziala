@@ -34,8 +34,7 @@ public class Login implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-
-//        sessionManager.remove(httpExchange);
+        
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {
@@ -68,19 +67,21 @@ public class Login implements HttpHandler {
 
         sessionManager.register(httpExchange, user.getUserId());
 
-        if (status.equals("admin")) {
         Headers responseHeaders = httpExchange.getResponseHeaders();
-        responseHeaders.add("Location", "/admin");
-        httpExchange.sendResponseHeaders(302, -1);
-        } else if (status.equals("mentor")) {
-            Headers responseHeaders = httpExchange.getResponseHeaders();
-            responseHeaders.add("Location", "/mentor");
-            httpExchange.sendResponseHeaders(302, -1);
-        } else if (status.equals("student")) {
-            Headers responseHeaders = httpExchange.getResponseHeaders();
-            responseHeaders.add("Location", "/student");
-            httpExchange.sendResponseHeaders(302, -1);
+        switch (status) {
+            case "admin":
+                responseHeaders.add("Location", "/admin");
+                break;
+            case "mentor":
+                responseHeaders.add("Location", "/mentor");
+                break;
+            case "student":
+                responseHeaders.add("Location", "/student");
+                break;
+            default:
+                responseHeaders.add("Location", "/");
         }
+        httpExchange.sendResponseHeaders(302, -1);
         httpExchange.close();
     }
 
