@@ -25,34 +25,24 @@
         <!-- content -->
         <div id="main-content">
 
-                <div id="edit-quest-header">
-                    <h1>Display mentor</h1>
-                </div>
+            <div id="main-content-header">
+                <h1>Display mentor data</h1>
+            </div>
 
                 <div class="pick-list">
                     <ul>
+                      <form method="post">
                         {%for mentor : mentors%}
 
-                        <li>{{mentorId}}: {{mentorName}}</li>
+                        <li><input type="radio" name="type" value={{mentorId}}: {{mentorName}}</li>{{mentorId}}: {{mentorName}}
 
                         {%endfor%}
+                      </form>
                     </ul>
                 </div>
 
                 <div id="main-inner-container">
-                    <input type="text" name="quest-id" placeholder="Id">
-                    <br/><br/>
-                    <input type="text" name="questname" placeholder="Name">
-                    <br/><br/>
-                    <input type="text" name="description" placeholder="Description">
-                    <br/><br/>
-                    <input type="text" name="value" placeholder="Value">
-                    <br/><br/>
-                    <input type="text" name="type" placeholder="Type">
-                    <br/><br/>
-                    <input type="text" name="category" placeholder="Category">
-                    <br/><br/>
-                    <input type="submit" value="Send">
+                    {% mentorData %}
                 </div>
             </div>
 

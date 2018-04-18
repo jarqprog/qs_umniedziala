@@ -24,20 +24,37 @@
 
             <!-- content -->
             <div id="main-content">
-                <div id="main-inner-container">
-                    <h1>Create mentor</h1>
-                      <form method="post">
-                        <input type="text" placeholder="First name">
-                        <br/><br/>
-                        <input type="text" placeholder="Last name">
-                        <br/><br/>
-                        <input type="password" placeholder="Password">
-                        <br/><br/>
-                        <input type="text" placeholder="Email">
-                        <br/><br/>
-                        <input type="submit" value="create">
-                      </form>
+
+                <div id="main-content-header">
+                <h1>Edit mentor</h1>
                 </div>
+
+                <div class="pick-list">
+                    <ul>
+                        {%for mentor : mentors%}
+
+                        <li>{{mentorId}}: {{mentorName}}</li>
+
+                        {%endfor%}
+                    </ul>
+                </div>
+
+                <div id="main-inner-container">
+                  <input type="text" placeholder="Id">
+                  <br/><br/>
+                  <input type="text" placeholder="First name">
+                  <br/><br/>
+                  <input type="text" placeholder="Last name">
+                  <br/><br/>
+                  <input type="password" placeholder="Password">
+                  <br/><br/>
+                  <input type="text" placeholder="Email">
+                  <br/><br/>
+                  <input type="submit" value="edit">
+                </div>
+
+
+
             </div>
         </main>
 

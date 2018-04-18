@@ -36,7 +36,9 @@ public class AdminHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
         String response;
-        if( sessionManager.getCurrentUserId(httpExchange) == -1) {
+        int loggedUserId = sessionManager.getCurrentUserId(httpExchange);
+        System.out.println("logged user: " + loggedUserId);
+        if( loggedUserId == -1) {
             response = "powinien wylogowac admina!!";
 
             httpExchange.sendResponseHeaders(200, response.length());
@@ -44,20 +46,16 @@ public class AdminHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
 
-
-
         } else {
             if (method.equals("GET")) {
                 String uri = httpExchange.getRequestURI().toString();
+                System.out.println(uri);
                 switch(uri){
                     case "/admin": displayAdminHomePage(httpExchange);
-                    break;
+                        break;
                 }
                 return;
-
-
             }
-
         }
     }
 
@@ -69,7 +67,7 @@ public class AdminHandler implements HttpHandler {
 
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/user-admin/admin_profile.html.twig");
+                        "static/user-admin/profile.html.twig");
 
         JtwigModel model = JtwigModel.newModel();
         model.with("name", admin.getName());
