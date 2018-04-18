@@ -4,19 +4,13 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import controller.ControllerAdmin;
 import dao.DaoAdmin;
-import dao.IDaoLogin;
+import dao.DaoMentor;
 import model.Admin;
-import model.Mentor;
-import model.Student;
-import model.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.sessions.ISessionManager;
 
 import java.io.*;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
 
@@ -35,9 +29,10 @@ public class AdminHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
+        System.out.println(method);
         String response;
         int loggedUserId = sessionManager.getCurrentUserId(httpExchange);
-        System.out.println("logged user: " + loggedUserId);
+//        System.out.println("logged user: " + loggedUserId);
         if( loggedUserId == -1) {
             response = "powinien wylogowac admina!!";
 
@@ -53,10 +48,40 @@ public class AdminHandler implements HttpHandler {
                 switch(uri){
                     case "/admin": displayAdminHomePage(httpExchange);
                         break;
+                    case "/admin/create_mentor": createMentor(httpExchange);
+                        break;
+                    case "/admin/display_mentor": displayMentor(httpExchange);
+                        break;
                 }
-                return;
             }
         }
+    }
+
+    private void displayMentor(HttpExchange httpExchange) throws IOException {
+        String response;
+        DaoMentor dao = new DaoMentor();
+
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/display_mentor.html");
+
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentors", dao.getAllMentors());
+        response = template.render(model);
+        executeResponse(httpExchange, response);
+
+    }
+
+    private void createMentor(HttpExchange httpExchange) throws IOException {
+        String response;
+        System.out.println("jestem");
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/create_mentor.html");
+
+        JtwigModel model = JtwigModel.newModel();
+        response = template.render(model);
+        executeResponse(httpExchange, response);
     }
 
     private void displayAdminHomePage(HttpExchange httpExchange) throws IOException {
@@ -67,7 +92,7 @@ public class AdminHandler implements HttpHandler {
 
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/user-admin/profile.html.twig");
+                        "static/admin/profile.html.twig");
 
         JtwigModel model = JtwigModel.newModel();
         model.with("name", admin.getName());
