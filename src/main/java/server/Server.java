@@ -6,6 +6,8 @@ import controller.ControllerAdmin;
 import dao.*;
 import server.sessions.ISessionManager;
 import server.sessions.SessionManager;
+import server.webcontrollers.IStudentController;
+import server.webcontrollers.WebStudentController;
 import view.ViewAdmin;
 
 import java.io.IOException;
@@ -35,6 +37,7 @@ public class Server implements IServer {
         server.createContext("/static", createStaticHandler());
         server.createContext("/", createLoginHandler());
         server.createContext("/admin", createAdminHandler());
+        server.createContext("/student", createStudentHandler());
 
         // set routes
         server.setExecutor(null); // creates a default executor
@@ -57,5 +60,11 @@ public class Server implements IServer {
         ControllerAdmin controller = ControllerAdmin
                 .createController(new ViewAdmin(), new DaoMentor(), new DaoClass(), new DaoLevel());
         return AdminHandler.create(sessionManager, controller);
+    }
+
+    private HttpHandler createStudentHandler() {
+        IStudentController controller = WebStudentController
+                .create(new DaoWallet(), new DaoStudent(), new DaoArtifact(), new DaoLevel(), new DaoTeam());
+        return StudentHandler.create(sessionManager, controller);
     }
 }
