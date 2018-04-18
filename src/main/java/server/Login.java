@@ -63,27 +63,25 @@ public class Login implements HttpHandler {
         executeResponse(httpExchange, response, response.length());
     }
 
-    private void logUser(HttpExchange httpExchange, User user) {
+    private void logUser(HttpExchange httpExchange, User user) throws IOException {
         String status = getUserRole(user);
 
         sessionManager.register(httpExchange, user.getUserId());
 
-//
         if (status.equals("admin")) {
         Headers responseHeaders = httpExchange.getResponseHeaders();
         responseHeaders.add("Location", "/admin");
-        try {
+        httpExchange.sendResponseHeaders(302, -1);
+        } else if (status.equals("mentor")) {
+            Headers responseHeaders = httpExchange.getResponseHeaders();
+            responseHeaders.add("Location", "/mentor");
             httpExchange.sendResponseHeaders(302, -1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } else if (status.equals("student")) {
+            Headers responseHeaders = httpExchange.getResponseHeaders();
+            responseHeaders.add("Location", "/student");
+            httpExchange.sendResponseHeaders(302, -1);
         }
         httpExchange.close();
-//        try {
-//            executeResponse(httpExchange, response, response.length()+1);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void executeResponse(HttpExchange httpExchange, String response, int i) throws IOException {
@@ -93,8 +91,6 @@ public class Login implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-
-
 
     private Map<String,String> getInput(HttpExchange httpExchange) throws IOException {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");

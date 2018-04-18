@@ -35,9 +35,10 @@ public class AdminHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
+        System.out.println(method);
         String response;
         int loggedUserId = sessionManager.getCurrentUserId(httpExchange);
-        System.out.println("logged user: " + loggedUserId);
+//        System.out.println("logged user: " + loggedUserId);
         if( loggedUserId == -1) {
             response = "powinien wylogowac admina!!";
 
