@@ -1,10 +1,10 @@
 package server.sessions;
 
-public class SessionException extends Exception {
+class SessionException extends Exception {
 
     private String message;
 
-    public SessionException() {
+    SessionException() {
         message = "problem with session occurred";
     }
 

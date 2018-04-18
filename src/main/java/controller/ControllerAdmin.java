@@ -18,12 +18,27 @@ public class ControllerAdmin implements IUserController {
     private IDaoClass daoClass;
     private IDaoLevel daoLevel;
 
+    public static ControllerAdmin createController(ViewAdmin viewAdmin, IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
+        return new ControllerAdmin(viewAdmin, daoMentor, daoClass, daoLevel);
+    }
+
     public ControllerAdmin(Admin admin, ViewAdmin viewAdmin, IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
         this.viewAdmin = viewAdmin;
         this.admin = admin;
         this.daoMentor = daoMentor;
         this.daoClass = daoClass;
         this.daoLevel = daoLevel;
+    }
+
+    private ControllerAdmin(ViewAdmin viewAdmin, IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
+        this.viewAdmin = viewAdmin;
+        this.daoMentor = daoMentor;
+        this.daoClass = daoClass;
+        this.daoLevel = daoLevel;
+    }
+
+    public void setModel(Admin admin) {
+        this.admin = admin;
     }
 
     public void createMentor() {
