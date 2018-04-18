@@ -13,7 +13,11 @@ public class WebAdminController implements IAdminController {
     private IDaoClass daoClass;
     private IDaoLevel daoLevel;
 
-    public WebAdminController(IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
+    public static IAdminController create(IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
+        return new WebAdminController(daoMentor, daoClass, daoLevel);
+    }
+
+    private WebAdminController(IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
         this.daoMentor = daoMentor;
         this.daoClass = daoClass;
         this.daoLevel = daoLevel;
@@ -43,7 +47,7 @@ public class WebAdminController implements IAdminController {
                 return codecoolClass.getName();
             }
         }
-        return null;
+        return "";
     }
 
 
@@ -53,7 +57,7 @@ public class WebAdminController implements IAdminController {
                 return mentor.getName();
             }
         }
-        return null;
+        return "";
     }
 
 

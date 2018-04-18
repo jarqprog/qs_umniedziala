@@ -9,19 +9,20 @@ import model.Admin;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.sessions.ISessionManager;
+import server.webcontrollers.IAdminController;
 
 import java.io.*;
 
 public class AdminHandler implements HttpHandler {
 
-    private final ControllerAdmin controller;
+    private final IAdminController controller;
     private final ISessionManager sessionManager;
 
-    public static HttpHandler create(ISessionManager sessionManager, ControllerAdmin controller) {
+    public static HttpHandler create(ISessionManager sessionManager, IAdminController controller) {
         return new AdminHandler(sessionManager, controller);
     }
 
-    private AdminHandler(ISessionManager sessionManager, ControllerAdmin controller) {
+    private AdminHandler(ISessionManager sessionManager, IAdminController controller) {
         this.sessionManager = sessionManager;
         this.controller = controller;
     }
