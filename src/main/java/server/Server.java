@@ -2,16 +2,11 @@ package server;
 
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import controller.ControllerAdmin;
 import dao.*;
 import server.helpers.ResponseManager;
 import server.sessions.ISessionManager;
 import server.sessions.SessionManager;
-import server.webcontrollers.IAdminController;
-import server.webcontrollers.IStudentController;
-import server.webcontrollers.WebAdminController;
-import server.webcontrollers.WebStudentController;
-import view.ViewAdmin;
+import server.webcontrollers.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -41,6 +36,7 @@ public class Server implements IServer {
         server.createContext("/", createLoginHandler());
         server.createContext("/admin", createAdminHandler());
         server.createContext("/student", createStudentHandler());
+        server.createContext("/mentor", createMentorHandler());
         server.createContext("/logout", createLogoutHandler());
 
         // set routes
@@ -65,6 +61,16 @@ public class Server implements IServer {
                 .create(new DaoAdmin(), new DaoMentor(), new DaoClass(), new DaoLevel());
         return AdminHandler.create(sessionManager, controller, ResponseManager.create());
     }
+
+
+    private HttpHandler createMentorHandler() {
+        IMentorController controller = WebMentorController
+                .create(new DaoWallet(), new DaoStudent(), new DaoArtifact(),
+                        new DaoLevel(), new DaoTeam(), new DaoClass(),
+                        new DaoQuest(), new DaoMentor());
+        return MentorHandler.create(sessionManager, controller, ResponseManager.create());
+    }
+
 
     private HttpHandler createStudentHandler() {
         IStudentController controller = WebStudentController

@@ -7,15 +7,12 @@ import model.Team;
 
 public class WebStudentController implements IStudentController {
 
-
-    private Student student;
-    private IDaoWallet daoWallet;
-    private IDaoStudent daoStudent;
-    private IDaoArtifact daoArtifact;
-    private IDaoLevel daoLevel;
-    private IDaoTeam daoTeam;
-    private IDaoClass daoClass;
-
+    private final IDaoWallet daoWallet;
+    private final IDaoStudent daoStudent;
+    private final IDaoArtifact daoArtifact;
+    private final IDaoLevel daoLevel;
+    private final IDaoTeam daoTeam;
+    private final IDaoClass daoClass;
 
     public static IStudentController create(IDaoWallet daoWallet, IDaoStudent daoStudent,
                                             IDaoArtifact daoArtifact, IDaoLevel daoLevel,
@@ -28,9 +25,6 @@ public class WebStudentController implements IStudentController {
                              IDaoWallet daoWallet, IDaoStudent daoStudent,
                              IDaoArtifact daoArtifact, IDaoLevel daoLevel,
                              IDaoTeam daoTeam, IDaoClass daoClass) {
-
-        // proper student will be set in method (by calling getStudentById(int studentId))
-        this.student = new Student(0, "n/a", "n/a", "n/a");  // by default
 
         this.daoWallet = daoWallet;
         this.daoStudent = daoStudent;
