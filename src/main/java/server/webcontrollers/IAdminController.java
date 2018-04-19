@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IAdminController {
 
-    String getAdmin(int adminId);
+    String getAdminName(int adminId);
     boolean createMentor(String name, String password, String email);
     boolean createClass(String name);
     boolean editMentor(String id);
@@ -13,4 +13,5 @@ public interface IAdminController {
     boolean createLevel(String name, String coinsLimit);
     List<String> getMentorsNames();
     List<String> getMentorsFullData();
+    String getAdminEmail(int adminId);
 }

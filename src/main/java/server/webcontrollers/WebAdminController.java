@@ -1,9 +1,6 @@
 package server.webcontrollers;
 
-import dao.IDaoAdmin;
-import dao.IDaoClass;
-import dao.IDaoLevel;
-import dao.IDaoMentor;
+import dao.*;
 import model.*;
 
 import java.util.List;
@@ -31,12 +28,21 @@ public class WebAdminController implements IAdminController {
 
 
     @Override
-    public String getAdmin(int adminId) {
+    public String getAdminName(int adminId) {
         Admin admin = daoAdmin.importAdmin(adminId);
         if(admin != null) {
             return admin.getName();
         }
         return "";
+    }
+
+    @Override
+    public String getAdminEmail(int adminId) {
+        Admin admin = daoAdmin.importAdmin(adminId);
+        if(admin == null) {
+            return "";
+        }
+        return admin.getEmail();
     }
 
     public boolean createMentor(String name, String password, String email) {
