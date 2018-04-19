@@ -12,7 +12,9 @@ import server.webcontrollers.IAdminController;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
 
@@ -53,7 +55,8 @@ public class AdminHandler implements HttpHandler {
                     case "/admin":
                         displayAdminHomePage(httpExchange);
                         break;
-                    case "/admin/create_mentor": createMentor(httpExchange);
+                    case "/admin/create_mentor":
+                        createMentor(httpExchange);
                         break;
                     case "/admin/display_mentor":
                         displayMentor(httpExchange);
@@ -120,15 +123,12 @@ public class AdminHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange, response);
     }
 
- 
-
     private void createMentor(HttpExchange httpExchange) throws IOException {
         String response;
         System.out.println("jestem");
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/admin/create_mentor.html");
-
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -153,4 +153,34 @@ public class AdminHandler implements HttpHandler {
         String name = pairs[1].replace("+", " ");
         return URLDecoder.decode(name, "UTF-8");
     }
+
+    private Map<String,String> parseFromManyData(String formData) throws UnsupportedEncodingException {
+        Map<String,String> map = new HashMap<>();
+        String[] pairs = formData.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            String value = URLDecoder.decode(keyValue[1], "UTF-8");
+            map.put(keyValue[0], value);
+        }
+        return map;
+    }
+
+    private Map<String,String> getInput(HttpExchange httpExchange) throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String formData = br.readLine();
+        System.out.println(formData);
+        return parseFromManyData(formData);
+    }
+
+    private void prepareMentor(HttpExchange httpExchange) throws IOException{
+        Map<String, String> inputs = getInput(httpExchange);
+
+        String name = inputs.get("fname") + " " + inputs.get("lname");
+        String password = inputs.get("password");
+        String email = inputs.get("email");
+
+        controller.createMentor(name, password, email);
+    }
+
 }
