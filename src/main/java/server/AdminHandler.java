@@ -57,6 +57,10 @@ public class AdminHandler implements HttpHandler {
                         break;
                     case "/admin/display_mentor":
                         displayMentor(httpExchange);
+                        break;
+                    case "/admin/create_class":
+                        displayCreateClassPage(httpExchange);
+                        break;
                 }
             }
             if (method.equals("POST")) {
@@ -64,7 +68,7 @@ public class AdminHandler implements HttpHandler {
                 BufferedReader br = new BufferedReader(isr);
                 String formData = br.readLine();
                 System.out.println(formData);
-                String mentorName = parseFromData(formData);
+
                 String uri = httpExchange.getRequestURI().toString();
 
 
@@ -73,11 +77,53 @@ public class AdminHandler implements HttpHandler {
                     case "/admin":
                         displayAdminHomePage(httpExchange);
                         break;
-                    case "/admin/display_mentor": showMentorDetails(httpExchange, mentorName);
+                    case "/admin/display_mentor":
+                        String mentorName = parseFromDataEditMentor(formData);
+                        showMentorDetails(httpExchange, mentorName);
+                        break;
+                    case "/admin/create_class":
+                        String className = parseFormDataCreateClass(formData);
+                        saveClassToDb(httpExchange, className);
+                        break;
                 }
             }
         }
     }
+
+    private String parseFormDataCreateClass(String formData) throws UnsupportedEncodingException {
+        String[] input = formData.split("=");
+        String className = input[1];
+        return URLDecoder.decode(className, "UTF-8");
+    }
+
+
+    private void saveClassToDb(HttpExchange httpExchange, String className) throws IOException {
+        String info;
+        if(controller.createClass(className)){
+            info = "Class added successfully!";
+        }else{
+            info = "Something went wrong :(";
+        }
+        String response;
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(
+                                "static/admin/create_class.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("info", info);
+        response =template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void displayCreateClassPage(HttpExchange httpExchange) throws IOException {
+        String response;
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(
+                                "static/admin/create_class.html");
+        JtwigModel model = JtwigModel.newModel();
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange,response);
+
+
+    }
+
 
     private void redirectToLogin(HttpExchange httpExchange) throws IOException {
         Headers responseHeaders = httpExchange.getResponseHeaders();
@@ -147,8 +193,8 @@ public class AdminHandler implements HttpHandler {
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
-
-    private String parseFromData(String formData) throws UnsupportedEncodingException {
+// parseFromDataEditMentor is unique for every form
+    private String parseFromDataEditMentor(String formData) throws UnsupportedEncodingException {
         String[] pairs = formData.split("=");
         String name = pairs[1].replace("+", " ");
         return URLDecoder.decode(name, "UTF-8");
