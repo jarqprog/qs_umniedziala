@@ -61,6 +61,9 @@ public class AdminHandler implements HttpHandler {
                     case "/admin/display_mentor":
                         displayMentor(httpExchange);
                         break;
+                    case "/admin/create_level":
+                        showExperienceLevelCreation(httpExchange);
+                        break;
                     case "/admin/create_class":
                         displayCreateClassPage(httpExchange);
                         break;
@@ -126,8 +129,6 @@ public class AdminHandler implements HttpHandler {
         httpExchange.close();
     }
 
-    // te dwie metody niżej są bardzo podobne... - zrobiłem refactor przy użyciu controllera - żeby nie wynosić modeli do handlera
-
     private void showMentorDetails(HttpExchange httpExchange) throws IOException {
         Map<String, String> inputs = getInput(httpExchange);
         String name = inputs.get("mentorName");
@@ -187,14 +188,6 @@ public class AdminHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange, response);
     }
 
-    private Map<String,String> getInput(HttpExchange httpExchange) throws IOException {
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        String formData = br.readLine();
-        System.out.println(formData);
-        return parseFromData(formData);
-    }
-
     private void createMentor(HttpExchange httpExchange) throws IOException{
         Map<String, String> inputs = getInput(httpExchange);
 
@@ -217,12 +210,6 @@ public class AdminHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange, response);
     }
 
-// parseFromDataEditMentor is unique for every form
-    private String parseFromDataEditMentor(String formData) throws UnsupportedEncodingException {
-        String[] pairs = formData.split("=");
-        String name = pairs[1].replace("+", " ");
-        return URLDecoder.decode(name, "UTF-8");
-    }
 
     private void showExperienceLevelCreation(HttpExchange httpExchange) throws IOException {
 
@@ -239,7 +226,7 @@ public class AdminHandler implements HttpHandler {
     }
 
     private void handleExperienceLevelCreation(HttpExchange httpExchange) throws IOException {
-        Map<String,String> inputs = parseFormDataToMap(httpExchange);
+        Map<String,String> inputs = getInput(httpExchange);
         String levelName = inputs.get("level_name");
         int coinsLimit = Integer.parseInt(inputs.get("coins_limit"));
 
@@ -265,7 +252,7 @@ public class AdminHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange, response);
     }
 
-    private Map<String,String> parseFormDataToMap(HttpExchange httpExchange) throws IOException {
+    private Map<String,String> getInput(HttpExchange httpExchange) throws IOException {
 
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
