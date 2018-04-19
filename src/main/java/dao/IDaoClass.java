@@ -27,4 +27,6 @@ public interface IDaoClass {
     List<Student> getStudentsOfClass(Integer classID);
 
     CodecoolClass getMentorsClass(Integer mentorId);
+
+    CodecoolClass getStudentClass(Integer studentId);
 }
