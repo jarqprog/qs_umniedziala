@@ -166,13 +166,16 @@ public class AdminHandler implements HttpHandler {
     }
 
     private void showExperienceLevelCreation(HttpExchange httpExchange) throws IOException {
-        String response;
+
+        List<String> expLevels = controller.getAllLevels();
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/admin/create_level.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("result", "");
-        response = template.render(model);
+        model.with("levels", expLevels);
+
+        String response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
 
@@ -180,28 +183,30 @@ public class AdminHandler implements HttpHandler {
         Map<String,String> inputs = parseFormDataToMap(httpExchange);
         String levelName = inputs.get("level_name");
         int coinsLimit = Integer.parseInt(inputs.get("coins_limit"));
-        System.out.println("Inputs: " + inputs.toString());
+
         boolean isExportSuccess =  controller.createLevel(levelName, coinsLimit);
+
         String result;
         if(! isExportSuccess) {
-            result = "creation failure, try again";
+            result = "creation failure, try again (haven't You type already existing level?)";
         } else {
             result = "creation success!";
         }
-        System.out.println(result);
 
+        List<String> expLevels = controller.getAllLevels();
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/admin/create_level.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("result", result);
+        model.with("levels", expLevels);
         response = template.render(model);
 
         responseManager.executeResponse(httpExchange, response);
     }
 
-    private Map<String,String> parseFormDataToMap(HttpExchange httpExchange) throws IOException, UnsupportedEncodingException {
+    private Map<String,String> parseFormDataToMap(HttpExchange httpExchange) throws IOException {
 
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
