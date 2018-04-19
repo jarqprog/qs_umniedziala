@@ -26,14 +26,14 @@
         <div id="main-content">
 
             <div id="main-content-header">
-                <h1>Display mentor data</h1>
+                <h1>Display mentor personal information</h1>
             </div>
 
                 <div class="pick-list">
                 <form method="POST">
                  <ol>
                     {%for mentor in MentorsNames%}
-                        <li>
+                        <li style="text-align: left">
                             <input type="radio" name="mentorName" value="{{mentor}}" checked> {{mentor}}
                          </li>
                     {%endfor%}
