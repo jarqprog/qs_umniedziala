@@ -15,32 +15,30 @@
 
     <div id="container">
 
-        <!-- header -->
-        <object id="header" name="header" type="text/html" data="static/header.html"></object>
+       <!-- header -->
+       <object id="header" name="header" type="text/html" data="static/header.html"></object>
 
         <main>
             <!-- menu -->
-            <object id="main-menu-box" name="main-menu-box" type="text/html" data="static/user-student/menu.html"></object>
-
+            <object id="main-menu-box" name="main-menu-box" type="text/html" data="static/student/menu.html"></object>
 
             <!-- content -->
             <div id="main-content">
                 <div class="user-name">Name: {{name}}</div>
                 <div class="user-info">
                     <p>Email: {{email}}</p>
-                    <p>Coolcoins: {{money}}</p>
-                    <p>Current level: {{level}}</p>
-                    <p>{{team}}</p>
+                    <p>{{money}}</p>
+                    <p>{{level}}</p>
                     <p>Current group: {{group}}</p>
+                    <p>Current class: {{class}}</p>
                 </div>
             </div>
         </main>
 
         <!-- footer -->
-        <object id="footer" name="footer" type="text/html" data="static/footer.html"></object>
+       <object id="footer" name="footer" type="text/html" data="static/footer.html"></object>
 
     </div>
-
 
 </body>
 </html>
