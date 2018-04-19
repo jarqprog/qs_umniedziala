@@ -292,7 +292,7 @@ public class AdminHandler implements HttpHandler {
 
         String result;
         if(! isExportSuccess) {
-            result = "creation failure, try again (haven't You type already existing level?)";
+            result = "creation failure, try again (haven't You type already existing level or invalid data?)";
         } else {
             result = "creation success!";
         }
