@@ -12,7 +12,9 @@ import server.webcontrollers.IAdminController;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
 
@@ -64,11 +66,6 @@ public class AdminHandler implements HttpHandler {
                 }
             }
             if (method.equals("POST")) {
-                InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-                BufferedReader br = new BufferedReader(isr);
-                String formData = br.readLine();
-                System.out.println(formData);
-
                 String uri = httpExchange.getRequestURI().toString();
 
 
@@ -78,8 +75,10 @@ public class AdminHandler implements HttpHandler {
                         displayAdminHomePage(httpExchange);
                         break;
                     case "/admin/display_mentor":
-                        String mentorName = parseFromDataEditMentor(formData);
-                        showMentorDetails(httpExchange, mentorName);
+                        showMentorDetails(httpExchange);
+                        break;
+                    case "/admin/create_level":
+                        handleExperienceLevelCreation(httpExchange);
                         break;
                     case "/admin/create_class":
                         String className = parseFormDataCreateClass(formData);
@@ -134,8 +133,9 @@ public class AdminHandler implements HttpHandler {
 
     // te dwie metody niżej są bardzo podobne... - zrobiłem refactor przy użyciu controllera - żeby nie wynosić modeli do handlera
 
-    private void showMentorDetails(HttpExchange httpExchange, String name) throws IOException {
-        String mentorInfo = controller.seeMentorData(name);
+    private void showMentorDetails(HttpExchange httpExchange) throws IOException {
+        String mentorName = parseFromData(httpExchange);
+        String mentorInfo = controller.seeMentorData(mentorName);
         String uri = httpExchange.getRequestURI().toString();
         System.out.println("URI: " + uri);
         List<String> mentorsFullData = controller.getMentorsFullData();
@@ -193,10 +193,73 @@ public class AdminHandler implements HttpHandler {
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
+
+    private String parseFromData(HttpExchange httpExchange) throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        return br.readLine();
+
 // parseFromDataEditMentor is unique for every form
     private String parseFromDataEditMentor(String formData) throws UnsupportedEncodingException {
         String[] pairs = formData.split("=");
         String name = pairs[1].replace("+", " ");
         return URLDecoder.decode(name, "UTF-8");
+    }
+
+    private void showExperienceLevelCreation(HttpExchange httpExchange) throws IOException {
+
+        List<String> expLevels = controller.getAllLevels();
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/create_level.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("result", "");
+        model.with("levels", expLevels);
+
+        String response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void handleExperienceLevelCreation(HttpExchange httpExchange) throws IOException {
+        Map<String,String> inputs = parseFormDataToMap(httpExchange);
+        String levelName = inputs.get("level_name");
+        int coinsLimit = Integer.parseInt(inputs.get("coins_limit"));
+
+        boolean isExportSuccess =  controller.createLevel(levelName, coinsLimit);
+
+        String result;
+        if(! isExportSuccess) {
+            result = "creation failure, try again (haven't You type already existing level?)";
+        } else {
+            result = "creation success!";
+        }
+
+        List<String> expLevels = controller.getAllLevels();
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/create_level.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("result", result);
+        model.with("levels", expLevels);
+        response = template.render(model);
+
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private Map<String,String> parseFormDataToMap(HttpExchange httpExchange) throws IOException {
+
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String data = br.readLine();
+        Map<String,String> map = new HashMap<>();
+        System.out.println("parser: " + data);
+        String[] pairs = data.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            String value = URLDecoder.decode(keyValue[1], "UTF-8");
+            map.put(keyValue[0], value);
+        }
+        return map;
     }
 }
