@@ -1,10 +1,10 @@
 
 /* custom fonts */
 
-@font-face {
+/*@font-face {
     font-family: 'Play-Regular', sans-serif;
     src: url(fonts/Play-Regular.ttf);
-}
+}*/
 
 body {
     background-color: black;
@@ -164,8 +164,9 @@ main {
 }
 
 #main-inner-container > h1 {
-    font-size: 100px;
-    margin: 0;
+    font-size: 350%;
+    margin-bottom: : 3%;
+    text-align: center;
 }
 
 /* footer: */

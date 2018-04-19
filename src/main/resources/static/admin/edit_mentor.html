@@ -43,11 +43,11 @@
                     <form method="POST">
                       <input type="number" min="1" name="Id" placeholder="Id" required>
                       <br/><br/>
-                      <input type="text" name="Name" placeholder="Name">
+                      <input type="text" name="Name" maxlength="30" placeholder="Name">
                       <br/><br/>
-                      <input type="password" name="Password" placeholder="Password">
+                      <input type="text" name="text" maxlength="30" placeholder="Password">
                       <br/><br/>
-                      <input type="email" name="Email" placeholder="Email">
+                      <input type="email" name="Email" maxlength="30" placeholder="Email">
                       <br/><br/>
                       <input type="submit" value="edit">
                   </form>
@@ -56,8 +56,6 @@
                         {{info}}
                         {%endif%}
                 </div>
-
-
 
             </div>
         </main>
