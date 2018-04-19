@@ -79,9 +79,8 @@ public class AdminHandler implements HttpHandler {
                 switch (uri) {
                     case "/admin": displayAdminHomePage(httpExchange);
                         break;
-                
                     case "/admin/edit_mentor":
-                        Map mentorData = parseEditMentor(formData);
+                        Map mentorData = parseEditMentor(httpExchange);
                         editMentor(httpExchange, mentorData);
                         break;
                     case "/admin/display_mentor":
@@ -128,10 +127,14 @@ public class AdminHandler implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
         responseManager.executeResponse(httpExchange,response);
+    }
 
-    private Map parseEditMentor(String formData) throws UnsupportedEncodingException {
-        Map map = new HashMap();
-        String[] pairs = formData.split("&");
+    private Map parseEditMentor(HttpExchange httpExchange) throws IOException {
+        Map<String,String> map = new HashMap<>();
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String data = br.readLine();
+        String[] pairs = data.split("&");
         for(String pair : pairs){
             String[] keyValue = pair.split("=");
             if(keyValue.length == 2) {
