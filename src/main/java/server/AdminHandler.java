@@ -55,7 +55,8 @@ public class AdminHandler implements HttpHandler {
                     case "/admin":
                         displayAdminHomePage(httpExchange);
                         break;
-                    case "/admin/create_mentor": createMentor(httpExchange);
+                    case "/admin/create_mentor":
+                        displayCreateMentor(httpExchange);
                         break;
                     case "/admin/display_mentor":
                         displayMentor(httpExchange);
@@ -67,7 +68,6 @@ public class AdminHandler implements HttpHandler {
             }
             if (method.equals("POST")) {
                 String uri = httpExchange.getRequestURI().toString();
-
 
                 System.out.println("URI: " + uri);
                 switch (uri) {
@@ -81,22 +81,20 @@ public class AdminHandler implements HttpHandler {
                         handleExperienceLevelCreation(httpExchange);
                         break;
                     case "/admin/create_class":
-                        String className = parseFormDataCreateClass(formData);
-                        saveClassToDb(httpExchange, className);
+                        saveClassToDb(httpExchange);
+                        break;
+                    case "/admin/create_mentor":
+                        createMentor(httpExchange);
                         break;
                 }
             }
         }
     }
 
-    private String parseFormDataCreateClass(String formData) throws UnsupportedEncodingException {
-        String[] input = formData.split("=");
-        String className = input[1];
-        return URLDecoder.decode(className, "UTF-8");
-    }
+    private void saveClassToDb(HttpExchange httpExchange) throws IOException {
+        Map<String, String> inputs = getInput(httpExchange);
+        String className = inputs.get("className");
 
-
-    private void saveClassToDb(HttpExchange httpExchange, String className) throws IOException {
         String info;
         if(controller.createClass(className)){
             info = "Class added successfully!";
@@ -119,10 +117,7 @@ public class AdminHandler implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
         responseManager.executeResponse(httpExchange,response);
-
-
     }
-
 
     private void redirectToLogin(HttpExchange httpExchange) throws IOException {
         Headers responseHeaders = httpExchange.getResponseHeaders();
@@ -134,8 +129,10 @@ public class AdminHandler implements HttpHandler {
     // te dwie metody niżej są bardzo podobne... - zrobiłem refactor przy użyciu controllera - żeby nie wynosić modeli do handlera
 
     private void showMentorDetails(HttpExchange httpExchange) throws IOException {
-        String mentorName = parseFromData(httpExchange);
-        String mentorInfo = controller.seeMentorData(mentorName);
+        Map<String, String> inputs = getInput(httpExchange);
+        String name = inputs.get("mentorName");
+
+        String mentorInfo = controller.seeMentorData(name);
         String uri = httpExchange.getRequestURI().toString();
         System.out.println("URI: " + uri);
         List<String> mentorsFullData = controller.getMentorsFullData();
@@ -166,15 +163,11 @@ public class AdminHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange, response);
     }
 
- 
-
-    private void createMentor(HttpExchange httpExchange) throws IOException {
+    private void displayCreateMentor(HttpExchange httpExchange) throws IOException {
         String response;
-        System.out.println("jestem");
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/admin/create_mentor.html");
-
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -194,10 +187,35 @@ public class AdminHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange, response);
     }
 
-    private String parseFromData(HttpExchange httpExchange) throws IOException {
+    private Map<String,String> getInput(HttpExchange httpExchange) throws IOException {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
-        return br.readLine();
+        String formData = br.readLine();
+        System.out.println(formData);
+        return parseFromData(formData);
+    }
+
+    private void createMentor(HttpExchange httpExchange) throws IOException{
+        Map<String, String> inputs = getInput(httpExchange);
+
+        String name = inputs.get("name");
+        String password = inputs.get("password");
+        String email = inputs.get("email");
+
+        String info;
+        if(controller.createMentor(name, password, email)){
+            info = "Mentor added successfully!";
+        }else{
+            info = "Something went wrong :(";
+        }
+        String response;
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(
+                "static/admin/create_mentor.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("info", info);
+        response =template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
 
 // parseFromDataEditMentor is unique for every form
     private String parseFromDataEditMentor(String formData) throws UnsupportedEncodingException {
