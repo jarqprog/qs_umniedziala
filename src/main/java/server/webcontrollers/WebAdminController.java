@@ -3,7 +3,9 @@ package server.webcontrollers;
 import dao.*;
 import model.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class WebAdminController implements IAdminController {
@@ -57,11 +59,23 @@ public class WebAdminController implements IAdminController {
     }
 
 
-    public boolean editMentor(String id) {
-        Mentor mentor = daoMentor.importMentor(Integer.parseInt(id));
-        return daoMentor.updateMentor(mentor);
+    public boolean editMentor(Map mentorData) {
+        Mentor mentor = daoMentor.importMentor(Integer.parseInt(mentorData.get("Id").toString()));
+        if(mentor !=null) {
+            if(mentorData.containsKey("Name")) {
+                mentor.setName(mentorData.get("Name").toString());
+            }
+            if(mentorData.containsKey("Password")) {
+                mentor.setPassword(mentorData.get("Password").toString());
+            }
+            if(mentorData.containsKey("Email")) {
+                mentor.setEmail(mentorData.get("Email").toString());
+            }
+            return daoMentor.updateMentor(mentor);
+        } else{
+            return false;
+        }
     }
-
 
     public String getCodecoolClass(String name) {
         for (CodecoolClass codecoolClass : daoClass.getAllClasses()) {
@@ -94,7 +108,16 @@ public class WebAdminController implements IAdminController {
     }
 
     @Override
+    public List<Integer> getMentorsId() {
+        return daoMentor.getAllMentors().stream().
+                                        map(User::getUserId).
+                                        collect(Collectors.toList());
+    }
+
+    @Override
     public List<String> getMentorsFullData() {
         return daoMentor.getAllMentors().stream().map(User::toString).collect(Collectors.toList());
     }
+
+
 }

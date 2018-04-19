@@ -190,7 +190,9 @@ main {
 
 
 input[type=login],
-input[type=password] {
+input[type=password],
+input[type=email],
+input[type=number] {
   background-color: chartreuse;
   text-align: center;
   padding: 5px 20px;
@@ -198,7 +200,9 @@ input[type=password] {
 }
 
 input[type=login]:hover,
-input[type=password]:hover {
+input[type=password]:hover
+input[type=email]:hover
+input[type=number]:hover {
   background-color: darkgreen;
   color: white;
 }
