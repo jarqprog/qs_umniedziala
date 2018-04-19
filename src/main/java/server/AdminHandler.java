@@ -67,15 +67,22 @@ public class AdminHandler implements HttpHandler {
                     case "/admin/create_class":
                         displayCreateClassPage(httpExchange);
                         break;
+                    case "/admin/edit_mentor":
+                        displayEditMentor(httpExchange);
+                        break;
                 }
             }
             if (method.equals("POST")) {
-                String uri = httpExchange.getRequestURI().toString();
 
+                String uri = httpExchange.getRequestURI().toString();
                 System.out.println("URI: " + uri);
                 switch (uri) {
-                    case "/admin":
-                        displayAdminHomePage(httpExchange);
+                    case "/admin": displayAdminHomePage(httpExchange);
+                        break;
+                
+                    case "/admin/edit_mentor":
+                        Map mentorData = parseEditMentor(formData);
+                        editMentor(httpExchange, mentorData);
                         break;
                     case "/admin/display_mentor":
                         showMentorDetails(httpExchange);
@@ -93,6 +100,7 @@ public class AdminHandler implements HttpHandler {
             }
         }
     }
+
 
     private void saveClassToDb(HttpExchange httpExchange) throws IOException {
         Map<String, String> inputs = getInput(httpExchange);
@@ -120,6 +128,53 @@ public class AdminHandler implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
         responseManager.executeResponse(httpExchange,response);
+
+    private Map parseEditMentor(String formData) throws UnsupportedEncodingException {
+        Map map = new HashMap();
+        String[] pairs = formData.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            if(keyValue.length == 2) {
+                String value = URLDecoder.decode(keyValue[1], "UTF-8");
+                map.put(keyValue[0], value);
+            }
+        }
+        return map;
+    }
+
+    private void editMentor(HttpExchange httpExchange, Map mentor) throws IOException {
+
+        String info;
+        boolean isMentorEdited = controller.editMentor(mentor);
+        List<String> mentors = controller.getMentorsFullData();
+        if(isMentorEdited) {
+            info = "Mentor updated!";
+        } else {
+            info = "Problem occurred";
+        }
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/edit_mentor.html");
+
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentors", mentors);
+        model.with("info", info);
+        String response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void displayEditMentor(HttpExchange httpExchange) throws IOException {
+        List<String> mentors = controller.getMentorsFullData();
+
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/edit_mentor.html");
+
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentors", mentors);
+        String response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+
     }
 
     private void redirectToLogin(HttpExchange httpExchange) throws IOException {
