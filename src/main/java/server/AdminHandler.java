@@ -1,14 +1,11 @@
 package server;
 
-
-
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import dao.*;
 import model.Admin;
-import model.Mentor;
-import model.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.sessions.ISessionManager;
@@ -17,7 +14,6 @@ import server.webcontrollers.IAdminController;
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AdminHandler implements HttpHandler {
 
@@ -37,17 +33,11 @@ public class AdminHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
         System.out.println(method);
-        String response;
+
         int loggedUserId = sessionManager.getCurrentUserId(httpExchange);
 
         if( loggedUserId == -1) {
-
-            response = "powinien wylogowac admina!!";
-
-            httpExchange.sendResponseHeaders(200, response.length());
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            redirectToLogin(httpExchange);
 
         } else {
             if (method.equals("GET")) {
@@ -84,6 +74,14 @@ public class AdminHandler implements HttpHandler {
         }
     }
 
+    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
+        Headers responseHeaders = httpExchange.getResponseHeaders();
+        responseHeaders.add("Location", "/");
+        httpExchange.sendResponseHeaders(302, -1);
+        httpExchange.close();
+    }
+
+    // te dwie metody niżej są bardzo podobne... - zrobiłem refactor przy użyciu controllera - żeby nie wynosić modeli do handlera
 
     private void showMentorDetails(HttpExchange httpExchange, String name) {
         String mentorInfo = controller.seeMentorData(name);
@@ -171,11 +169,6 @@ public class AdminHandler implements HttpHandler {
     private String parseFromData(String formData) throws UnsupportedEncodingException {
         String[] pairs = formData.split("=");
         String name = pairs[1].replace("+", " ");
-        String value = URLDecoder.decode(name, "UTF-8");
-        return value;
-    }
-
-    private String getAdminName(int adminId) {
-        return controller.getAdmin(adminId);
+        return URLDecoder.decode(name, "UTF-8");
     }
 }

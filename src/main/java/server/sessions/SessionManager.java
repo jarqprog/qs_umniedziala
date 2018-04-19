@@ -38,8 +38,12 @@ public class SessionManager implements ISessionManager {
     public int getCurrentUserId(HttpExchange he) {
         deleteExpired();  // remove old sessions
         try {
+            String sessionToken = extractToken(he);
+            if(sessionToken.contains("deleted")) {
+                return -1;
+            }
+
             if(isLogged(he)) {
-                String sessionToken = extractToken(he);
                 sessions.put(sessionToken, Calendar.getInstance());  // time has been updated (session is current)
 
                 String splitRegex = "==";
@@ -58,6 +62,7 @@ public class SessionManager implements ISessionManager {
         try {
             String sessionToken = extractToken(he);
             sessions.remove(sessionToken);
+            he.getResponseHeaders().set("Set-Cookie", "sessionToken=deleted");
             return true;
         } catch (SessionException notUsed) {
             return false;
@@ -72,6 +77,7 @@ public class SessionManager implements ISessionManager {
 
         String prefix = String.valueOf(getRandomNumber());
         String sessionId = prefix + "==" + userId;
+        he.getResponseHeaders().set("Max-Age", String.valueOf(sessionExpirationTime));
         he.getResponseHeaders().set("Set-Cookie", "sessionToken="+sessionId);
         sessions.put(sessionId, Calendar.getInstance());
         return true;
