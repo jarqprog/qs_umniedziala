@@ -1,10 +1,8 @@
-import server.Server;
-
-import java.io.IOException;
+import server.ServerClient;
 
 public class App {
-    public static void main(String [] args) throws IOException {
-        Server.getInstance(8080).run();
-        System.out.println("http://localhost:8080/");
+    public static void main(String [] args) {
+
+        ServerClient.create().runClient();
     }
 }
