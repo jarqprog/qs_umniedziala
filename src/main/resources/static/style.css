@@ -1,10 +1,10 @@
 
 /* custom fonts */
 
-@font-face {
+/*@font-face {
     font-family: 'Play-Regular', sans-serif;
     src: url(fonts/Play-Regular.ttf);
-}
+}*/
 
 body {
     background-color: black;
@@ -149,7 +149,6 @@ main {
 }
 
 #main-content > h1 {
-
     text-align: center;
     font-size: 56px;
     margin: 0;
@@ -164,8 +163,9 @@ main {
 }
 
 #main-inner-container > h1 {
-    font-size: 100px;
-    margin: 0;
+    font-size: 350%;
+    margin-bottom: : 3%;
+    text-align: center;
 }
 
 /* footer: */
@@ -258,6 +258,7 @@ input[type=text]:hover {
     float: left;
     width: 50%;
     height: 80%;
+    max-height: 50%;
     overflow-y:scroll;
     padding-right: 2%;
     }
