@@ -4,10 +4,9 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import dao.*;
-import model.Admin;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import server.helpers.IResponseManager;
 import server.sessions.ISessionManager;
 import server.webcontrollers.IAdminController;
 
@@ -19,14 +18,20 @@ public class AdminHandler implements HttpHandler {
 
     private final IAdminController controller;
     private final ISessionManager sessionManager;
+    private final IResponseManager responseManager;
 
-    public static HttpHandler create(ISessionManager sessionManager, IAdminController controller) {
-        return new AdminHandler(sessionManager, controller);
+    public static HttpHandler create(ISessionManager sessionManager,
+                                     IAdminController controller,
+                                     IResponseManager responseManager) {
+        return new AdminHandler(sessionManager, controller, responseManager);
     }
 
-    private AdminHandler(ISessionManager sessionManager, IAdminController controller) {
+    private AdminHandler(ISessionManager sessionManager,
+                         IAdminController controller,
+                         IResponseManager responseManager) {
         this.sessionManager = sessionManager;
         this.controller = controller;
+        this.responseManager = responseManager;
     }
 
     @Override
@@ -83,7 +88,7 @@ public class AdminHandler implements HttpHandler {
 
     // te dwie metody niżej są bardzo podobne... - zrobiłem refactor przy użyciu controllera - żeby nie wynosić modeli do handlera
 
-    private void showMentorDetails(HttpExchange httpExchange, String name) {
+    private void showMentorDetails(HttpExchange httpExchange, String name) throws IOException {
         String mentorInfo = controller.seeMentorData(name);
         String uri = httpExchange.getRequestURI().toString();
         System.out.println("URI: " + uri);
@@ -97,10 +102,10 @@ public class AdminHandler implements HttpHandler {
         model.with("MentorsNames", mentorsNames);
         model.with("MentorInfo", mentorInfo);
         String response = template.render(model);
-        executeResponse(httpExchange, response);
+        responseManager.executeResponse(httpExchange, response);
     }
 
-    private void displayMentor(HttpExchange httpExchange) {
+    private void displayMentor(HttpExchange httpExchange) throws IOException {
         List<String> mentorsFullData = controller.getMentorsFullData();
         List<String> mentorsNames = controller.getMentorsNames();
         String info = "choose mentor to display";
@@ -112,7 +117,7 @@ public class AdminHandler implements HttpHandler {
         model.with("MentorsNames", mentorsNames);
         model.with("MentorInfo", info);
         String response = template.render(model);
-        executeResponse(httpExchange, response);
+        responseManager.executeResponse(httpExchange, response);
     }
 
  
@@ -126,44 +131,21 @@ public class AdminHandler implements HttpHandler {
 
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
-        executeResponse(httpExchange, response);
+        responseManager.executeResponse(httpExchange, response);
     }
 
     private void displayAdminHomePage(HttpExchange httpExchange) throws IOException {
         String response;
-        DaoAdmin daoAdmin = new DaoAdmin();
-        int userId = this.sessionManager.getCurrentUserId(httpExchange);
-        Admin admin = daoAdmin.importAdmin(userId);
 
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/admin/profile.html.twig");
-
         JtwigModel model = JtwigModel.newModel();
-        model.with("name", admin.getName());
-        model.with("email", admin.getEmail());
+        int adminId = sessionManager.getCurrentUserId(httpExchange);
+        model.with("name", controller.getAdminName(adminId));
+        model.with("email", controller.getAdminEmail(adminId));
         response = template.render(model);
-        executeResponse(httpExchange, response);
-    }
-
-    private void executeResponse(HttpExchange httpExchange, String response) {
-        byte[] bytes = response.getBytes();
-        try {
-            httpExchange.sendResponseHeaders(200, bytes.length);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        OutputStream os = httpExchange.getResponseBody();
-        try {
-            os.write(response.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        responseManager.executeResponse(httpExchange, response);
     }
 
     private String parseFromData(String formData) throws UnsupportedEncodingException {

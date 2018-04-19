@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import controller.ControllerAdmin;
 import dao.*;
+import server.helpers.ResponseManager;
 import server.sessions.ISessionManager;
 import server.sessions.SessionManager;
 import server.webcontrollers.IAdminController;
@@ -62,13 +63,14 @@ public class Server implements IServer {
     private HttpHandler createAdminHandler() {
         IAdminController controller = WebAdminController
                 .create(new DaoAdmin(), new DaoMentor(), new DaoClass(), new DaoLevel());
-        return AdminHandler.create(sessionManager, controller);
+        return AdminHandler.create(sessionManager, controller, ResponseManager.create());
     }
 
     private HttpHandler createStudentHandler() {
         IStudentController controller = WebStudentController
-                .create(new DaoWallet(), new DaoStudent(), new DaoArtifact(), new DaoLevel(), new DaoTeam());
-        return StudentHandler.create(sessionManager, controller);
+                .create(new DaoWallet(), new DaoStudent(),
+                        new DaoArtifact(), new DaoLevel(), new DaoTeam(), new DaoClass());
+        return StudentHandler.create(sessionManager, controller, ResponseManager.create());
     }
 
     private HttpHandler createLogoutHandler() {

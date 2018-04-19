@@ -8,9 +8,9 @@ import java.util.*;
  *    sample usage (in handlers classes):
  *
  *        sessionManager.register(httpExchange, userId);  use after successful login (register new session)
- *        sessionManager.remove(httpExchange);  use after while logout (remove session for current user)
+ *        sessionManager.remove(httpExchange);  use while logout (remove session for current user)
  *        sessionManager.getCurrentUserId(httpExchange);  use in Admin/Student/Mentor handlers
- *                                                        - it returns id of current user (if session is valid)
+ *                                                        - returns id of current user (if session is valid)
  *                                                        - or -1 if there is no valid session
  *
  */
