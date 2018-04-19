@@ -214,4 +214,26 @@ public class DaoClass implements IDaoClass {
         return mentorsClass;
     }
 
+    @Override
+    public CodecoolClass getStudentClass(Integer studentId) {
+        CodecoolClass studentClass = null;
+        String query = "SELECT id_codecool_class FROM students_in_classes WHERE id_student=?;";
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, studentId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(!resultSet.isClosed()){
+                Integer classId = resultSet.getInt("id_codecool_class");
+                studentClass = importClass(classId);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("updating students class assignment failed");
+        }
+        return studentClass;
+    }
+
 }

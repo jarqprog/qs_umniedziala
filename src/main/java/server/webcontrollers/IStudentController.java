@@ -2,6 +2,11 @@ package server.webcontrollers;
 
 public interface IStudentController {
 
-    int getWallet(int studentId);
-    String[] getExpLevel(int studentId);
+
+    String getStudentName(int studentId);
+    String getStudentEmail(int studentId);
+    String getStudentWallet(int studentId);
+    String getStudentGroup(int studentId);
+    String getStudentExpLevel(int studentId);
+    String getStudentClass(int studentId);
 }

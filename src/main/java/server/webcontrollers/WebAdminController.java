@@ -1,13 +1,10 @@
 package server.webcontrollers;
 
-import dao.IDaoAdmin;
-import dao.IDaoClass;
-import dao.IDaoLevel;
-import dao.IDaoMentor;
-import model.Admin;
-import model.CodecoolClass;
-import model.Level;
-import model.Mentor;
+import dao.*;
+import model.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class WebAdminController implements IAdminController {
 
@@ -31,12 +28,21 @@ public class WebAdminController implements IAdminController {
 
 
     @Override
-    public String getAdmin(int adminId) {
+    public String getAdminName(int adminId) {
         Admin admin = daoAdmin.importAdmin(adminId);
         if(admin != null) {
             return admin.getName();
         }
         return "";
+    }
+
+    @Override
+    public String getAdminEmail(int adminId) {
+        Admin admin = daoAdmin.importAdmin(adminId);
+        if(admin == null) {
+            return "";
+        }
+        return admin.getEmail();
     }
 
     public boolean createMentor(String name, String password, String email) {
@@ -80,5 +86,15 @@ public class WebAdminController implements IAdminController {
     public boolean createLevel(String name, String coinsLimit) {
         Level level = daoLevel.createLevel(name, Integer.parseInt(coinsLimit));
         return daoLevel.exportLevel(level);
+    }
+
+    @Override
+    public List<String> getMentorsNames() {
+        return daoMentor.getAllMentors().stream().map(User::getName).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getMentorsFullData() {
+        return daoMentor.getAllMentors().stream().map(User::toString).collect(Collectors.toList());
     }
 }
