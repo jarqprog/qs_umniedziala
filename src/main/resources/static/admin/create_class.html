@@ -5,8 +5,8 @@
     <title>Quest Store </title>
     <meta name="description" content="Quest Store System website."/>
     <meta name="keywords" content="it students, CodeCool"/>
-    <link rel="stylesheet" href="../style.css" type="text/css"/>
-    <link rel="stylesheet" href="../css/fontello.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/fontello.css" type="text/css"/>
     <script type="text/javascript" src="../js/javascript.js"></script>
 
 </head>
@@ -16,27 +16,30 @@
     <div id="container">
 
         <!-- header -->
-        <object id="header" name="header" type="text/html" data="../header.html"></object>
+        <object id="header" name="header" type="text/html" data="/static/header.html"></object>
 
         <main>
             <!-- menu -->
-            <object id="main-menu-box" name="main-menu-box" type="text/html" data="menu.html"></object>
+            <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/admin/menu.html"></object>
 
             <!-- content -->
             <div id="main-content">
                 <div id="main-inner-container">
-                  <form method="post">
+                  <form method="POST">
                     <h1>CLASS CREATION</h1>
-                    <input type="text" placeholder="Class name">
+                    <input type="text" name = "className" placeholder="Class name">
                     <br/><br/>
                     <input type="submit" value="create">
                   </form>
+                    {%if method == POST%}
+                        {{info}}
+                    {%endif%}
                 </div>
             </div>
         </main>
 
         <!-- footer -->
-        <object id="footer" name="footer" type="text/html" data="../footer.html"></object>
+        <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
 
     </div>
 

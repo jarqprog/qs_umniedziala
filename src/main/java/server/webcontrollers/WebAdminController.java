@@ -47,6 +47,15 @@ public class WebAdminController implements IAdminController {
         return admin.getEmail();
     }
 
+    @Override
+    public List<String> getAllLevels() {
+        List<String> levels = daoLevel.getAllLevels().stream().map(Level::toString).collect(Collectors.toList());
+        if(levels == null) {
+            return new ArrayList<>();
+        }
+        return levels;
+    }
+
     public boolean createMentor(String name, String password, String email) {
         Mentor mentor = daoMentor.createMentor(name, password, email);
         return daoMentor.exportMentor(mentor);
@@ -97,8 +106,8 @@ public class WebAdminController implements IAdminController {
     }
 
 
-    public boolean createLevel(String name, String coinsLimit) {
-        Level level = daoLevel.createLevel(name, Integer.parseInt(coinsLimit));
+    public boolean createLevel(String name, int coinsLimit) {
+        Level level = daoLevel.createLevel(name, coinsLimit);
         return daoLevel.exportLevel(level);
     }
 

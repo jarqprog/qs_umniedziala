@@ -11,9 +11,10 @@ public interface IAdminController {
     boolean editMentor(Map mentorData);
     String getCodecoolClass(String name);
     String seeMentorData(String mentor);
-    boolean createLevel(String name, String coinsLimit);
+    boolean createLevel(String name, int coinsLimit);
     List<String> getMentorsNames();
     List<String> getMentorsFullData();
     List<Integer> getMentorsId();
     String getAdminEmail(int adminId);
+    List<String> getAllLevels();
 }
