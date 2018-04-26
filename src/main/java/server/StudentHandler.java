@@ -41,7 +41,7 @@ public class StudentHandler implements HttpHandler {
         int loggedUserId = sessionManager.getCurrentUserId(httpExchange);
 
         if( loggedUserId == -1) {
-            redirectToLogin(httpExchange);
+            responseManager.redirectToLogin(httpExchange);
 
         } else {
             if (method.equals("GET")) {
@@ -59,13 +59,6 @@ public class StudentHandler implements HttpHandler {
                 // to implement
             }
         }
-    }
-
-    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
-        Headers responseHeaders = httpExchange.getResponseHeaders();
-        responseHeaders.add("Location", "/");
-        httpExchange.sendResponseHeaders(302, -1);
-        httpExchange.close();
     }
 
     private void displayStudentHomePage(HttpExchange httpExchange) throws IOException {

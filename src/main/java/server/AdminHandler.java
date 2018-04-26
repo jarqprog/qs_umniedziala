@@ -44,7 +44,7 @@ public class AdminHandler implements HttpHandler {
         int loggedUserId = sessionManager.getCurrentUserId(httpExchange);
 
         if( loggedUserId == -1) {
-            redirectToLogin(httpExchange);
+            responseManager.redirectToLogin(httpExchange);
 
         } else {
             if (method.equals("GET")) {
@@ -102,7 +102,7 @@ public class AdminHandler implements HttpHandler {
 
 
     private void saveClassToDb(HttpExchange httpExchange) throws IOException {
-        Map<String, String> inputs = getInput(httpExchange);
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
         String className = inputs.get("className");
 
         String info;
@@ -180,15 +180,8 @@ public class AdminHandler implements HttpHandler {
 
     }
 
-    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
-        Headers responseHeaders = httpExchange.getResponseHeaders();
-        responseHeaders.add("Location", "/");
-        httpExchange.sendResponseHeaders(302, -1);
-        httpExchange.close();
-    }
-
     private void showMentorDetails(HttpExchange httpExchange) throws IOException {
-        Map<String, String> inputs = getInput(httpExchange);
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
         String name = inputs.get("mentorName");
 
         String mentorInfo = controller.seeMentorData(name);
@@ -247,7 +240,7 @@ public class AdminHandler implements HttpHandler {
     }
 
     private void createMentor(HttpExchange httpExchange) throws IOException{
-        Map<String, String> inputs = getInput(httpExchange);
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
 
         String name = inputs.get("name");
         String password = inputs.get("password");
@@ -284,7 +277,7 @@ public class AdminHandler implements HttpHandler {
     }
 
     private void handleExperienceLevelCreation(HttpExchange httpExchange) throws IOException {
-        Map<String,String> inputs = getInput(httpExchange);
+        Map<String,String> inputs = responseManager.getInput(httpExchange);
         String levelName = inputs.get("level_name");
         int coinsLimit = Integer.parseInt(inputs.get("coins_limit"));
 
@@ -308,21 +301,5 @@ public class AdminHandler implements HttpHandler {
         response = template.render(model);
 
         responseManager.executeResponse(httpExchange, response);
-    }
-
-    private Map<String,String> getInput(HttpExchange httpExchange) throws IOException {
-
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        String data = br.readLine();
-        Map<String,String> map = new HashMap<>();
-        System.out.println("parser: " + data);
-        String[] pairs = data.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            String value = URLDecoder.decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
     }
 }
