@@ -18,7 +18,7 @@ public class ResponseManager implements IResponseManager {
         byte[] bytes = response.getBytes();
         httpExchange.sendResponseHeaders(200, bytes.length);
         OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
+        os.write(response.getBytes("utf-8"));
         os.close();
     }
 }
