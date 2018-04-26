@@ -5,10 +5,7 @@ import server.helpers.MimeTypeResolver;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URL;
 
@@ -25,18 +22,20 @@ public class Static implements HttpHandler {
 
         // get file path from url
         URI uri = httpExchange.getRequestURI();
-        String path = "." + uri.getPath();
 
-        // get file from resources folder, see: https://www.mkyong.com/java/java-read-a-file-from-resources-folder/
+        String path = uri.getPath().substring(1);
+
         ClassLoader classLoader = getClass().getClassLoader();
+
+        InputStream inputStream = classLoader.getResourceAsStream(path);
         URL fileURL = classLoader.getResource(path);
 
-        if (fileURL == null) {
+        if (inputStream == null || fileURL == null) {
             // Object does not exist or is not a file: reject with 404 error.
             send404(httpExchange);
         } else {
             // Object exists and is a file: accept with response code 200.
-            sendFile(httpExchange, fileURL);
+            sendFile(httpExchange, inputStream, fileURL);
         }
     }
 
@@ -44,13 +43,14 @@ public class Static implements HttpHandler {
         String response = "404 (Not Found)\n";
         httpExchange.sendResponseHeaders(404, response.length());
         OutputStream os = httpExchange.getResponseBody();
-        os.write(response.toString().getBytes());
+        os.write(response.getBytes());
         os.close();
     }
 
-    private void sendFile(HttpExchange httpExchange, URL fileURL) throws IOException {
-        // get the file
+    private void sendFile(HttpExchange httpExchange, InputStream inputStream, URL fileURL) throws IOException {
+
         File file = new File(fileURL.getFile());
+
         // we need to find out the mime type of the file, see: https://en.wikipedia.org/wiki/Media_type
         MimeTypeResolver resolver = new MimeTypeResolver(file);
         String mime = resolver.getMimeType();
@@ -61,14 +61,11 @@ public class Static implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
 
         // send the file
-        FileInputStream fs = new FileInputStream(file);
         final byte[] buffer = new byte[0x10000];
         int count;
-        while ((count = fs.read(buffer)) >= 0) {
-            os.write(buffer,0,count);
+        while ((count = inputStream.read(buffer)) >= 0) {
+            os.write(buffer, 0, count);
         }
         os.close();
     }
-
-
 }
