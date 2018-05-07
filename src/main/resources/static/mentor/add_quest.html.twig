@@ -34,11 +34,15 @@
                         <input type="text" name="value" placeholder="Value" required>
                         <br/><br/>
                         <input type="text" name="description" placeholder="Description" required>
-                        <br/><br/>
-                        <input type="text" name="type" placeholder="Team/Individual" required>
-                        <br/><br/>
-                        <input type="text" name="category" placeholder="Basic/Magic" required>
-                        <br/><br/>
+                        <br/>
+                        <div id="row">
+                            <p>Type</p>
+                            <input type="radio" name="type" value="individual"> Individual
+                            <input type="radio" name="type" value="team"> Team<br/>
+                            <p>Category</p>
+                            <input type="radio" name="category" value="basic"> Basic
+                            <input type="radio" name="category" value="extra"> Extra<br/>
+                        </div>
                         <input type="submit" value="Send">
                     </form>
                     {%if method == POST%}
