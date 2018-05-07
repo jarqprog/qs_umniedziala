@@ -18,13 +18,15 @@ public class Server implements IServer {
 
     private final long MAX_SESSION_DURATION = 300000;  // in milliseconds
     private final ISessionManager sessionManager = SessionManager.create(MAX_SESSION_DURATION);
+    private final IDaoFactory daoFactory;
 
-    private Server(int port){
+    private Server(int port, IDaoFactory daoFactory){
         PORT = port;
+        this.daoFactory = daoFactory;
     }
 
-    public static IServer getInstance(int port){
-        return new Server(port);
+    public static IServer getInstance(int port, IDaoFactory daoFactory){
+        return new Server(port, daoFactory);
     }
 
     @Override
@@ -53,29 +55,32 @@ public class Server implements IServer {
     }
 
     private HttpHandler createLoginHandler() {
-        return Login.create(new DaoLogin(), sessionManager);
+        return Login.create(daoFactory.create(DaoLogin.class), sessionManager);
     }
 
     private HttpHandler createAdminHandler() {
         IAdminController controller = WebAdminController
-                .create(new DaoAdmin(), new DaoMentor(), new DaoClass(), new DaoLevel());
+                .create(daoFactory.create(DaoAdmin.class), daoFactory.create(DaoMentor.class),
+                        daoFactory.create(DaoClass.class), daoFactory.create(DaoLevel.class));
         return AdminHandler.create(sessionManager, controller, ResponseManager.create());
     }
 
 
     private HttpHandler createMentorHandler() {
         IMentorController controller = WebMentorController
-                .create(new DaoWallet(), new DaoStudent(), new DaoArtifact(),
-                        new DaoLevel(), new DaoTeam(), new DaoClass(),
-                        new DaoQuest(), new DaoMentor());
+                .create(daoFactory.create(DaoWallet.class), daoFactory.create(DaoStudent.class),
+                        daoFactory.create(DaoArtifact.class), daoFactory.create(DaoLevel.class),
+                        daoFactory.create(DaoTeam.class), daoFactory.create(DaoClass.class),
+                        daoFactory.create(DaoQuest.class), daoFactory.create(DaoMentor.class));
         return MentorHandler.create(sessionManager, controller, ResponseManager.create());
     }
 
 
     private HttpHandler createStudentHandler() {
         IStudentController controller = WebStudentController
-                .create(new DaoWallet(), new DaoStudent(),
-                        new DaoArtifact(), new DaoLevel(), new DaoTeam(), new DaoClass());
+                .create(daoFactory.create(DaoWallet.class), daoFactory.create(DaoStudent.class),
+                        daoFactory.create(DaoArtifact.class), daoFactory.create(DaoLevel.class),
+                        daoFactory.create(DaoTeam.class), daoFactory.create(DaoClass.class));
         return StudentHandler.create(sessionManager, controller, ResponseManager.create());
     }
 
