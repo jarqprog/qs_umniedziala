@@ -63,10 +63,14 @@ public class SqlConfig implements DatabaseConfiguration {
     }
 
     private static Properties getPostgresDefaultProperties() {
+        //https://www.mkyong.com/jdbc/how-do-connect-to-postgresql-with-jdbc-driver-java/
+//        https://www.postgresql.org/docs/9.3/static/app-createuser.html
+//        https://github.com/dimitri/pgloader
+//        https://www.spectralcore.com/trial/fc-ent !!!!!
         Properties props = new Properties();
         props.setProperty("user","szyfratorzy");
         props.setProperty("password","#apaj1234");
-        props.setProperty("ssl","true");
+        props.setProperty("ssl","false");
         return props;
     }
 
