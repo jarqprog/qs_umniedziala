@@ -7,7 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DaoAdmin implements IDaoAdmin  {
+public class DaoAdmin extends SqlDao implements IDaoAdmin  {
+
+    DaoAdmin(Connection connection) {
+        super(connection);
+    }
 
     @Override
     public Admin createAdmin (String name, String password, String email){
@@ -26,8 +30,8 @@ public class DaoAdmin implements IDaoAdmin  {
         int roleId = getRoleID("admin");
 
 
-        try (Connection connection = DbConnection.getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (
+                 PreparedStatement preparedStatement = getConnection().prepareStatement(query)){
             
             preparedStatement.setInt(1, adminId);
             preparedStatement.setInt(2, roleId);
@@ -59,8 +63,8 @@ public class DaoAdmin implements IDaoAdmin  {
         String query = "INSERT INTO users (name, password, email, id_role)" +
                 "VALUES (?, ?, ?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)){
             
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -87,8 +91,8 @@ public class DaoAdmin implements IDaoAdmin  {
         String query = "UPDATE users SET name = ?, password = ?, email = ?"+
                 "WHERE id_user= ? AND id_role = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)){
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -110,8 +114,8 @@ public class DaoAdmin implements IDaoAdmin  {
 
         String query = "SELECT id_role FROM roles WHERE name = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)){
             preparedStatement.setString(1, roleName);
             ResultSet resultSet = preparedStatement.executeQuery();
 

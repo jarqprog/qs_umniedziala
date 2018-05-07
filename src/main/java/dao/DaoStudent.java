@@ -6,7 +6,14 @@ import java.util.List;
 
 import model.*;
 
-public class DaoStudent implements IDaoStudent{
+public class DaoStudent extends SqlDao implements IDaoStudent{
+
+    private final IDaoWallet daoWallet;
+
+    DaoStudent(Connection connection, IDaoWallet daoWallet) {
+        super(connection);
+        this.daoWallet = daoWallet;
+    }
 
     @Override
     public Student createStudent(String name, String password, String email) {
@@ -27,8 +34,8 @@ public class DaoStudent implements IDaoStudent{
 
         String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
              preparedStatement.setInt(1, studentId);
             preparedStatement.setInt(2, roleId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -42,7 +49,7 @@ public class DaoStudent implements IDaoStudent{
                 String email = resultSet.getString("email");
 
                 student = createStudent(userId, name, password, email);
-                Wallet wallet = new DaoWallet().importWallet(studentId);
+                Wallet wallet = daoWallet.importWallet(studentId);
                 student.setWallet(wallet);
             }
 
@@ -63,8 +70,8 @@ public class DaoStudent implements IDaoStudent{
 
         String query = "SELECT * FROM users WHERE email = ? AND id_role = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setString(1, userEmail);
             preparedStatement.setInt(2, roleId);
@@ -104,8 +111,8 @@ public class DaoStudent implements IDaoStudent{
         String query = "INSERT INTO users (name, password, email, id_role)" +
                 "VALUES (?, ?, ?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -130,8 +137,8 @@ public class DaoStudent implements IDaoStudent{
 
         String query = "UPDATE users set name = ?, password = ?, email = ? WHERE id_user= ? AND id_role = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -152,8 +159,8 @@ public class DaoStudent implements IDaoStudent{
         int roleId = 0;
         String query = "SELECT id_role FROM roles WHERE name = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setString(1, roleName);
 
@@ -178,8 +185,8 @@ public class DaoStudent implements IDaoStudent{
         int roleId = getRoleID("student");
         String query = "SELECT id_user FROM users WHERE id_role = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, roleId);
 

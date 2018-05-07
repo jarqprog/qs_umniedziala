@@ -9,7 +9,14 @@ import java.sql.Connection;
 import model.CodecoolClass;
 import model.Student;
 
-public class DaoClass implements IDaoClass {
+public class DaoClass extends SqlDao implements IDaoClass {
+
+    private final IDaoStudent daoStudent;
+
+    DaoClass(Connection connection, IDaoStudent daoStudent) {
+        super(connection);
+        this.daoStudent = daoStudent;
+    }
 
     @Override
     public CodecoolClass createClass(String name){
@@ -27,8 +34,8 @@ public class DaoClass implements IDaoClass {
 
         String query = "SELECT * FROM codecool_classes WHERE id_codecool_class = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, classID);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -55,8 +62,8 @@ public class DaoClass implements IDaoClass {
         
         String query = "INSERT INTO codecool_classes (name) VALUES (?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
             
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
@@ -76,8 +83,8 @@ public class DaoClass implements IDaoClass {
         String query = "SELECT * FROM codecool_classes;";
         CodecoolClass codecoolClass;
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()){
 
             while(resultSet.next()) {
@@ -101,8 +108,8 @@ public class DaoClass implements IDaoClass {
          
         String query = "INSERT INTO mentors_in_classes (id_codecool_class, id_mentor) VALUES (?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
              
             preparedStatement.setInt(1, classId);
             preparedStatement.setInt(2, mentorId);
@@ -118,8 +125,8 @@ public class DaoClass implements IDaoClass {
          
         String query = "INSERT INTO students_in_classes (id_codecool_class, id_student) VALUES (?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
              
             preparedStatement.setInt(1, classId);
             preparedStatement.setInt(2, studentId);
@@ -136,8 +143,8 @@ public class DaoClass implements IDaoClass {
         
         String query = "UPDATE mentors_in_classes SET id_codecool_class=? WHERE id_mentor=?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
              
             preparedStatement.setInt(1, classId);
             preparedStatement.setInt(2, mentorId);
@@ -154,8 +161,8 @@ public class DaoClass implements IDaoClass {
 
         String query = "DELETE FROM mentors_in_classes WHERE id_mentor=?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
              
             preparedStatement.setInt(1, mentorId);
             preparedStatement.executeUpdate();
@@ -173,15 +180,15 @@ public class DaoClass implements IDaoClass {
 
         String query = "SELECT id_user FROM users JOIN students_in_classes WHERE students_in_classes.id_codecool_class=? AND students_in_classes.id_student=users.id_user;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
              
             preparedStatement.setInt(1, classID);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()) {
                 int userId = resultSet.getInt("id_user");
-                studentsInClass.add(new DaoStudent().importStudent(userId));
+                studentsInClass.add(daoStudent.importStudent(userId));
             }
              
 
@@ -196,8 +203,8 @@ public class DaoClass implements IDaoClass {
         CodecoolClass mentorsClass = null;
         String query = "SELECT id_codecool_class FROM mentors_in_classes WHERE id_mentor=?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, mentorId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -219,8 +226,8 @@ public class DaoClass implements IDaoClass {
         CodecoolClass studentClass = null;
         String query = "SELECT id_codecool_class FROM students_in_classes WHERE id_student=?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, studentId);
             ResultSet resultSet = preparedStatement.executeQuery();

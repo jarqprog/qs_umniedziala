@@ -10,7 +10,12 @@ import java.util.List;
 import model.Level;
 import model.Mentor;
 
-public class DaoLevel implements IDaoLevel {
+public class DaoLevel extends SqlDao implements IDaoLevel {
+
+    DaoLevel(Connection connection) {
+        super(connection);
+    }
+
     @Override
     public Level createLevel(String name, int coinsLimit) {
         return new Level(name, coinsLimit);
@@ -30,8 +35,8 @@ public class DaoLevel implements IDaoLevel {
         String query = "INSERT INTO levels (name, coins_limit)" +
                 "VALUES (?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, coinsLimit);
@@ -49,8 +54,8 @@ public class DaoLevel implements IDaoLevel {
         Level level = null;
         String query = "SELECT name, coins_limit FROM levels WHERE id_level = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
              preparedStatement.setInt(1, levelId);
 
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -75,8 +80,8 @@ public class DaoLevel implements IDaoLevel {
 
         String query = "SELECT id_level FROM levels ORDER BY coins_limit;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()){
@@ -108,8 +113,8 @@ public class DaoLevel implements IDaoLevel {
         String query = "SELECT * FROM levels WHERE coins_limit <= ?";
         List <Level> levels = new ArrayList<>();
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)){
             preparedStatement.setInt(1, allCoins);
 
             try( ResultSet resultSet = preparedStatement.executeQuery()) {

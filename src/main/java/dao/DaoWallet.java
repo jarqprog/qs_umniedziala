@@ -9,7 +9,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoWallet implements IDaoWallet {
+public class DaoWallet extends SqlDao implements IDaoWallet {
+
+    private final IDaoArtifact daoArtifact;
+
+    DaoWallet(Connection connection, IDaoArtifact daoArtifact) {
+        super(connection);
+        this.daoArtifact = daoArtifact;
+    }
 
     @Override
     public Wallet createWallet(){
@@ -28,8 +35,8 @@ public class DaoWallet implements IDaoWallet {
 
         List<Artifact> artifacts = null;
         String query = "SELECT * FROM wallets WHERE id_student= ?";
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, userID);
             try(ResultSet resultSet = preparedStatement.executeQuery()){
@@ -62,8 +69,8 @@ public class DaoWallet implements IDaoWallet {
         String query = "INSERT INTO wallets (id_student, all_coins, available_coins)" +
                 "VALUES (?, ?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, value);
             preparedStatement.setInt(2, allCoins);
@@ -84,8 +91,8 @@ public class DaoWallet implements IDaoWallet {
                        + "on artifacts.id_artifact = artifacts_in_wallets.id_artifact "
                        + "WHERE artifacts_in_wallets.id_student = ? and artifacts_in_wallets.status = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, userID);
             preparedStatement.setString(2, status);
@@ -94,7 +101,7 @@ public class DaoWallet implements IDaoWallet {
 
                 while (resultSet.next()) {
                     int idArtifact = resultSet.getInt("id_artifact");
-                    Artifact artifact = new DaoArtifact().importArtifact(idArtifact);
+                    Artifact artifact = daoArtifact.importArtifact(idArtifact);
                     artifacts.add(artifact);
                 }
             }
@@ -116,8 +123,8 @@ public class DaoWallet implements IDaoWallet {
         String query = "UPDATE wallets SET all_coins = ?, available_coins = ?"+
                 "WHERE id_student= ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, allCoins);
             preparedStatement.setInt(2, availableCoins);
@@ -136,8 +143,8 @@ public class DaoWallet implements IDaoWallet {
         String query = "INSERT INTO artifacts_in_wallets (id_artifact, id_student, status)" +
                 "VALUES (?, ?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, idArtifact);
             preparedStatement.setInt(2, idStudent);
@@ -159,8 +166,8 @@ public class DaoWallet implements IDaoWallet {
         String query = "UPDATE artifacts_in_wallets SET status = ?"+
                     "WHERE id_artifact= ? and id_student = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setString(1, statusArtifact);
             preparedStatement.setInt(2, idArtifact);

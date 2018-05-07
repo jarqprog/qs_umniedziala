@@ -9,7 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoArtifact implements IDaoArtifact{
+public class DaoArtifact extends SqlDao implements IDaoArtifact{
+
+    DaoArtifact(Connection connection) {
+        super(connection);
+    }
 
     public Artifact createArtifact(String name, int value, String description, String type) {
         return new Artifact(name, value, description, type);
@@ -23,8 +27,8 @@ public class DaoArtifact implements IDaoArtifact{
         Artifact artifact = null;
         String query = "SELECT * FROM artifacts WHERE id_artifact = ?";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)){
             
             preparedStatement.setInt(1, itemId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -52,8 +56,8 @@ public class DaoArtifact implements IDaoArtifact{
         List<Artifact> artifacts = new ArrayList<>();
         String query = "SELECT id_artifact FROM artifacts;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()){
@@ -82,8 +86,8 @@ public class DaoArtifact implements IDaoArtifact{
                 "name = ?, value = ?, description = ?, type = ? " +
                 "WHERE id_artifact = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
             
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, value);
@@ -103,8 +107,8 @@ public class DaoArtifact implements IDaoArtifact{
 
         String query = "INSERT INTO artifacts VALUES (?, ?, ?, ?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setString(2, artifact.getName());
             preparedStatement.setInt(3, artifact.getValue());
@@ -124,8 +128,8 @@ public class DaoArtifact implements IDaoArtifact{
         List<Artifact> artifacts = new ArrayList<>();
         String query = "SELECT id_artifact FROM artifacts WHERE type = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
 
             preparedStatement.setString(1, type);

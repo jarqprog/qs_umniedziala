@@ -37,13 +37,14 @@ public class DaoFactory implements IDaoFactory {
                 dao = new DaoArtifact(connection);
                 break;
             case("DaoClass"):
-                dao = new DaoClass(connection);
+                dao = new DaoClass(connection, create(DaoStudent.class));
                 break;
             case("DaoLevel"):
                 dao = new DaoLevel(connection);
                 break;
             case("DaoLogin"):
-                dao = new DaoLogin(connection);
+                dao = new DaoLogin(connection, create(DaoAdmin.class),
+                        create(DaoMentor.class), create(DaoStudent.class));
                 break;
             case("DaoMentor"):
                 dao = new DaoMentor(connection);
@@ -52,13 +53,13 @@ public class DaoFactory implements IDaoFactory {
                 dao = new DaoQuest(connection);
                 break;
             case("DaoStudent"):
-                dao = new DaoStudent(connection);
+                dao = new DaoStudent(connection, create(DaoWallet.class));
                 break;
             case("DaoTeam"):
-                dao = new DaoTeam(connection);
+                dao = new DaoTeam(connection, create(DaoStudent.class));
                 break;
             case("DaoWallet"):
-                dao = new DaoWallet(connection);
+                dao = new DaoWallet(connection, create(DaoArtifact.class));
                 break;
         }
         return daoType.cast(dao);

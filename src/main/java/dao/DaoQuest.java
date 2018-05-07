@@ -10,7 +10,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaoQuest implements IDaoQuest {
+public class DaoQuest extends SqlDao implements IDaoQuest {
+
+    DaoQuest(Connection connection) {
+        super(connection);
+    }
 
     @Override
     public Quest createQuest(String name, int value, String description, String type, String category) {
@@ -27,8 +31,8 @@ public class DaoQuest implements IDaoQuest {
         Quest quest = null;
 
         String query = "SELECT * FROM quests WHERE id_quest = ?";
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
              preparedStatement.setInt(1, itemId);
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -55,8 +59,8 @@ public class DaoQuest implements IDaoQuest {
 
         String query = "SELECT id_quest FROM quests";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
              try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
                  while (resultSet.next()) {
@@ -85,8 +89,8 @@ public class DaoQuest implements IDaoQuest {
         "name = ?, value = ?, description = ?, type = ?, category =? " +
         "WHERE id_quest = ?";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, value);
@@ -107,8 +111,8 @@ public class DaoQuest implements IDaoQuest {
 
         String query = "INSERT INTO quests VALUES (?, ?, ?, ?, ?, ?);";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setString(2, quest.getName());
             preparedStatement.setInt(3, quest.getValue());
@@ -130,8 +134,8 @@ public class DaoQuest implements IDaoQuest {
 
         String query = "SELECT id_quest FROM quests WHERE type = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
             preparedStatement.setString(1, "team");
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -154,8 +158,8 @@ public class DaoQuest implements IDaoQuest {
 
         String query = "SELECT id_quest FROM quests WHERE type = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (
+             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
             preparedStatement.setString(1, "individual");
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 

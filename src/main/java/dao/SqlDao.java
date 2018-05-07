@@ -6,7 +6,7 @@ public abstract class SqlDao implements Dao {
 
     private Connection connection;
 
-    public SqlDao(Connection connection) {
+    SqlDao(Connection connection) {
         this.connection = connection;
     }
 
