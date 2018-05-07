@@ -33,14 +33,14 @@ public class DaoLogin implements IDaoLogin {
     }
 
     @Override
-    public String getRole(int id_role){
+    public String getRole(int idRole){
 
         String role = null;
 
         String query = "SELECT name FROM roles WHERE id_role= ?;";
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-             preparedStatement.setInt(1, id_role);
+             preparedStatement.setInt(1, idRole);
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 if (!resultSet.isClosed()) {
