@@ -2,7 +2,8 @@ package enums.dbEnums;
 
 public enum DbDriver {
 
-    SQLITE("org.sqlite.JDBC");
+    SQLITE("org.sqlite.JDBC"),
+    POSTGRES("org.postgresql.Driver");
 
     private String driver;
 
