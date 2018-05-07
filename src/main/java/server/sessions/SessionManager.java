@@ -20,6 +20,7 @@ public class SessionManager implements ISessionManager {
     private Map<String,Calendar> sessions;
     private static ISessionManager instance;
     private final long sessionExpirationTime;  // in milliseconds (recommended: 300000)
+    private final String SPLITTER = "==";
 
     // singleton:
     public static ISessionManager create(long sessionExpirationTime) {
@@ -43,13 +44,12 @@ public class SessionManager implements ISessionManager {
                 return -1;
             }
 
+
             if(isLogged(he)) {
                 sessions.put(sessionToken, Calendar.getInstance());  // time has been updated (session is current)
-
-                String splitRegex = "==";
                 int idIndex = 1;
 
-                return Integer.parseInt(sessionToken.split(splitRegex)[idIndex]);
+                return Integer.parseInt(sessionToken.split(SPLITTER)[idIndex]);
             }
             return -1;
         } catch (Exception notUsed) {
@@ -70,13 +70,13 @@ public class SessionManager implements ISessionManager {
     }
 
     @Override
-    public boolean register(HttpExchange he, int userId) {
+    public boolean register(HttpExchange he, int userId, String userRole) {
         if( isLogged(he) ) {  // user is already registered and has active session
             return false;
         }
-
         String prefix = String.valueOf(getRandomNumber());
-        String sessionId = prefix + "==" + userId;
+        // separator SPLITTER used below is to split String to array (to extract proper data)
+        String sessionId = String.format("%s%s%s%s%s", prefix, SPLITTER, userId, SPLITTER, userRole);
         he.getResponseHeaders().set("Max-Age", String.valueOf(sessionExpirationTime));
         he.getResponseHeaders().set("Set-Cookie", "sessionToken="+sessionId);
         sessions.put(sessionId, Calendar.getInstance());
@@ -106,7 +106,9 @@ public class SessionManager implements ISessionManager {
     private boolean isLogged(HttpExchange he) {
         try {
             String sessionToken = extractToken(he);
-            return sessions.containsKey(sessionToken);
+            String uri = he.getRequestURI().toString();
+            return sessions.containsKey(sessionToken)
+                    && uri.contains(gatherUserRole(sessionToken));
 
         } catch (SessionException notUsed) {
             return false;
@@ -125,6 +127,15 @@ public class SessionManager implements ISessionManager {
 
             return cookie.replace(cookieMatcher, "");
         } catch (Exception notUsed) {
+            throw new SessionException();
+        }
+    }
+
+    private String gatherUserRole(String sessionToken) throws SessionException {
+        try {
+            int ROLE_INDEX = 2;
+            return sessionToken.split(SPLITTER)[ROLE_INDEX];
+        } catch (IndexOutOfBoundsException notUsed) {
             throw new SessionException();
         }
     }
