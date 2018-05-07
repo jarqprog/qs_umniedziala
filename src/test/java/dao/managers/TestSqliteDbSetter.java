@@ -1,6 +1,6 @@
 package dao.managers;
 
-import dao.DbFilePath;
+import enums.dbEnums.DbFilePath;
 
 import java.io.File;
 import java.io.FileNotFoundException;

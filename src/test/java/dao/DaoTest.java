@@ -1,6 +1,8 @@
 package dao;
 
 import dao.managers.TestSqliteDbSetter;
+import enums.dbEnums.DbFilePath;
+import enums.dbEnums.DbUrl;
 import org.junit.*;
 import org.junit.rules.MethodRule;
 import org.junit.rules.TestWatchman;
