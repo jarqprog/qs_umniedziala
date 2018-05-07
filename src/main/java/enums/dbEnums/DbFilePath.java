@@ -1,4 +1,4 @@
-package dao;
+package enums.dbEnums;
 
 public enum DbFilePath {
 
