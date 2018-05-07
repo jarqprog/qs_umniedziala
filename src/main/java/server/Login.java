@@ -65,7 +65,7 @@ public class Login implements HttpHandler {
     private void logUser(HttpExchange httpExchange, User user) throws IOException {
         String status = getUserRole(user);
 
-        sessionManager.register(httpExchange, user.getUserId());
+        sessionManager.register(httpExchange, user.getUserId(), status);
 
         Headers responseHeaders = httpExchange.getResponseHeaders();
         switch (status) {
