@@ -54,6 +54,9 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/add_quest":
                         displayAddQuestPage(httpExchange);
                         break;
+                    case "/mentor/add_artifact":
+                        displayAddArtifactPage(httpExchange);
+                        break;
                 }
             }
             if (method.equals("POST")) {
@@ -61,6 +64,9 @@ public class MentorHandler implements HttpHandler {
                 switch (uri) {
                     case "/mentor/add_quest":
                         addQuest(httpExchange);
+                        break;
+                    case "/mentor/add_artifact":
+                        addArtifact(httpExchange);
                         break;
                 }
             }
@@ -91,14 +97,24 @@ public class MentorHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange, response);
     }
 
+    private void displayAddArtifactPage(HttpExchange httpExchange) throws IOException {
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/add_artifact.html.twig");
+        JtwigModel model = JtwigModel.newModel();
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
     private void addQuest(HttpExchange httpExchange) throws IOException{
         Map<String, String> inputs = responseManager.getInput(httpExchange);
 
         String name = inputs.get("questname");
         int value = Integer.parseInt(inputs.get("value"));
         String description = inputs.get("description");
-        String type = inputs.get("type").toLowerCase();
-        String category = inputs.get("category").toLowerCase();
+        String type = inputs.get("type");
+        String category = inputs.get("category");
 
         String info = "Error!";
         if(controller.addQuest(name, value, description, type, category)){
@@ -107,6 +123,27 @@ public class MentorHandler implements HttpHandler {
         String response;
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
                 "static/mentor/add_quest.html.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("info", info);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void addArtifact(HttpExchange httpExchange) throws IOException {
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
+
+        String name = inputs.get("artifactname");
+        int value = Integer.parseInt(inputs.get("value"));
+        String description = inputs.get("description");
+        String type = inputs.get("type");
+
+        String info = "Error!";
+        if(controller.addArtifact(name, value, description, type)){
+            info = "Done!";
+        }
+        String response;
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(
+                "static/mentor/add_artifact.html.twig");
         JtwigModel model = JtwigModel.newModel();
         model.with("info", info);
         response = template.render(model);

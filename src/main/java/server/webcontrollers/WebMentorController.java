@@ -1,6 +1,7 @@
 package server.webcontrollers;
 
 import dao.*;
+import model.Artifact;
 import model.CodecoolClass;
 import model.Mentor;
 import model.Quest;
@@ -86,6 +87,12 @@ public class WebMentorController implements IMentorController {
     public boolean addQuest(String name, int value, String description, String type, String category) {
         Quest quest = daoQuest.createQuest(name, value, description, type, category);
         return daoQuest.exportQuest(quest);
+    }
+
+    @Override
+    public boolean addArtifact(String name, int value, String type, String category) {
+        Artifact artifact = daoArtifact.createArtifact(name, value, type, category);
+        return daoArtifact.exportArtifact(artifact);
     }
 }
 

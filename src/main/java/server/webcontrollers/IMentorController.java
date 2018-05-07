@@ -7,4 +7,5 @@ public interface IMentorController {
     String getMentorEmail(int mentorId);
     String getMentorClassWithStudents(int mentorId);
     boolean addQuest(String name, int value, String description, String type, String category);
+    boolean addArtifact(String name, int value, String type, String caetgory);
 }
