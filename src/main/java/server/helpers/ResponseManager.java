@@ -46,6 +46,23 @@ public class ResponseManager implements IResponseManager {
     }
 
     @Override
+    public Map parseEditData(HttpExchange httpExchange) throws IOException {
+        Map<String,String> map = new HashMap<>();
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String data = br.readLine();
+        String[] pairs = data.split("&");
+        for(String pair : pairs){
+            String[] keyValue = pair.split("=");
+            if(keyValue.length == 2) {
+                String value = URLDecoder.decode(keyValue[1], "UTF-8");
+                map.put(keyValue[0], value);
+            }
+        }
+        return map;
+    }
+
+    @Override
     public void redirectToLogin(HttpExchange httpExchange) throws IOException {
         Headers responseHeaders = httpExchange.getResponseHeaders();
         responseHeaders.add("Location", "/");

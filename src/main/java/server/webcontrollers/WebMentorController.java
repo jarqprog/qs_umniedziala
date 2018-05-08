@@ -1,10 +1,13 @@
 package server.webcontrollers;
 
+
 import dao.*;
-import model.Artifact;
-import model.CodecoolClass;
-import model.Mentor;
-import model.Quest;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import model.*;
 
 public class WebMentorController implements IMentorController {
 
@@ -77,6 +80,65 @@ public class WebMentorController implements IMentorController {
             counter++;
         }
         return sb.toString();
+    }
+
+    @Override
+    public String getClassNames() {
+        List<String> classes = daoClass.getAllClassNames();
+        String result = "";
+        for(String className : classes) {
+            result += className;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean createStudent(String name, String password, String email, int classId) {
+        Student student = new Student(name, password, email);
+        boolean isStudentCreated = daoStudent.exportStudent(student);
+        int studentId = daoStudent.importNewStudent(email).getUserId();
+        daoClass.assignStudentToClass(studentId, classId);
+        return isStudentCreated;
+    }
+
+    public List<String> getQuests() {
+        List<String> quests = new ArrayList<>();
+        for(Quest quest : daoQuest.getAllQuests()) {
+            quests.add(quest.getFullInfo());
+        }
+        return quests;
+    }
+
+    @Override
+    public boolean editQuest(Map<String, String> questData) {
+        Quest quest = daoQuest.importQuest(Integer.parseInt(questData.get("quest-id")));
+        if(quest !=null) {
+            if(questData.containsKey("questname")) {
+                quest.setName(questData.get("questname"));
+            }
+            if(questData.containsKey("description")) {
+                quest.setDescription(questData.get("description"));
+            }
+            if(questData.containsKey("value")) {
+                quest.setValue(Integer.parseInt(questData.get("value")));
+            }
+            if(questData.containsKey("type")) {
+                quest.setType(questData.get("type"));
+            }
+            if(questData.containsKey("category")) {
+                quest.setCategory(questData.get("category"));
+            }
+
+            return daoQuest.updateQuest(quest);
+        } else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean createTeam(String teamName) {
+        Team team = daoTeam.createTeam(teamName);
+        return daoTeam.exportTeam(team);
     }
 
     private Mentor getMentorById(int mentorId) {
