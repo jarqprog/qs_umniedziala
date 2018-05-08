@@ -18,4 +18,7 @@ public interface IMentorController {
     boolean editQuest(Map<String, String> inputs);
     boolean addQuest(String name, int value, String description, String type, String category);
     boolean addArtifact(String name, int value, String type, String caetgory);
+    List<String> getArtifacts();
+
+    boolean editArtifact(Map<String, String> inputs);
 }

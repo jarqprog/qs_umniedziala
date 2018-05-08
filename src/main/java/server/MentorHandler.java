@@ -66,6 +66,9 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/add_artifact":
                         displayAddArtifactPage(httpExchange);
                         break;
+                    case "/mentor/edit_artifact":
+                        displayEditArtifactPage(httpExchange);
+                        break;
                 }
             }
             if (method.equals("POST")) {
@@ -87,9 +90,45 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/add_artifact":
                         addArtifact(httpExchange);
                         break;
+                    case "/mentor/edit_artifact":
+                        editArtifact(httpExchange);
+                        break;
                 }
             }
         }
+    }
+
+    private void editArtifact(HttpExchange httpExchange) throws IOException {
+        Map<String, String> inputs = responseManager.parseEditData(httpExchange);
+        String info;
+        boolean isArtifactEdited = controller.editArtifact(inputs);
+        if(isArtifactEdited){
+            info = "Quest edited successfully!";
+        }else{
+            info = "Something went wrong :(";
+        }
+        List<String> artifacts = controller.getArtifacts();
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/edit_artifact.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("artifacts", artifacts);
+        model.with("info", info);
+        String response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void displayEditArtifactPage(HttpExchange httpExchange) throws IOException {
+        List<String> artifacts = controller.getArtifacts();
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/edit_artifact.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("artifacts", artifacts);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+
     }
 
     private void updateQuest(HttpExchange httpExchange) throws IOException {
