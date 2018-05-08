@@ -157,7 +157,7 @@ public class MentorHandler implements HttpHandler {
         int classId = Integer.parseInt(id);
         String info;
         if(controller.createStudent(name, password, email, classId)){
-            info = "Student added successfully!";
+            info = "Team added successfully!";
         }else{
             info = "Something went wrong :(";
         }
