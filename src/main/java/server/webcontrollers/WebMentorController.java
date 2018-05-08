@@ -65,7 +65,7 @@ public class WebMentorController implements IMentorController {
     @Override
     public String getMentorClassWithStudents(int mentorId) {
         CodecoolClass codecoolClass = daoClass.getMentorsClass(mentorId);
-        if(codecoolClass == null) {
+        if(codecoolClass.getGroupId() == 0) {
             return "no class assigned yet..";
         }
         String[] classData = codecoolClass.toString().split("ID:");

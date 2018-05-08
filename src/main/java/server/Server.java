@@ -1,85 +1,42 @@
 package server;
 
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import dao.*;
-import server.helpers.ResponseManager;
-import server.sessions.ISessionManager;
-import server.sessions.SessionManager;
-import server.webcontrollers.*;
+
+import server.factory.IHandlerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
 public class Server implements IServer {
 
-
     private final int PORT;
 
-    private final long MAX_SESSION_DURATION = 300000;  // in milliseconds
-    private final ISessionManager sessionManager = SessionManager.create(MAX_SESSION_DURATION);
+    private final IHandlerFactory handlerFactory;
 
-    private Server(int port){
+    private Server(int port, IHandlerFactory handlerFactory){
         PORT = port;
+        this.handlerFactory = handlerFactory;
     }
 
-    public static IServer getInstance(int port){
-        return new Server(port);
+    public static IServer getInstance(int port, IHandlerFactory handlerFactory){
+        return new Server(port, handlerFactory);
     }
 
     @Override
     public void run() throws IOException {
-
+        System.out.println("http://localhost:8080/");
         HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
 
-        server.createContext("/static", createStaticHandler());
-        server.createContext("/", createLoginHandler());
-        server.createContext("/admin", createAdminHandler());
-        server.createContext("/student", createStudentHandler());
-        server.createContext("/mentor", createMentorHandler());
-        server.createContext("/logout", createLogoutHandler());
+        server.createContext("/static", handlerFactory.create(Static.class));
+        server.createContext("/", handlerFactory.create(Login.class));
+        server.createContext("/admin", handlerFactory.create(AdminHandler.class));
+        server.createContext("/student", handlerFactory.create(StudentHandler.class));
+        server.createContext("/mentor", handlerFactory.create(MentorHandler.class));
+        server.createContext("/logout", handlerFactory.create(Logout.class));
 
         // set routes
         server.setExecutor(null); // creates a default executor
         // start listening
         server.start();
-    }
-
-
-    // initialize objects
-
-    private HttpHandler createStaticHandler() {
-        return Static.create();
-    }
-
-    private HttpHandler createLoginHandler() {
-        return Login.create(new DaoLogin(), sessionManager);
-    }
-
-    private HttpHandler createAdminHandler() {
-        IAdminController controller = WebAdminController
-                .create(new DaoAdmin(), new DaoMentor(), new DaoClass(), new DaoLevel());
-        return AdminHandler.create(sessionManager, controller, ResponseManager.create());
-    }
-
-
-    private HttpHandler createMentorHandler() {
-        IMentorController controller = WebMentorController
-                .create(new DaoWallet(), new DaoStudent(), new DaoArtifact(),
-                        new DaoLevel(), new DaoTeam(), new DaoClass(),
-                        new DaoQuest(), new DaoMentor());
-        return MentorHandler.create(sessionManager, controller, ResponseManager.create());
-    }
-
-
-    private HttpHandler createStudentHandler() {
-        IStudentController controller = WebStudentController
-                .create(new DaoWallet(), new DaoStudent(),
-                        new DaoArtifact(), new DaoLevel(), new DaoTeam(), new DaoClass());
-        return StudentHandler.create(sessionManager, controller, ResponseManager.create());
-    }
-
-    private HttpHandler createLogoutHandler() {
-        return Logout.create(sessionManager);
     }
 }

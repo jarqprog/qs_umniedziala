@@ -3,7 +3,7 @@ package server.webcontrollers;
 import java.util.List;
 import java.util.Map;
 
-public interface IAdminController {
+public interface IAdminController extends IServerController {
 
     String getAdminName(int adminId);
     boolean createMentor(String name, String password, String email);

@@ -14,12 +14,13 @@ import view.ViewStudent;
 import java.sql.SQLException;
 
 public class ControllerLogin{
-    private ViewLogin viewLogin;
-    private DaoLogin daoLogin;
 
-    public ControllerLogin(ViewLogin viewLogin){
+    private ViewLogin viewLogin;
+    private final IDaoFactory daoFactory;
+
+    public ControllerLogin(ViewLogin viewLogin, IDaoFactory daoFactory){
         this.viewLogin = viewLogin;
-        this.daoLogin = new DaoLogin();
+        this.daoFactory = daoFactory;
     }
 
     public void runMenu(){
@@ -44,6 +45,7 @@ public class ControllerLogin{
     public void login(){
         String userEmail = viewLogin.getInputFromUser("email: ");
         String userPassword = viewLogin.getInputFromUser("password: ");
+        IDaoLogin daoLogin = daoFactory.create(DaoLogin.class);
 
         User user = daoLogin.getUser(userEmail, userPassword);
 
@@ -62,18 +64,19 @@ public class ControllerLogin{
 
         if(user instanceof Admin){
             controller = new ControllerAdmin((Admin)user, new ViewAdmin(),
-                                            new DaoMentor(), new DaoClass(),
-                                            new DaoLevel());
+                    daoFactory.create(DaoMentor.class),
+                    daoFactory.create(DaoClass.class),
+                    daoFactory.create(DaoLevel.class));
         }else if(user instanceof Mentor){
             controller = new ControllerMentor((Mentor)user, new ViewMentor(),
-                                            new DaoStudent(), new DaoClass(),
-                                            new DaoArtifact(), new DaoQuest(),
-                                            new DaoTeam(), new DaoWallet());
+                    daoFactory.create(DaoStudent.class), daoFactory.create(DaoClass.class),
+                    daoFactory.create(DaoArtifact.class), daoFactory.create(DaoQuest.class),
+                    daoFactory.create(DaoTeam.class), daoFactory.create(DaoWallet.class));
         }else if(user instanceof Student){
             controller = new ControllerStudent((Student)user, new ViewStudent(),
-                                            new DaoWallet(), new DaoStudent(),
-                                            new DaoArtifact(), new DaoLevel(),
-                                            new DaoTeam());
+                    daoFactory.create(DaoWallet.class), daoFactory.create(DaoStudent.class),
+                    daoFactory.create(DaoArtifact.class), daoFactory.create(DaoLevel.class),
+                    daoFactory.create(DaoTeam.class));
         }
 
         return controller;

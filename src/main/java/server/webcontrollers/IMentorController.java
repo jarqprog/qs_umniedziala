@@ -1,12 +1,9 @@
 package server.webcontrollers;
 
-import com.sun.net.httpserver.HttpExchange;
-import model.Quest;
-
 import java.util.List;
 import java.util.Map;
 
-public interface IMentorController {
+public interface IMentorController extends IServerController {
 
     String getMentorName(int mentorId);
     String getMentorEmail(int mentorId);
@@ -19,6 +16,5 @@ public interface IMentorController {
     boolean addQuest(String name, int value, String description, String type, String category);
     boolean addArtifact(String name, int value, String type, String caetgory);
     List<String> getArtifacts();
-
     boolean editArtifact(Map<String, String> inputs);
 }

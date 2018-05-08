@@ -5,9 +5,8 @@ import model.Mentor;
 import java.util.List;
 
 public interface IDaoMentor {
-    Mentor createMentor(String name, String password, String email);
 
-    Mentor createMentor(int userId, String name, String password, String email);
+    Mentor createMentor(String name, String password, String email);
 
     Mentor importMentor(int mentorId);
 

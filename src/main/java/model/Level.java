@@ -2,15 +2,9 @@ package model;
 
 public class Level{
 
-    private int levelId;
+    private final int levelId;
     private String name;
     private int coinsLimit;
-
-    public Level(String name, int coinsLimit){
-        
-        this.name = name;
-        this.coinsLimit = coinsLimit;
-    }
 
     public Level(int levelId, String name, int coinsLimit){
 
@@ -26,6 +20,7 @@ public class Level{
     public void setName(String name){
         this.name = name;
     }
+
     public void setCoinsLimit(int coinsLimit){
         this.coinsLimit = coinsLimit;
     }
