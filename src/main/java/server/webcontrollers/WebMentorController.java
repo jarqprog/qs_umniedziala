@@ -1,10 +1,12 @@
 package server.webcontrollers;
 
 import dao.*;
-import model.Artifact;
-import model.CodecoolClass;
-import model.Mentor;
-import model.Quest;
+import model.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class WebMentorController implements IMentorController {
 
@@ -93,6 +95,18 @@ public class WebMentorController implements IMentorController {
     public boolean addArtifact(String name, int value, String type, String category) {
         Artifact artifact = daoArtifact.createArtifact(name, value, type, category);
         return daoArtifact.exportArtifact(artifact);
+    }
+
+    @Override
+    public Map<String, String> getAllWallets() {
+        List<Student> students = daoStudent.getAllStudents();
+        Map<String, String> dataFromWallets = new HashMap<>();
+
+        for (Student student : students){
+            dataFromWallets.put(student.getName(), daoWallet.importWallet(student.getUserId()).toString().replaceAll("\n", "<br/>"));
+        }
+
+        return dataFromWallets;
     }
 }
 
