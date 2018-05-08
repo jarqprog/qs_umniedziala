@@ -1,9 +1,7 @@
 package server;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import model.Quest;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.IResponseManager;
@@ -61,7 +59,7 @@ public class MentorHandler implements HttpHandler {
                         displayCreateTeamPage(httpExchange);
                         break;
                     case "/mentor/edit_quest":
-                        displayUpdateQuest(httpExchange);
+                        displayQuestToUpdate(httpExchange);
                         break;
                 }
             }
@@ -76,12 +74,37 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/create_team":
                         createTeam(httpExchange);
                         break;
+                    case "/mentor/edit_quest":
+                        updateQuest(httpExchange);
+                        break;
                 }
             }
         }
     }
 
-    private void displayUpdateQuest(HttpExchange httpExchange) throws IOException {
+    private void updateQuest(HttpExchange httpExchange) throws IOException {
+        List<String> quests = controller.getQuests();
+        Map<String, String> inputs = responseManager.parseEditData(httpExchange);
+        String info;
+        boolean isQuestEdited = controller.editQuest(inputs);
+        if(isQuestEdited){
+            info = "Quest edited successfully!";
+        }else{
+            info = "Something went wrong :(";
+        }
+
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/edit_quest.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("quests", quests);
+        model.with("info", info);
+        String response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+
+    }
+
+    private void displayQuestToUpdate(HttpExchange httpExchange) throws IOException {
         List<String> quests = controller.getQuests();
         String response;
         JtwigTemplate template =

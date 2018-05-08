@@ -29,7 +29,7 @@ public class Quest extends Item {
         return this.category;
     }
 
-    public String getIdWithName() {
+    public String getFullInfo() {
         return String.format("Id: %d <br>Name: %s<br>Type: %s<br>Category: %s<br>Description: %s<br>Value: %d.",
                 getItemId(), getName(), getType(), getCategory(), getDescription(), getValue());
     }

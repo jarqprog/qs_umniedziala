@@ -42,20 +42,23 @@
 
                 <div id="main-inner-container">
                   <form method="POST">
-                    <input type="text" name="quest-id" placeholder="Id">
+                    <input type="text" maxlength="30" name="quest-id" placeholder="Id" required>
                     <br/><br/>
-                    <input type="text" name="questname" placeholder="Name">
+                    <input type="text" maxlength="30" name="questname" placeholder="Name">
                     <br/><br/>
-                    <input type="text" name="description" placeholder="Description">
+                    <input type="text" maxlength="150" name="description" placeholder="Description">
                     <br/><br/>
-                    <input type="text" name="value" placeholder="Value">
+                    <input type="number" min="1" name="value" placeholder="Value">
                     <br/><br/>
-                    <input type="text" name="type" placeholder="Type">
+                    <input type="radio" name="type" value="team" checked>Team
+                    <input type="radio" name="type" value="individual">Individual
                     <br/><br/>
-                    <input type="text" name="category" placeholder="Category">
+                    <input type="radio" name="category" value="basic" checked>Basic
+                    <input type="radio" name="category" value="extra">Extra
                     <br/><br/>
                     <input type="submit" value="Send">
                   </form>
+                  {{info}}
                 </div>
 
 
