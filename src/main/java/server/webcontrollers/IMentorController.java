@@ -1,6 +1,6 @@
 package server.webcontrollers;
 
-public interface IMentorController {
+public interface IMentorController extends IServerController {
 
 
     String getMentorName(int mentorId);

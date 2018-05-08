@@ -1,6 +1,6 @@
 package server.webcontrollers;
 
-public interface IStudentController {
+public interface IStudentController extends IServerController {
 
 
     String getStudentName(int studentId);

@@ -9,8 +9,16 @@ import manager.database.DatabaseConfiguration;
 import manager.database.DatabaseManager;
 import manager.database.SqlConfig;
 import manager.database.SqlManager;
+import server.factory.IControllerFactory;
+import server.factory.IHandlerFactory;
+import server.helpers.IResponseManager;
+import server.helpers.ResponseManager;
+import server.sessions.ISessionManager;
+import server.sessions.SessionManager;
+import server.webcontrollers.ControllerFactory;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class ServerClient implements IClient {
 
@@ -26,15 +34,32 @@ public class ServerClient implements IClient {
     public void runClient() {
 
         try {
-            Server.getInstance(8080, createSQLiteDaoFactory(createSQLiteDatabaseManager())).run();
-            System.out.println("http://localhost:8080/");
+
+            System.out.println("Choose client - 'p' for Postgres client or anything else for SQLite: ");
+            Scanner sc = new Scanner(System.in);
+            String choice = sc.nextLine().toLowerCase();
+
+            // build application:
+            DatabaseManager databaseManager;
+            switch (choice) {
+                case("p"):
+                    databaseManager = createPostgresManager();
+                    break;
+                default:
+                    databaseManager = createSQLiteManager();
+            }
+
+            IDaoFactory daoFactory = DaoFactory.getInstance(databaseManager);
+            IHandlerFactory handlerFactory = createHandlerFactory(daoFactory);
+            int PORT = 8080;
+            Server.getInstance(PORT, handlerFactory).run();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-    private DatabaseManager createSQLiteDatabaseManager() {
+    private DatabaseManager createSQLiteManager() {
 
         DatabaseConfiguration databaseConfiguration = SqlConfig
                 .createPosgresConfiguration(DbUrl.DATABASE_MAIN_URL, DbDriver.SQLITE,
@@ -43,7 +68,23 @@ public class ServerClient implements IClient {
         return SqlManager.getSQLManager(databaseConfiguration);
     }
 
-    private IDaoFactory createSQLiteDaoFactory(DatabaseManager databaseManager) {
-        return DaoFactory.getInstance(databaseManager);
+    private DatabaseManager createPostgresManager() {
+
+        DatabaseConfiguration databaseConfiguration = SqlConfig
+                .createPosgresConfiguration(DbUrl.POSTGRES_MAIN_URL, DbDriver.POSTGRES,
+                        DbFilePath.POSTGRES_MAIN_DATABASE);
+
+        return SqlManager.getSQLManager(databaseConfiguration);
+    }
+
+    private IHandlerFactory createHandlerFactory(IDaoFactory daoFactory) {
+
+        IResponseManager responseManager = ResponseManager.create();
+        int sessionExpirationTime = 300000;
+        ISessionManager sessionManager = SessionManager.create(sessionExpirationTime);
+        IControllerFactory controllerFactory = ControllerFactory.getInstance(daoFactory);
+
+        return HandlerFactory.getInstance(controllerFactory,
+                responseManager, sessionManager, daoFactory);
     }
 }
