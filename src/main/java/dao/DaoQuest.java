@@ -6,11 +6,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DaoQuest extends SqlDao implements IDaoQuest {
+
+
+    private final String DATABASE_TABLE = "quests";
+    private final String ID_LABEL = "id_quest";
 
     DaoQuest(Connection connection) {
         super(connection);
@@ -18,17 +21,17 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
 
     @Override
     public Quest createQuest(String name, int value, String description, String type, String category) {
-        return new Quest(name, value, description, type, category);
-    }
-
-    @Override
-    public Quest createQuest(int itemId, String name, int value, String description, String type, String category) {
-        return new Quest(itemId, name, value, description, type, category);
+        try {
+            int id = getLowestFreeIdFromGivenTable(DATABASE_TABLE, ID_LABEL);
+            return new Quest(id, name, value, description, type, category);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Quest importQuest(int itemId) {
-        Quest quest = null;
 
         String query = "SELECT * FROM quests WHERE id_quest = ?";
         try (
@@ -36,23 +39,24 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
              preparedStatement.setInt(1, itemId);
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                if (!resultSet.isClosed()) {
+                if ( resultSet.next() ) {
                     String name = resultSet.getString("name");
                     int value = resultSet.getInt("value");
                     String description = resultSet.getString("description");
                     String type = resultSet.getString("type");
                     String category = resultSet.getString("category");
 
-                    quest = createQuest(itemId, name, value, description, type, category);
-
+                    return new Quest(itemId, name, value, description, type, category);
                 }
+                return null;
             }
 
          }catch(SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return null;
         }
-        return quest;
     }
+
     @Override
     public List<Quest> getAllQuests() {
         List<Quest> quests = new ArrayList<>();
@@ -64,7 +68,7 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
              try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
                  while (resultSet.next()) {
-                     int questId = resultSet.getInt("id_quest");
+                     int questId = resultSet.getInt(ID_LABEL);
                      Quest quest = importQuest(questId);
                      quests.add(quest);
                  }
@@ -89,8 +93,7 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
         "name = ?, value = ?, description = ?, type = ?, category =? " +
         "WHERE id_quest = ?";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, value);
@@ -102,6 +105,7 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
             preparedStatement.executeUpdate();
              return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -111,8 +115,7 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
 
         String query = "INSERT INTO quests VALUES (?, ?, ?, ?, ?, ?);";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setString(2, quest.getName());
             preparedStatement.setInt(3, quest.getValue());
@@ -124,6 +127,7 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
              return true;
 
         }catch (SQLException e){
+            e.printStackTrace();
             return false;
         }
     }
@@ -140,9 +144,8 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 while (resultSet.next()) {
-                    int questId = resultSet.getInt("id_quest");
-                    Quest quest = importQuest(questId);
-                    quests.add(quest);
+                    int questId = resultSet.getInt(ID_LABEL);
+                    quests.add(importQuest(questId));
                 }
             }
 
@@ -164,9 +167,8 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 while (resultSet.next()) {
-                    int questId = resultSet.getInt("id_quest");
-                    Quest quest = importQuest(questId);
-                    quests.add(quest);
+                    int questId = resultSet.getInt(ID_LABEL);
+                    quests.add(importQuest(questId));
                 }
             }
 

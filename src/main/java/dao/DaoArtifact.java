@@ -11,12 +11,21 @@ import java.util.List;
 
 public class DaoArtifact extends SqlDao implements IDaoArtifact{
 
+    private final String DATABASE_TABLE = "artifacts";
+    private final String ID_LABEL = "id_artifact";
+
     DaoArtifact(Connection connection) {
         super(connection);
     }
 
     public Artifact createArtifact(String name, int value, String description, String type) {
-        return new Artifact(name, value, description, type);
+        try {
+            int id = getLowestFreeIdFromGivenTable(DATABASE_TABLE, ID_LABEL);
+            return new Artifact(id, name, value, description, type);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Artifact createArtifact(int itemId, String name, int value, String description, String type) {

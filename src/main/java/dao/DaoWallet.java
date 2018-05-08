@@ -24,16 +24,9 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
     }
 
     @Override
-    public Wallet createWallet(int allCoins, int availableCoins, List<Artifact> newArtifacts,
-                               List<Artifact> usedArtifacts){
-        return new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
-    }
-
-    @Override
     public Wallet importWallet(int userID) {
         Wallet wallet = null;
 
-        List<Artifact> artifacts = null;
         String query = "SELECT * FROM wallets WHERE id_student= ?";
         try (
              PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
@@ -41,7 +34,7 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
             preparedStatement.setInt(1, userID);
             try(ResultSet resultSet = preparedStatement.executeQuery()){
 
-                if (!resultSet.isClosed()) {
+                if ( resultSet.next() ) {
                     int allCoins = resultSet.getInt("all_coins");
                     int availableCoins = resultSet.getInt("available_coins");
                     List<Artifact> newArtifacts = getUserArtifacts(userID, "new");
@@ -57,9 +50,9 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
     }
 
     @Override
-    public void exportWallet(Student student){
+    public boolean exportWallet(Student student){
         if(student == null){
-            return;
+            return false;
         }
         int value = student.getUserId();
         int allCoins = student.getWallet().getAllCoins();
@@ -76,9 +69,11 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
             preparedStatement.setInt(2, allCoins);
             preparedStatement.setInt(3, availableCoins);
             preparedStatement.executeUpdate();
+            return true;
 
         }catch (SQLException e){
             System.out.println("Wallet insertion failed");
+            return false;
         }
 
     }
@@ -113,7 +108,7 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
     }
 
     @Override
-    public void updateWallet(Student student){
+    public boolean updateWallet(Student student){
 
         int allCoins = student.getWallet().getAllCoins();
         int availableCoins = student.getWallet().getAvailableCoins();
@@ -130,14 +125,17 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
             preparedStatement.setInt(2, availableCoins);
             preparedStatement.setInt(3, userId);
             preparedStatement.executeUpdate();
+            return true;
 
         } catch (SQLException e){
+            e.printStackTrace();
             System.out.println("Wallet update failed");
+            return false;
         }
     }
 
     @Override
-    public void exportStudentArtifact(int idArtifact, int idStudent) {
+    public boolean exportStudentArtifact(int idArtifact, int idStudent) {
 
         String status = "new";
         String query = "INSERT INTO artifacts_in_wallets (id_artifact, id_student, status)" +
@@ -151,17 +149,18 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
             preparedStatement.setString(3, status);
 
             preparedStatement.executeUpdate();
+            return true;
 
         } catch (SQLException e) {
             System.out.println("Artifact insertion failed");
+            return false;
         }
     }
 
     @Override
-    public void updateStudentsArtifact(int idArtifact, int idStudent){
+    public boolean updateStudentsArtifact(int idArtifact, int idStudent){
 
         String statusArtifact = "used";
-
 
         String query = "UPDATE artifacts_in_wallets SET status = ?"+
                     "WHERE id_artifact= ? and id_student = ?;";
@@ -173,9 +172,12 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
             preparedStatement.setInt(2, idArtifact);
             preparedStatement.setInt(3, idStudent);
             preparedStatement.executeUpdate();
+            return true;
 
-        }catch (SQLException e){
+        } catch (SQLException e){
+            e.printStackTrace();
             System.out.println("Artifact update failed");
+            return false;
         }
     }
 }

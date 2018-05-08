@@ -9,25 +9,30 @@ import java.sql.SQLException;
 
 public class DaoAdmin extends SqlDao implements IDaoAdmin  {
 
+    private final String DATABASE_TABLE = "users";
+    private final String ID_LABEL = "id_user";
+
     DaoAdmin(Connection connection) {
         super(connection);
     }
 
     @Override
-    public Admin createAdmin (String name, String password, String email){
-        return new Admin(name, password, email);
-    }
-    @Override
+    public Admin createAdmin (String name, String password, String email) {
 
-    public Admin createAdmin(int userId, String name, String password, String email){
-        return new Admin(userId, name, password, email);
+        try {
+            int id = getLowestFreeIdFromGivenTable(DATABASE_TABLE, ID_LABEL);
+            return new Admin(id, name, password, email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Admin importAdmin(int adminId){
         Admin admin = null;
         String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
-        int roleId = getRoleID("admin");
+        int roleId = getRoleID();
 
 
         try (
@@ -37,17 +42,18 @@ public class DaoAdmin extends SqlDao implements IDaoAdmin  {
             preparedStatement.setInt(2, roleId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()) {
-                int userId = resultSet.getInt("id_user");
+            while(resultSet.next()) {
+                int userId = resultSet.getInt(ID_LABEL);
                 String name = resultSet.getString("name");
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                admin = createAdmin(userId, name, password, email);
+                admin = new Admin(userId, name, password, email);
             }
             
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return admin;
         }
         return admin;
@@ -57,14 +63,12 @@ public class DaoAdmin extends SqlDao implements IDaoAdmin  {
         String name = admin.getName();
         String password = admin.getPassword();
         String email = admin.getEmail();
-        int roleId = getRoleID("admin");
+        int roleId = getRoleID();
 
-        
         String query = "INSERT INTO users (name, password, email, id_role)" +
                 "VALUES (?, ?, ?, ?);";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)){
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
             
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -75,6 +79,7 @@ public class DaoAdmin extends SqlDao implements IDaoAdmin  {
             return true;
 
         }catch (SQLException e){
+            e.printStackTrace();
             return false;
         }
     }
@@ -85,14 +90,13 @@ public class DaoAdmin extends SqlDao implements IDaoAdmin  {
         String password = admin.getPassword();
         String email = admin.getEmail();
         int adminId = admin.getUserId();
-        int roleId = getRoleID("admin");
+        int roleId = getRoleID();
 
         
         String query = "UPDATE users SET name = ?, password = ?, email = ?"+
                 "WHERE id_user= ? AND id_role = ?;";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)){
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
@@ -103,32 +107,28 @@ public class DaoAdmin extends SqlDao implements IDaoAdmin  {
             
             return true;
         } catch (SQLException e){
+            e.printStackTrace();
             return false;
         }
     }
 
-    public int getRoleID(String roleName){
+    private int getRoleID(){
 
         int roleId = 0;
-        
-
+        String roleName = "admin";
         String query = "SELECT id_role FROM roles WHERE name = ?;";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)){
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
             preparedStatement.setString(1, roleName);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()) {
+            while(resultSet.next()) {
                 roleId = resultSet.getInt("id_role");
             }
-            
 
         }catch (SQLException e){
             System.out.println("Role not found");
         }
-
         return roleId;
-
     }
 }

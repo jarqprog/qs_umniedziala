@@ -12,6 +12,8 @@ import model.Student;
 public class DaoClass extends SqlDao implements IDaoClass {
 
     private final IDaoStudent daoStudent;
+    private final String DATABASE_TABLE = "codecool_classes";
+    private final String ID_LABEL = "id_codecool_class";
 
     DaoClass(Connection connection, IDaoStudent daoStudent) {
         super(connection);
@@ -20,12 +22,14 @@ public class DaoClass extends SqlDao implements IDaoClass {
 
     @Override
     public CodecoolClass createClass(String name){
-        return new CodecoolClass(name);
-    }
 
-    @Override
-    public CodecoolClass createClass(int groupId, String name, List<Student> students){
-        return new CodecoolClass(groupId, name, students);
+        try {
+            int id = getLowestFreeIdFromGivenTable(DATABASE_TABLE, ID_LABEL);
+            return new CodecoolClass(id, name, new ArrayList<>());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -40,10 +44,10 @@ public class DaoClass extends SqlDao implements IDaoClass {
             preparedStatement.setInt(1, classID);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                if (!resultSet.isClosed()) {
+                if ( resultSet.next() ) {
                     String name = resultSet.getString("name");
                     List<Student> students = getStudentsOfClass(classID);
-                    codecoolClass = createClass(classID, name, students);
+                    codecoolClass = new CodecoolClass(classID, name, students);
                 }
             }
 
@@ -81,21 +85,17 @@ public class DaoClass extends SqlDao implements IDaoClass {
 
         
         String query = "SELECT * FROM codecool_classes;";
-        CodecoolClass codecoolClass;
 
         try (
              PreparedStatement preparedStatement = getConnection().prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()){
 
             while(resultSet.next()) {
-                int classId = resultSet.getInt("id_codecool_class");
+                int classId = resultSet.getInt(ID_LABEL);
                 String name = resultSet.getString("name");
                 List<Student> students = getStudentsOfClass(classId);
-
-                codecoolClass = createClass(classId, name, students);
-                allCodecoolClasses.add(codecoolClass);
+                allCodecoolClasses.add(new CodecoolClass(classId, name, students));
             }
-
 
         } catch (SQLException e) {
             System.out.println("No Classes");
@@ -203,14 +203,13 @@ public class DaoClass extends SqlDao implements IDaoClass {
         CodecoolClass mentorsClass = null;
         String query = "SELECT id_codecool_class FROM mentors_in_classes WHERE id_mentor=?;";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setInt(1, mentorId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()){
-                Integer classId = resultSet.getInt("id_codecool_class");
+            while(resultSet.next()){
+                Integer classId = resultSet.getInt(ID_LABEL);
                 mentorsClass = importClass(classId);
             }
 
@@ -226,18 +225,18 @@ public class DaoClass extends SqlDao implements IDaoClass {
         CodecoolClass studentClass = null;
         String query = "SELECT id_codecool_class FROM students_in_classes WHERE id_student=?;";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setInt(1, studentId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()){
-                Integer classId = resultSet.getInt("id_codecool_class");
+            while(resultSet.next()){
+                Integer classId = resultSet.getInt(ID_LABEL);
                 studentClass = importClass(classId);
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("updating students class assignment failed");
         }
         return studentClass;

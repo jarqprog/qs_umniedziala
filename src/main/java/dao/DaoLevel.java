@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Level;
-import model.Mentor;
 
 public class DaoLevel extends SqlDao implements IDaoLevel {
+
+    private final String DATABASE_TABLE = "levels";
+    private final String ID_LABEL = "id_level";
 
     DaoLevel(Connection connection) {
         super(connection);
@@ -18,12 +20,13 @@ public class DaoLevel extends SqlDao implements IDaoLevel {
 
     @Override
     public Level createLevel(String name, int coinsLimit) {
-        return new Level(name, coinsLimit);
-    }
-
-    @Override
-    public Level createLevel(int levelId, String name, int coinsLimit) {
-        return new Level(levelId, name, coinsLimit);
+        try {
+            int id = getLowestFreeIdFromGivenTable(DATABASE_TABLE, ID_LABEL);
+            return new Level(id, name, coinsLimit);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -44,6 +47,7 @@ public class DaoLevel extends SqlDao implements IDaoLevel {
             return true;
 
         }catch (SQLException e){
+            e.printStackTrace();
             return false;
         }
     }
@@ -51,41 +55,38 @@ public class DaoLevel extends SqlDao implements IDaoLevel {
 
     @Override
     public Level importLevel(int levelId) {
-        Level level = null;
+
         String query = "SELECT name, coins_limit FROM levels WHERE id_level = ?;";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
              preparedStatement.setInt(1, levelId);
 
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                if (!resultSet.isClosed()) {
+                if(resultSet.next() ) {
                     String name = resultSet.getString("name");
                     int coinsLimit = resultSet.getInt("coins_limit");
-                    level = createLevel(levelId, name, coinsLimit);
-
+                    return new Level(levelId, name, coinsLimit);
                 }
+                return null;
             }
 
         } catch (SQLException e) {
-            return level;
+            e.printStackTrace();
+            return null;
         }
-        return level;
     }
 
     @Override
     public List<Level> getAllLevels() {
         List<Level> levels = new ArrayList<>();
-
         String query = "SELECT id_level FROM levels ORDER BY coins_limit;";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()){
-                int levelId = resultSet.getInt("id_level");
+                int levelId = resultSet.getInt(ID_LABEL);
                 Level level = importLevel(levelId);
                 levels.add(level);
             }
@@ -108,8 +109,6 @@ public class DaoLevel extends SqlDao implements IDaoLevel {
     @Override
     public List <Level> getMatchingLevels(int allCoins){
 
-        Level level = null;
-
         String query = "SELECT * FROM levels WHERE coins_limit <= ?";
         List <Level> levels = new ArrayList<>();
 
@@ -122,8 +121,7 @@ public class DaoLevel extends SqlDao implements IDaoLevel {
                 while (resultSet.next()) {
                     String name = resultSet.getString("name");
                     int limitCoins = resultSet.getInt("coins_limit");
-                    level = createLevel(name, limitCoins);
-                    levels.add(level);
+                    levels.add(createLevel(name, limitCoins));
                 }
             }
 

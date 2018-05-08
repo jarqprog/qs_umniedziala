@@ -6,9 +6,8 @@ import model.Student;
 import java.util.List;
 
 public interface IDaoClass {
-    CodecoolClass createClass(String name);
 
-    CodecoolClass createClass(int groupId, String name, List<Student> students);
+    CodecoolClass createClass(String name);
 
     CodecoolClass importClass(Integer classID);
 

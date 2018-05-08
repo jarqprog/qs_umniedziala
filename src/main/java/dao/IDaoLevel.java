@@ -5,9 +5,8 @@ import model.Level;
 import java.util.List;
 
 public interface IDaoLevel {
-    Level createLevel(String name, int coinsLimit);
 
-    Level createLevel(int levelId, String name, int coinsLimit);
+    Level createLevel(String name, int coinsLimit);
 
     boolean exportLevel(Level level);
 

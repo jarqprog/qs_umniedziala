@@ -12,6 +12,8 @@ import java.util.List;
 public class DaoTeam extends SqlDao implements IDaoTeam {
 
     private final IDaoStudent daoStudent;
+    private final String DATABASE_TABLE = "teams";
+    private final String ID_LABEL = "id_team";
 
     DaoTeam(Connection connection, IDaoStudent daoStudent) {
         super(connection);
@@ -20,7 +22,15 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
 
     @Override
     public Team createTeam(String name) {
-        return new Team(name);
+
+        try {
+            int id = getLowestFreeIdFromGivenTable(DATABASE_TABLE, ID_LABEL);
+            int coins = 0;
+            return new Team(id, name, new ArrayList<>(), coins);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -50,6 +60,7 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
             }
 
         }catch (SQLException e){
+            e.printStackTrace();
             System.out.println("Team not found");
         }
         return team;
@@ -69,6 +80,7 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
             preparedStatement.executeUpdate();
              return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -108,8 +120,8 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
 
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                if (!resultSet.isClosed()) {
-                    Integer teamId = resultSet.getInt("id_team");
+                if (resultSet.next()) {
+                    Integer teamId = resultSet.getInt(ID_LABEL);
                     team = importTeam(teamId);
                 }
             }
@@ -123,7 +135,7 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
 
     @Override
     public List<Student> getStudentsOfTeam(int teamId) {
-        List<Student> studentsOfTeam = new ArrayList<Student>();
+        List<Student> studentsOfTeam = new ArrayList<>();
         String query = "SELECT id_user FROM users JOIN students_in_teams "
                      + "ON users.id_user = students_in_teams.id_student "
                      + "WHERE students_in_teams.id_team = ?;";
@@ -143,6 +155,7 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("No students");
         }
         return studentsOfTeam;
@@ -180,6 +193,7 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
             preparedStatement.setInt(2, studentId);
             preparedStatement.executeUpdate();
          } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("Assignment of student to team failed");
         }
     }

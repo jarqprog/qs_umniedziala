@@ -32,7 +32,7 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()) {
+            while(resultSet.next()) {
                 int id_role = resultSet.getInt("id_role");
                 String role = getRole(id_role);
                 user = createUser(resultSet, role);
