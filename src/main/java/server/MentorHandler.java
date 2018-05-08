@@ -60,6 +60,11 @@ public class MentorHandler implements HttpHandler {
                         break;
                     case "/mentor/edit_quest":
                         displayQuestToUpdate(httpExchange);
+                    case "/mentor/add_quest":
+                        displayAddQuestPage(httpExchange);
+                        break;
+                    case "/mentor/add_artifact":
+                        displayAddArtifactPage(httpExchange);
                         break;
                 }
             }
@@ -76,6 +81,11 @@ public class MentorHandler implements HttpHandler {
                         break;
                     case "/mentor/edit_quest":
                         updateQuest(httpExchange);
+                    case "/mentor/add_quest":
+                        addQuest(httpExchange);
+                        break;
+                    case "/mentor/add_artifact":
+                        addArtifact(httpExchange);
                         break;
                 }
             }
@@ -83,7 +93,7 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void updateQuest(HttpExchange httpExchange) throws IOException {
-        List<String> quests = controller.getQuests();
+
         Map<String, String> inputs = responseManager.parseEditData(httpExchange);
         String info;
         boolean isQuestEdited = controller.editQuest(inputs);
@@ -92,7 +102,7 @@ public class MentorHandler implements HttpHandler {
         }else{
             info = "Something went wrong :(";
         }
-
+        List<String> quests = controller.getQuests();
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/edit_quest.html");
@@ -194,6 +204,69 @@ public class MentorHandler implements HttpHandler {
         model.with("name", controller.getMentorName(mentorId));
         model.with("email", controller.getMentorEmail(mentorId));
         model.with("class", controller.getMentorClassWithStudents(mentorId));
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void displayAddQuestPage(HttpExchange httpExchange) throws IOException {
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/add_quest.html.twig");
+        JtwigModel model = JtwigModel.newModel();
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void displayAddArtifactPage(HttpExchange httpExchange) throws IOException {
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/add_artifact.html.twig");
+        JtwigModel model = JtwigModel.newModel();
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void addQuest(HttpExchange httpExchange) throws IOException{
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
+
+        String name = inputs.get("questname");
+        int value = Integer.parseInt(inputs.get("value"));
+        String description = inputs.get("description");
+        String type = inputs.get("type");
+        String category = inputs.get("category");
+
+        String info = "Error!";
+        if(controller.addQuest(name, value, description, type, category)){
+            info = "Done!";
+        }
+        String response;
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(
+                "static/mentor/add_quest.html.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("info", info);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void addArtifact(HttpExchange httpExchange) throws IOException {
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
+
+        String name = inputs.get("artifactname");
+        int value = Integer.parseInt(inputs.get("value"));
+        String description = inputs.get("description");
+        String type = inputs.get("type");
+
+        String info = "Error!";
+        if(controller.addArtifact(name, value, description, type)){
+            info = "Done!";
+        }
+        String response;
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(
+                "static/mentor/add_artifact.html.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("info", info);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
