@@ -11,7 +11,7 @@ public class SqlManager implements DatabaseManager {
     private Connection connection;
     private final Properties properties;
 
-    public static DatabaseManager getSQLiteManager(DatabaseConfiguration dbConfig) {
+    public static DatabaseManager getSQLManager(DatabaseConfiguration dbConfig) {
         return new SqlManager(dbConfig);
     }
 

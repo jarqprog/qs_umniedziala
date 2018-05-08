@@ -40,10 +40,10 @@ public class ServerClient implements IClient {
                 .createPosgresConfiguration(DbUrl.DATABASE_MAIN_URL, DbDriver.SQLITE,
                         DbFilePath.SQLITE_MAIN_DATABASE);
 
-        return SqlManager.getSQLiteManager(databaseConfiguration);
+        return SqlManager.getSQLManager(databaseConfiguration);
     }
 
     private IDaoFactory createSQLiteDaoFactory(DatabaseManager databaseManager) {
-        return DaoFactory.getInstance(createSQLiteDatabaseManager());
+        return DaoFactory.getInstance(databaseManager);
     }
 }
