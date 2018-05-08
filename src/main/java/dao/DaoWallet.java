@@ -25,11 +25,9 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
 
     @Override
     public Wallet importWallet(int userID) {
-        Wallet wallet = null;
 
         String query = "SELECT * FROM wallets WHERE id_student= ?";
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setInt(1, userID);
             try(ResultSet resultSet = preparedStatement.executeQuery()){
@@ -39,31 +37,30 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
                     int availableCoins = resultSet.getInt("available_coins");
                     List<Artifact> newArtifacts = getUserArtifacts(userID, "new");
                     List<Artifact> usedArtifacts = getUserArtifacts(userID, "used");
-                    wallet = new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
+                    return new Wallet(allCoins, availableCoins, newArtifacts, usedArtifacts);
                 }
+                return new Wallet();
             }
 
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            return new Wallet();
         }
-        return wallet;
     }
 
     @Override
     public boolean exportWallet(Student student){
-        if(student == null){
+        if(student == null || student instanceof NullStudent){
             return false;
         }
         int value = student.getUserId();
         int allCoins = student.getWallet().getAllCoins();
         int availableCoins = student.getWallet().getAvailableCoins();
 
-
         String query = "INSERT INTO wallets (id_student, all_coins, available_coins)" +
                 "VALUES (?, ?, ?);";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setInt(1, value);
             preparedStatement.setInt(2, allCoins);
@@ -72,58 +69,23 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
             return true;
 
         }catch (SQLException e){
+            e.printStackTrace();
             System.out.println("Wallet insertion failed");
             return false;
         }
-
-    }
-
-    private List<Artifact> getUserArtifacts(int userID, String status) {
-
-        List<Artifact> artifacts = new ArrayList<>();
-
-        String query = "SELECT artifacts.id_artifact FROM artifacts inner join artifacts_in_wallets "
-                       + "on artifacts.id_artifact = artifacts_in_wallets.id_artifact "
-                       + "WHERE artifacts_in_wallets.id_student = ? and artifacts_in_wallets.status = ?;";
-
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
-
-            preparedStatement.setInt(1, userID);
-            preparedStatement.setString(2, status);
-
-            try(ResultSet resultSet = preparedStatement.executeQuery()) {
-
-                while (resultSet.next()) {
-                    int idArtifact = resultSet.getInt("id_artifact");
-                    Artifact artifact = daoArtifact.importArtifact(idArtifact);
-                    artifacts.add(artifact);
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-        }
-
-        return artifacts;
     }
 
     @Override
     public boolean updateWallet(Student student){
 
-        int allCoins = student.getWallet().getAllCoins();
-        int availableCoins = student.getWallet().getAvailableCoins();
-        int userId = student.getUserId();
-
-
         String query = "UPDATE wallets SET all_coins = ?, available_coins = ?"+
                 "WHERE id_student= ?;";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
-            preparedStatement.setInt(1, allCoins);
-            preparedStatement.setInt(2, availableCoins);
-            preparedStatement.setInt(3, userId);
+            preparedStatement.setInt(1, student.getWallet().getAllCoins());
+            preparedStatement.setInt(2, student.getWallet().getAvailableCoins());
+            preparedStatement.setInt(3, student.getUserId());
             preparedStatement.executeUpdate();
             return true;
 
@@ -141,8 +103,7 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
         String query = "INSERT INTO artifacts_in_wallets (id_artifact, id_student, status)" +
                 "VALUES (?, ?, ?);";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setInt(1, idArtifact);
             preparedStatement.setInt(2, idStudent);
@@ -152,6 +113,7 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
             return true;
 
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println("Artifact insertion failed");
             return false;
         }
@@ -165,8 +127,7 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
         String query = "UPDATE artifacts_in_wallets SET status = ?"+
                     "WHERE id_artifact= ? and id_student = ?;";
 
-        try (
-             PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setString(1, statusArtifact);
             preparedStatement.setInt(2, idArtifact);
@@ -179,5 +140,32 @@ public class DaoWallet extends SqlDao implements IDaoWallet {
             System.out.println("Artifact update failed");
             return false;
         }
+    }
+
+    private List<Artifact> getUserArtifacts(int userID, String status) {
+
+        List<Artifact> artifacts = new ArrayList<>();
+
+        String query = "SELECT artifacts.id_artifact FROM artifacts inner join artifacts_in_wallets "
+                + "on artifacts.id_artifact = artifacts_in_wallets.id_artifact "
+                + "WHERE artifacts_in_wallets.id_student = ? and artifacts_in_wallets.status = ?;";
+
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
+
+            preparedStatement.setInt(1, userID);
+            preparedStatement.setString(2, status);
+
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    int idArtifact = resultSet.getInt("id_artifact");
+                    Artifact artifact = daoArtifact.importArtifact(idArtifact);
+                    artifacts.add(artifact);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+        return artifacts;
     }
 }

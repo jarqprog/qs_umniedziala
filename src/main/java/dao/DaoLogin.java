@@ -24,7 +24,7 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
 
     @Override
     public User getUser(String email, String password){
-        User user = null;
+        User user = new NullStudent();
 
         String query = "SELECT * FROM users WHERE email= ? AND password= ?;";
         try (
@@ -32,7 +32,7 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while(resultSet.next()) {
+            if(resultSet.next()) {
                 int id_role = resultSet.getInt("id_role");
                 String role = getRole(id_role);
                 user = createUser(resultSet, role);
@@ -47,7 +47,7 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
     @Override
     public String getRole(int roleId){
 
-        String role = null;
+        String role = "n/a";
 
         String query = "SELECT name FROM roles WHERE id_role= ?;";
         try (
@@ -64,21 +64,17 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
-
         return role;
     }
 
     private User createUser(ResultSet resultSet, String role) throws SQLException {
-        User user = null;
-
+        User user = null;  // because of login in Login (handler - server package)
         int userId;
-
         try {
             userId = resultSet.getInt("id_user");
         } catch (SQLException e) {
             throw new SQLException(e);
         }
-
         switch (role.toUpperCase()) {
             case "ADMIN":
                 user = daoAdmin.importAdmin(userId);
@@ -90,7 +86,6 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
                 user = daoStudent.importStudent(userId);
                 break;
         }
-
         return user;
     }
 

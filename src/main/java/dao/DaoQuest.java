@@ -26,7 +26,7 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
             return new Quest(id, name, value, description, type, category);
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return new NullQuest();
         }
     }
 
@@ -48,12 +48,12 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
 
                     return new Quest(itemId, name, value, description, type, category);
                 }
-                return null;
+                return new NullQuest();
             }
 
          }catch(SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            return null;
+            return new NullQuest();
         }
     }
 
@@ -82,12 +82,6 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
 
     @Override
     public boolean updateQuest(Quest quest) {
-        int itemId = quest.getItemId();
-        String name = quest.getName();
-        int value = quest.getValue();
-        String description = quest.getDescription();
-        String type = quest.getType();
-        String category = quest.getCategory();
 
         String query = "UPDATE quests SET " +
         "name = ?, value = ?, description = ?, type = ?, category =? " +
@@ -95,15 +89,16 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
 
         try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
-            preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, value);
-            preparedStatement.setString(3, description);
-            preparedStatement.setString(4, type);
-            preparedStatement.setString(5, category);
-            preparedStatement.setInt(6, itemId);
+            preparedStatement.setString(1, quest.getName());
+            preparedStatement.setInt(2, quest.getValue());
+            preparedStatement.setString(3, quest.getDescription());
+            preparedStatement.setString(4, quest.getType());
+            preparedStatement.setString(5, quest.getCategory());
+            preparedStatement.setInt(6, quest.getItemId());
 
             preparedStatement.executeUpdate();
-             return true;
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -117,6 +112,7 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
 
         try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
+            preparedStatement.setInt(1, quest.getItemId());
             preparedStatement.setString(2, quest.getName());
             preparedStatement.setInt(3, quest.getValue());
             preparedStatement.setString(4, quest.getDescription());
@@ -177,6 +173,5 @@ public class DaoQuest extends SqlDao implements IDaoQuest {
         }
         return quests;
     }
-
 }
 

@@ -6,15 +6,14 @@ import model.Team;
 import java.util.List;
 
 public interface IDaoTeam {
-    Team createTeam(String name);
 
-    Team createTeam (int groupId, String name, List<Student> students, int availableCoins);
+    Team createTeam(String name);
 
     Team importTeam(int teamId);
 
     boolean exportTeam(Team team);
 
-    void updateTeamData(Team team);
+    boolean updateTeamData(Team team);
 
     Team getTeamByStudentId(Integer studentId);
 
@@ -22,5 +21,5 @@ public interface IDaoTeam {
 
     List<Team> getAllTeams();
 
-    void assignStudentToTeam(int studentId, int teamId);
+    boolean assignStudentToTeam(int studentId, int teamId);
 }
