@@ -4,16 +4,6 @@ public class Quest extends Item {
 
     private String category;
 
-    public Quest(String name,
-                 int value,
-                 String description,
-                 String type,
-                 String category) {
-
-        super(name, value, description, type);
-        this.category = category;
-    }
-
     public Quest(int itemId,
                  String name,
                  int value,

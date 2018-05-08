@@ -1,27 +1,17 @@
 package model;
 
-import java.util.ArrayList;
 import iterator.MyIterator;
 import java.util.List;
 
 public abstract class Group{
     private String name;
     private List<Student> students;
-    private int groupId;
-
-    public Group(String name){
-        this.name = name;
-        this.students = new ArrayList<>();
-    }
+    private final int groupId;
 
     public Group(int groupId, String name, List<Student> students){
         this.groupId = groupId;
         this.name = name;
         this.students = students;
-    }
-
-    public void setGroupId(int groupId){
-        this.groupId = groupId;
     }
 
     public int getGroupId(){
