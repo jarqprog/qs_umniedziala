@@ -27,14 +27,14 @@
             <div id="main-content-edit-quest">
 
                 <div id="edit-quest-header">
-                <h1>Edit quest</h1>
+                <h1>Edit artifact</h1>
                 </div>
 
                 <div class="pick-list">
                     <ul>
-                        {%for quest in quests%}
+                        {%for artifact in artifacts%}
                         <li>
-                          {{quest}}
+                          {{artifact}}
                         </li>
                         {%endfor%}
                     </ul>
@@ -42,9 +42,9 @@
 
                 <div id="main-inner-container">
                   <form method="POST">
-                    <input type="text" maxlength="30" name="quest-id" placeholder="Id" required>
+                    <input type="text" maxlength="30" name="artifact_id" placeholder="Id" required>
                     <br/><br/>
-                    <input type="text" maxlength="30" name="questname" placeholder="Name">
+                    <input type="text" maxlength="30" name="name" placeholder="Name">
                     <br/><br/>
                     <input type="text" maxlength="150" name="description" placeholder="Description">
                     <br/><br/>
@@ -52,9 +52,6 @@
                     <br/><br/>
                     <input type="radio" name="type" value="team">Team
                     <input type="radio" name="type" value="individual">Individual
-                    <br/><br/>
-                    <input type="radio" name="category" value="basic">Basic
-                    <input type="radio" name="category" value="extra">Extra
                     <br/><br/>
                     <input type="submit" value="Send">
                   </form>

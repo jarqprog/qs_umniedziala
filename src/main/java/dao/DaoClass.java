@@ -75,6 +75,30 @@ public class DaoClass extends SqlDao implements IDaoClass {
     }
 
     @Override
+    public List<String> getAllClassNames() {
+        List<String> classes = new ArrayList<>();
+        String query = "SELECT * FROM codecool_classes";
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                while (resultSet.next()) {
+                    String id = resultSet.getString("id_codecool_class");
+                    String name = resultSet.getString("name");
+                    classes.add("Id: " + id + " name: " + name + "<br>");
+                }
+            }
+
+        }catch (SQLException e){
+            System.out.println("Class not found");
+        }
+
+        return classes;
+    }
+
+    @Override
     public List<CodecoolClass> getAllClasses(){
         List <CodecoolClass> allCodecoolClasses = new ArrayList <>();
 

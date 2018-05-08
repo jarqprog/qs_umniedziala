@@ -80,7 +80,7 @@ public class AdminHandler implements HttpHandler {
                     case "/admin": displayAdminHomePage(httpExchange);
                         break;
                     case "/admin/edit_mentor":
-                        Map mentorData = parseEditMentor(httpExchange);
+                        Map mentorData = responseManager.parseEditData(httpExchange);
                         editMentor(httpExchange, mentorData);
                         break;
                     case "/admin/display_mentor":
@@ -129,21 +129,7 @@ public class AdminHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange,response);
     }
 
-    private Map parseEditMentor(HttpExchange httpExchange) throws IOException {
-        Map<String,String> map = new HashMap<>();
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-        BufferedReader br = new BufferedReader(isr);
-        String data = br.readLine();
-        String[] pairs = data.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            if(keyValue.length == 2) {
-                String value = URLDecoder.decode(keyValue[1], "UTF-8");
-                map.put(keyValue[0], value);
-            }
-        }
-        return map;
-    }
+
 
     private void editMentor(HttpExchange httpExchange, Map mentor) throws IOException {
 

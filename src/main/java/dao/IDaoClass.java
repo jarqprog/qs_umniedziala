@@ -13,6 +13,8 @@ public interface IDaoClass {
 
     boolean exportClass(CodecoolClass codecoolClass);
 
+    List<String> getAllClassNames();
+
     List<CodecoolClass> getAllClasses();
 
     boolean assignMentorToClass(Integer mentorId, Integer classId);
