@@ -5,8 +5,7 @@
     <title>Quest Store </title>
     <meta name="description" content="Quest Store System website."/>
     <meta name="keywords" content="it students, CodeCool"/>
-    <link rel="stylesheet" href="../style.css" type="text/css"/>
-    <link rel="stylesheet" href="../css/fontello.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
     <script type="text/javascript" src="../js/javascript.js"></script>
 
 </head>
@@ -16,39 +15,39 @@
     <div id="container">
 
         <!-- header -->
-        <object id="header" name="header" type="text/html" data="../header.html"></object>
+        <object id="header" name="header" type="text/html" data="/static/header.html"></object>
 
 
         <main>
             <!-- menu -->
-            <object id="main-menu-box" name="main-menu-box" type="text/html" data="menu.html"></object>
+            <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/mentor/menu.html"></object>
 
             <!-- content -->
             <div id="main-content">
                 <div id="main-inner-container">
                   <h1>Create student</h1>
-                  <input type="text" name="firstname" placeholder="Name">
-                  <br/><br/>
-                  <input type="text" name="password" placeholder="Password">
-                  <br/><br/>
-                  <input type="text" name="email" placeholder="Email">
-                  <br/><br/>
-                  <strong>TODO Tutaj lista dostepnych klas!!!</strong>
-                  <br/><br/>
-                  <input type="text" name="classId" placeholder="ID">
-                  <br/><br/>
-                  <input type="submit" value="Send">
+                    <form method="POST">
+                      <input type="text" maxlength="30" name="firstname" placeholder="Name" required>
+                      <br/><br/>
+                      <input type="text" maxlength="30" name="password" placeholder="Password" required>
+                      <br/><br/>
+                      <input type="email" maxlength="30" name="email" placeholder="Email" required>
+                      <br/><br/>
+                      {{classNames}}
+                      <br/><br/>
+                      <input type="number" min="1" name="classId" placeholder="ID" required>
+                      <br/><br/>
+                      <input type="submit" value="Send">
+                    </form>
+                    {{info}}
             </div>
         </div>
         <!-- content -end-->
     </main>
 
 
-            </div>
-        </main>
-
         <!-- footer -->
-        <object id="footer" name="footer" type="text/html" data="../footer.html"></object>
+        <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
 
     </div>
 

@@ -5,8 +5,7 @@
     <title>Quest Store </title>
     <meta name="description" content="Quest Store System website."/>
     <meta name="keywords" content="it students, CodeCool"/>
-    <link rel="stylesheet" href="../style.css" type="text/css"/>
-    <link rel="stylesheet" href="../css/fontello.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
     <script type="text/javascript" src="../js/javascript.js"></script>
 
 </head>
@@ -17,12 +16,12 @@
 
 
         <!-- header -->
-        <object id="header" name="header" type="text/html" data="../header.html"></object>
+        <object id="header" name="header" type="text/html" data="/static/header.html"></object>
 
 
         <main>
             <!-- menu -->
-            <object id="main-menu-box" name="main-menu-box" type="text/html" data="menu.html"></object>
+            <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/mentor/menu.html"></object>
 
             <!-- content -->
             <div id="main-content-edit-quest">
@@ -33,37 +32,16 @@
 
                 <div class="pick-list">
                     <ul>
-                        <li>Item id: 10, name: Achiever, value: 1000, description: set up a SMART goal accepted by a mentor, type: team, category: extra</li>
-                        <li>Item id: 12, name: Creating an enchanted scroll, value: 500, description: Creating extra material for the current TW/SI topic (should be revised by mentors), type: individual, category: extra</li>
-                        <li>Item id: 13, name: Enter the arena, value: 500, description: Do a presentation on a meet-up, type: team, category: extra</li>
-                        <li>Item id: 1, name: Exploring a dungeon, value: 100, description: Finishing a Teamwork week, type: team, category: basic</li>
-                        <li>Item id: 9, name: Fast as an unicorn, value: 500, description: deliver 4 consecutive SI week assignments on time, type: individual, category: extra</li>
-                        <li>Item id: 7, name: Forging weapons, value: 400, description: Organizing a workshop for other students, type: team, category: extra</li>
-                        <li>Item id: 11, name: Fortune, value: 500, description: students choose the best project of the week. Selected team scores, type: individual, category: extra</li>
-                        <li>Item id: 8, name: Master the mornings, value: 300, description: Attend 1 months without being late, type: individual, category: extra</li>
-                        <li>Item id: 6, name: Recruiting some n00bs, value: 100, description: Taking part in the student screening process, type: individual, category: extra</li>
-                        <li>Item id: 3, name: Slaying a dragon, value: 500, description: Passing a Checkpoint in the first attempt, type: individual, category: basic</li>
-                        <li>Item id: 2, name: Solving the magic puzzle, value: 100, description: Finishing an SI assignment, type: individual, category: basic</li>
-                        <li>Item id: 4, name: Spot trap, value: 50, description: Spot a major mistake in the assignment, type: individual, category: extra</li>
-                        <li>Item id: 5, name: Taming a pet, value: 100, description: Doing a demo about a pet project, type: team, category: extra</li>
-                        <li>Item id: 10, name: Achiever, value: 1000, description: set up a SMART goal accepted by a mentor, type: team, category: extra</li>
-                        <li>Item id: 12, name: Creating an enchanted scroll, value: 500, description: Creating extra material for the current TW/SI topic (should be revised by mentors), type: individual, category: extra</li>
-                        <li>Item id: 13, name: Enter the arena, value: 500, description: Do a presentation on a meet-up, type: team, category: extra</li>
-                        <li>Item id: 1, name: Exploring a dungeon, value: 100, description: Finishing a Teamwork week, type: team, category: basic</li>
-                        <li>Item id: 9, name: Fast as an unicorn, value: 500, description: deliver 4 consecutive SI week assignments on time, type: individual, category: extra</li>
-                        <li>Item id: 7, name: Forging weapons, value: 400, description: Organizing a workshop for other students, type: team, category: extra</li>
-                        <li>Item id: 11, name: Fortune, value: 500, description: students choose the best project of the week. Selected team scores, type: individual, category: extra</li>
-                        <li>Item id: 8, name: Master the mornings, value: 300, description: Attend 1 months without being late, type: individual, category: extra</li>
-                        <li>Item id: 6, name: Recruiting some n00bs, value: 100, description: Taking part in the student screening process, type: individual, category: extra</li>
-                        <li>Item id: 3, name: Slaying a dragon, value: 500, description: Passing a Checkpoint in the first attempt, type: individual, category: basic</li>
-                        <li>Item id: 2, name: Solving the magic puzzle, value: 100, description: Finishing an SI assignment, type: individual, category: basic</li>
-                        <li>Item id: 4, name: Spot trap, value: 50, description: Spot a major mistake in the assignment, type: individual, category: extra</li>
-                        <li>Item id: 5, name: Taming a pet, value: 100, description: Doing a demo about a pet project, type: team, category: extra</li>
-
+                        {%for quest in quests%}
+                        <li>
+                          {{quest}}
+                        </li>
+                        {%endfor%}
                     </ul>
                 </div>
 
                 <div id="main-inner-container">
+                  <form method="POST">
                     <input type="text" name="quest-id" placeholder="Id">
                     <br/><br/>
                     <input type="text" name="questname" placeholder="Name">
@@ -77,6 +55,7 @@
                     <input type="text" name="category" placeholder="Category">
                     <br/><br/>
                     <input type="submit" value="Send">
+                  </form>
                 </div>
 
 
@@ -86,7 +65,7 @@
 
 
         <!-- footer -->
-        <object id="footer" name="footer" type="text/html" data="../footer.html"></object>
+        <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
 
     </div>
 
