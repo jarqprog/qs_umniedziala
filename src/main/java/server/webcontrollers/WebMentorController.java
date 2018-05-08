@@ -156,6 +156,38 @@ public class WebMentorController implements IMentorController {
         Artifact artifact = daoArtifact.createArtifact(name, value, type, category);
         return daoArtifact.exportArtifact(artifact);
     }
+
+    @Override
+    public List<String> getArtifacts() {
+        List<String> artifacts = new ArrayList<>();
+        for(Artifact artifact : daoArtifact.getAllArtifacts()) {
+            artifacts.add(artifact.toString());
+        }
+        return artifacts;
+    }
+
+    @Override
+    public boolean editArtifact(Map<String, String> artifactData) {
+        Artifact artifact = daoArtifact.importArtifact(Integer.parseInt(artifactData.get("artifact_id")));
+        if(artifact !=null) {
+            if(artifactData.containsKey("name")) {
+                artifact.setName(artifactData.get("name"));
+            }
+            if(artifactData.containsKey("description")) {
+                artifact.setDescription(artifactData.get("description"));
+            }
+            if(artifactData.containsKey("value")) {
+                artifact.setValue(Integer.parseInt(artifactData.get("value")));
+            }
+            if(artifactData.containsKey("type")) {
+                artifact.setType(artifactData.get("type"));
+            }
+
+            return daoArtifact.updateArtifact(artifact);
+        } else{
+            return false;
+        }
+    }
 }
 
 
