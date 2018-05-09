@@ -66,7 +66,6 @@ public class ControllerMentor implements IUserController{
     }
 
     public Student getStudent(){
-        DaoStudent daoStudent = new DaoStudent();
         Student student = null;
 
         viewMentor.displayText("Available students:\n");

@@ -6,23 +6,24 @@ import model.Student;
 import java.util.List;
 
 public interface IDaoClass {
-    CodecoolClass createClass(String name);
 
-    CodecoolClass createClass(int groupId, String name, List<Student> students);
+    CodecoolClass createClass(String name);
 
     CodecoolClass importClass(Integer classID);
 
     boolean exportClass(CodecoolClass codecoolClass);
 
+    List<String> getAllClassNames();
+
     List<CodecoolClass> getAllClasses();
 
-    void assignMentorToClass(Integer mentorId, Integer classId);
+    boolean assignMentorToClass(Integer mentorId, Integer classId);
 
-    void assignStudentToClass(Integer studentId, Integer classId);
+    boolean assignStudentToClass(Integer studentId, Integer classId);
 
-    void updateMentorInClass(Integer mentorId, Integer classId);
+    boolean updateMentorInClass(Integer mentorId, Integer classId);
 
-    void unsignMentorFromClass(Integer mentorId);
+    boolean unsignMentorFromClass(Integer mentorId);
 
     List<Student> getStudentsOfClass(Integer classID);
 

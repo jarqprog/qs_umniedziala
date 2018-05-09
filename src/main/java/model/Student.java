@@ -11,12 +11,6 @@ public class Student extends User{
         this.wallet = new Wallet();
     }
 
-    public Student(String name, String password, String email) {
-
-        super(name, password, email);
-        this.wallet = new Wallet();
-    }
-
     public Wallet getWallet() {
         return wallet;
     }
