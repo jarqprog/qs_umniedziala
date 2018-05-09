@@ -15,6 +15,7 @@ public interface IMentorController extends IServerController {
     boolean editQuest(Map<String, String> inputs);
     boolean addQuest(String name, int value, String description, String type, String category);
     boolean addArtifact(String name, int value, String type, String caetgory);
+    Map<String, String> getAllWallets();
     List<String> getArtifacts();
     boolean editArtifact(Map<String, String> inputs);
 }

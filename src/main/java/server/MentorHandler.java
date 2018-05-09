@@ -66,6 +66,9 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/add_artifact":
                         displayAddArtifactPage(httpExchange);
                         break;
+                    case "/mentor/see_all_wallets":
+                        displayAllWallets(httpExchange);
+                        break;
                     case "/mentor/edit_artifact":
                         displayEditArtifactPage(httpExchange);
                         break;
@@ -306,6 +309,17 @@ public class MentorHandler implements HttpHandler {
                 "static/mentor/add_artifact.html.twig");
         JtwigModel model = JtwigModel.newModel();
         model.with("info", info);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void displayAllWallets(HttpExchange httpExchange) throws IOException{
+        Map<String, String> wallets = controller.getAllWallets();
+        String response;
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(
+                "static/mentor/see_all_wallets.html.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("wallets", wallets);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }

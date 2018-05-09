@@ -2,12 +2,13 @@ package server.webcontrollers;
 
 
 import dao.*;
+import model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.*;
 
 public class WebMentorController implements IMentorController {
 
@@ -94,7 +95,7 @@ public class WebMentorController implements IMentorController {
 
     @Override
     public boolean createStudent(String name, String password, String email, int classId) {
-        Student student = new Student(name, password, email);
+        Student student = daoStudent.createStudent(name, password, email);
         boolean isStudentCreated = daoStudent.exportStudent(student);
         int studentId = daoStudent.importNewStudent(email).getUserId();
         daoClass.assignStudentToClass(studentId, classId);
@@ -158,6 +159,17 @@ public class WebMentorController implements IMentorController {
     }
 
     @Override
+    public Map<String, String> getAllWallets() {
+        List<Student> students = daoStudent.getAllStudents();
+        Map<String, String> dataFromWallets = new HashMap<>();
+
+        for (Student student : students) {
+            dataFromWallets.put(student.getName(), daoWallet.importWallet(student.getUserId()).toString().replaceAll("\n", "<br/>"));
+        }
+
+        return dataFromWallets;
+    }
+
     public List<String> getArtifacts() {
         List<String> artifacts = new ArrayList<>();
         for(Artifact artifact : daoArtifact.getAllArtifacts()) {

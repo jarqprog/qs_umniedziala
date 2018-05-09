@@ -309,3 +309,7 @@ body::-webkit-scroll {
     float: left;
     max-width: 50px;
 }
+
+#wallets{
+    align-content: left;
+}
