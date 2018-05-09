@@ -95,9 +95,8 @@ public class DaoLevel extends SqlDao implements IDaoLevel {
             try( ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 while (resultSet.next()) {
-                    String name = resultSet.getString("name");
-                    int limitCoins = resultSet.getInt("coins_limit");
-                    levels.add(createLevel(name, limitCoins));
+                    int levelId = resultSet.getInt(ID_LABEL);
+                    levels.add(importLevel(levelId));
                 }
             }
         }catch(SQLException e){
