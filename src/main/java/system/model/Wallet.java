@@ -1,6 +1,6 @@
-package model;
+package system.model;
 
-import iterator.MyIterator;
+import system.iterator.MyIterator;
 
 import java.util.ArrayList;
 import java.util.List;

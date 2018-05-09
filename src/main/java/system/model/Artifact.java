@@ -1,4 +1,4 @@
-package model;
+package system.model;
 
 public class Artifact extends Item {
 
