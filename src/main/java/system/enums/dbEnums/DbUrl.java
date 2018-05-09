@@ -1,4 +1,4 @@
-package enums.dbEnums;
+package system.enums.dbEnums;
 
 public enum DbUrl {
 
