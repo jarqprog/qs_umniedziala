@@ -313,3 +313,7 @@ body::-webkit-scroll {
 #wallets{
     align-content: left;
 }
+
+#team_info h1 {
+    font-size: 100px;
+}

@@ -5,6 +5,9 @@ import model.CodecoolClass;
 import model.Student;
 import model.Team;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WebStudentController implements IStudentController {
 
     private final IDaoWallet daoWallet;
@@ -90,6 +93,17 @@ public class WebStudentController implements IStudentController {
 
     private Student getStudentById(int studentId) {
         return daoStudent.importStudent(studentId);
+    }
+
+    @Override
+    public List<String> getTeamMembers(int studentId) {
+        Team team = daoTeam.getTeamByStudentId(studentId);
+        List<Student> members = team.getStudents();
+        List<String> membersNames = new ArrayList<>();
+        for (Student student : members){
+            membersNames.add(student.getName());
+        }
+        return membersNames;
     }
 }
 

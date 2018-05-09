@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang=en-us>
+<head>
+    <meta charset="utf-8"/>
+    <title>Quest Store </title>
+    <meta name="description" content="Quest Store System website."/>
+    <meta name="keywords" content="it students, CodeCool"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/fontello.css" type="text/css"/>
+    <script type="text/javascript" src="../js/javascript.js"></script>
+
+</head>
+
+<body>
+
+<div id="container">
+
+    <!-- header -->
+    <object id="header" name="admin-header" target= ype="text/html" data="/static/header.html"></object>
+
+    <main>
+        <!-- menu -->
+        <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/student/menu.html"></object>
+
+        <!-- content -->
+        <div id="main-content">
+
+            <div id="main-content-header">
+                <div id="team_info">
+                    <h1><b>{{ teamName }}</b></h1><br/><br/>
+                    {% for member in members %}
+                        <h3>{{ member }}</h3>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- footer -->
+    <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
+
+</div>
+
+</body>
+</html>

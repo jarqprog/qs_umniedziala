@@ -11,6 +11,7 @@ import server.sessions.ISessionManager;
 import server.webcontrollers.IStudentController;
 
 import java.io.IOException;
+import java.util.List;
 
 public class StudentHandler implements HttpHandler {
 
@@ -52,6 +53,9 @@ public class StudentHandler implements HttpHandler {
                     case "/student":
                         displayStudentHomePage(httpExchange);
                         break;
+                    case "/student/menage_team":
+                        displayStudentTeamData(httpExchange);
+                        break;
                 }
             }
             if (method.equals("POST")) {
@@ -78,4 +82,22 @@ public class StudentHandler implements HttpHandler {
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
+
+    private void displayStudentTeamData(HttpExchange httpExchange) throws IOException{
+        int studentId = this.sessionManager.getCurrentUserId(httpExchange);
+        String teamName = controller.getStudentGroup(studentId);
+        List<String> memebrs = controller.getTeamMembers(studentId);
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/student/menage_team.html.twig");
+
+        JtwigModel model = JtwigModel.newModel();
+        model.with("teamName", teamName);
+        model.with("members", memebrs);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+
 }
