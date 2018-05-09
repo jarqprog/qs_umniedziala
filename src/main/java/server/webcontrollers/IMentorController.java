@@ -8,7 +8,7 @@ public interface IMentorController extends IServerController {
     String getMentorName(int mentorId);
     String getMentorEmail(int mentorId);
     String getMentorClassWithStudents(int mentorId);
-    String getClassNames();
+    String getAllTeams();
     boolean createStudent(String name, String password, String email, int classId);
     boolean createTeam(String teamName);
     List<String> getQuests();

@@ -125,5 +125,25 @@ public class WebAdminController implements IAdminController {
         return daoMentor.getAllMentors().stream().map(User::toString).collect(Collectors.toList());
     }
 
+    @Override
+    public String getAllClasses() {
+
+        List<CodecoolClass> classes = daoClass.getAllClasses();
+        StringBuilder classesAsText = new StringBuilder();
+        int counter = 1;
+        int maxNumClassesInLine = 7;
+        for(CodecoolClass codecoolClass : classes) {
+            int classId = codecoolClass.getGroupId();
+            if(classId != 0) {
+                if(counter % maxNumClassesInLine == 1) {
+                    classesAsText.append("<br>");
+                }
+                String classAsText = String.format(" '%s', ", codecoolClass.getName());
+                classesAsText.append(classAsText);
+                counter++;
+            }
+        }
+        return classesAsText.toString();
+    }
 
 }

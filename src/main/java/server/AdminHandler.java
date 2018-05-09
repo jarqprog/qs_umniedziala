@@ -109,12 +109,13 @@ public class AdminHandler implements HttpHandler {
         if(controller.createClass(className)){
             info = "Class added successfully!";
         }else{
-            info = "Something went wrong :(";
+            info = "Something went wrong - perhaps You've used already existing name?";
         }
         String response;
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
-                                "static/admin/create_class.html");
+                "static/admin/create_class.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("classesNames", controller.getAllClasses());
         model.with("info", info);
         response =template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -125,6 +126,7 @@ public class AdminHandler implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
                                 "static/admin/create_class.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("classesNames", controller.getAllClasses());
         response = template.render(model);
         responseManager.executeResponse(httpExchange,response);
     }
