@@ -59,6 +59,12 @@ public class DaoClass extends SqlDao implements IDaoClass {
     }
 
     private boolean exportClass(CodecoolClass codecoolClass) throws SQLException {
+        List<CodecoolClass> classes = getAllClasses();
+        for(CodecoolClass cls : classes) {
+            if(cls.getName().equals(codecoolClass.getName())) {
+                throw new SQLException("This class name already exists!");
+            }
+        }
 
         String query = "INSERT INTO codecool_classes (id_codecool_class, name) VALUES (?, ?);";
 
