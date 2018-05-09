@@ -1,14 +1,14 @@
 package server;
 
-import dao.DaoFactory;
-import dao.IDaoFactory;
-import enums.dbEnums.DbDriver;
-import enums.dbEnums.DbFilePath;
-import enums.dbEnums.DbUrl;
-import manager.database.DatabaseConfiguration;
-import manager.database.DatabaseManager;
-import manager.database.SqlConfig;
-import manager.database.SqlManager;
+import system.dao.DaoFactory;
+import system.dao.IDaoFactory;
+import system.enums.dbEnums.DbDriver;
+import system.enums.dbEnums.DbFilePath;
+import system.enums.dbEnums.DbUrl;
+import system.manager.database.DatabaseConfiguration;
+import system.manager.database.DatabaseManager;
+import system.manager.database.SqlConfig;
+import system.manager.database.SqlManager;
 import server.factory.IControllerFactory;
 import server.factory.IHandlerFactory;
 import server.helpers.IResponseManager;
