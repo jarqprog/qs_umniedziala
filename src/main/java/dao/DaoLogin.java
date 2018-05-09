@@ -24,7 +24,7 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
 
     @Override
     public User getUser(String email, String password){
-        User user = new NullStudent();
+        User user = null;
 
         String query = "SELECT * FROM users WHERE email= ? AND password= ?;";
         try (
@@ -55,7 +55,7 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
              preparedStatement.setInt(1, roleId);
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                if (!resultSet.isClosed()) {
+                if ( resultSet.next() ) {
                     role = resultSet.getString("name");
 
                 }
