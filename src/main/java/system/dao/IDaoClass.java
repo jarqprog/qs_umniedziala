@@ -1,7 +1,7 @@
-package dao;
+package system.dao;
 
-import model.CodecoolClass;
-import model.Student;
+import system.model.CodecoolClass;
+import system.model.Student;
 
 import java.util.List;
 

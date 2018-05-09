@@ -1,10 +1,10 @@
-package dao;
+package system.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.*;
+import system.model.*;
 
 public class DaoStudent extends DaoUser implements IDaoStudent{
 

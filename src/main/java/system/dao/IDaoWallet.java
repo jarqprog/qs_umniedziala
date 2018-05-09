@@ -1,7 +1,7 @@
-package dao;
+package system.dao;
 
-import model.Student;
-import model.Wallet;
+import system.model.Student;
+import system.model.Wallet;
 
 public interface IDaoWallet {
 

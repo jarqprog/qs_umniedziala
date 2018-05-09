@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Quest;
+import system.model.Quest;
 
 public class NullQuest extends Quest {
 

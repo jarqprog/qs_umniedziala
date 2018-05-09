@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Artifact;
+import system.model.Artifact;
 
 public class NullArtifact extends Artifact {
 

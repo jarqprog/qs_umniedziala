@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Quest;
+import system.model.Quest;
 
 import java.util.List;
 

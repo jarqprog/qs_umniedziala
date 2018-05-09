@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.User;
+import system.model.User;
 
 public interface IDaoLogin {
     User getUser(String email, String password);

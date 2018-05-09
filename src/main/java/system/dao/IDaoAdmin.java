@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Admin;
+import system.model.Admin;
 
 public interface IDaoAdmin {
     Admin createAdmin(String name, String password, String email);

@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Mentor;
+import system.model.Mentor;
 
 public class NullMentor extends Mentor {
 

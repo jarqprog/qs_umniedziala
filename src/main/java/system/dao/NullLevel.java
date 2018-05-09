@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Level;
+import system.model.Level;
 
 public class NullLevel extends Level {
 

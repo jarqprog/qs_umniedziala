@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Student;
+import system.model.Student;
 
 public class NullStudent extends Student {
 

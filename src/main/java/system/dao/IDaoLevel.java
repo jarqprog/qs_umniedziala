@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Level;
+import system.model.Level;
 
 import java.util.List;
 

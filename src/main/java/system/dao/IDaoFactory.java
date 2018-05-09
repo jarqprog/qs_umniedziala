@@ -1,4 +1,4 @@
-package dao;
+package system.dao;
 
 public interface IDaoFactory {
 

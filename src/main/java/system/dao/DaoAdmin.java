@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Admin;
+import system.model.Admin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

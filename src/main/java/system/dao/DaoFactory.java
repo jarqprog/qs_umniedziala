@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import manager.database.DatabaseManager;
+import system.manager.database.DatabaseManager;
 
 import java.sql.Connection;
 

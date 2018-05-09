@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Student;
+import system.model.Student;
 
 import java.util.List;
 

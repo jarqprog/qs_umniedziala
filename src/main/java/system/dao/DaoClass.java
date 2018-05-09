@@ -1,4 +1,4 @@
-package dao;
+package system.dao;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Connection;
-import model.CodecoolClass;
-import model.Student;
+import system.model.CodecoolClass;
+import system.model.Student;
 
 public class DaoClass extends SqlDao implements IDaoClass {
 
@@ -234,25 +234,3 @@ public class DaoClass extends SqlDao implements IDaoClass {
         }
     }
 }
-
-//    @Override
-//    public List<String> getAllClassNames() {
-//        List<String> classes = new ArrayList<>();
-//        String query = "SELECT * FROM codecool_classes";
-//
-//        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
-//
-//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//                while (resultSet.next()) {
-//                    String id = resultSet.getString(ID_LABEL);
-//                    String name = resultSet.getString("name");
-//                    classes.add("Id: " + id + " name: " + name + "<br>");
-//                }
-//            }
-//
-//        }catch (SQLException e){
-//            System.out.println("Class not found");
-//        }
-//
-//        return classes;
-//    }

@@ -1,9 +1,9 @@
-package dao;
+package system.dao;
 
-import model.User;
-import model.Admin;
-import model.Mentor;
-import model.Student;
+import system.model.User;
+import system.model.Admin;
+import system.model.Mentor;
+import system.model.Student;
 
 
 import java.sql.*;

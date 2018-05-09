@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.CodecoolClass;
+import system.model.CodecoolClass;
 
 import java.util.ArrayList;
 

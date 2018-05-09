@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
 public interface Dao {
 
-    // marker interface for dao factory
+    // marker interface for system.dao factory
 }

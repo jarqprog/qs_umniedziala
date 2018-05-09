@@ -1,6 +1,6 @@
-package dao;
+package system.dao;
 
-import model.Team;
+import system.model.Team;
 
 import java.util.ArrayList;
 

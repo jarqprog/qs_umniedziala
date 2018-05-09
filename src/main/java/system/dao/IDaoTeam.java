@@ -1,7 +1,7 @@
-package dao;
+package system.dao;
 
-import model.Student;
-import model.Team;
+import system.model.Student;
+import system.model.Team;
 
 import java.util.List;
 

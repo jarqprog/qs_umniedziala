@@ -1,4 +1,4 @@
-package dao;
+package system.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Level;
+import system.model.Level;
 
 public class DaoLevel extends SqlDao implements IDaoLevel {
 
