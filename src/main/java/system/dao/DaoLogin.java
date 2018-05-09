@@ -1,9 +1,6 @@
 package system.dao;
 
 import system.model.User;
-import system.model.Admin;
-import system.model.Mentor;
-import system.model.Student;
 
 
 import java.sql.*;
@@ -35,7 +32,7 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
             if(resultSet.next()) {
                 int id_role = resultSet.getInt("id_role");
                 String role = getRole(id_role);
-                user = createUser(resultSet, role);
+                user = importUser(resultSet, role);
             }
 
         }catch(SQLException e){
@@ -67,7 +64,7 @@ public class DaoLogin extends SqlDao implements IDaoLogin {
         return role;
     }
 
-    private User createUser(ResultSet resultSet, String role) throws SQLException {
+    private User importUser(ResultSet resultSet, String role) throws SQLException {
         User user = null;  // because of login in Login (handler - server package)
         int userId;
         try {
