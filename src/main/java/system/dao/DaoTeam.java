@@ -126,7 +126,7 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
         List<Student> studentsOfTeam = new ArrayList<>();
         String query = "SELECT id_user FROM users INNER JOIN students_in_teams "
                      + "ON users.id_user = students_in_teams.id_student "
-                     + "ON students_in_teams.id_team = ?;";
+                     + "AND students_in_teams.id_team = ?";
 
         try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
             preparedStatement.setInt(1, teamId);
