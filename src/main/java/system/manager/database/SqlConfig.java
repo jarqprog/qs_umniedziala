@@ -1,8 +1,8 @@
-package manager.database;
+package system.manager.database;
 
-import enums.dbEnums.DbDriver;
-import enums.dbEnums.DbFilePath;
-import enums.dbEnums.DbUrl;
+import system.enums.dbEnums.DbDriver;
+import system.enums.dbEnums.DbFilePath;
+import system.enums.dbEnums.DbUrl;
 
 import java.util.Properties;
 
