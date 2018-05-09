@@ -1,6 +1,9 @@
-package integrationTests;
+package integration.integrationTests;
 
-import dao.*;
+import dao.DaoAdmin;
+import dao.DaoFactory;
+import dao.IDaoAdmin;
+import dao.IDaoFactory;
 import enums.dbEnums.DbDriver;
 import enums.dbEnums.DbFilePath;
 import enums.dbEnums.DbUrl;
@@ -8,16 +11,15 @@ import manager.database.DatabaseConfiguration;
 import manager.database.DatabaseManager;
 import manager.database.SqlConfig;
 import manager.database.SqlManager;
-import model.Admin;
 
 import java.sql.Connection;
 
-public class PostgresTests {
+public class SQLiteTests {
 
     public static void main(String[] args) {
 
         DatabaseConfiguration databaseConfiguration = SqlConfig
-                .createPosgresConfiguration(DbUrl.POSTGRES_MAIN_URL, DbDriver.POSTGRES, DbFilePath.POSTGRES_MAIN_DATABASE);
+                .createSQLiteConfiguration(DbUrl.DATABASE_MAIN_URL, DbDriver.SQLITE, DbFilePath.SQLITE_MAIN_DATABASE);
 
         DatabaseManager databaseManager = SqlManager.getSQLManager(databaseConfiguration);
 
@@ -30,10 +32,11 @@ public class PostgresTests {
 
         IDaoAdmin daoAdmin = daoFactory.create(DaoAdmin.class);
 
-        Admin admin = daoAdmin.createAdmin("Mark", "mark", "mark@cc.com");
-//        admin.set
-        System.out.println(admin);
-        System.out.println(daoAdmin.exportAdmin(admin));
+//        Admin admin = daoAdmin.createAdmin("Mark", "mark", "mark@cc.com");
+////        admin.set
+//        System.out.println(admin);
+//        System.out.println(daoAdmin.exportAdmin(admin));
+        System.out.println(daoAdmin.importAdmin(200));
 
     }
 

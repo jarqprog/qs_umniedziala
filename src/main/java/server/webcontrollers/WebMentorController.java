@@ -30,10 +30,10 @@ public class WebMentorController implements IMentorController {
     }
 
     private WebMentorController(
-                             IDaoWallet daoWallet, IDaoStudent daoStudent,
-                             IDaoArtifact daoArtifact, IDaoLevel daoLevel,
-                             IDaoTeam daoTeam, IDaoClass daoClass,
-                             IDaoQuest daoQuest, IDaoMentor daoMentor) {
+                                 IDaoWallet daoWallet, IDaoStudent daoStudent,
+                                 IDaoArtifact daoArtifact, IDaoLevel daoLevel,
+                                 IDaoTeam daoTeam, IDaoClass daoClass,
+                                 IDaoQuest daoQuest, IDaoMentor daoMentor) {
 
         this.daoWallet = daoWallet;
         this.daoStudent = daoStudent;
@@ -48,7 +48,7 @@ public class WebMentorController implements IMentorController {
     @Override
     public String getMentorName(int mentorId) {
         Mentor mentor = getMentorById(mentorId);
-        if(mentor == null) {
+        if(mentor.getUserId() == 0) {
             return "";
         }
         return mentor.getName();
@@ -57,7 +57,7 @@ public class WebMentorController implements IMentorController {
     @Override
     public String getMentorEmail(int mentorId) {
         Mentor mentor = getMentorById(mentorId);
-        if(mentor == null) {
+        if(mentor.getUserId() == 0) {
             return "";
         }
         return mentor.getEmail();
@@ -113,7 +113,7 @@ public class WebMentorController implements IMentorController {
     @Override
     public boolean editQuest(Map<String, String> questData) {
         Quest quest = daoQuest.importQuest(Integer.parseInt(questData.get("quest-id")));
-        if(quest !=null) {
+        if(quest.getItemId() != 0) {
             if(questData.containsKey("questname")) {
                 quest.setName(questData.get("questname"));
             }
@@ -181,7 +181,7 @@ public class WebMentorController implements IMentorController {
     @Override
     public boolean editArtifact(Map<String, String> artifactData) {
         Artifact artifact = daoArtifact.importArtifact(Integer.parseInt(artifactData.get("artifact_id")));
-        if(artifact !=null) {
+        if(artifact.getItemId() != 0) {
             if(artifactData.containsKey("name")) {
                 artifact.setName(artifactData.get("name"));
             }

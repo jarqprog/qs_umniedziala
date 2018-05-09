@@ -37,16 +37,16 @@ public class WebStudentController implements IStudentController {
     @Override
     public String getStudentName(int studentId) {
         Student student = getStudentById(studentId);
-        if(student != null) {
-            return student.getName();
+        if(student.getUserId() == 0) {
+            return "";
         }
-        return "";
+        return student.getName();
     }
 
     @Override
     public String getStudentEmail(int studentId) {
         Student student = getStudentById(studentId);
-        if(student == null) {
+        if(student.getUserId() == 0) {
             return "";
         }
         return student.getEmail();
@@ -55,27 +55,25 @@ public class WebStudentController implements IStudentController {
     @Override
     public String getStudentWallet(int studentId) {
         Student student = getStudentById(studentId);
-        if(student != null) {
-            return student.getWallet().toString();
+        if(student.getUserId() == 0) {
+            return "";
         }
-        return "";
+        return student.getWallet().toString();
     }
 
     @Override
     public String getStudentGroup(int studentId) {
         Team team = daoTeam.getTeamByStudentId(studentId);
-        if(team != null) {
-            return team.getName();
+        if(team.getGroupId() == 0) {
+            return "";
         }
-        return "";
+        return team.getName();
     }
 
     @Override
     public String getStudentExpLevel(int studentId) {
         Student student = getStudentById(studentId);
-        if(student == null) {
-            return "n/a";
-        }
+
         int coins = student.getWallet().getAllCoins();
         String level = daoLevel.importLevelByCoins(coins).getName();
         return String.format("level: %s / collected coins: %s", level, coins);
@@ -84,16 +82,15 @@ public class WebStudentController implements IStudentController {
     @Override
     public String getStudentClass(int studentId) {
         CodecoolClass codecoolClass = daoClass.getStudentClass(studentId);
-        if(codecoolClass != null) {
-            return codecoolClass.getName();
+        if(codecoolClass.getGroupId() == 0) {
+            return "";
         }
-        return "";
+        return codecoolClass.getName();
     }
 
     private Student getStudentById(int studentId) {
         return daoStudent.importStudent(studentId);
     }
-
 }
 
 
