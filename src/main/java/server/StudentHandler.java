@@ -56,6 +56,9 @@ public class StudentHandler implements HttpHandler {
                     case "/student/menage_team":
                         displayStudentTeamData(httpExchange);
                         break;
+                    case "/student/buy_artifact":
+                        displayArtifacts(httpExchange);
+                        break;
                 }
             }
             if (method.equals("POST")) {
@@ -99,5 +102,17 @@ public class StudentHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange, response);
     }
 
+    private void displayArtifacts(HttpExchange httpExchange) throws IOException{
+        List<String> artifacts = controller.buyArtifact();
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/student/buy_artifact.html.twig");
+
+        JtwigModel model = JtwigModel.newModel();
+        model.with("artifacts", artifacts);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
 
 }

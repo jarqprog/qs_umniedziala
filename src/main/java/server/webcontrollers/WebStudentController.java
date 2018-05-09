@@ -1,6 +1,7 @@
 package server.webcontrollers;
 
 import system.dao.*;
+import system.model.Artifact;
 import system.model.CodecoolClass;
 import system.model.Student;
 import system.model.Team;
@@ -104,6 +105,16 @@ public class WebStudentController implements IStudentController {
             membersNames.add(student.getName());
         }
         return membersNames;
+    }
+
+    @Override
+    public List<String> buyArtifact() {
+        List<Artifact> artifacts = daoArtifact.getAllArtifacts();
+        List<String> artifactsNames = new ArrayList<>();
+        for (Artifact artifact : artifacts){
+            artifactsNames.add(artifact.getName());
+        }
+        return artifactsNames;
     }
 }
 
