@@ -1,10 +1,9 @@
-package controller;
+package terminal.controller;
 
-import dao.*;
-import model.*;
-import view.ViewTeam;
+import system.dao.*;
+import system.model.*;
+import terminal.controller.view.ViewTeam;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class ControllerTeam implements IUserController {
     private IDaoTeam daoTeam;
     private IDaoWallet daoWallet;
 
-    public ControllerTeam(Team team, ViewTeam viewTeam, IDaoArtifact daoArtifact, IDaoTeam daoTeam, IDaoWallet daoWallet) {
+    ControllerTeam(Team team, ViewTeam viewTeam, IDaoArtifact daoArtifact, IDaoTeam daoTeam, IDaoWallet daoWallet) {
         this.viewTeam = viewTeam;
         this.team = team;
         this.daoArtifact = daoArtifact;
@@ -24,7 +23,7 @@ public class ControllerTeam implements IUserController {
         this.daoWallet = daoWallet;
     }
 
-    public Artifact getArtifact(String type) {
+    private Artifact getArtifact(String type) {
 
         viewTeam.displayText("Available artifacts:\n");
         List<Artifact> artifacts = daoArtifact.getArtifacts(type);
@@ -46,7 +45,7 @@ public class ControllerTeam implements IUserController {
         return artifact;
     }
 
-    public void buyArtifact() {
+    private void buyArtifact() {
         Artifact artifact = getArtifact("team");
         if(artifact != null) {
             int price = artifact.getValue();
@@ -97,7 +96,7 @@ public class ControllerTeam implements IUserController {
         }
     }
 
-    public void splitTeamMoney() {
+    private void splitTeamMoney() {
         List<Student> students = team.getStudents();
         int remainderCoins = team.getAvailableCoins();
 

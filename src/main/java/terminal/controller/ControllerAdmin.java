@@ -1,14 +1,13 @@
-package controller;
+package terminal.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import dao.*;
-import model.Admin;
-import model.CodecoolClass;
-import model.Mentor;
-import model.Level;
-import view.ViewAdmin;
+import system.dao.*;
+import system.model.Admin;
+import system.model.CodecoolClass;
+import system.model.Mentor;
+import system.model.Level;
+import terminal.controller.view.ViewAdmin;
 
 public class ControllerAdmin implements IUserController {
 
@@ -22,9 +21,7 @@ public class ControllerAdmin implements IUserController {
         return new ControllerAdmin(viewAdmin, daoMentor, daoClass, daoLevel);
     }
 
-    public ControllerAdmin(){};
-
-    public ControllerAdmin(Admin admin, ViewAdmin viewAdmin, IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
+    ControllerAdmin(Admin admin, ViewAdmin viewAdmin, IDaoMentor daoMentor, IDaoClass daoClass, IDaoLevel daoLevel) {
         this.viewAdmin = viewAdmin;
         this.admin = admin;
         this.daoMentor = daoMentor;
@@ -43,27 +40,23 @@ public class ControllerAdmin implements IUserController {
         this.admin = admin;
     }
 
-    public void createMentor() {
+    private void createMentor() {
         String mentorName = viewAdmin.getInputFromUser("Enter name of new mentor: ");
         String mentorPassword = viewAdmin.getInputFromUser("Enter password of new mentor: ");
         String mentorEmail = viewAdmin.getInputFromUser("Enter email of new mentor: ");
 
-        Mentor mentor = daoMentor.createMentor(mentorName, mentorPassword, mentorEmail);
-        boolean isInsert = daoMentor.exportMentor(mentor);
-         if(isInsert){
+         if(daoMentor.createMentor(mentorName, mentorPassword, mentorEmail).getUserId() != 0){
              viewAdmin.displayText("Mentor creation successful");
          }else {
              viewAdmin.displayText("Mentor creation failed");
          }
     }
 
-    public void createClass() {
+    private void createClass() {
 
         String className = viewAdmin.getInputFromUser("Enter the name of the class:");
-        CodecoolClass codecoolClass = daoClass.createClass(className);
-        boolean isInsert = daoClass.exportClass(codecoolClass);
 
-        if(isInsert){
+        if(daoClass.createClass(className).getGroupId() != 0){
             viewAdmin.displayText("Creation class successful");
         }else {
             viewAdmin.displayText("Creation class failed");
@@ -71,7 +64,7 @@ public class ControllerAdmin implements IUserController {
 
     }
 
-    public void editMentor() {
+    private void editMentor() {
         Mentor mentor = getMentor();
         if(mentor != null) {
             String editMentorOption = "";
@@ -192,7 +185,7 @@ public class ControllerAdmin implements IUserController {
         }
     }
 
-    public CodecoolClass getCodecoolClass() {
+    private CodecoolClass getCodecoolClass() {
         CodecoolClass chosenClass = null;
 
         viewAdmin.displayText("Available classes: ");
@@ -212,7 +205,7 @@ public class ControllerAdmin implements IUserController {
     }
 
 
-    public void seeMentorData() {
+    private void seeMentorData() {
         Mentor mentor = getMentor();
         if(mentor != null) {
             CodecoolClass mentorsClass = daoClass.getMentorsClass(mentor.getUserId());
@@ -237,23 +230,16 @@ public class ControllerAdmin implements IUserController {
         }
     }
 
-    public void createLevel() {
+    private void createLevel() {
         seeAllLevels();
 
         String levelName = viewAdmin.getInputFromUser("Enter name of new level: ");
         int coinsLimit = viewAdmin.getIntInputFromUser("Enter the number of coins required for level: ");
-
-        Level level = daoLevel.createLevel(levelName, coinsLimit);
-        if(level != null) {
-            boolean isInsert = daoLevel.exportLevel(level);
-
-            if (isInsert) {
-                viewAdmin.displayText("Creation level successful");
-            } else {
-                viewAdmin.displayText("Creation level failed");
-            }
+        if (daoLevel.createLevel(levelName, coinsLimit).getLevelId() != 0) {
+            viewAdmin.displayText("Creation level successful");
+        } else {
+            viewAdmin.displayText("Creation level failed");
         }
-
     }
 
     public void runMenu() {

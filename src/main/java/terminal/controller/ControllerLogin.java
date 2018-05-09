@@ -1,17 +1,15 @@
-package controller;
+package terminal.controller;
 
 
-import dao.*;
-import model.Admin;
-import model.Mentor;
-import model.Student;
-import model.User;
-import view.ViewAdmin;
-import view.ViewLogin;
-import view.ViewMentor;
-import view.ViewStudent;
-
-import java.sql.SQLException;
+import system.dao.*;
+import system.model.Admin;
+import system.model.Mentor;
+import system.model.Student;
+import system.model.User;
+import terminal.controller.view.ViewAdmin;
+import terminal.controller.view.ViewLogin;
+import terminal.controller.view.ViewMentor;
+import terminal.controller.view.ViewStudent;
 
 public class ControllerLogin{
 
@@ -42,7 +40,7 @@ public class ControllerLogin{
         }
     }
 
-    public void login(){
+    private void login(){
         String userEmail = viewLogin.getInputFromUser("email: ");
         String userPassword = viewLogin.getInputFromUser("password: ");
         IDaoLogin daoLogin = daoFactory.create(DaoLogin.class);

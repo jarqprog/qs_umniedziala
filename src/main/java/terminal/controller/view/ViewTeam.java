@@ -1,4 +1,4 @@
-package view;
+package terminal.controller.view;
 
 import java.util.ArrayList;
 import java.util.Arrays;

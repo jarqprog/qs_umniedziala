@@ -1,13 +1,13 @@
-package controller;
+package terminal.controller;
 
-import dao.*;
+import system.dao.*;
 
-import model.*;
-import model.Artifact;
-import model.Student;
-import model.Level;
-import view.ViewStudent;
-import view.ViewTeam;
+import system.model.*;
+import system.model.Artifact;
+import system.model.Student;
+import system.model.Level;
+import terminal.controller.view.ViewStudent;
+import terminal.controller.view.ViewTeam;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ControllerStudent implements IUserController{
     private IDaoLevel daoLevel;
     private IDaoTeam daoTeam;
 
-    public ControllerStudent(Student student, ViewStudent viewStudent,
+    ControllerStudent(Student student, ViewStudent viewStudent,
                              IDaoWallet daoWallet, IDaoStudent daoStudent,
                              IDaoArtifact daoArtifact, IDaoLevel daoLevel,
                              IDaoTeam daoTeam) {
@@ -34,11 +34,11 @@ public class ControllerStudent implements IUserController{
         this.daoTeam = daoTeam;
     }
 
-    public void seeWallet() {
+    private void seeWallet() {
         viewStudent.displayText(student.getWallet().toString());
     }
 
-    public void buyArtifact() {
+    private void buyArtifact() {
         Artifact artifact = getArtifact("individual");
         if(artifact != null && artifact instanceof Artifact) {
 
@@ -62,7 +62,7 @@ public class ControllerStudent implements IUserController{
         }
     }
 
-    public Artifact getArtifact(String type) {
+    private Artifact getArtifact(String type) {
         viewStudent.displayText("Available artifacts:\n");
         List<Artifact> allArtifacts = daoArtifact.getArtifacts(type);
         Artifact artifact = null;
@@ -82,7 +82,7 @@ public class ControllerStudent implements IUserController{
         return artifact;
     }
 
-    public void seeExpLevel() {
+    private void seeExpLevel() {
         Level level = daoLevel.importLevelByCoins(this.student.getWallet().getAllCoins());
         if (level == null){
             return;
@@ -94,7 +94,7 @@ public class ControllerStudent implements IUserController{
         viewStudent.displayText(levelString);
     }
 
-    public void manageTeam() {
+    private void manageTeam() {
         Team team = daoTeam.getTeamByStudentId(student.getUserId());
 
         if (team != null) {
