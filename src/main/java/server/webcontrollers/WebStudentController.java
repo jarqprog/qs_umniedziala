@@ -108,7 +108,7 @@ public class WebStudentController implements IStudentController {
     }
 
     @Override
-    public List<String> buyArtifact() {
+    public List<String> getArtifacts() {
         List<Artifact> artifacts = daoArtifact.getAllArtifacts();
         List<String> artifactsNames = new ArrayList<>();
         for (Artifact artifact : artifacts){

@@ -81,7 +81,7 @@ public class StudentHandler implements HttpHandler {
         model.with("money", controller.getStudentWallet(studentId));
         model.with("level", controller.getStudentExpLevel(studentId));
         model.with("group", controller.getStudentGroup(studentId));
-        model.with("class", controller.getStudentGroup(studentId));
+        model.with("class", controller.getStudentClass(studentId));
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
@@ -103,7 +103,7 @@ public class StudentHandler implements HttpHandler {
     }
 
     private void displayArtifacts(HttpExchange httpExchange) throws IOException{
-        List<String> artifacts = controller.buyArtifact();
+        List<String> artifacts = controller.getArtifacts();
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
