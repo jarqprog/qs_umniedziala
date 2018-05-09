@@ -2,22 +2,11 @@ package model;
 
 public abstract class Item {
 
-    private int itemId;
+    private final int itemId;
     private String name;
     private int value;
     private String description;
     private String type;
-
-    public Item(String name,
-                int value,
-                String description,
-                String type) {
-
-        this.name = name;
-        this.value = value;
-        this.description = description;
-        this.type = type;
-    }
 
     public Item(int itemId,
                 String name,
@@ -64,10 +53,6 @@ public abstract class Item {
 
     public void setType(String status) {
         this.type = status;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
     }
 
     public String toString() {

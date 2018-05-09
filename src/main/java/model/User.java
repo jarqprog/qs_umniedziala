@@ -4,17 +4,13 @@ public abstract class User{
     private String name;
     private String password;
     private String email;
-    private int userId;
+    private final int userId;
 
-    public User(String name, String password, String email) {
+    public User(int userId, String name, String password, String email) {
+        this.userId = userId;
         this.name = name;
         this.password = password;
         this.email = email;
-    }
-
-    public User(int userId, String name, String password, String email) {
-        this(name, password, email);
-        this.userId = userId;
     }
 
     public String getName() {

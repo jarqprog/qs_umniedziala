@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang=en-us>
+<head>
+    <meta charset="utf-8"/>
+    <title>Quest Store </title>
+    <meta name="description" content="Quest Store System website."/>
+    <meta name="keywords" content="it students, CodeCool"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/fontello.css" type="text/css"/>
+    <script type="text/javascript" src="../js/javascript.js"></script>
+
+</head>
+
+<body>
+
+<div id="container">
+
+    <!-- header -->
+    <object id="header" name="admin-header" target= ype="text/html" data="/static/header.html"></object>
+
+    <main>
+        <!-- menu -->
+            <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/admin/menu.html"></object>
+
+        <!-- content -->
+        <div id="main-content">
+
+            <div id="main-content-header">
+                <h1>Display mentor personal information</h1>
+            </div>
+
+                <div class="pick-list">
+                <form method="POST">
+                 <ol>
+                    {%for mentor in MentorsNames%}
+                        <li style="text-align: left">
+                            <input type="radio" name="mentorName" value="{{mentor}}" checked> {{mentor}}
+                         </li>
+                    {%endfor%}
+                    </ol>
+                    <input type="submit" value="display mentor details">
+                 </form>
+                </div>
+                <div id="main-inner-container">
+                    {{MentorInfo}}
+                </div>
+
+            </div>
+
+    </main>
+
+    <!-- footer -->
+    <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
+
+</div>
+
+</body>
+</html>

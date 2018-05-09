@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang=en-us>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
+    <script type="text/javascript" src="/static/js/javascript.js"></script>
+</head>
+
+<!-- header -->
+<object id="header" name="header" type="text/html" data="/static/header.html"></object>
+
+<main>
+    <!-- menu -->
+    <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/admin/menu.html"></object>
+
+    <!-- content -->
+    <div id="main-content">
+
+        <div id="main-inner-container">
+
+            <h1>LEVEL CREATION</h1>
+            <!--<br/><br/>-->
+            <h2>EXISTING LEVELS:</h2>
+            <ul>
+                {% for level in levels %}
+                <li> {{level}} </li>
+                {% endfor %}
+            </ul>
+            <form method="POST">
+                <input type="text" name="level_name" maxlength="30" placeholder="Enter level name" required>
+                <br/><br/>
+                <input type="number" name="coins_limit" min="1" placeholder="Enter required coins" required>
+                <br/><br/>
+                <input type="submit" value="CREATE!">
+            </form>
+            <h3> {{ result }} </h3>
+        </div>
+    </div>
+</main>
+
+<!-- footer -->
+<object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
+
+</div>
+
+</body>
+</html>

@@ -1,14 +1,15 @@
 
 /* custom fonts */
 
-@font-face {
-    font-family: bitwise;
-    src: url(fonts/old.ttf);
-}
+/*@font-face {
+    font-family: 'Play-Regular', sans-serif;
+    src: url(fonts/Play-Regular.ttf);
+}*/
 
 body {
     background-color: black;
-    font-family: bitwise;
+    font-family: 'Play-Regular', sans-serif;
+    src: url(fonts/Play-Regular.ttf);
     color: rgb(50,205,50);
 }
 
@@ -69,6 +70,10 @@ body {
 #login-button:hover {
     color: rgb(154,205,50);
     background-color: rgb(34,139,34);
+}
+
+#main-content-header {
+  text-align: center;
 }
 
 /* main content: */
@@ -139,12 +144,11 @@ main {
 }
 #edit-quest-header{
     text-align: center;
-    font-size: 100px;
+    font-size: 50%;
     margin: 0px;
 }
 
 #main-content > h1 {
-
     text-align: center;
     font-size: 56px;
     margin: 0;
@@ -159,8 +163,9 @@ main {
 }
 
 #main-inner-container > h1 {
-    font-size: 100px;
-    margin: 0;
+    font-size: 350%;
+    margin-bottom: : 3%;
+    text-align: center;
 }
 
 /* footer: */
@@ -185,7 +190,9 @@ main {
 
 
 input[type=login],
-input[type=password] {
+input[type=password],
+input[type=email],
+input[type=number] {
   background-color: chartreuse;
   text-align: center;
   padding: 5px 20px;
@@ -193,7 +200,9 @@ input[type=password] {
 }
 
 input[type=login]:hover,
-input[type=password]:hover {
+input[type=password]:hover
+input[type=email]:hover
+input[type=number]:hover {
   background-color: darkgreen;
   color: white;
 }
@@ -223,6 +232,10 @@ input[type=radio] {
     padding-left: 15px;
 }
 
+form {
+  text-align: center;
+}
+
 /* Inputs */
 
 input[type=text] {
@@ -245,6 +258,7 @@ input[type=text]:hover {
     float: left;
     width: 50%;
     height: 80%;
+    max-height: 50%;
     overflow-y:scroll;
     padding-right: 2%;
     }
@@ -294,4 +308,8 @@ body::-webkit-scroll {
 #song{
     float: left;
     max-width: 50px;
+}
+
+#wallets{
+    align-content: left;
 }

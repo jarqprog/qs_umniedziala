@@ -1,16 +1,10 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Team extends Group {
+
     private int availableCoins;
-
-    public Team(String name) {
-        super(name);
-        this.availableCoins = 0;
-
-    }
 
     public Team(int groupId, String name, List<Student> students, int availableCoins) {
         super(groupId, name, students);

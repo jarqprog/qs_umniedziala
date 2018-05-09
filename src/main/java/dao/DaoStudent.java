@@ -6,187 +6,118 @@ import java.util.List;
 
 import model.*;
 
-public class DaoStudent implements IDaoStudent{
+public class DaoStudent extends DaoUser implements IDaoStudent{
+
+    private final IDaoWallet daoWallet;
+    private final String ROLE_NAME = "student";
+
+    DaoStudent(Connection connection, IDaoWallet daoWallet) {
+        super(connection);
+        this.daoWallet = daoWallet;
+    }
 
     @Override
     public Student createStudent(String name, String password, String email) {
-        return new Student(name, password, email);
-    }
 
-    @Override
-    public Student createStudent(int userId, String name, String password, String email) {
-        return new Student(userId, name, password, email);
+        try {
+            int id = getLowestFreeIdFromGivenTable(getDatabaseTable(), getIdLabel());
+            return new Student(id, name, password, email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new NullStudent();
+        }
     }
-
 
     @Override
     public Student importStudent(int studentId) {
-        Student student = null;
 
-        int roleId = getRoleID("student");
+        int roleId = getRoleID(ROLE_NAME);
 
         String query = "SELECT * FROM users WHERE id_user = ? AND id_role = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-             preparedStatement.setInt(1, studentId);
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
+            preparedStatement.setInt(1, studentId);
             preparedStatement.setInt(2, roleId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.isClosed()){
+            if(resultSet.next()){
 
-                int userId = resultSet.getInt("id_user");
+                int userId = resultSet.getInt(getIdLabel());
 
                 String name = resultSet.getString("name");
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
 
-                student = createStudent(userId, name, password, email);
-                Wallet wallet = new DaoWallet().importWallet(studentId);
+                Student student = new Student(userId, name, password, email);
+                Wallet wallet = daoWallet.importWallet(studentId);
                 student.setWallet(wallet);
+                return student;
             }
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return student;
+            new NullStudent();
         }
-
-        return student;
+        return new NullStudent();
     }
 
     @Override
     public Student importNewStudent(String userEmail){
 
-        Student student = null;
-
-        int roleId = getRoleID("student");
+        int roleId = getRoleID(ROLE_NAME);
 
         String query = "SELECT * FROM users WHERE email = ? AND id_role = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
 
             preparedStatement.setString(1, userEmail);
             preparedStatement.setInt(2, roleId);
 
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                if (!resultSet.isClosed()) {
+                if (resultSet.next()) {
 
-                    int userId = resultSet.getInt("id_user");
+                    int userId = resultSet.getInt(getIdLabel());
 
                     String name = resultSet.getString("name");
                     String password = resultSet.getString("password");
                     String email = resultSet.getString("email");
 
-                    student = createStudent(userId, name, password, email);
+                    return new Student(userId, name, password, email);
                 }
+                return new NullStudent();
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return student;
+            return new NullStudent();
         }
-
-        return student;
     }
 
 
     @Override
     public boolean exportStudent(Student student) {
-
-        String name = student.getName();
-        String password = student.getPassword();
-        String email = student.getEmail();
-        int roleId = getRoleID("student");
-
-
-        String query = "INSERT INTO users (name, password, email, id_role)" +
-                "VALUES (?, ?, ?, ?);";
-
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, email);
-            preparedStatement.setInt(4, roleId);
-
-            preparedStatement.executeUpdate();
-            return true;
-
-        } catch (SQLException e) {
-            return false;
-        }
+        return exportUser(student, ROLE_NAME);
     }
 
     @Override
     public boolean updateStudent(Student student) {
-        String name = student.getName();
-        String password = student.getPassword();
-        String email = student.getEmail();
-        int studentId = student.getUserId();
-        int roleId = getRoleID("student");
-
-        String query = "UPDATE users set name = ?, password = ?, email = ? WHERE id_user= ? AND id_role = ?;";
-
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, email);
-            preparedStatement.setInt(4, studentId);
-            preparedStatement.setInt(5, roleId);
-
-            preparedStatement.executeUpdate();
-             return true;
-
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-
-    public int getRoleID(String roleName){
-
-        int roleId = 0;
-        String query = "SELECT id_role FROM roles WHERE name = ?;";
-
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, roleName);
-
-            try(ResultSet resultSet = preparedStatement.executeQuery()) {
-
-                if (!resultSet.isClosed()) {
-                    roleId = resultSet.getInt("id_role");
-                }
-            }
-
-        }catch (SQLException e){
-            System.out.println("Role not found");
-        }
-
-        return roleId;
-
+        return updateUser(student, ROLE_NAME);
     }
 
     @Override
     public List<Student> getAllStudents() {
         List<Student> students = new ArrayList<>();
-        int roleId = getRoleID("student");
+        int roleId = getRoleID(ROLE_NAME);
         String query = "SELECT id_user FROM users WHERE id_role = ?;";
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
 
             preparedStatement.setInt(1, roleId);
 
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
 
                 while (resultSet.next()) {
-                    int userId = resultSet.getInt("id_user");
+                    int userId = resultSet.getInt(getIdLabel());
                     Student student = importStudent(userId);
                     students.add(student);
                 }
@@ -195,9 +126,7 @@ public class DaoStudent implements IDaoStudent{
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
-
         return students;
     }
-    
 }
 
