@@ -32,7 +32,7 @@ public class WebAdminController implements IAdminController {
     @Override
     public String getAdminName(int adminId) {
         Admin admin = daoAdmin.importAdmin(adminId);
-        if(admin != null) {
+        if(admin.getUserId() != 0) {
             return admin.getName();
         }
         return "";
@@ -41,7 +41,7 @@ public class WebAdminController implements IAdminController {
     @Override
     public String getAdminEmail(int adminId) {
         Admin admin = daoAdmin.importAdmin(adminId);
-        if(admin == null) {
+        if(admin.getUserId() == 0) {
             return "";
         }
         return admin.getEmail();
@@ -70,7 +70,7 @@ public class WebAdminController implements IAdminController {
 
     public boolean editMentor(Map mentorData) {
         Mentor mentor = daoMentor.importMentor(Integer.parseInt(mentorData.get("Id").toString()));
-        if(mentor !=null) {
+        if(mentor.getUserId() != 0) {
             if(mentorData.containsKey("Name")) {
                 mentor.setName(mentorData.get("Name").toString());
             }

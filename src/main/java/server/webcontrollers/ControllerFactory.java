@@ -14,6 +14,7 @@ public class ControllerFactory implements IControllerFactory {
     private ControllerFactory(IDaoFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
+
     @Override
     public <T extends IServerController> T create(Class<T> controllerType) {
         String controllerName = controllerType.getSimpleName();
