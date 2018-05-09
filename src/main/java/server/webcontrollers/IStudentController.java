@@ -1,5 +1,7 @@
 package server.webcontrollers;
 
+import model.Student;
+
 public interface IStudentController extends IServerController {
 
 
@@ -9,4 +11,5 @@ public interface IStudentController extends IServerController {
     String getStudentGroup(int studentId);
     String getStudentExpLevel(int studentId);
     String getStudentClass(int studentId);
+
 }

@@ -1,5 +1,7 @@
 package server.webcontrollers;
 
+import model.Student;
+
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +20,6 @@ public interface IMentorController extends IServerController {
     Map<String, String> getAllWallets();
     List<String> getArtifacts();
     boolean editArtifact(Map<String, String> inputs);
+    Map<Integer, String> getStudentsWithIds();
+    Student getStudentById(int studentId);
 }

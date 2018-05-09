@@ -2,6 +2,7 @@ package server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import model.Student;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.IResponseManager;
@@ -72,6 +73,8 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/edit_artifact":
                         displayEditArtifactPage(httpExchange);
                         break;
+                    case "/mentor/display_student_to_pick":
+                        showStudentToPick(httpExchange);
                 }
             }
             if (method.equals("POST")) {
@@ -96,9 +99,43 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/edit_artifact":
                         editArtifact(httpExchange);
                         break;
+                    case "/mentor/display_student_to_pick":
+                       showStudentArtifact(httpExchange);
+                        break;
+
                 }
             }
         }
+    }
+
+    private void showStudentArtifact(HttpExchange httpExchange) throws IOException {
+        Map<String,String> id = responseManager.getInput(httpExchange);
+        System.out.println(id.get("studentId"));
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/show_student_artifacts.html");
+        JtwigModel model = JtwigModel.newModel();
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+
+
+
+
+    }
+
+    private void showStudentToPick(HttpExchange httpExchange) throws IOException {
+        Map<Integer, String> students = controller.getStudentsWithIds();
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/display_student_to_pick.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("students", students);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+
+
     }
 
     private void editArtifact(HttpExchange httpExchange) throws IOException {

@@ -200,6 +200,19 @@ public class WebMentorController implements IMentorController {
             return false;
         }
     }
+
+    @Override
+    public Map<Integer, String> getStudentsWithIds() {
+        Map<Integer, String> studentsWithIds = new HashMap<>();
+        List<Student> students = daoStudent.getAllStudents();
+        for(Student student: students){
+            studentsWithIds.put(student.getUserId(), student.getName());
+        }
+        return studentsWithIds;
+    }
+    public Student getStudentById(int studentId){
+        return daoStudent.importStudent(studentId);
+    }
 }
 
 
