@@ -94,7 +94,7 @@ public class WebMentorController implements IMentorController {
 
     @Override
     public boolean createStudent(String name, String password, String email, int classId) {
-        Student student = new Student(name, password, email);
+        Student student = daoStudent.createStudent(name, password, email);
         boolean isStudentCreated = daoStudent.exportStudent(student);
         int studentId = daoStudent.importNewStudent(email).getUserId();
         daoClass.assignStudentToClass(studentId, classId);
