@@ -1,7 +1,7 @@
 package server.webcontrollers;
 
-import dao.*;
-import model.*;
+import system.dao.*;
+import system.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +57,12 @@ public class WebAdminController implements IAdminController {
     }
 
     public boolean createMentor(String name, String password, String email) {
-        Mentor mentor = daoMentor.createMentor(name, password, email);
-        return daoMentor.exportMentor(mentor);
+        return daoMentor.createMentor(name, password, email).getUserId() != 0;
     }
 
 
     public boolean createClass(String name) {
-        CodecoolClass codecoolClass = daoClass.createClass(name);
-        return daoClass.exportClass(codecoolClass);
+        return daoClass.createClass(name).getGroupId() != 0;
     }
 
 
@@ -107,8 +105,7 @@ public class WebAdminController implements IAdminController {
 
 
     public boolean createLevel(String name, int coinsLimit) {
-        Level level = daoLevel.createLevel(name, coinsLimit);
-        return daoLevel.exportLevel(level);
+        return daoLevel.createLevel(name, coinsLimit).getLevelId() != 0;
     }
 
     @Override

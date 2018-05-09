@@ -1,8 +1,8 @@
 package server.webcontrollers;
 
 
-import dao.*;
-import model.*;
+import system.dao.*;
+import system.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,7 +85,7 @@ public class WebMentorController implements IMentorController {
 
     @Override
     public String getClassNames() {
-        List<String> classes = daoClass.getAllClassNames();
+        List<String> classes = getClasses();
         String result = "";
         for(String className : classes) {
             result += className;
@@ -95,11 +95,11 @@ public class WebMentorController implements IMentorController {
 
     @Override
     public boolean createStudent(String name, String password, String email, int classId) {
-        Student student = daoStudent.createStudent(name, password, email);
-        boolean isStudentCreated = daoStudent.exportStudent(student);
-        int studentId = daoStudent.importNewStudent(email).getUserId();
+        int studentId = daoStudent.createStudent(name, password, email).getUserId();
+
+
         daoClass.assignStudentToClass(studentId, classId);
-        return isStudentCreated;
+        return studentId != 0;
     }
 
     public List<String> getQuests() {
@@ -138,8 +138,8 @@ public class WebMentorController implements IMentorController {
 
     @Override
     public boolean createTeam(String teamName) {
-        Team team = daoTeam.createTeam(teamName);
-        return daoTeam.exportTeam(team);
+
+        return daoTeam.createTeam(teamName).getGroupId() != 0;
     }
 
     private Mentor getMentorById(int mentorId) {
@@ -148,14 +148,14 @@ public class WebMentorController implements IMentorController {
 
     @Override
     public boolean addQuest(String name, int value, String description, String type, String category) {
-        Quest quest = daoQuest.createQuest(name, value, description, type, category);
-        return daoQuest.exportQuest(quest);
+
+        return daoQuest.createQuest(name, value, description, type, category).getItemId() != 0;
     }
 
     @Override
     public boolean addArtifact(String name, int value, String type, String category) {
-        Artifact artifact = daoArtifact.createArtifact(name, value, type, category);
-        return daoArtifact.exportArtifact(artifact);
+
+        return daoArtifact.createArtifact(name, value, type, category).getItemId() != 0;
     }
 
     @Override
@@ -199,6 +199,20 @@ public class WebMentorController implements IMentorController {
         } else{
             return false;
         }
+    }
+
+    private List<String> getClasses() {
+
+        List<CodecoolClass> classes = daoClass.getAllClasses();
+        List<String> classesAsText = new ArrayList<>();
+        for(CodecoolClass codecoolClass : classes) {
+            int classId = codecoolClass.getGroupId();
+            if(classId != 0) {
+                String classAsText = String.format("Id:%s name: %s", classId, codecoolClass.getName());
+                classesAsText.add(classAsText);
+            }
+        }
+        return classesAsText;
     }
 }
 

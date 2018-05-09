@@ -174,7 +174,7 @@ public class MentorHandler implements HttpHandler {
         String teamName = inputs.get("teamname");
         String info;
         if(controller.createTeam(teamName)){
-            info = "Student added successfully!";
+            info = "Team added successfully!";
         }else{
             info = "Something went wrong :(";
         }
