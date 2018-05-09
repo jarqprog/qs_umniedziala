@@ -84,13 +84,23 @@ public class WebMentorController implements IMentorController {
     }
 
     @Override
-    public String getClassNames() {
-        List<String> classes = getClasses();
-        String result = "";
-        for(String className : classes) {
-            result += className;
+    public String getAllTeams() {
+        List<Team> teams = daoTeam.getAllTeams();
+        StringBuilder teamsAsText = new StringBuilder();
+        int counter = 1;
+        int maxNumTeamsInLine = 7;
+        for(Team team : teams) {
+            int teamId = team.getGroupId();
+            if(teamId != 0) {
+                if(counter % maxNumTeamsInLine == 1) {
+                    teamsAsText.append("<br>");
+                }
+                String teamAsText = String.format(" ' %s', ", team.getName());
+                teamsAsText.append(teamAsText);
+                counter++;
+            }
         }
-        return result;
+        return teamsAsText.toString();
     }
 
     @Override
@@ -199,20 +209,6 @@ public class WebMentorController implements IMentorController {
         } else{
             return false;
         }
-    }
-
-    private List<String> getClasses() {
-
-        List<CodecoolClass> classes = daoClass.getAllClasses();
-        List<String> classesAsText = new ArrayList<>();
-        for(CodecoolClass codecoolClass : classes) {
-            int classId = codecoolClass.getGroupId();
-            if(classId != 0) {
-                String classAsText = String.format("Id:%s name: %s", classId, codecoolClass.getName());
-                classesAsText.add(classAsText);
-            }
-        }
-        return classesAsText;
     }
 }
 

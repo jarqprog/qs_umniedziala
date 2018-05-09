@@ -25,15 +25,18 @@
             <!-- content -->
             <div id="main-content">
                 <div id="main-inner-container">
-                  <form method="POST">
-                    <h1>CLASS CREATION</h1>
-                    <input type="text" name = "className" maxlength="30" placeholder="Class name" required>
-                    <br/><br/>
-                    <input type="submit" value="create">
-                  </form>
-                    {%if method == POST%}
-                        {{info}}
-                    {%endif%}
+                    <form method="POST">
+                        <h1>CLASS CREATION</h1>
+                        <p>existing teams (names can not be repeated):</p>
+                        <p>{{classesNames}}</p>
+
+                        <input type="text" name = "className" maxlength="30" placeholder="Class name" required>
+                        <br>
+                        <input type="submit" value="create">
+                    </form>
+                        {%if method == POST%}
+                            {{info}}
+                        {%endif%}
                 </div>
             </div>
         </main>

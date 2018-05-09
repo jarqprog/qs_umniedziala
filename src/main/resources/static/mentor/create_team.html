@@ -25,12 +25,15 @@
             <!-- content -->
             <div id="main-content">
                 <div id="main-inner-container">
-                  <h1>Create team</h1>
-                  <form method="POST">
-                    <input type="text" name="teamname"placeholder="Enter name of new team" required><br/>
-                    <input type="submit" value="Send">
-                </form>
-                {{info}}
+                    <form method="POST">
+                        <h1>Create team</h1>
+                        <p>existing teams (names can not be repeated):</p>
+                        <p>{{teamsNames}}</p>
+
+                        <input type="text" name="teamname"placeholder="Enter name of new team" required><br/>
+                        <input type="submit" value="Send">
+                    </form>
+                    {{info}}
               </div>
             </div>
 

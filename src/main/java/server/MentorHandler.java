@@ -176,13 +176,14 @@ public class MentorHandler implements HttpHandler {
         if(controller.createTeam(teamName)){
             info = "Team added successfully!";
         }else{
-            info = "Something went wrong :(";
+            info = "Something went wrong - perhaps You've used already existing name?";
         }
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_team.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("teamsNames", controller.getAllTeams());
         model.with("info", info);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -191,7 +192,7 @@ public class MentorHandler implements HttpHandler {
 
     private void createStudent(HttpExchange httpExchange) throws IOException {
         Map<String, String> inputs = responseManager.getInput(httpExchange);
-        String classNames = controller.getClassNames();
+        String teamsNames = controller.getAllTeams();
         String name = inputs.get("firstname");
         String password = inputs.get("password");
         String email = inputs.get("email");
@@ -208,7 +209,7 @@ public class MentorHandler implements HttpHandler {
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_student.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("classNames", classNames);
+        model.with("teamsNames", teamsNames);
         model.with("info", info);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -216,12 +217,12 @@ public class MentorHandler implements HttpHandler {
 
     private void displayCreateStudentPage(HttpExchange httpExchange) throws IOException {
         String response;
-        String classNames = controller.getClassNames();
+        String teamsNames = controller.getAllTeams();
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_student.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("classNames", classNames);
+        model.with("teamsNames", teamsNames);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
@@ -232,6 +233,7 @@ public class MentorHandler implements HttpHandler {
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_team.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("teamsNames", controller.getAllTeams());
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
