@@ -1,9 +1,9 @@
 package server.webcontrollers;
 
-import dao.*;
-import model.CodecoolClass;
-import model.Student;
-import model.Team;
+import system.dao.*;
+import system.model.CodecoolClass;
+import system.model.Student;
+import system.model.Team;
 
 import java.util.ArrayList;
 import java.util.List;
