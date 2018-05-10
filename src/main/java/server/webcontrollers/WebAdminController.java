@@ -149,7 +149,7 @@ public class WebAdminController implements IAdminController {
     @Override
     public List<String> getAllClassesCollection() {
         return daoClass.getAllClasses().stream()
-                .map(t -> String.format("#%s %s", t.getGroupId(), t.getName()))
+                .map(c -> String.format("#%s %s", c.getGroupId(), c.getName()))
                 .collect(Collectors.toList());
     }
 

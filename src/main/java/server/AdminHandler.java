@@ -157,7 +157,7 @@ public class AdminHandler implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
                 "static/admin/create_class.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("classesNames", controller.getAllClasses());
+        model.with("classes", controller.getAllClassesCollection());
         model.with("info", info);
         response =template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -168,7 +168,8 @@ public class AdminHandler implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
                                 "static/admin/create_class.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("classesNames", controller.getAllClasses());
+        model.with("classes", controller.getAllClassesCollection());
+        model.with("info", "");
         response = template.render(model);
         responseManager.executeResponse(httpExchange,response);
     }
