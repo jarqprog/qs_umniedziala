@@ -25,15 +25,44 @@
 
         <!-- content -->
         <div id="main-content">
-            <div id="wallets">
-                {%for name, wallet in wallets%}
-                    <li>
-                        <b>{{name}}</b><br/>
-                        {{wallet}}
-                        <br/><br/><br/>
-                    </li>
-                {%endfor%}
-            </div>
+            <h1>WHAT'S IN STUDENTS WALLETS?</h1>
+            <form method="POST">
+                <div class="nested-container">
+
+                    <div class="pick-list">
+                        <ol class = "enumeration-free-list">
+                            <h3>choose student</h3>
+                            {% for student in students %}
+                            <li>
+                                <input type="radio" id="student" name="student" value="{{student}}" required>
+                                <label for="student">{{student}}</label>
+                            </li>
+                            {%endfor%}
+                        </ol>
+                    </div>
+                </div>
+                <div class="nested-container">
+                    <h3>Student's treasure: {{studentName}}</h3>
+                    <h5>{{ wallet }}</h5>
+
+                </div>
+                <div class="nested-container-submit">
+                    <h3>{{result}}</h3>
+                    <input type="submit" value="perform" required>
+                </div>
+            </form>
+
+
+
+            <!--<div id="wallets">-->
+                <!--{%for name, wallet in wallets%}-->
+                    <!--<li>-->
+                        <!--<b>{{name}}</b><br/>-->
+                        <!--{{wallet}}-->
+                        <!--<br/><br/><br/>-->
+                    <!--</li>-->
+                <!--{%endfor%}-->
+            <!--</div>-->
         </div>
     </main>
 

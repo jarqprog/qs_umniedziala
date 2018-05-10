@@ -8,9 +8,7 @@ public interface IMentorController extends IServerController {
     String getMentorName(int mentorId);
     String getMentorEmail(int mentorId);
     String getMentorClassWithStudents(int mentorId);
-    String getAllTeams();
     List<String> getAllTeamsCollection();
-    String getAllClasses();
     List<String> getAllClassCollection();
     boolean createStudent(String name, String password, String email, String codeCoolClass);
     boolean createTeam(String teamName);
@@ -23,4 +21,6 @@ public interface IMentorController extends IServerController {
     boolean editArtifact(Map<String, String> inputs);
     List<String> getStudentsByMentorId(int mentorId);
     boolean assignStudentToTeam(String studentData, String teamData);
+    String getStudentWallet(int studentId);
+    int getStudentIdFromTextData(String studentData);
 }
