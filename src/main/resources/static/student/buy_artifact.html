@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang=en-us>
+<head>
+    <meta charset="utf-8"/>
+    <title>Quest Store </title>
+    <meta name="description" content="Quest Store System website."/>
+    <meta name="keywords" content="it students, CodeCool"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
+    <script type="text/javascript" src="../js/javascript.js"></script>
+</head>
+
+<body>
+
+<div id="container">
+
+    <!-- header -->
+    <object id="header" name="admin-header" target= ype="text/html" data="/static/header.html"></object>
+
+    <main>
+        <!-- menu -->
+        <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/student/menu.html"></object>
+
+        <!-- content -->
+        <div id="main-content">
+            <h1>ARTIFACTS STORE</h1>
+            <form method="POST">
+                <div class="nested-container" style="width: 66%">
+                        <div class="pick-list">
+                            <ol class = "enumeration-free-list">
+                                <h3>Artifacts I offer:</h3>
+                                {% for artifact in artifacts %}
+                                <li>
+                                    <input type="radio" id="artifact" name="artifact" value="{{ artifact }}">
+                                    <label for="artifact">{{artifact}}</label>
+                                </li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="nested-container" style="width: 34%">
+                        <h1>Your wealth:</h1>
+                        <h1>{{  money }}cc</h1>
+                    </div>
+                <!--</div>-->
+                <div class="nested-container-submit">
+                    <h3>{{info}}</h3>
+                    <input type="submit" value="Buy artifact" required><br/>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
+</div>
+
+</body>
+</html>

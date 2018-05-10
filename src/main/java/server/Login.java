@@ -3,11 +3,11 @@ package server;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import dao.IDaoLogin;
-import model.Admin;
-import model.Mentor;
-import model.Student;
-import model.User;
+import system.dao.IDaoLogin;
+import system.model.Admin;
+import system.model.Mentor;
+import system.model.Student;
+import system.model.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.sessions.ISessionManager;
@@ -54,7 +54,7 @@ public class Login implements HttpHandler {
     }
 
     private void displayLoginFailure(HttpExchange httpExchange) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("user", "invalid");
         String response = template.render(model);
@@ -102,7 +102,7 @@ public class Login implements HttpHandler {
     }
 
     private void displayLoginPage(HttpExchange httpExchange) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html");
         JtwigModel model = JtwigModel.newModel();
         String response = template.render(model);
 

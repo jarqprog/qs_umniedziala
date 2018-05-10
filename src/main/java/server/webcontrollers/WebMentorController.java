@@ -1,13 +1,11 @@
 package server.webcontrollers;
 
 
-import dao.*;
-import model.*;
+import system.dao.*;
+import system.model.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class WebMentorController implements IMentorController {
@@ -84,22 +82,13 @@ public class WebMentorController implements IMentorController {
     }
 
     @Override
-    public String getClassNames() {
-        List<String> classes = daoClass.getAllClassNames();
-        String result = "";
-        for(String className : classes) {
-            result += className;
+    public boolean createStudent(String name, String password, String email, String codeCoolClass) {
+        int studentId = daoStudent.createStudent(name, password, email).getUserId();
+        if(studentId == 0) {
+            return false;
         }
-        return result;
-    }
-
-    @Override
-    public boolean createStudent(String name, String password, String email, int classId) {
-        Student student = daoStudent.createStudent(name, password, email);
-        boolean isStudentCreated = daoStudent.exportStudent(student);
-        int studentId = daoStudent.importNewStudent(email).getUserId();
-        daoClass.assignStudentToClass(studentId, classId);
-        return isStudentCreated;
+        int classId = gatherIdFromStringData(codeCoolClass);
+        return classId != 0 & daoClass.assignStudentToClass(studentId, classId);
     }
 
     public List<String> getQuests() {
@@ -138,8 +127,8 @@ public class WebMentorController implements IMentorController {
 
     @Override
     public boolean createTeam(String teamName) {
-        Team team = daoTeam.createTeam(teamName);
-        return daoTeam.exportTeam(team);
+
+        return daoTeam.createTeam(teamName).getGroupId() != 0;
     }
 
     private Mentor getMentorById(int mentorId) {
@@ -148,14 +137,14 @@ public class WebMentorController implements IMentorController {
 
     @Override
     public boolean addQuest(String name, int value, String description, String type, String category) {
-        Quest quest = daoQuest.createQuest(name, value, description, type, category);
-        return daoQuest.exportQuest(quest);
+
+        return daoQuest.createQuest(name, value, description, type, category).getItemId() != 0;
     }
 
     @Override
     public boolean addArtifact(String name, int value, String type, String category) {
-        Artifact artifact = daoArtifact.createArtifact(name, value, type, category);
-        return daoArtifact.exportArtifact(artifact);
+
+        return daoArtifact.createArtifact(name, value, type, category).getItemId() != 0;
     }
 
     @Override
@@ -170,6 +159,7 @@ public class WebMentorController implements IMentorController {
         return dataFromWallets;
     }
 
+    @Override
     public List<String> getArtifacts() {
         List<String> artifacts = new ArrayList<>();
         for(Artifact artifact : daoArtifact.getAllArtifacts()) {
@@ -198,6 +188,82 @@ public class WebMentorController implements IMentorController {
             return daoArtifact.updateArtifact(artifact);
         } else{
             return false;
+        }
+    }
+
+    @Override
+    public List<String> getStudentsByMentorId(int mentorId) {
+        int classId = daoClass.getMentorsClass(mentorId).getGroupId();
+        return daoClass.getStudentsOfClass(classId).stream()
+                .map(s -> String.format("#%s %s", s.getUserId(), s.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllTeamsCollection() {
+        return daoTeam.getAllTeams().stream().sorted(Comparator.comparing(Team::getGroupId))
+                .map(t -> String.format("#%s %s", t.getGroupId(), t.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllClassCollection() {
+        return daoClass.getAllClasses().stream().sorted(Comparator.comparing(CodecoolClass::getGroupId))
+                .map(t -> String.format("#%s %s", t.getGroupId(), t.getName()))
+                .collect(Collectors.toList());
+    }
+
+
+
+    @Override
+    public boolean assignStudentToTeam(String studentData, String teamData) {
+        try {
+            int studentId = gatherIdFromStringData(studentData);
+            int teamId = gatherIdFromStringData(teamData);
+            return daoTeam.assignStudentToTeam(studentId, teamId);
+
+        } catch (NumberFormatException | IndexOutOfBoundsException ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public String getStudentWallet(int studentId) {
+        return daoWallet.importWallet(studentId).toString().replaceAll("\n", "<br/>");
+    }
+
+    @Override
+    public String[] getMentorData(int mentorId) {
+        String[] mentorData = new String[]{"",""};
+        Mentor mentor = daoMentor.importMentor(mentorId);
+        if(mentorId == 0) {
+            return mentorData;
+        }
+        int BASIC_DATA_INDEX = 0;
+        int DETAILS_INDEX = 1;
+        mentorData[BASIC_DATA_INDEX] = mentor.getName();
+
+        mentorData[DETAILS_INDEX] = String.format("id:%s<br>email:%s<br>students:<br>%s", mentorId,
+                mentor.getEmail(),
+                daoClass.getStudentsOfClass(daoMentor.getMentorClassId(mentor))
+                        .stream().map(Student::toString)
+                        .collect(Collectors.joining("<br>")));
+        return mentorData;
+    }
+
+    @Override
+    public int getStudentIdFromTextData(String studentData) {
+        return gatherIdFromStringData(studentData);
+    }
+
+    private int gatherIdFromStringData(String data) {
+        try {
+            int idIndex = 0;
+            return Integer.parseInt(data.replace("#", "").split(" ")[idIndex]);
+        } catch (NumberFormatException | IndexOutOfBoundsException ex){
+            ex.printStackTrace();
+            return 0;
         }
     }
 }

@@ -1,7 +1,7 @@
 package server.webcontrollers;
 
-import dao.*;
-import model.*;
+import system.dao.*;
+import system.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +57,12 @@ public class WebAdminController implements IAdminController {
     }
 
     public boolean createMentor(String name, String password, String email) {
-        Mentor mentor = daoMentor.createMentor(name, password, email);
-        return daoMentor.exportMentor(mentor);
+        return daoMentor.createMentor(name, password, email).getUserId() != 0;
     }
 
 
     public boolean createClass(String name) {
-        CodecoolClass codecoolClass = daoClass.createClass(name);
-        return daoClass.exportClass(codecoolClass);
+        return daoClass.createClass(name).getGroupId() != 0;
     }
 
 
@@ -107,8 +105,7 @@ public class WebAdminController implements IAdminController {
 
 
     public boolean createLevel(String name, int coinsLimit) {
-        Level level = daoLevel.createLevel(name, coinsLimit);
-        return daoLevel.exportLevel(level);
+        return daoLevel.createLevel(name, coinsLimit).getLevelId() != 0;
     }
 
     @Override
@@ -128,5 +125,76 @@ public class WebAdminController implements IAdminController {
         return daoMentor.getAllMentors().stream().map(User::toString).collect(Collectors.toList());
     }
 
+    @Override
+    public String getAllClasses() {
 
+        List<CodecoolClass> classes = daoClass.getAllClasses();
+        StringBuilder classesAsText = new StringBuilder();
+        int counter = 1;
+        int maxNumClassesInLine = 7;
+        for(CodecoolClass codecoolClass : classes) {
+            int classId = codecoolClass.getGroupId();
+            if(classId != 0) {
+                if(counter % maxNumClassesInLine == 1) {
+                    classesAsText.append("<br>");
+                }
+                String classAsText = String.format(" '%s', ", codecoolClass.getName());
+                classesAsText.append(classAsText);
+                counter++;
+            }
+        }
+        return classesAsText.toString();
+    }
+
+    @Override
+    public List<String> getAllClassesCollection() {
+        return daoClass.getAllClasses().stream()
+                .map(c -> String.format("#%s %s", c.getGroupId(), c.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllMentorsCollection() {
+        return daoMentor.getAllMentors().stream()
+                .map(m -> String.format("#%s %s", m.getUserId(), m.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean assignMentorToClass(String mentorData, String classData) {
+        try {
+            int mentorId = gatherIdFromStringData(mentorData);
+            int classId = gatherIdFromStringData(classData);
+            return daoClass.assignMentorToClass(mentorId, classId);
+
+        } catch (NumberFormatException | IndexOutOfBoundsException ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public String[] getAdminData(int adminId) {
+        String[] adminData = new String[]{"",""};
+        if(adminId == 0) {
+            return adminData;
+        }
+        int BASIC_DATA_INDEX = 0;
+        int DETAILS_INDEX = 1;
+        Admin admin = daoAdmin.importAdmin(adminId);
+
+        adminData[BASIC_DATA_INDEX] = admin.getName();
+
+        adminData[DETAILS_INDEX] = String.format("id:%s<br>email:%s<br>mentors:<br>%s", adminId,
+                admin.getEmail(),
+                daoMentor.getAllMentors()
+                .stream().map(Mentor::toString)
+                .collect(Collectors.joining("<br>")));
+        return adminData;
+    }
+
+    private int gatherIdFromStringData(String data) throws NumberFormatException, IndexOutOfBoundsException {
+            int idIndex = 0;
+            return Integer.parseInt(data.replace("#", "").split(" ")[idIndex]);
+    }
 }

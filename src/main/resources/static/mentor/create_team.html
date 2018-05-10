@@ -24,16 +24,30 @@
 
             <!-- content -->
             <div id="main-content">
-                <div id="main-inner-container">
-                  <h1>Create team</h1>
-                  <form method="POST">
-                    <input type="text" name="teamname"placeholder="Enter name of new team" required><br/>
-                    <input type="submit" value="Send">
+                <h1>TEAM CREATION</h1>
+                <div class="nested-container">
+                    <ol class="enumeration-free-list">
+                        <h3>existing teams</h3>
+                        {%for team in teams%}
+                        <li>
+                            {{team}}
+                        </li>
+                        {%endfor%}
+                    </ol>
+                </div>
+                <form method="POST">
+                    <div class="nested-container">
+                        <h3>enter team name:</h3>
+                        <p>(names can not be repeated)</p>
+                        <input type="text" name = "team" maxlength="30" placeholder="Team name" required>
+                        <br>
+                    </div>
+                    <div class="nested-container-submit">
+                        <h3>{{info}}</h3>
+                        <input type="submit" value="perform" required>
+                    </div>
                 </form>
-                {{info}}
-              </div>
             </div>
-
         </main>
 
         <!-- footer -->

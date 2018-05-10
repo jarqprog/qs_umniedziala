@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang=en-us>
+<head>
+    <meta charset="utf-8"/>
+    <title>Quest Store </title>
+    <meta name="description" content="Quest Store System website."/>
+    <meta name="keywords" content="it students, CodeCool"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
+    <script type="text/javascript" src="/static/js/javascript.js"></script>
+
+</head>
+
+<body>
+
+    <div id="container">
+
+
+        <!-- header -->
+        <object id="header" name="header" type="text/html" data="/static/header.html"></object>
+
+
+        <main>
+            <!-- menu -->
+            <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/mentor/menu.html"></object>
+
+            <!-- content -->
+            <div id="main-content">
+                <div id="main-inner-container">
+                    <h1>Add quest</h1>
+                    <form method="POST">
+                        <input type="text" name="questname" placeholder="Name" required>
+                        <br/><br/>
+                        <input type="text" name="value" placeholder="Value" required>
+                        <br/><br/>
+                        <input type="text" name="description" placeholder="Description" required>
+                        <br/>
+                        <div id="row">
+                            <p>Type</p>
+                            <input type="radio" name="type" value="individual"> Individual
+                            <input type="radio" name="type" value="team"> Team<br/>
+                            <p>Category</p>
+                            <input type="radio" name="category" value="basic"> Basic
+                            <input type="radio" name="category" value="extra"> Extra<br/>
+                        </div>
+                        <input type="submit" value="Send">
+                    </form>
+                    {%if method == POST%}
+                        {{info}}
+                    {%endif%}
+                </div>
+
+
+            </div>
+        </main>
+
+
+        <!-- footer -->
+        <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
+
+    </div>
+
+</body>
+</html>

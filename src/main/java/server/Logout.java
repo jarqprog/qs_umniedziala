@@ -34,7 +34,7 @@ public class Logout implements HttpHandler {
     }
 
     private void displayLogoutPage(HttpExchange httpExchange) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/logout.html.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/logout.html");
         JtwigModel model = JtwigModel.newModel();
         String response = template.render(model);
         executeResponse(httpExchange, response, response.length());

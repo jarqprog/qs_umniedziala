@@ -1,6 +1,5 @@
 package server;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -11,8 +10,6 @@ import server.sessions.ISessionManager;
 import server.webcontrollers.IAdminController;
 
 import java.io.*;
-import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +64,9 @@ public class AdminHandler implements HttpHandler {
                     case "/admin/create_class":
                         displayCreateClassPage(httpExchange);
                         break;
+                    case "/admin/assign_mentor_to_class":
+                        displayAssignMentorToClass(httpExchange);
+                        break;
                     case "/admin/edit_mentor":
                         displayEditMentor(httpExchange);
                         break;
@@ -92,12 +92,51 @@ public class AdminHandler implements HttpHandler {
                     case "/admin/create_class":
                         saveClassToDb(httpExchange);
                         break;
+                    case "/admin/assign_mentor_to_class":
+                        handleAssignMentorToClass(httpExchange);
+                        break;
                     case "/admin/create_mentor":
                         createMentor(httpExchange);
                         break;
                 }
             }
         }
+    }
+
+    private void handleAssignMentorToClass(HttpExchange httpExchange) throws IOException {
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
+        String mentorData = inputs.get("mentor");
+        String classData = inputs.get("class");
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/assign_mentor_to_class.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentors", controller.getAllMentorsCollection());
+        model.with("classes",  controller.getAllClassesCollection());
+        boolean isSuccess= controller.assignMentorToClass(mentorData, classData);
+        String result;
+        if(isSuccess) {
+            result = mentorData + " assigned to class " + classData + "!";
+        } else {
+            result = "operation failed! student: " + mentorData;
+        }
+        model.with("result", result);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void displayAssignMentorToClass(HttpExchange httpExchange) throws IOException {
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/assign_mentor_to_class.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentors", controller.getAllMentorsCollection());
+        model.with("classes",  controller.getAllClassesCollection());
+        model.with("result", "");
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
     }
 
 
@@ -109,12 +148,13 @@ public class AdminHandler implements HttpHandler {
         if(controller.createClass(className)){
             info = "Class added successfully!";
         }else{
-            info = "Something went wrong :(";
+            info = "Something went wrong - perhaps You've used already existing name?";
         }
         String response;
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
-                                "static/admin/create_class.html");
+                "static/admin/create_class.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("classes", controller.getAllClassesCollection());
         model.with("info", info);
         response =template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -125,6 +165,8 @@ public class AdminHandler implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
                                 "static/admin/create_class.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("classes", controller.getAllClassesCollection());
+        model.with("info", "");
         response = template.render(model);
         responseManager.executeResponse(httpExchange,response);
     }
@@ -177,7 +219,7 @@ public class AdminHandler implements HttpHandler {
         List<String> mentorsNames = controller.getMentorsNames();
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/admin/display_mentor.html.twig");
+                        "static/admin/display_mentor.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("mentors", mentorsFullData);
         model.with("MentorsNames", mentorsNames);
@@ -192,7 +234,7 @@ public class AdminHandler implements HttpHandler {
         String info = "choose mentor to display";
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/admin/display_mentor.html.twig");
+                        "static/admin/display_mentor.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("mentors", mentorsFullData);
         model.with("MentorsNames", mentorsNames);
@@ -213,14 +255,16 @@ public class AdminHandler implements HttpHandler {
 
     private void displayAdminHomePage(HttpExchange httpExchange) throws IOException {
         String response;
-
+        int MAIN_INFO_INDEX = 0;
+        int DETAILS_INDEX = 1;
+        String[] adminData = controller.getAdminData(sessionManager
+                .getCurrentUserId(httpExchange));
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/admin/profile.html.twig");
+                        "static/admin/profile.html");
         JtwigModel model = JtwigModel.newModel();
-        int adminId = sessionManager.getCurrentUserId(httpExchange);
-        model.with("name", controller.getAdminName(adminId));
-        model.with("email", controller.getAdminEmail(adminId));
+        model.with("mainInfo", adminData[MAIN_INFO_INDEX]);
+        model.with("details", adminData[DETAILS_INDEX]);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
