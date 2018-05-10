@@ -125,5 +125,56 @@ public class WebAdminController implements IAdminController {
         return daoMentor.getAllMentors().stream().map(User::toString).collect(Collectors.toList());
     }
 
+    @Override
+    public String getAllClasses() {
 
+        List<CodecoolClass> classes = daoClass.getAllClasses();
+        StringBuilder classesAsText = new StringBuilder();
+        int counter = 1;
+        int maxNumClassesInLine = 7;
+        for(CodecoolClass codecoolClass : classes) {
+            int classId = codecoolClass.getGroupId();
+            if(classId != 0) {
+                if(counter % maxNumClassesInLine == 1) {
+                    classesAsText.append("<br>");
+                }
+                String classAsText = String.format(" '%s', ", codecoolClass.getName());
+                classesAsText.append(classAsText);
+                counter++;
+            }
+        }
+        return classesAsText.toString();
+    }
+
+    @Override
+    public List<String> getAllClassesCollection() {
+        return daoClass.getAllClasses().stream()
+                .map(c -> String.format("#%s %s", c.getGroupId(), c.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllMentorsCollection() {
+        return daoMentor.getAllMentors().stream()
+                .map(m -> String.format("#%s %s", m.getUserId(), m.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean assignMentorToClass(String mentorData, String classData) {
+        try {
+            int mentorId = gatherIdFromStringData(mentorData);
+            int classId = gatherIdFromStringData(classData);
+            return daoClass.assignMentorToClass(mentorId, classId);
+
+        } catch (NumberFormatException | IndexOutOfBoundsException ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    private int gatherIdFromStringData(String data) throws NumberFormatException, IndexOutOfBoundsException {
+            int idIndex = 0;
+            return Integer.parseInt(data.replace("#", "").split(" ")[idIndex]);
+    }
 }

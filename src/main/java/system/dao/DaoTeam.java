@@ -98,7 +98,7 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
     }
 
     @Override
-    public Team getTeamByStudentId(Integer studentId){
+    public Team getTeamByStudentId(int studentId){
 
         String query = "SELECT id_team FROM students_in_teams WHERE id_student=?;";
 
@@ -169,10 +169,30 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
 
     @Override
     public boolean assignStudentToTeam(int studentId, int teamId) {
+        try {
+            List<Integer> existingTeamsIds = getAllTeamsIds();
+            if(! existingTeamsIds.contains(teamId)) {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        String removeQuery = "DELETE FROM students_in_teams WHERE id_student=?";
+
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(removeQuery) ) {
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Assignment of student to team failed");
+            return false;
+        }
+
         String query = "INSERT INTO students_in_teams (id_team, id_student) VALUES (?, ?);";
 
         try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
-
             preparedStatement.setInt(1, teamId);
             preparedStatement.setInt(2, studentId);
             preparedStatement.executeUpdate();
@@ -182,5 +202,18 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
             System.out.println("Assignment of student to team failed");
             return false;
         }
+    }
+
+    private List<Integer> getAllTeamsIds() throws SQLException {
+        String query = String.format("SELECT %s FROM %s ", ID_LABEL, DATABASE_TABLE);
+        List<Integer> teamsIds = new ArrayList<>();
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                teamsIds.add(resultSet.getInt(ID_LABEL));
+            }
+        }
+        return teamsIds;
     }
 }

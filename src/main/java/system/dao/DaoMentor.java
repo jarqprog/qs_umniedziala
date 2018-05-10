@@ -66,7 +66,7 @@ public class DaoMentor extends DaoUser implements IDaoMentor {
     }
 
     @Override
-    public Integer getMentorClassId(Mentor mentor){
+    public int getMentorClassId(Mentor mentor){
 
         String query = "SELECT id_codecool_class FROM mentors_in_classes WHERE id_mentor = ?;";
 
