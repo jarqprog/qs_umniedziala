@@ -122,15 +122,14 @@ main {
 
 .nested-container {
     float: left;
-    width: 35%;
+    width: 50%;
     background-color: #000a00;
-    max-height: 500px;
+    max-height: 400px;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: left;
-    margin-left: 10%;
     flex-direction: column;
  }
 
@@ -158,6 +157,14 @@ main {
     align-items: center;
     justify-content: center;
     padding: 10px;
+}
+
+.square-list {
+    list-style-type: square;
+}
+
+.enumeration-free-list {
+    list-style-type: none;
 }
 
 .nested-container-submit input {
