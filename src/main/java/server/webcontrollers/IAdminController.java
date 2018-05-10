@@ -18,4 +18,7 @@ public interface IAdminController extends IServerController {
     String getAdminEmail(int adminId);
     List<String> getAllLevels();
     String getAllClasses();
+    List<String> getAllClassesCollection();
+    List<String> getAllMentorsCollection();
+    boolean assignMentorToClass(String mentorData, String classData);
 }

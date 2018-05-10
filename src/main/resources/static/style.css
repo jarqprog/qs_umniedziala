@@ -120,6 +120,60 @@ main {
     height: +10%;
 }
 
+.nested-container {
+    float: left;
+    width: 35%;
+    background-color: #000a00;
+    max-height: 500px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    margin-left: 10%;
+    flex-direction: column;
+ }
+
+.nested-container > h3 {
+    text-align-all: left;
+    align-items: left;
+    justify-content: left;
+}
+
+.nested-container-submit > h3 {
+    clear: both;
+    background-color: #000a00;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.nested-container-submit {
+    clear: both;
+    background-color: #000a00;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.nested-container-submit input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: center;
+    font-size:x-large;
+    padding: 15px;
+}
+
+.nested-container-submit input:hover {
+    font-size: xx-large;
+    padding: 20px;
+}
+
 #main-content {
     float: left;
     width: 100%;
@@ -152,6 +206,7 @@ main {
     text-align: center;
     font-size: 56px;
     margin: 0;
+    padding: 10px;
 }
 
 #main-inner-container {
@@ -164,7 +219,7 @@ main {
 
 #main-inner-container > h1 {
     font-size: 350%;
-    margin-bottom: : 3%;
+    margin-bottom: 3%;
     text-align: center;
 }
 
@@ -187,7 +242,6 @@ main {
     color: rgb(154,205,50);
     font-size: 110%;
 }
-
 
 input[type=login],
 input[type=password],

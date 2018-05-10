@@ -12,7 +12,7 @@ public interface IDaoMentor {
 
     boolean updateMentor(Mentor mentor);
     
-    Integer getMentorClassId(Mentor mentor);
+    int getMentorClassId(Mentor mentor);
 
     List<Mentor> getAllMentors();
 }

@@ -67,6 +67,9 @@ public class AdminHandler implements HttpHandler {
                     case "/admin/create_class":
                         displayCreateClassPage(httpExchange);
                         break;
+                    case "/admin/assign_mentor_to_class":
+                        displayAssignMentorToClass(httpExchange);
+                        break;
                     case "/admin/edit_mentor":
                         displayEditMentor(httpExchange);
                         break;
@@ -92,12 +95,51 @@ public class AdminHandler implements HttpHandler {
                     case "/admin/create_class":
                         saveClassToDb(httpExchange);
                         break;
+                    case "/admin/assign_mentor_to_class":
+                        handleAssignMentorToClass(httpExchange);
+                        break;
                     case "/admin/create_mentor":
                         createMentor(httpExchange);
                         break;
                 }
             }
         }
+    }
+
+    private void handleAssignMentorToClass(HttpExchange httpExchange) throws IOException {
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
+        String mentorData = inputs.get("mentor");
+        String classData = inputs.get("class");
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/assign_mentor_to_class.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentors", controller.getAllMentorsCollection());
+        model.with("classes",  controller.getAllClassesCollection());
+        boolean isSuccess= controller.assignMentorToClass(mentorData, classData);
+        String result;
+        if(isSuccess) {
+            result = mentorData + " assigned to class " + classData + "!";
+        } else {
+            result = "operation failed! student: " + mentorData;
+        }
+        model.with("result", result);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void displayAssignMentorToClass(HttpExchange httpExchange) throws IOException {
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/admin/assign_mentor_to_class.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentors", controller.getAllMentorsCollection());
+        model.with("classes",  controller.getAllClassesCollection());
+        model.with("result", "");
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
     }
 
 
@@ -115,7 +157,7 @@ public class AdminHandler implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
                 "static/admin/create_class.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("classesNames", controller.getAllClasses());
+        model.with("classes", controller.getAllClassesCollection());
         model.with("info", info);
         response =template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -126,7 +168,8 @@ public class AdminHandler implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
                                 "static/admin/create_class.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("classesNames", controller.getAllClasses());
+        model.with("classes", controller.getAllClassesCollection());
+        model.with("info", "");
         response = template.render(model);
         responseManager.executeResponse(httpExchange,response);
     }

@@ -13,7 +13,7 @@ public interface IDaoTeam {
 
     boolean updateTeamData(Team team);
 
-    Team getTeamByStudentId(Integer studentId);
+    Team getTeamByStudentId(int studentId);
 
     List<Student> getStudentsOfTeam(int teamId);
 
