@@ -24,31 +24,38 @@
 
         <!-- content -->
         <div id="main-content">
-            <form method="post">
-                <div id="main-inner-container">
-                    <div class="artifacts">
-                    <div class="pick-list">
-                        <h1>Artifacts</h1>
-                        <p>Your money: {{ money }}cc</p>
-                        {% for artifact in artifacts %}
-                            <input type="radio" name="artifact" value="{{ artifact }}"> {{ artifact }} <br/>
-                        {% endfor %}
+            <h1>ARTIFACTS STORE</h1>
+            <form method="POST">
+                <div class="nested-container">
+
+                    <!--<div class="artifacts">-->
+                        <div class="pick-list">
+                            <ol class = "enumeration-free-list">
+                                <h3>Artifacts I offer:</h3>
+                                {% for artifact in artifacts %}
+                                <li>
+                                    <input type="radio" id="artifact" name="artifact" value="{{ artifact }}">
+                                    <label for="artifact">{{artifact}}</label>
+                                </li>
+                                {% endfor %}
+                            </ol>
+                        </div>
                     </div>
+                    <div class="nested-container">
+                        <h2>Your wealth:</h2>
+                        <h3>{{    money }}cc</h3>
                     </div>
-                </div>
+                <!--</div>-->
                 <div class="nested-container-submit">
+                    <h3>{{info}}</h3>
                     <input type="submit" value="Buy" required><br/>
                 </div>
-                {%if method == POST%}
-                    {{info}}
-                {%endif%}
-            </div>
             </form>
+        </div>
     </main>
 
     <!-- footer -->
     <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
-
 </div>
 
 </body>

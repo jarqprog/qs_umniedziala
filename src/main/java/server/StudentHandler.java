@@ -99,7 +99,7 @@ public class StudentHandler implements HttpHandler {
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/student/menage_team.html.twig");
+                        "static/student/menage_team.html");
 
         JtwigModel model = JtwigModel.newModel();
         model.with("teamName", teamName);
@@ -114,9 +114,10 @@ public class StudentHandler implements HttpHandler {
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/student/buy_artifact.html.twig");
+                        "static/student/buy_artifact.html");
 
         JtwigModel model = JtwigModel.newModel();
+        model.with("info", "");
         model.with("artifacts", artifacts);
         model.with("money", controller.getMoney(studentId));
         response = template.render(model);
@@ -135,7 +136,7 @@ public class StudentHandler implements HttpHandler {
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/student/buy_artifact.html.twig");
+                        "static/student/buy_artifact.html");
 
         JtwigModel model = JtwigModel.newModel();
         model.with("info", info);
