@@ -24,28 +24,33 @@
 
             <!-- content -->
             <div id="main-content">
-                <h1>Create student</h1>
+                <h1>Assign student to team</h1>
                 <form method="POST">
                     <div class="nested-container">
-                        <h3>enter Student's data</h3>
-                        <input type="text" maxlength="30" name="name" placeholder="Name" required>
-                        <br/><br/>
-                        <input type="text" maxlength="30" name="password" placeholder="Password" required>
-                        <br/><br/>
-                        <input type="email" maxlength="30" name="email" placeholder="Email" required>
-                        <br/><br/>
-                    </div>
-                    <div class="nested-container">
+
                         <div class="pick-list">
                             <ol>
-                                <h3>choose class</h3>
-                                {%for class in classes%}
+                                <h3>choose student</h3>
+                                {%for student in students%}
                                 <li>
-                                    <input type="radio" id="class" name="class" value="{{class}}" required>
-                                    <label for="class">{{class}}</label>
+                                    <input type="radio" id="student" name="student" value="{{student}}" required>
+                                    <label for="student">{{student}}</label>
                                 </li>
                                 {%endfor%}
                             </ol>
+                        </div>
+                    </div>
+                    <div class="nested-container">
+                        <div class="pick-list">
+                        <ol>
+                            <h3>choose team</h3>
+                            {%for team in teams%}
+                            <li>
+                                <input type="radio" id="team" name="team" value="{{team}}" required>
+                                <label for="team">{{team}}</label>
+                            </li>
+                            {%endfor%}
+                        </ol>
                         </div>
                     </div>
                     <div class="nested-container-submit">
@@ -56,12 +61,8 @@
         </div>
         <!-- content -end-->
     </main>
-
-
         <!-- footer -->
         <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
-
     </div>
-
 </body>
 </html>
