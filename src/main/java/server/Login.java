@@ -54,7 +54,7 @@ public class Login implements HttpHandler {
     }
 
     private void displayLoginFailure(HttpExchange httpExchange) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("user", "invalid");
         String response = template.render(model);
@@ -102,7 +102,7 @@ public class Login implements HttpHandler {
     }
 
     private void displayLoginPage(HttpExchange httpExchange) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("static/index.html");
         JtwigModel model = JtwigModel.newModel();
         String response = template.render(model);
 

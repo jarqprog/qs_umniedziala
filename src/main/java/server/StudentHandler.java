@@ -1,6 +1,5 @@
 package server;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -65,7 +64,7 @@ public class StudentHandler implements HttpHandler {
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/student/profile.html.twig");
+                        "static/student/profile.html");
 
         JtwigModel model = JtwigModel.newModel();
         int studentId = this.sessionManager.getCurrentUserId(httpExchange);
