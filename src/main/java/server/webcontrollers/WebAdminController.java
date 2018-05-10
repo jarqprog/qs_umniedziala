@@ -176,13 +176,13 @@ public class WebAdminController implements IAdminController {
     @Override
     public String[] getAdminData(int adminId) {
         String[] adminData = new String[]{"",""};
+        if(adminId == 0) {
+            return adminData;
+        }
         int BASIC_DATA_INDEX = 0;
         int DETAILS_INDEX = 1;
         Admin admin = daoAdmin.importAdmin(adminId);
-        int id = admin.getUserId();
-        if(id == 0) {
-            return adminData;
-        }
+
         adminData[BASIC_DATA_INDEX] = admin.getName();
 
         adminData[DETAILS_INDEX] = String.format("id:%s<br>email:%s<br>mentors:<br>%s", adminId,

@@ -23,4 +23,5 @@ public interface IMentorController extends IServerController {
     boolean assignStudentToTeam(String studentData, String teamData);
     String getStudentWallet(int studentId);
     int getStudentIdFromTextData(String studentData);
+    String[] getMentorData(int mentorId);
 }
