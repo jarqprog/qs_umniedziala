@@ -1,6 +1,5 @@
 package server;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -11,8 +10,6 @@ import server.sessions.ISessionManager;
 import server.webcontrollers.IAdminController;
 
 import java.io.*;
-import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -222,7 +219,7 @@ public class AdminHandler implements HttpHandler {
         List<String> mentorsNames = controller.getMentorsNames();
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/admin/display_mentor.html.twig");
+                        "static/admin/display_mentor.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("mentors", mentorsFullData);
         model.with("MentorsNames", mentorsNames);
@@ -237,7 +234,7 @@ public class AdminHandler implements HttpHandler {
         String info = "choose mentor to display";
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/admin/display_mentor.html.twig");
+                        "static/admin/display_mentor.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("mentors", mentorsFullData);
         model.with("MentorsNames", mentorsNames);
@@ -261,7 +258,7 @@ public class AdminHandler implements HttpHandler {
 
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/admin/profile.html.twig");
+                        "static/admin/profile.html");
         JtwigModel model = JtwigModel.newModel();
         int adminId = sessionManager.getCurrentUserId(httpExchange);
         model.with("name", controller.getAdminName(adminId));
