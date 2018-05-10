@@ -367,3 +367,23 @@ body::-webkit-scroll {
 #wallets{
     align-content: left;
 }
+
+#team_info h1 {
+    font-size: 100px;
+}
+
+.artifacts{
+    float: left;
+    width: 75%;
+    background-color: #000a00;
+    max-height: 500px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    margin-left: 10%;
+    flex-direction: column;
+}
+
+
