@@ -190,9 +190,30 @@ public class WebMentorController implements IMentorController {
             return false;
         }
     }
+    @Override
+    public Map<String, List<String>> getStudentArtifacts(int studentId){
+        Student student = getStudentById(studentId);
+
+        List<String> newArtifact = student.getWallet().getNewArtifacts()
+                .stream()
+                .sorted(Comparator.comparing(Artifact::getValue))
+                .map(Artifact::toString)
+                .collect(Collectors.toList());
+
+        List<String> usedArtifact = student.getWallet().getUsedArtifacts()
+                .stream()
+                .sorted(Comparator.comparing(Artifact::getValue))
+                .map(Artifact::toString)
+                .collect(Collectors.toList());
+
+        Map<String, List<String>> studentsArtifacts = new HashMap<>();
+        studentsArtifacts.put("newArtifacts", newArtifact);
+        studentsArtifacts.put("usedArtifacts", usedArtifact);
+
+        return studentsArtifacts;
+    }
 
     @Override
-
     public Map<Integer, String> getStudentsWithIds() {
         Map<Integer, String> studentsWithIds = new HashMap<>();
         List<Student> students = daoStudent.getAllStudents();
@@ -201,7 +222,7 @@ public class WebMentorController implements IMentorController {
         }
         return studentsWithIds;
     }
-    public Student getStudentById(int studentId) { // TODO: 10.05.18 check if used if not delete
+    private Student getStudentById(int studentId) { // TODO: 10.05.18 check if used if not delete
         return daoStudent.importStudent(studentId);
     }
 

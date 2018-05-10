@@ -11,4 +11,5 @@ public interface IResponseManager {
     Map<String,String> getInput(HttpExchange httpExchange) throws IOException;
     void redirectToLogin(HttpExchange httpExchange) throws IOException;
     Map<String,String> parseEditData(HttpExchange httpExchange) throws IOException;
+    void redirectToStudentArtifact(HttpExchange httpExchange) throws IOException;
 }

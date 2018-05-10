@@ -30,12 +30,12 @@
                     <div class="pick-list">
                         <ol>
                             <h3>New Artifacts</h3>
-                            <!--{%for student in students%}-->
-                            <!--<li>-->
-                                <!--<input type="radio" id="student" name="student" value="{{student}}" required>-->
-                                <!--<label for="student">{{student}}</label>-->
-                            <!--</li>-->
-                            <!--{%endfor%}-->
+                            {%for new in newStudentArtifacts%}
+                            <li>
+                                <input type="radio" id="newArtifact" name="newArtifact" value={{new}} required>
+                                <label for="newArtifact">{{new}}</label>
+                            </li>
+                            {%endfor%}
                         </ol>
                     </div>
                 </div>
@@ -43,17 +43,15 @@
                     <div class="pick-list">
                         <ol>
                             <h3>Used Artifact</h3>
-                            <!--{%for team in teams%}-->
-                            <!--<li>-->
-                                <!--<input type="radio" id="team" name="team" value="{{team}}" required>-->
-                                <!--<label for="team">{{team}}</label>-->
-                            <!--</li>-->
-                            <!--{%endfor%}-->
+                            {%for used in usedStudentArtifacts%}
+                            <li>
+                               {{used}}
+                            </li>
+                            {%endfor%}
                         </ol>
                     </div>
                 </div>
                 <div class="nested-container-submit">
-                    <!--<h3>{{result}}</h3>-->
                     <input type="submit" value="perform" required>
                 </div>
             </form>

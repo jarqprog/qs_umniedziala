@@ -24,8 +24,8 @@ public interface IMentorController extends IServerController {
     List<String> getArtifacts();
     boolean editArtifact(Map<String, String> inputs);
     Map<Integer, String> getStudentsWithIds();
-    Student getStudentById(int studentId); // TODO: 10.05.18 check if using if not deleting
     List<String> getStudentsByMentorId(int mentorId);
     boolean assignStudentToTeam(String studentData, String teamData);
+    Map<String, List<String>> getStudentArtifacts(int studentId);
 
 }

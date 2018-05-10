@@ -105,25 +105,29 @@ public class MentorHandler implements HttpHandler {
                         editArtifact(httpExchange);
                         break;
                     case "/mentor/display_student_to_pick":
-                       showStudentArtifact(httpExchange);
+                        showStudentArtifact(httpExchange);
+                    case "/mentor/show_student_artifacts":
+                        showStudentArtifact(httpExchange);
                         break;
-
                 }
             }
         }
     }
 
     private void showStudentArtifact(HttpExchange httpExchange) throws IOException {
-        Map<String,String> id = responseManager.getInput(httpExchange);
-        System.out.println(id.get("studentId"));
+        Map<String,String> input = responseManager.getInput(httpExchange);
+        System.out.println(input.get("studentId"));
+        int studentId = Integer.parseInt(input.get("studentId"));
+        Map<String, List<String>> studentArtifacts = controller.getStudentArtifacts(studentId);
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/show_student_artifacts.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("newStudentArtifacts",studentArtifacts.get("newArtifacts"));
+        model.with("usedStudentArtifacts",studentArtifacts.get("usedArtifacts"));
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
-        
     }
 
     private void showStudentToPick(HttpExchange httpExchange) throws IOException {
@@ -136,7 +140,6 @@ public class MentorHandler implements HttpHandler {
         model.with("students", students);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
-
 
     }
 
