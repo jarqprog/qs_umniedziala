@@ -26,9 +26,15 @@
         <div id="main-content">
 
             <div id="main-content-header">
+                <form method="post">
                     {% for artifact in artifacts %}
-                        {{ artifact }}
+                        {{ artifact }} <input type="radio" name="artifact" value="{{ artifact }}"><br/>
                     {% endfor %}
+                    <input type="submit" value="Buy">
+                </form>
+                {%if method == POST%}
+                    {{info}}
+                {%endif%}
             </div>
 
         </div>

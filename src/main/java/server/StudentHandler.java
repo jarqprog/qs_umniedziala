@@ -12,6 +12,7 @@ import server.webcontrollers.IStudentController;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class StudentHandler implements HttpHandler {
 
@@ -62,8 +63,14 @@ public class StudentHandler implements HttpHandler {
                 }
             }
             if (method.equals("POST")) {
-
-                // to implement
+                System.out.println(method);
+                String uri = httpExchange.getRequestURI().toString();
+                System.out.println(uri);
+                switch (uri) {
+                    case "/student/buy_artifact":
+                        buyArtifact(httpExchange);
+                        break;
+                }
             }
         }
     }
@@ -110,6 +117,27 @@ public class StudentHandler implements HttpHandler {
                         "static/student/buy_artifact.html.twig");
 
         JtwigModel model = JtwigModel.newModel();
+        model.with("artifacts", artifacts);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void buyArtifact(HttpExchange httpExchange) throws IOException{
+        int studentId = this.sessionManager.getCurrentUserId(httpExchange);
+
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
+        String artifactName = inputs.get("artifact");
+
+        String info = controller.buyArtifact(studentId , artifactName);
+
+        List<String> artifacts = controller.getArtifacts();
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/student/buy_artifact.html.twig");
+
+        JtwigModel model = JtwigModel.newModel();
+        model.with("info", info);
         model.with("artifacts", artifacts);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);

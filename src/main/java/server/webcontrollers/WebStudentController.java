@@ -7,7 +7,9 @@ import system.model.Student;
 import system.model.Team;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WebStudentController implements IStudentController {
 
@@ -109,12 +111,36 @@ public class WebStudentController implements IStudentController {
 
     @Override
     public List<String> getArtifacts() {
-        List<Artifact> artifacts = daoArtifact.getAllArtifacts();
-        List<String> artifactsNames = new ArrayList<>();
-        for (Artifact artifact : artifacts){
-            artifactsNames.add(artifact.getName());
+        return daoArtifact.getAllArtifacts().stream().sorted(Comparator.comparing(Artifact::getItemId))
+                .map(t -> String.format("#%s %s", t.getItemId(), t.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String buyArtifact(int studentId , String artifactName) {
+        int artifactId = gatherIdFromStringData(artifactName);
+        Artifact artifact = daoArtifact.importArtifact(artifactId);
+        Student student = daoStudent.importStudent(studentId);
+        int price = artifact.getValue();
+        if(student.hasEnoughCoins(price)){
+            student.subtractCoins(price);
+            student.addNewArtifact(artifact);
+            daoWallet.updateWallet(student);
+            daoWallet.exportStudentArtifact(artifact.getItemId(), studentId);
+            return "Done";
+        } else {
+            return "Operation failure";
         }
-        return artifactsNames;
+    }
+
+    private int gatherIdFromStringData(String data) {
+        try {
+            int idIndex = 0;
+            return Integer.parseInt(data.replace("#", "").split(" ")[idIndex]);
+        } catch (NumberFormatException | IndexOutOfBoundsException ex){
+            ex.printStackTrace();
+            return 0;
+        }
     }
 }
 
