@@ -127,9 +127,9 @@ public class WebStudentController implements IStudentController {
             student.addNewArtifact(artifact);
             daoWallet.updateWallet(student);
             daoWallet.exportStudentArtifact(artifact.getItemId(), studentId);
-            return "Done";
+            return "Artifact bought!";
         } else {
-            return "Operation failure";
+            return "Not this time.. :(";
         }
     }
 
