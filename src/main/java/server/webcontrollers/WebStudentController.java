@@ -112,7 +112,7 @@ public class WebStudentController implements IStudentController {
     @Override
     public List<String> getArtifacts() {
         return daoArtifact.getAllArtifacts().stream().sorted(Comparator.comparing(Artifact::getItemId))
-                .map(t -> String.format("#%s %s", t.getItemId(), t.getName()))
+                .map(t -> String.format("#%s %s %dcc", t.getItemId(), t.getName(), t.getValue()))
                 .collect(Collectors.toList());
     }
 
@@ -131,6 +131,12 @@ public class WebStudentController implements IStudentController {
         } else {
             return "Operation failure";
         }
+    }
+
+    @Override
+    public String getMoney(int studentId) {
+        Student student = getStudentById(studentId);
+        return Integer.toString(student.getWallet().getAvailableCoins());
     }
 
     private int gatherIdFromStringData(String data) {

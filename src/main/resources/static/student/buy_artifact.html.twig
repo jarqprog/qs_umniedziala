@@ -24,21 +24,26 @@
 
         <!-- content -->
         <div id="main-content">
-
-            <div id="main-content-header">
-                <form method="post">
-                    {% for artifact in artifacts %}
-                        {{ artifact }} <input type="radio" name="artifact" value="{{ artifact }}"><br/>
-                    {% endfor %}
-                    <input type="submit" value="Buy">
-                </form>
+            <form method="post">
+                <div id="main-inner-container">
+                    <div class="artifacts">
+                    <div class="pick-list">
+                        <h1>Artifacts</h1>
+                        <p>Your money: {{ money }}cc</p>
+                        {% for artifact in artifacts %}
+                            <input type="radio" name="artifact" value="{{ artifact }}"> {{ artifact }} <br/>
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+                <div class="nested-container-submit">
+                    <input type="submit" value="Buy" required><br/>
+                </div>
                 {%if method == POST%}
                     {{info}}
                 {%endif%}
             </div>
-
-        </div>
-
+            </form>
     </main>
 
     <!-- footer -->

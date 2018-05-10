@@ -14,4 +14,5 @@ public interface IStudentController extends IServerController {
     List<String> getTeamMembers(int studentId);
     List<String> getArtifacts();
     String buyArtifact(int studentId, String artifactName);
+    String getMoney(int studentId);
 }

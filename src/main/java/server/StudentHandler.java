@@ -111,6 +111,7 @@ public class StudentHandler implements HttpHandler {
 
     private void displayArtifacts(HttpExchange httpExchange) throws IOException{
         List<String> artifacts = controller.getArtifacts();
+        int studentId = this.sessionManager.getCurrentUserId(httpExchange);
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
@@ -118,6 +119,7 @@ public class StudentHandler implements HttpHandler {
 
         JtwigModel model = JtwigModel.newModel();
         model.with("artifacts", artifacts);
+        model.with("money", controller.getMoney(studentId));
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
@@ -139,6 +141,7 @@ public class StudentHandler implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         model.with("info", info);
         model.with("artifacts", artifacts);
+        model.with("money", controller.getMoney(studentId));
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
