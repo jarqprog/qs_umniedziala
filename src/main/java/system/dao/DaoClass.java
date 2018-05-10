@@ -121,18 +121,20 @@ public class DaoClass extends SqlDao implements IDaoClass {
             return false;
         }
 
-        String query = "INSERT INTO mentors_in_classes (id_codecool_class, id_mentor) VALUES (?, ?);";
+
+        String query = "INSERT INTO mentors_in_classes (id_codecool_class, id_mentor, id_mentor_in_class) " +
+                "VALUES (?, ?, ?)";
 
         try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
-             
+            int idMentorInClass = getLowestFreeIdFromGivenTable("mentors_in_classes",
+                    "id_mentor_in_class");
             preparedStatement.setInt(1, classId);
             preparedStatement.setInt(2, mentorId);
+            preparedStatement.setInt(3, idMentorInClass);
             preparedStatement.executeUpdate();
             return true;
-            
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Assigning mentor to class failed");
             return false;
         }
     }
