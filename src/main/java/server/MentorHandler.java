@@ -2,7 +2,6 @@ package server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import model.Student;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.IResponseManager;
@@ -59,6 +58,9 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/create_team":
                         displayCreateTeamPage(httpExchange);
                         break;
+                    case "/mentor/assign_student_to_team":
+                        displayAssignStudentToTeam(httpExchange);
+                        break;
                     case "/mentor/edit_quest":
                         displayQuestToUpdate(httpExchange);
                     case "/mentor/add_quest":
@@ -87,6 +89,9 @@ public class MentorHandler implements HttpHandler {
                         break;
                     case "/mentor/create_team":
                         createTeam(httpExchange);
+                        break;
+                    case "/mentor/assign_student_to_team":
+                        handleAssignStudentToTeam(httpExchange);
                         break;
                     case "/mentor/edit_quest":
                         updateQuest(httpExchange);
@@ -118,10 +123,7 @@ public class MentorHandler implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
-
-
-
-
+        
     }
 
     private void showStudentToPick(HttpExchange httpExchange) throws IOException {
@@ -208,18 +210,19 @@ public class MentorHandler implements HttpHandler {
 
     private void createTeam(HttpExchange httpExchange) throws IOException {
         Map<String, String> inputs = responseManager.getInput(httpExchange);
-        String teamName = inputs.get("teamname");
+        String teamName = inputs.get("team");
         String info;
         if(controller.createTeam(teamName)){
-            info = "Student added successfully!";
+            info = "Team added successfully!";
         }else{
-            info = "Something went wrong :(";
+            info = "Something went wrong - perhaps You've used already existing name?";
         }
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_team.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("teams", controller.getAllTeamsCollection());
         model.with("info", info);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -228,37 +231,35 @@ public class MentorHandler implements HttpHandler {
 
     private void createStudent(HttpExchange httpExchange) throws IOException {
         Map<String, String> inputs = responseManager.getInput(httpExchange);
-        String classNames = controller.getClassNames();
-        String name = inputs.get("firstname");
+        String name = inputs.get("name");
         String password = inputs.get("password");
         String email = inputs.get("email");
-        String id = inputs.get("classId");
-        int classId = Integer.parseInt(id);
+        String codeCoolClass = inputs.get("class");
         String info;
-        if(controller.createStudent(name, password, email, classId)){
-            info = "Team added successfully!";
+        if(controller.createStudent(name, password, email, codeCoolClass)){
+            info = "Student added successfully!";
         }else{
-            info = "Something went wrong :(";
+            info = "Operation failed!";
         }
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_student.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("classNames", classNames);
-        model.with("info", info);
+        model.with("classes", controller.getAllClassCollection());
+        model.with("result", info);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
 
     private void displayCreateStudentPage(HttpExchange httpExchange) throws IOException {
         String response;
-        String classNames = controller.getClassNames();
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_student.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("classNames", classNames);
+        model.with("classes", controller.getAllClassCollection());
+        model.with("result", "");
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
@@ -269,6 +270,8 @@ public class MentorHandler implements HttpHandler {
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_team.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("teams", controller.getAllTeamsCollection());
+        model.with("info", "");
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }
@@ -357,6 +360,42 @@ public class MentorHandler implements HttpHandler {
                 "static/mentor/see_all_wallets.html.twig");
         JtwigModel model = JtwigModel.newModel();
         model.with("wallets", wallets);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void displayAssignStudentToTeam(HttpExchange httpExchange ) throws IOException {
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/assign_student_to_team.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("students", controller.getStudentsByMentorId(sessionManager.getCurrentUserId(httpExchange)));
+        model.with("teams",  controller.getAllTeamsCollection());
+        model.with("result", "");
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void handleAssignStudentToTeam(HttpExchange httpExchange) throws IOException {
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
+        String studentData = inputs.get("student");
+        String teamData = inputs.get("team");
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/assign_student_to_team.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("students", controller.getStudentsByMentorId(sessionManager.getCurrentUserId(httpExchange)));
+        model.with("teams", controller.getAllTeamsCollection());
+        boolean isSuccess= controller.assignStudentToTeam(studentData, teamData);
+        String result;
+        if(isSuccess) {
+            result = studentData + " assigned to team " + teamData + "!";
+        } else {
+            result = "operation failed! student: " + studentData;
+        }
+        model.with("result", result);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }

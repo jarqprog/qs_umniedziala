@@ -1,6 +1,6 @@
 package server.webcontrollers;
 
-import dao.*;
+import system.dao.*;
 import server.factory.IControllerFactory;
 
 public class ControllerFactory implements IControllerFactory {

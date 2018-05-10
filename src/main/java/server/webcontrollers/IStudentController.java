@@ -1,9 +1,6 @@
 package server.webcontrollers;
 
-import model.Student;
-
 public interface IStudentController extends IServerController {
-
 
     String getStudentName(int studentId);
     String getStudentEmail(int studentId);

@@ -24,23 +24,35 @@
 
             <!-- content -->
             <div id="main-content">
-                <div id="main-inner-container">
-                  <h1>Create student</h1>
-                    <form method="POST">
-                      <input type="text" maxlength="30" name="firstname" placeholder="Name" required>
-                      <br/><br/>
-                      <input type="text" maxlength="30" name="password" placeholder="Password" required>
-                      <br/><br/>
-                      <input type="email" maxlength="30" name="email" placeholder="Email" required>
-                      <br/><br/>
-                      {{classNames}}
-                      <br/><br/>
-                      <input type="number" min="1" name="classId" placeholder="ID" required>
-                      <br/><br/>
-                      <input type="submit" value="Send">
-                    </form>
-                    {{info}}
-            </div>
+                <h1>Create student</h1>
+                <form method="POST">
+                    <div class="nested-container">
+                        <h3>enter Student's data</h3>
+                        <input type="text" maxlength="30" name="name" placeholder="Name" required>
+                        <br/><br/>
+                        <input type="text" maxlength="30" name="password" placeholder="Password" required>
+                        <br/><br/>
+                        <input type="email" maxlength="30" name="email" placeholder="Email" required>
+                        <br/><br/>
+                    </div>
+                    <div class="nested-container">
+                        <div class="pick-list">
+                            <ol>
+                                <h3>choose class</h3>
+                                {%for class in classes%}
+                                <li>
+                                    <input type="radio" id="class" name="class" value="{{class}}" required>
+                                    <label for="class">{{class}}</label>
+                                </li>
+                                {%endfor%}
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="nested-container-submit">
+                        <h3>{{result}}</h3>
+                        <input type="submit" value="perform" required>
+                    </div>
+                </form>
         </div>
         <!-- content -end-->
     </main>
