@@ -70,7 +70,7 @@ public class MentorHandler implements HttpHandler {
                         displayAddArtifactPage(httpExchange);
                         break;
                     case "/mentor/see_all_wallets":
-                        displayAllWallets(httpExchange);
+                        displayStudentWallet(httpExchange);
                         break;
                     case "/mentor/edit_artifact":
                         displayEditArtifactPage(httpExchange);
@@ -108,6 +108,8 @@ public class MentorHandler implements HttpHandler {
                         showStudentArtifact(httpExchange);
                     case "/mentor/show_student_artifacts":
                         showStudentArtifact(httpExchange);
+                    case "/mentor/see_all_wallets":
+                        handleStudentWalletInfo(httpExchange);
                         break;
                 }
             }
@@ -356,13 +358,31 @@ public class MentorHandler implements HttpHandler {
         responseManager.executeResponse(httpExchange, response);
     }
 
-    private void displayAllWallets(HttpExchange httpExchange) throws IOException{
-        Map<String, String> wallets = controller.getAllWallets();
+    private void displayStudentWallet(HttpExchange httpExchange) throws IOException {
         String response;
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
                 "static/mentor/see_all_wallets.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("wallets", wallets);
+        model.with("studentName", "");
+        model.with("wallet", "");
+        model.with("students", controller.getStudentsByMentorId(sessionManager.getCurrentUserId(httpExchange)));
+        model.with("result", "");
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void handleStudentWalletInfo(HttpExchange httpExchange) throws IOException {
+        String response;
+        Map<String, String> inputs = responseManager.getInput(httpExchange);
+        String studentData = inputs.get("student");
+        int studentId = controller.getStudentIdFromTextData(studentData);
+        JtwigTemplate template = JtwigTemplate.classpathTemplate(
+                "static/mentor/see_all_wallets.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("studentName", String.format("(%s)", studentData));
+        model.with("wallet", controller.getStudentWallet(studentId));
+        model.with("students", controller.getStudentsByMentorId(sessionManager.getCurrentUserId(httpExchange)));
+        model.with("result", "");
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }

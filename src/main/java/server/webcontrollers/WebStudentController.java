@@ -1,9 +1,15 @@
 package server.webcontrollers;
 
 import system.dao.*;
+import system.model.Artifact;
 import system.model.CodecoolClass;
 import system.model.Student;
 import system.model.Team;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class WebStudentController implements IStudentController {
 
@@ -90,6 +96,57 @@ public class WebStudentController implements IStudentController {
 
     private Student getStudentById(int studentId) {
         return daoStudent.importStudent(studentId);
+    }
+
+    @Override
+    public List<String> getTeamMembers(int studentId) {
+        Team team = daoTeam.getTeamByStudentId(studentId);
+        List<Student> members = team.getStudents();
+        List<String> membersNames = new ArrayList<>();
+        for (Student student : members){
+            membersNames.add(student.getName());
+        }
+        return membersNames;
+    }
+
+    @Override
+    public List<String> getArtifacts() {
+        return daoArtifact.getAllArtifacts().stream().sorted(Comparator.comparing(Artifact::getItemId))
+                .map(t -> String.format("#%s %s %dcc", t.getItemId(), t.getName(), t.getValue()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String buyArtifact(int studentId , String artifactName) {
+        int artifactId = gatherIdFromStringData(artifactName);
+        Artifact artifact = daoArtifact.importArtifact(artifactId);
+        Student student = daoStudent.importStudent(studentId);
+        int price = artifact.getValue();
+        if(student.hasEnoughCoins(price)){
+            student.subtractCoins(price);
+            student.addNewArtifact(artifact);
+            daoWallet.updateWallet(student);
+            daoWallet.exportStudentArtifact(artifact.getItemId(), studentId);
+            return "Artifact bought!";
+        } else {
+            return "Not this time.. :(";
+        }
+    }
+
+    @Override
+    public String getMoney(int studentId) {
+        Student student = getStudentById(studentId);
+        return Integer.toString(student.getWallet().getAvailableCoins());
+    }
+
+    private int gatherIdFromStringData(String data) {
+        try {
+            int idIndex = 0;
+            return Integer.parseInt(data.replace("#", "").split(" ")[idIndex]);
+        } catch (NumberFormatException | IndexOutOfBoundsException ex){
+            ex.printStackTrace();
+            return 0;
+        }
     }
 }
 

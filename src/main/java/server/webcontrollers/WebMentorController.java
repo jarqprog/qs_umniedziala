@@ -247,15 +247,7 @@ public class WebMentorController implements IMentorController {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public String getAllClasses() {
-        return transformGroupsToTxt(daoClass.getAllClasses());
-    }
 
-    @Override
-    public String getAllTeams() {
-        return transformGroupsToTxt(daoTeam.getAllTeams());
-    }
 
     @Override
     public boolean assignStudentToTeam(String studentData, String teamData) {
@@ -270,23 +262,14 @@ public class WebMentorController implements IMentorController {
         }
     }
 
-    private String transformGroupsToTxt(List<? extends Group> groups) {
-        groups.sort(Comparator.comparing(Group::getGroupId));
-        StringBuilder groupsAsText = new StringBuilder();
-        int counter = 1;
-        int maxNumGroupsInLine = 7;
-        for(Group group: groups) {
-            int groupId = group.getGroupId();
-            if(groupId != 0) {
-                if(counter % maxNumGroupsInLine == 1) {
-                    groupsAsText.append("<br>");
-                }
-                String teamAsText = String.format(" id(%s) %s; ", groupId, group.getName());
-                groupsAsText.append(teamAsText);
-                counter++;
-            }
-        }
-        return groupsAsText.toString();
+    @Override
+    public String getStudentWallet(int studentId) {
+        return daoWallet.importWallet(studentId).toString().replaceAll("\n", "<br/>");
+    }
+
+    @Override
+    public int getStudentIdFromTextData(String studentData) {
+        return gatherIdFromStringData(studentData);
     }
 
     private int gatherIdFromStringData(String data) {
