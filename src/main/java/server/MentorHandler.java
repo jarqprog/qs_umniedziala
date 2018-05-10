@@ -177,7 +177,7 @@ public class MentorHandler implements HttpHandler {
 
     private void createTeam(HttpExchange httpExchange) throws IOException {
         Map<String, String> inputs = responseManager.getInput(httpExchange);
-        String teamName = inputs.get("teamname");
+        String teamName = inputs.get("team");
         String info;
         if(controller.createTeam(teamName)){
             info = "Team added successfully!";
@@ -189,7 +189,7 @@ public class MentorHandler implements HttpHandler {
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_team.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("teamsNames", controller.getAllTeams());
+        model.with("teams", controller.getAllTeamsCollection());
         model.with("info", info);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -237,7 +237,8 @@ public class MentorHandler implements HttpHandler {
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/create_team.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("teamsNames", controller.getAllTeams());
+        model.with("teams", controller.getAllTeamsCollection());
+        model.with("info", "");
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }

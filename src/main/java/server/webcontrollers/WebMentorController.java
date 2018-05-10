@@ -201,14 +201,14 @@ public class WebMentorController implements IMentorController {
 
     @Override
     public List<String> getAllTeamsCollection() {
-        return daoTeam.getAllTeams().stream()
+        return daoTeam.getAllTeams().stream().sorted(Comparator.comparing(Team::getGroupId))
                 .map(t -> String.format("#%s %s", t.getGroupId(), t.getName()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<String> getAllClassCollection() {
-        return daoClass.getAllClasses().stream()
+        return daoClass.getAllClasses().stream().sorted(Comparator.comparing(CodecoolClass::getGroupId))
                 .map(t -> String.format("#%s %s", t.getGroupId(), t.getName()))
                 .collect(Collectors.toList());
     }
