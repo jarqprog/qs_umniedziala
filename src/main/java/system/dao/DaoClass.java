@@ -141,13 +141,27 @@ public class DaoClass extends SqlDao implements IDaoClass {
 
     @Override
     public boolean assignStudentToClass(int studentId, int classId){
+
+        String removeQuery = "DELETE FROM students_in_classes WHERE id_student=?";
+        try ( PreparedStatement preparedStatement = getConnection().prepareStatement(removeQuery) ) {
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Assignment of student to class failed");
+            return false;
+        }
          
-        String query = "INSERT INTO students_in_classes (id_codecool_class, id_student) VALUES (?, ?);";
+        String query = "INSERT INTO students_in_classes (id_codecool_class, id_student, id_student_in_class) " +
+                "VALUES (?, ?, ?)";
 
         try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
-             
+
+            int idStudentInClass = getLowestFreeIdFromGivenTable("students_in_classes",
+                    "id_student_in_class");
             preparedStatement.setInt(1, classId);
             preparedStatement.setInt(2, studentId);
+            preparedStatement.setInt(3, idStudentInClass);
             preparedStatement.executeUpdate();
             return true;
 
