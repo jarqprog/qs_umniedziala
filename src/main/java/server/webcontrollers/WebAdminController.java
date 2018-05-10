@@ -146,4 +146,35 @@ public class WebAdminController implements IAdminController {
         return classesAsText.toString();
     }
 
+    @Override
+    public List<String> getAllClassesCollection() {
+        return daoClass.getAllClasses().stream()
+                .map(t -> String.format("#%s %s", t.getGroupId(), t.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllMentorsCollection() {
+        return daoMentor.getAllMentors().stream()
+                .map(m -> String.format("#%s %s", m.getUserId(), m.getName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean assignMentorToClass(String mentorData, String classData) {
+        try {
+            int mentorId = gatherIdFromStringData(mentorData);
+            int classId = gatherIdFromStringData(classData);
+            return daoClass.assignMentorToClass(mentorId, classId);
+
+        } catch (NumberFormatException | IndexOutOfBoundsException ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    private int gatherIdFromStringData(String data) throws NumberFormatException, IndexOutOfBoundsException {
+            int idIndex = 0;
+            return Integer.parseInt(data.replace("#", "").split(" ")[idIndex]);
+    }
 }

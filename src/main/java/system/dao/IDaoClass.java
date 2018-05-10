@@ -9,21 +9,21 @@ public interface IDaoClass {
 
     CodecoolClass createClass(String name);
 
-    CodecoolClass importClass(Integer classID);
+    CodecoolClass importClass(int classID);
 
     List<CodecoolClass> getAllClasses();
 
-    boolean assignMentorToClass(Integer mentorId, Integer classId);
+    boolean assignMentorToClass(int mentorId, int classId);
 
-    boolean assignStudentToClass(Integer studentId, Integer classId);
+    boolean assignStudentToClass(int studentId, int classId);
 
-    boolean updateMentorInClass(Integer mentorId, Integer classId);
+    boolean updateMentorInClass(int mentorId, int classId);
 
-    boolean unsignMentorFromClass(Integer mentorId);
+    boolean unsignMentorFromClass(int mentorId);
 
-    List<Student> getStudentsOfClass(Integer classID);
+    List<Student> getStudentsOfClass(int classID);
 
-    CodecoolClass getMentorsClass(Integer mentorId);
+    CodecoolClass getMentorsClass(int mentorId);
 
-    CodecoolClass getStudentClass(Integer studentId);
+    CodecoolClass getStudentClass(int studentId);
 }

@@ -9,13 +9,18 @@ public interface IMentorController extends IServerController {
     String getMentorEmail(int mentorId);
     String getMentorClassWithStudents(int mentorId);
     String getAllTeams();
-    boolean createStudent(String name, String password, String email, int classId);
+    List<String> getAllTeamsCollection();
+    String getAllClasses();
+    List<String> getAllClassCollection();
+    boolean createStudent(String name, String password, String email, String codeCoolClass);
     boolean createTeam(String teamName);
     List<String> getQuests();
     boolean editQuest(Map<String, String> inputs);
     boolean addQuest(String name, int value, String description, String type, String category);
-    boolean addArtifact(String name, int value, String type, String caetgory);
+    boolean addArtifact(String name, int value, String type, String category);
     Map<String, String> getAllWallets();
     List<String> getArtifacts();
     boolean editArtifact(Map<String, String> inputs);
+    List<String> getStudentsByMentorId(int mentorId);
+    boolean assignStudentToTeam(String studentData, String teamData);
 }
