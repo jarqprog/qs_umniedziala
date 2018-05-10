@@ -1,3 +1,4 @@
+
 function displayCalendar() {
 
     var today = new Date();

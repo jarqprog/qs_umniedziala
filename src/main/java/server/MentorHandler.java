@@ -280,7 +280,7 @@ public class MentorHandler implements HttpHandler {
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/mentor/profile.html.twig");
+                        "static/mentor/profile.html");
         JtwigModel model = JtwigModel.newModel();
         int mentorId = this.sessionManager.getCurrentUserId(httpExchange);
         model.with("name", controller.getMentorName(mentorId));
@@ -294,7 +294,7 @@ public class MentorHandler implements HttpHandler {
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/mentor/add_quest.html.twig");
+                        "static/mentor/add_quest.html");
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -304,7 +304,7 @@ public class MentorHandler implements HttpHandler {
         String response;
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
-                        "static/mentor/add_artifact.html.twig");
+                        "static/mentor/add_artifact.html");
         JtwigModel model = JtwigModel.newModel();
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
@@ -325,7 +325,7 @@ public class MentorHandler implements HttpHandler {
         }
         String response;
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
-                "static/mentor/add_quest.html.twig");
+                "static/mentor/add_quest.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("info", info);
         response = template.render(model);
@@ -346,7 +346,7 @@ public class MentorHandler implements HttpHandler {
         }
         String response;
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
-                "static/mentor/add_artifact.html.twig");
+                "static/mentor/add_artifact.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("info", info);
         response = template.render(model);
@@ -357,7 +357,7 @@ public class MentorHandler implements HttpHandler {
         Map<String, String> wallets = controller.getAllWallets();
         String response;
         JtwigTemplate template = JtwigTemplate.classpathTemplate(
-                "static/mentor/see_all_wallets.html.twig");
+                "static/mentor/see_all_wallets.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("wallets", wallets);
         response = template.render(model);
