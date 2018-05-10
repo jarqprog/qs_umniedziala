@@ -15,26 +15,47 @@
 
     <!-- content -->
     <div id="main-content">
-
-        <div id="main-inner-container">
-
-            <h1>LEVEL CREATION</h1>
-            <!--<br/><br/>-->
-            <h2>EXISTING LEVELS:</h2>
-            <ul>
-                {% for level in levels %}
-                <li> {{level}} </li>
-                {% endfor %}
-            </ul>
-            <form method="POST">
+        <h1>LEVEL CREATION</h1>
+        <form method="POST">
+            <div class="nested-container">
+                <div class="pick-list">
+                    <ol class ="enumeration-free-list">
+                        <h3>EXISTING LEVELS:</h3>
+                        {% for level in levels %}
+                        <li> {{level}} </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+            <div class="nested-container">
+                <h3>ENTER LEVEL DATA:</h3>
                 <input type="text" name="level_name" maxlength="30" placeholder="Enter level name" required>
                 <br/><br/>
                 <input type="number" name="coins_limit" min="1" placeholder="Enter required coins" required>
                 <br/><br/>
-                <input type="submit" value="CREATE!">
-            </form>
-            <h3> {{ result }} </h3>
-        </div>
+            </div>
+            <div class="nested-container-submit">
+                <h3>{{result}}</h3>
+                <input type="submit" value="perform" required>
+            </div>
+        </form>
+
+        <!--<div id="main-inner-container">-->
+
+            <!--<h1>LEVEL CREATION</h1>-->
+            <!--&lt;!&ndash;<br/><br/>&ndash;&gt;-->
+            <!--<h2>EXISTING LEVELS:</h2>-->
+            <!--<ul>-->
+                <!--{% for level in levels %}-->
+                <!--<li> {{level}} </li>-->
+                <!--{% endfor %}-->
+            <!--</ul>-->
+            <!--<form method="POST">-->
+
+                <!--<input type="submit" value="CREATE!">-->
+            <!--</form>-->
+            <!--<h3> {{ result }} </h3>-->
+        <!--</div>-->
     </div>
 </main>
 
